@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TradingChart from '../../components/TradingChart.astro';
+import DynamicCta from '../../components/DynamicCta.astro';
 
 export async function getStaticPaths() {
   const allEntries = await getCollection('blog');
@@ -78,6 +79,9 @@ const displayTitle = entry.data.title.replace(/Historical Correlation of |Price 
       
       <Content />
     </article>
+
+    {/* Dynamic CTA */}
+    <DynamicCta asset={entry.data.tags?.[0]} />
 
     {relatedPosts.length > 0 && (
       <section class="border-t border-gray-200 pt-10">
