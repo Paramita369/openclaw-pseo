@@ -19,7 +19,8 @@ Welcome to the QuantMacro quantitative analysis report for **QQQ** reacting to *
 ## Historical Performance Data
 
 | Metric | Value |
-|--------|-------|| T+1 (24h) | 0.16% |
+|--------|-------|
+| T+1 (24h) | 0.16% |
 | T+7 (1 Week) | -0.27% |
 
 *Based on historical backtesting from our quant database.*

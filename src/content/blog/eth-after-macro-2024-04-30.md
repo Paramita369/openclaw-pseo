@@ -19,7 +19,8 @@ Welcome to the QuantMacro quantitative analysis report for **ETH** reacting to *
 ## Historical Performance Data
 
 | Metric | Value |
-|--------|-------|| T+1 (24h) | -1.41% |
+|--------|-------|
+| T+1 (24h) | -1.41% |
 | T+7 (1 Week) | -0.19% |
 
 *Based on historical backtesting from our quant database.*

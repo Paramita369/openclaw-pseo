@@ -19,7 +19,8 @@ Welcome to the QuantMacro quantitative analysis report for **GOLD** reacting to 
 ## Historical Performance Data
 
 | Metric | Value |
-|--------|-------|| T+1 (24h) | nan% |
+|--------|-------|
+| T+1 (24h) | nan% |
 | T+7 (1 Week) | 1.14% |
 
 *Based on historical backtesting from our quant database.*

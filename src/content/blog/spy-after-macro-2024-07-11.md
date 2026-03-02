@@ -19,7 +19,8 @@ Welcome to the QuantMacro quantitative analysis report for **SPY** reacting to *
 ## Historical Performance Data
 
 | Metric | Value |
-|--------|-------|| T+1 (24h) | 0.63% |
+|--------|-------|
+| T+1 (24h) | 0.63% |
 | T+7 (1 Week) | -0.69% |
 
 *Based on historical backtesting from our quant database.*

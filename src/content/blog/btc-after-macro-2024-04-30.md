@@ -19,7 +19,8 @@ Welcome to the QuantMacro quantitative analysis report for **BTC** reacting to *
 ## Historical Performance Data
 
 | Metric | Value |
-|--------|-------|| T+1 (24h) | -3.93% |
+|--------|-------|
+| T+1 (24h) | -3.93% |
 | T+7 (1 Week) | 2.8% |
 
 *Based on historical backtesting from our quant database.*
