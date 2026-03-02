@@ -3,7 +3,7 @@ import mdx from '@astrojs/mdx';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://openclaw-pseo.vercel.app',
+  site: 'https://quantmacro.vercel.app',
   integrations: [
     mdx(),
     tailwind()
