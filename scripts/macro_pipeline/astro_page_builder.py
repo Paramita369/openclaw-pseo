@@ -289,9 +289,9 @@ pubDate: "{datetime.now().strftime('%Y-%m-%d')}"
 slug: "{slug}"
 tags: ["{asset.lower()}", "macro", "backtest", "{row.get('intent', 'analysis').replace(' ', '-').lower()}"]
 metrics:
-  sharpe_t7: {float(row.get('sharpe_t7', 0)) if row.get('sharpe_t7') else 0}
-  mdd_t7: {float(row.get('mdd_t7', 0)) if row.get('mdd_t7') else 0}
-  volatility: {float(row.get('volatility', 0)) if row.get('volatility') else 0}
+  sharpe_t7: {round(float(row.get('sharpe_t7') or 0), 2)}
+  mdd_t7: {round(float(row.get('mdd_t7') or 0), 2)}
+  volatility: {round(float(row.get('volatility') or 0), 2)}
 {('chartData: ' + json.dumps(chart_data)) if chart_data else ''}
 ---
 
