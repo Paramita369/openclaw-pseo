@@ -355,7 +355,7 @@ def main():
 
 # ================= Sitemap Generator =================
 def build_sitemap():
-    """掃描生成的 .md 檔案並產出標準 sitemap.xml"""
+    """Scan generated .md files and produce standard sitemap.xml with lastmod"""
     public_dir = os.path.expanduser("~/.openclaw/workspace/astro_project/public/")
     os.makedirs(public_dir, exist_ok=True)
     
@@ -412,3 +412,60 @@ def fetch_chart_data(ticker, event_date, days=10):
     return []
 
 # ================================================
+
+# ================= Dynamic Sitemap Generator =================
+def generate_dynamic_sitemap(slug_list, domain="https://quantmacro.vercel.app"):
+    """Generate sitemap.xml with lastmod for all blog posts"""
+    import os
+    from datetime import datetime
+    
+    sitemap_path = os.path.join(os.getcwd(), "public", "sitemap.xml")
+    today = datetime.utcnow().strftime('%Y-%m-%d')
+    
+    # Build XML
+    xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>']
+    xml_lines.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+    
+    # Homepage
+    xml_lines.append(f"  <url>")
+    xml_lines.append(f"    <loc>{domain}/</loc>")
+    xml_lines.append(f"    <lastmod>{today}</lastmod>")
+    xml_lines.append(f"    <changefreq>daily</changefreq>")
+    xml_lines.append(f"    <priority>1.0</priority>")
+    xml_lines.append(f"  </url>")
+    
+    # Blog index
+    xml_lines.append(f"  <url>")
+    xml_lines.append(f"    <loc>{domain}/blog</loc>")
+    xml_lines.append(f"    <lastmod>{today}</lastmod>")
+    xml_lines.append(f"    <changefreq>daily</changefreq>")
+    xml_lines.append(f"    <priority>0.9</priority>")
+    xml_lines.append(f"  </url>")
+    
+    # Leaderboard
+    xml_lines.append(f"  <url>")
+    xml_lines.append(f"    <loc>{domain}/leaderboard</loc>")
+    xml_lines.append(f"    <lastmod>{today}</lastmod>")
+    xml_lines.append(f"    <changefreq>daily</changefreq>")
+    xml_lines.append(f"    <priority>0.8</priority>")
+    xml_lines.append(f"  </url>")
+    
+    # All blog posts
+    for slug in slug_list:
+        xml_lines.append(f"  <url>")
+        xml_lines.append(f"    <loc>{domain}/blog/{slug}</loc>")
+        xml_lines.append(f"    <lastmod>{today}</lastmod>")
+        xml_lines.append(f"    <changefreq>weekly</changefreq>")
+        xml_lines.append(f"    <priority>0.7</priority>")
+        xml_lines.append(f"  </url>")
+    
+    xml_lines.append('</urlset>')
+    
+    # Write file
+    os.makedirs(os.path.dirname(sitemap_path), exist_ok=True)
+    with open(sitemap_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(xml_lines))
+    
+    print(f"✅ Dynamic sitemap generated: {len(slug_list) + 3} URLs")
+
+# ============================================================
