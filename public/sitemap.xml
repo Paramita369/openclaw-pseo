@@ -469,6 +469,10 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://quantmacro.vercel.app/blog/btc-after-macro</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://quantmacro.vercel.app/blog/ethereum-volatility-after-cpi-release-7-day</loc>
     <priority>0.8</priority>
   </url>
@@ -670,6 +674,10 @@
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/nvda-volatility-after-gdp-report-7-day-vs-gold</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/btc-after-geopolitics</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -1745,6 +1753,10 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://quantmacro.vercel.app/blog/eth-after-geopolitics</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://quantmacro.vercel.app/blog/gold-correlation-after-cpi-release-1-day-vs-gold</loc>
     <priority>0.8</priority>
   </url>
@@ -1902,6 +1914,10 @@
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/spy-price-impact-after-gdp-report-7-day-vs-sp500</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/eth-after-macro</loc>
     <priority>0.8</priority>
   </url>
   <url>
