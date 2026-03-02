@@ -1019,842 +1019,842 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-cpi-release-1-day-vs-gold.md": {
-	id: "ethereum-correlation-after-cpi-release-1-day-vs-gold.md";
-  slug: "ethereum-correlation-after-cpi-release-1-day-vs-gold";
+"eth-correlation-after-cpi-release-1-day-vs-gold.md": {
+	id: "eth-correlation-after-cpi-release-1-day-vs-gold.md";
+  slug: "eth-correlation-after-cpi-release-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-cpi-release-1-day-vs-sp500.md": {
-	id: "ethereum-correlation-after-cpi-release-1-day-vs-sp500.md";
-  slug: "ethereum-correlation-after-cpi-release-1-day-vs-sp500";
+"eth-correlation-after-cpi-release-1-day-vs-sp500.md": {
+	id: "eth-correlation-after-cpi-release-1-day-vs-sp500.md";
+  slug: "eth-correlation-after-cpi-release-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-cpi-release-1-day.md": {
-	id: "ethereum-correlation-after-cpi-release-1-day.md";
-  slug: "ethereum-correlation-after-cpi-release-1-day";
+"eth-correlation-after-cpi-release-1-day.md": {
+	id: "eth-correlation-after-cpi-release-1-day.md";
+  slug: "eth-correlation-after-cpi-release-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-cpi-release-7-day-vs-gold.md": {
-	id: "ethereum-correlation-after-cpi-release-7-day-vs-gold.md";
-  slug: "ethereum-correlation-after-cpi-release-7-day-vs-gold";
+"eth-correlation-after-cpi-release-7-day-vs-gold.md": {
+	id: "eth-correlation-after-cpi-release-7-day-vs-gold.md";
+  slug: "eth-correlation-after-cpi-release-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-cpi-release-7-day-vs-sp500.md": {
-	id: "ethereum-correlation-after-cpi-release-7-day-vs-sp500.md";
-  slug: "ethereum-correlation-after-cpi-release-7-day-vs-sp500";
+"eth-correlation-after-cpi-release-7-day-vs-sp500.md": {
+	id: "eth-correlation-after-cpi-release-7-day-vs-sp500.md";
+  slug: "eth-correlation-after-cpi-release-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-cpi-release-7-day.md": {
-	id: "ethereum-correlation-after-cpi-release-7-day.md";
-  slug: "ethereum-correlation-after-cpi-release-7-day";
+"eth-correlation-after-cpi-release-7-day.md": {
+	id: "eth-correlation-after-cpi-release-7-day.md";
+  slug: "eth-correlation-after-cpi-release-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-fed-rate-cut-1-day-vs-gold.md": {
-	id: "ethereum-correlation-after-fed-rate-cut-1-day-vs-gold.md";
-  slug: "ethereum-correlation-after-fed-rate-cut-1-day-vs-gold";
+"eth-correlation-after-fed-rate-cut-1-day-vs-gold.md": {
+	id: "eth-correlation-after-fed-rate-cut-1-day-vs-gold.md";
+  slug: "eth-correlation-after-fed-rate-cut-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-fed-rate-cut-1-day-vs-sp500.md": {
-	id: "ethereum-correlation-after-fed-rate-cut-1-day-vs-sp500.md";
-  slug: "ethereum-correlation-after-fed-rate-cut-1-day-vs-sp500";
+"eth-correlation-after-fed-rate-cut-1-day-vs-sp500.md": {
+	id: "eth-correlation-after-fed-rate-cut-1-day-vs-sp500.md";
+  slug: "eth-correlation-after-fed-rate-cut-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-fed-rate-cut-1-day.md": {
-	id: "ethereum-correlation-after-fed-rate-cut-1-day.md";
-  slug: "ethereum-correlation-after-fed-rate-cut-1-day";
+"eth-correlation-after-fed-rate-cut-1-day.md": {
+	id: "eth-correlation-after-fed-rate-cut-1-day.md";
+  slug: "eth-correlation-after-fed-rate-cut-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-fed-rate-cut-7-day-vs-gold.md": {
-	id: "ethereum-correlation-after-fed-rate-cut-7-day-vs-gold.md";
-  slug: "ethereum-correlation-after-fed-rate-cut-7-day-vs-gold";
+"eth-correlation-after-fed-rate-cut-7-day-vs-gold.md": {
+	id: "eth-correlation-after-fed-rate-cut-7-day-vs-gold.md";
+  slug: "eth-correlation-after-fed-rate-cut-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-fed-rate-cut-7-day-vs-sp500.md": {
-	id: "ethereum-correlation-after-fed-rate-cut-7-day-vs-sp500.md";
-  slug: "ethereum-correlation-after-fed-rate-cut-7-day-vs-sp500";
+"eth-correlation-after-fed-rate-cut-7-day-vs-sp500.md": {
+	id: "eth-correlation-after-fed-rate-cut-7-day-vs-sp500.md";
+  slug: "eth-correlation-after-fed-rate-cut-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-fed-rate-cut-7-day.md": {
-	id: "ethereum-correlation-after-fed-rate-cut-7-day.md";
-  slug: "ethereum-correlation-after-fed-rate-cut-7-day";
+"eth-correlation-after-fed-rate-cut-7-day.md": {
+	id: "eth-correlation-after-fed-rate-cut-7-day.md";
+  slug: "eth-correlation-after-fed-rate-cut-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-gdp-report-1-day-vs-gold.md": {
-	id: "ethereum-correlation-after-gdp-report-1-day-vs-gold.md";
-  slug: "ethereum-correlation-after-gdp-report-1-day-vs-gold";
+"eth-correlation-after-gdp-report-1-day-vs-gold.md": {
+	id: "eth-correlation-after-gdp-report-1-day-vs-gold.md";
+  slug: "eth-correlation-after-gdp-report-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-gdp-report-1-day-vs-sp500.md": {
-	id: "ethereum-correlation-after-gdp-report-1-day-vs-sp500.md";
-  slug: "ethereum-correlation-after-gdp-report-1-day-vs-sp500";
+"eth-correlation-after-gdp-report-1-day-vs-sp500.md": {
+	id: "eth-correlation-after-gdp-report-1-day-vs-sp500.md";
+  slug: "eth-correlation-after-gdp-report-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-gdp-report-1-day.md": {
-	id: "ethereum-correlation-after-gdp-report-1-day.md";
-  slug: "ethereum-correlation-after-gdp-report-1-day";
+"eth-correlation-after-gdp-report-1-day.md": {
+	id: "eth-correlation-after-gdp-report-1-day.md";
+  slug: "eth-correlation-after-gdp-report-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-gdp-report-7-day-vs-gold.md": {
-	id: "ethereum-correlation-after-gdp-report-7-day-vs-gold.md";
-  slug: "ethereum-correlation-after-gdp-report-7-day-vs-gold";
+"eth-correlation-after-gdp-report-7-day-vs-gold.md": {
+	id: "eth-correlation-after-gdp-report-7-day-vs-gold.md";
+  slug: "eth-correlation-after-gdp-report-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-gdp-report-7-day-vs-sp500.md": {
-	id: "ethereum-correlation-after-gdp-report-7-day-vs-sp500.md";
-  slug: "ethereum-correlation-after-gdp-report-7-day-vs-sp500";
+"eth-correlation-after-gdp-report-7-day-vs-sp500.md": {
+	id: "eth-correlation-after-gdp-report-7-day-vs-sp500.md";
+  slug: "eth-correlation-after-gdp-report-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-gdp-report-7-day.md": {
-	id: "ethereum-correlation-after-gdp-report-7-day.md";
-  slug: "ethereum-correlation-after-gdp-report-7-day";
+"eth-correlation-after-gdp-report-7-day.md": {
+	id: "eth-correlation-after-gdp-report-7-day.md";
+  slug: "eth-correlation-after-gdp-report-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-inflation-rate-1-day-vs-gold.md": {
-	id: "ethereum-correlation-after-inflation-rate-1-day-vs-gold.md";
-  slug: "ethereum-correlation-after-inflation-rate-1-day-vs-gold";
+"eth-correlation-after-inflation-rate-1-day-vs-gold.md": {
+	id: "eth-correlation-after-inflation-rate-1-day-vs-gold.md";
+  slug: "eth-correlation-after-inflation-rate-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-inflation-rate-1-day-vs-sp500.md": {
-	id: "ethereum-correlation-after-inflation-rate-1-day-vs-sp500.md";
-  slug: "ethereum-correlation-after-inflation-rate-1-day-vs-sp500";
+"eth-correlation-after-inflation-rate-1-day-vs-sp500.md": {
+	id: "eth-correlation-after-inflation-rate-1-day-vs-sp500.md";
+  slug: "eth-correlation-after-inflation-rate-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-inflation-rate-1-day.md": {
-	id: "ethereum-correlation-after-inflation-rate-1-day.md";
-  slug: "ethereum-correlation-after-inflation-rate-1-day";
+"eth-correlation-after-inflation-rate-1-day.md": {
+	id: "eth-correlation-after-inflation-rate-1-day.md";
+  slug: "eth-correlation-after-inflation-rate-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-inflation-rate-7-day-vs-gold.md": {
-	id: "ethereum-correlation-after-inflation-rate-7-day-vs-gold.md";
-  slug: "ethereum-correlation-after-inflation-rate-7-day-vs-gold";
+"eth-correlation-after-inflation-rate-7-day-vs-gold.md": {
+	id: "eth-correlation-after-inflation-rate-7-day-vs-gold.md";
+  slug: "eth-correlation-after-inflation-rate-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-inflation-rate-7-day-vs-sp500.md": {
-	id: "ethereum-correlation-after-inflation-rate-7-day-vs-sp500.md";
-  slug: "ethereum-correlation-after-inflation-rate-7-day-vs-sp500";
+"eth-correlation-after-inflation-rate-7-day-vs-sp500.md": {
+	id: "eth-correlation-after-inflation-rate-7-day-vs-sp500.md";
+  slug: "eth-correlation-after-inflation-rate-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-inflation-rate-7-day.md": {
-	id: "ethereum-correlation-after-inflation-rate-7-day.md";
-  slug: "ethereum-correlation-after-inflation-rate-7-day";
+"eth-correlation-after-inflation-rate-7-day.md": {
+	id: "eth-correlation-after-inflation-rate-7-day.md";
+  slug: "eth-correlation-after-inflation-rate-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-nfp-data-1-day-vs-gold.md": {
-	id: "ethereum-correlation-after-nfp-data-1-day-vs-gold.md";
-  slug: "ethereum-correlation-after-nfp-data-1-day-vs-gold";
+"eth-correlation-after-nfp-data-1-day-vs-gold.md": {
+	id: "eth-correlation-after-nfp-data-1-day-vs-gold.md";
+  slug: "eth-correlation-after-nfp-data-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-nfp-data-1-day-vs-sp500.md": {
-	id: "ethereum-correlation-after-nfp-data-1-day-vs-sp500.md";
-  slug: "ethereum-correlation-after-nfp-data-1-day-vs-sp500";
+"eth-correlation-after-nfp-data-1-day-vs-sp500.md": {
+	id: "eth-correlation-after-nfp-data-1-day-vs-sp500.md";
+  slug: "eth-correlation-after-nfp-data-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-nfp-data-1-day.md": {
-	id: "ethereum-correlation-after-nfp-data-1-day.md";
-  slug: "ethereum-correlation-after-nfp-data-1-day";
+"eth-correlation-after-nfp-data-1-day.md": {
+	id: "eth-correlation-after-nfp-data-1-day.md";
+  slug: "eth-correlation-after-nfp-data-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-nfp-data-7-day-vs-gold.md": {
-	id: "ethereum-correlation-after-nfp-data-7-day-vs-gold.md";
-  slug: "ethereum-correlation-after-nfp-data-7-day-vs-gold";
+"eth-correlation-after-nfp-data-7-day-vs-gold.md": {
+	id: "eth-correlation-after-nfp-data-7-day-vs-gold.md";
+  slug: "eth-correlation-after-nfp-data-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-nfp-data-7-day-vs-sp500.md": {
-	id: "ethereum-correlation-after-nfp-data-7-day-vs-sp500.md";
-  slug: "ethereum-correlation-after-nfp-data-7-day-vs-sp500";
+"eth-correlation-after-nfp-data-7-day-vs-sp500.md": {
+	id: "eth-correlation-after-nfp-data-7-day-vs-sp500.md";
+  slug: "eth-correlation-after-nfp-data-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-correlation-after-nfp-data-7-day.md": {
-	id: "ethereum-correlation-after-nfp-data-7-day.md";
-  slug: "ethereum-correlation-after-nfp-data-7-day";
+"eth-correlation-after-nfp-data-7-day.md": {
+	id: "eth-correlation-after-nfp-data-7-day.md";
+  slug: "eth-correlation-after-nfp-data-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-cpi-release-1-day-vs-gold.md": {
-	id: "ethereum-historical-performance-after-cpi-release-1-day-vs-gold.md";
-  slug: "ethereum-historical-performance-after-cpi-release-1-day-vs-gold";
+"eth-historical-performance-after-cpi-release-1-day-vs-gold.md": {
+	id: "eth-historical-performance-after-cpi-release-1-day-vs-gold.md";
+  slug: "eth-historical-performance-after-cpi-release-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-cpi-release-1-day-vs-sp500.md": {
-	id: "ethereum-historical-performance-after-cpi-release-1-day-vs-sp500.md";
-  slug: "ethereum-historical-performance-after-cpi-release-1-day-vs-sp500";
+"eth-historical-performance-after-cpi-release-1-day-vs-sp500.md": {
+	id: "eth-historical-performance-after-cpi-release-1-day-vs-sp500.md";
+  slug: "eth-historical-performance-after-cpi-release-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-cpi-release-1-day.md": {
-	id: "ethereum-historical-performance-after-cpi-release-1-day.md";
-  slug: "ethereum-historical-performance-after-cpi-release-1-day";
+"eth-historical-performance-after-cpi-release-1-day.md": {
+	id: "eth-historical-performance-after-cpi-release-1-day.md";
+  slug: "eth-historical-performance-after-cpi-release-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-cpi-release-7-day-vs-gold.md": {
-	id: "ethereum-historical-performance-after-cpi-release-7-day-vs-gold.md";
-  slug: "ethereum-historical-performance-after-cpi-release-7-day-vs-gold";
+"eth-historical-performance-after-cpi-release-7-day-vs-gold.md": {
+	id: "eth-historical-performance-after-cpi-release-7-day-vs-gold.md";
+  slug: "eth-historical-performance-after-cpi-release-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-cpi-release-7-day-vs-sp500.md": {
-	id: "ethereum-historical-performance-after-cpi-release-7-day-vs-sp500.md";
-  slug: "ethereum-historical-performance-after-cpi-release-7-day-vs-sp500";
+"eth-historical-performance-after-cpi-release-7-day-vs-sp500.md": {
+	id: "eth-historical-performance-after-cpi-release-7-day-vs-sp500.md";
+  slug: "eth-historical-performance-after-cpi-release-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-cpi-release-7-day.md": {
-	id: "ethereum-historical-performance-after-cpi-release-7-day.md";
-  slug: "ethereum-historical-performance-after-cpi-release-7-day";
+"eth-historical-performance-after-cpi-release-7-day.md": {
+	id: "eth-historical-performance-after-cpi-release-7-day.md";
+  slug: "eth-historical-performance-after-cpi-release-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-fed-rate-cut-1-day-vs-gold.md": {
-	id: "ethereum-historical-performance-after-fed-rate-cut-1-day-vs-gold.md";
-  slug: "ethereum-historical-performance-after-fed-rate-cut-1-day-vs-gold";
+"eth-historical-performance-after-fed-rate-cut-1-day-vs-gold.md": {
+	id: "eth-historical-performance-after-fed-rate-cut-1-day-vs-gold.md";
+  slug: "eth-historical-performance-after-fed-rate-cut-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-fed-rate-cut-1-day-vs-sp500.md": {
-	id: "ethereum-historical-performance-after-fed-rate-cut-1-day-vs-sp500.md";
-  slug: "ethereum-historical-performance-after-fed-rate-cut-1-day-vs-sp500";
+"eth-historical-performance-after-fed-rate-cut-1-day-vs-sp500.md": {
+	id: "eth-historical-performance-after-fed-rate-cut-1-day-vs-sp500.md";
+  slug: "eth-historical-performance-after-fed-rate-cut-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-fed-rate-cut-1-day.md": {
-	id: "ethereum-historical-performance-after-fed-rate-cut-1-day.md";
-  slug: "ethereum-historical-performance-after-fed-rate-cut-1-day";
+"eth-historical-performance-after-fed-rate-cut-1-day.md": {
+	id: "eth-historical-performance-after-fed-rate-cut-1-day.md";
+  slug: "eth-historical-performance-after-fed-rate-cut-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-fed-rate-cut-7-day-vs-gold.md": {
-	id: "ethereum-historical-performance-after-fed-rate-cut-7-day-vs-gold.md";
-  slug: "ethereum-historical-performance-after-fed-rate-cut-7-day-vs-gold";
+"eth-historical-performance-after-fed-rate-cut-7-day-vs-gold.md": {
+	id: "eth-historical-performance-after-fed-rate-cut-7-day-vs-gold.md";
+  slug: "eth-historical-performance-after-fed-rate-cut-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-fed-rate-cut-7-day-vs-sp500.md": {
-	id: "ethereum-historical-performance-after-fed-rate-cut-7-day-vs-sp500.md";
-  slug: "ethereum-historical-performance-after-fed-rate-cut-7-day-vs-sp500";
+"eth-historical-performance-after-fed-rate-cut-7-day-vs-sp500.md": {
+	id: "eth-historical-performance-after-fed-rate-cut-7-day-vs-sp500.md";
+  slug: "eth-historical-performance-after-fed-rate-cut-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-fed-rate-cut-7-day.md": {
-	id: "ethereum-historical-performance-after-fed-rate-cut-7-day.md";
-  slug: "ethereum-historical-performance-after-fed-rate-cut-7-day";
+"eth-historical-performance-after-fed-rate-cut-7-day.md": {
+	id: "eth-historical-performance-after-fed-rate-cut-7-day.md";
+  slug: "eth-historical-performance-after-fed-rate-cut-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-gdp-report-1-day-vs-gold.md": {
-	id: "ethereum-historical-performance-after-gdp-report-1-day-vs-gold.md";
-  slug: "ethereum-historical-performance-after-gdp-report-1-day-vs-gold";
+"eth-historical-performance-after-gdp-report-1-day-vs-gold.md": {
+	id: "eth-historical-performance-after-gdp-report-1-day-vs-gold.md";
+  slug: "eth-historical-performance-after-gdp-report-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-gdp-report-1-day-vs-sp500.md": {
-	id: "ethereum-historical-performance-after-gdp-report-1-day-vs-sp500.md";
-  slug: "ethereum-historical-performance-after-gdp-report-1-day-vs-sp500";
+"eth-historical-performance-after-gdp-report-1-day-vs-sp500.md": {
+	id: "eth-historical-performance-after-gdp-report-1-day-vs-sp500.md";
+  slug: "eth-historical-performance-after-gdp-report-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-gdp-report-1-day.md": {
-	id: "ethereum-historical-performance-after-gdp-report-1-day.md";
-  slug: "ethereum-historical-performance-after-gdp-report-1-day";
+"eth-historical-performance-after-gdp-report-1-day.md": {
+	id: "eth-historical-performance-after-gdp-report-1-day.md";
+  slug: "eth-historical-performance-after-gdp-report-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-gdp-report-7-day-vs-gold.md": {
-	id: "ethereum-historical-performance-after-gdp-report-7-day-vs-gold.md";
-  slug: "ethereum-historical-performance-after-gdp-report-7-day-vs-gold";
+"eth-historical-performance-after-gdp-report-7-day-vs-gold.md": {
+	id: "eth-historical-performance-after-gdp-report-7-day-vs-gold.md";
+  slug: "eth-historical-performance-after-gdp-report-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-gdp-report-7-day-vs-sp500.md": {
-	id: "ethereum-historical-performance-after-gdp-report-7-day-vs-sp500.md";
-  slug: "ethereum-historical-performance-after-gdp-report-7-day-vs-sp500";
+"eth-historical-performance-after-gdp-report-7-day-vs-sp500.md": {
+	id: "eth-historical-performance-after-gdp-report-7-day-vs-sp500.md";
+  slug: "eth-historical-performance-after-gdp-report-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-gdp-report-7-day.md": {
-	id: "ethereum-historical-performance-after-gdp-report-7-day.md";
-  slug: "ethereum-historical-performance-after-gdp-report-7-day";
+"eth-historical-performance-after-gdp-report-7-day.md": {
+	id: "eth-historical-performance-after-gdp-report-7-day.md";
+  slug: "eth-historical-performance-after-gdp-report-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-inflation-rate-1-day-vs-gold.md": {
-	id: "ethereum-historical-performance-after-inflation-rate-1-day-vs-gold.md";
-  slug: "ethereum-historical-performance-after-inflation-rate-1-day-vs-gold";
+"eth-historical-performance-after-inflation-rate-1-day-vs-gold.md": {
+	id: "eth-historical-performance-after-inflation-rate-1-day-vs-gold.md";
+  slug: "eth-historical-performance-after-inflation-rate-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-inflation-rate-1-day-vs-sp500.md": {
-	id: "ethereum-historical-performance-after-inflation-rate-1-day-vs-sp500.md";
-  slug: "ethereum-historical-performance-after-inflation-rate-1-day-vs-sp500";
+"eth-historical-performance-after-inflation-rate-1-day-vs-sp500.md": {
+	id: "eth-historical-performance-after-inflation-rate-1-day-vs-sp500.md";
+  slug: "eth-historical-performance-after-inflation-rate-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-inflation-rate-1-day.md": {
-	id: "ethereum-historical-performance-after-inflation-rate-1-day.md";
-  slug: "ethereum-historical-performance-after-inflation-rate-1-day";
+"eth-historical-performance-after-inflation-rate-1-day.md": {
+	id: "eth-historical-performance-after-inflation-rate-1-day.md";
+  slug: "eth-historical-performance-after-inflation-rate-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-inflation-rate-7-day-vs-gold.md": {
-	id: "ethereum-historical-performance-after-inflation-rate-7-day-vs-gold.md";
-  slug: "ethereum-historical-performance-after-inflation-rate-7-day-vs-gold";
+"eth-historical-performance-after-inflation-rate-7-day-vs-gold.md": {
+	id: "eth-historical-performance-after-inflation-rate-7-day-vs-gold.md";
+  slug: "eth-historical-performance-after-inflation-rate-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-inflation-rate-7-day-vs-sp500.md": {
-	id: "ethereum-historical-performance-after-inflation-rate-7-day-vs-sp500.md";
-  slug: "ethereum-historical-performance-after-inflation-rate-7-day-vs-sp500";
+"eth-historical-performance-after-inflation-rate-7-day-vs-sp500.md": {
+	id: "eth-historical-performance-after-inflation-rate-7-day-vs-sp500.md";
+  slug: "eth-historical-performance-after-inflation-rate-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-inflation-rate-7-day.md": {
-	id: "ethereum-historical-performance-after-inflation-rate-7-day.md";
-  slug: "ethereum-historical-performance-after-inflation-rate-7-day";
+"eth-historical-performance-after-inflation-rate-7-day.md": {
+	id: "eth-historical-performance-after-inflation-rate-7-day.md";
+  slug: "eth-historical-performance-after-inflation-rate-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-nfp-data-1-day-vs-gold.md": {
-	id: "ethereum-historical-performance-after-nfp-data-1-day-vs-gold.md";
-  slug: "ethereum-historical-performance-after-nfp-data-1-day-vs-gold";
+"eth-historical-performance-after-nfp-data-1-day-vs-gold.md": {
+	id: "eth-historical-performance-after-nfp-data-1-day-vs-gold.md";
+  slug: "eth-historical-performance-after-nfp-data-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-nfp-data-1-day-vs-sp500.md": {
-	id: "ethereum-historical-performance-after-nfp-data-1-day-vs-sp500.md";
-  slug: "ethereum-historical-performance-after-nfp-data-1-day-vs-sp500";
+"eth-historical-performance-after-nfp-data-1-day-vs-sp500.md": {
+	id: "eth-historical-performance-after-nfp-data-1-day-vs-sp500.md";
+  slug: "eth-historical-performance-after-nfp-data-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-nfp-data-1-day.md": {
-	id: "ethereum-historical-performance-after-nfp-data-1-day.md";
-  slug: "ethereum-historical-performance-after-nfp-data-1-day";
+"eth-historical-performance-after-nfp-data-1-day.md": {
+	id: "eth-historical-performance-after-nfp-data-1-day.md";
+  slug: "eth-historical-performance-after-nfp-data-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-nfp-data-7-day-vs-gold.md": {
-	id: "ethereum-historical-performance-after-nfp-data-7-day-vs-gold.md";
-  slug: "ethereum-historical-performance-after-nfp-data-7-day-vs-gold";
+"eth-historical-performance-after-nfp-data-7-day-vs-gold.md": {
+	id: "eth-historical-performance-after-nfp-data-7-day-vs-gold.md";
+  slug: "eth-historical-performance-after-nfp-data-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-nfp-data-7-day-vs-sp500.md": {
-	id: "ethereum-historical-performance-after-nfp-data-7-day-vs-sp500.md";
-  slug: "ethereum-historical-performance-after-nfp-data-7-day-vs-sp500";
+"eth-historical-performance-after-nfp-data-7-day-vs-sp500.md": {
+	id: "eth-historical-performance-after-nfp-data-7-day-vs-sp500.md";
+  slug: "eth-historical-performance-after-nfp-data-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-historical-performance-after-nfp-data-7-day.md": {
-	id: "ethereum-historical-performance-after-nfp-data-7-day.md";
-  slug: "ethereum-historical-performance-after-nfp-data-7-day";
+"eth-historical-performance-after-nfp-data-7-day.md": {
+	id: "eth-historical-performance-after-nfp-data-7-day.md";
+  slug: "eth-historical-performance-after-nfp-data-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-cpi-release-1-day-vs-gold.md": {
-	id: "ethereum-price-impact-after-cpi-release-1-day-vs-gold.md";
-  slug: "ethereum-price-impact-after-cpi-release-1-day-vs-gold";
+"eth-price-impact-after-cpi-release-1-day-vs-gold.md": {
+	id: "eth-price-impact-after-cpi-release-1-day-vs-gold.md";
+  slug: "eth-price-impact-after-cpi-release-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-cpi-release-1-day-vs-sp500.md": {
-	id: "ethereum-price-impact-after-cpi-release-1-day-vs-sp500.md";
-  slug: "ethereum-price-impact-after-cpi-release-1-day-vs-sp500";
+"eth-price-impact-after-cpi-release-1-day-vs-sp500.md": {
+	id: "eth-price-impact-after-cpi-release-1-day-vs-sp500.md";
+  slug: "eth-price-impact-after-cpi-release-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-cpi-release-1-day.md": {
-	id: "ethereum-price-impact-after-cpi-release-1-day.md";
-  slug: "ethereum-price-impact-after-cpi-release-1-day";
+"eth-price-impact-after-cpi-release-1-day.md": {
+	id: "eth-price-impact-after-cpi-release-1-day.md";
+  slug: "eth-price-impact-after-cpi-release-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-cpi-release-7-day-vs-gold.md": {
-	id: "ethereum-price-impact-after-cpi-release-7-day-vs-gold.md";
-  slug: "ethereum-price-impact-after-cpi-release-7-day-vs-gold";
+"eth-price-impact-after-cpi-release-7-day-vs-gold.md": {
+	id: "eth-price-impact-after-cpi-release-7-day-vs-gold.md";
+  slug: "eth-price-impact-after-cpi-release-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-cpi-release-7-day-vs-sp500.md": {
-	id: "ethereum-price-impact-after-cpi-release-7-day-vs-sp500.md";
-  slug: "ethereum-price-impact-after-cpi-release-7-day-vs-sp500";
+"eth-price-impact-after-cpi-release-7-day-vs-sp500.md": {
+	id: "eth-price-impact-after-cpi-release-7-day-vs-sp500.md";
+  slug: "eth-price-impact-after-cpi-release-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-cpi-release-7-day.md": {
-	id: "ethereum-price-impact-after-cpi-release-7-day.md";
-  slug: "ethereum-price-impact-after-cpi-release-7-day";
+"eth-price-impact-after-cpi-release-7-day.md": {
+	id: "eth-price-impact-after-cpi-release-7-day.md";
+  slug: "eth-price-impact-after-cpi-release-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-fed-rate-cut-1-day-vs-gold.md": {
-	id: "ethereum-price-impact-after-fed-rate-cut-1-day-vs-gold.md";
-  slug: "ethereum-price-impact-after-fed-rate-cut-1-day-vs-gold";
+"eth-price-impact-after-fed-rate-cut-1-day-vs-gold.md": {
+	id: "eth-price-impact-after-fed-rate-cut-1-day-vs-gold.md";
+  slug: "eth-price-impact-after-fed-rate-cut-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-fed-rate-cut-1-day-vs-sp500.md": {
-	id: "ethereum-price-impact-after-fed-rate-cut-1-day-vs-sp500.md";
-  slug: "ethereum-price-impact-after-fed-rate-cut-1-day-vs-sp500";
+"eth-price-impact-after-fed-rate-cut-1-day-vs-sp500.md": {
+	id: "eth-price-impact-after-fed-rate-cut-1-day-vs-sp500.md";
+  slug: "eth-price-impact-after-fed-rate-cut-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-fed-rate-cut-1-day.md": {
-	id: "ethereum-price-impact-after-fed-rate-cut-1-day.md";
-  slug: "ethereum-price-impact-after-fed-rate-cut-1-day";
+"eth-price-impact-after-fed-rate-cut-1-day.md": {
+	id: "eth-price-impact-after-fed-rate-cut-1-day.md";
+  slug: "eth-price-impact-after-fed-rate-cut-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-fed-rate-cut-7-day-vs-gold.md": {
-	id: "ethereum-price-impact-after-fed-rate-cut-7-day-vs-gold.md";
-  slug: "ethereum-price-impact-after-fed-rate-cut-7-day-vs-gold";
+"eth-price-impact-after-fed-rate-cut-7-day-vs-gold.md": {
+	id: "eth-price-impact-after-fed-rate-cut-7-day-vs-gold.md";
+  slug: "eth-price-impact-after-fed-rate-cut-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-fed-rate-cut-7-day-vs-sp500.md": {
-	id: "ethereum-price-impact-after-fed-rate-cut-7-day-vs-sp500.md";
-  slug: "ethereum-price-impact-after-fed-rate-cut-7-day-vs-sp500";
+"eth-price-impact-after-fed-rate-cut-7-day-vs-sp500.md": {
+	id: "eth-price-impact-after-fed-rate-cut-7-day-vs-sp500.md";
+  slug: "eth-price-impact-after-fed-rate-cut-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-fed-rate-cut-7-day.md": {
-	id: "ethereum-price-impact-after-fed-rate-cut-7-day.md";
-  slug: "ethereum-price-impact-after-fed-rate-cut-7-day";
+"eth-price-impact-after-fed-rate-cut-7-day.md": {
+	id: "eth-price-impact-after-fed-rate-cut-7-day.md";
+  slug: "eth-price-impact-after-fed-rate-cut-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-gdp-report-1-day-vs-gold.md": {
-	id: "ethereum-price-impact-after-gdp-report-1-day-vs-gold.md";
-  slug: "ethereum-price-impact-after-gdp-report-1-day-vs-gold";
+"eth-price-impact-after-gdp-report-1-day-vs-gold.md": {
+	id: "eth-price-impact-after-gdp-report-1-day-vs-gold.md";
+  slug: "eth-price-impact-after-gdp-report-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-gdp-report-1-day-vs-sp500.md": {
-	id: "ethereum-price-impact-after-gdp-report-1-day-vs-sp500.md";
-  slug: "ethereum-price-impact-after-gdp-report-1-day-vs-sp500";
+"eth-price-impact-after-gdp-report-1-day-vs-sp500.md": {
+	id: "eth-price-impact-after-gdp-report-1-day-vs-sp500.md";
+  slug: "eth-price-impact-after-gdp-report-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-gdp-report-1-day.md": {
-	id: "ethereum-price-impact-after-gdp-report-1-day.md";
-  slug: "ethereum-price-impact-after-gdp-report-1-day";
+"eth-price-impact-after-gdp-report-1-day.md": {
+	id: "eth-price-impact-after-gdp-report-1-day.md";
+  slug: "eth-price-impact-after-gdp-report-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-gdp-report-7-day-vs-gold.md": {
-	id: "ethereum-price-impact-after-gdp-report-7-day-vs-gold.md";
-  slug: "ethereum-price-impact-after-gdp-report-7-day-vs-gold";
+"eth-price-impact-after-gdp-report-7-day-vs-gold.md": {
+	id: "eth-price-impact-after-gdp-report-7-day-vs-gold.md";
+  slug: "eth-price-impact-after-gdp-report-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-gdp-report-7-day-vs-sp500.md": {
-	id: "ethereum-price-impact-after-gdp-report-7-day-vs-sp500.md";
-  slug: "ethereum-price-impact-after-gdp-report-7-day-vs-sp500";
+"eth-price-impact-after-gdp-report-7-day-vs-sp500.md": {
+	id: "eth-price-impact-after-gdp-report-7-day-vs-sp500.md";
+  slug: "eth-price-impact-after-gdp-report-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-gdp-report-7-day.md": {
-	id: "ethereum-price-impact-after-gdp-report-7-day.md";
-  slug: "ethereum-price-impact-after-gdp-report-7-day";
+"eth-price-impact-after-gdp-report-7-day.md": {
+	id: "eth-price-impact-after-gdp-report-7-day.md";
+  slug: "eth-price-impact-after-gdp-report-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-inflation-rate-1-day-vs-gold.md": {
-	id: "ethereum-price-impact-after-inflation-rate-1-day-vs-gold.md";
-  slug: "ethereum-price-impact-after-inflation-rate-1-day-vs-gold";
+"eth-price-impact-after-inflation-rate-1-day-vs-gold.md": {
+	id: "eth-price-impact-after-inflation-rate-1-day-vs-gold.md";
+  slug: "eth-price-impact-after-inflation-rate-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-inflation-rate-1-day-vs-sp500.md": {
-	id: "ethereum-price-impact-after-inflation-rate-1-day-vs-sp500.md";
-  slug: "ethereum-price-impact-after-inflation-rate-1-day-vs-sp500";
+"eth-price-impact-after-inflation-rate-1-day-vs-sp500.md": {
+	id: "eth-price-impact-after-inflation-rate-1-day-vs-sp500.md";
+  slug: "eth-price-impact-after-inflation-rate-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-inflation-rate-1-day.md": {
-	id: "ethereum-price-impact-after-inflation-rate-1-day.md";
-  slug: "ethereum-price-impact-after-inflation-rate-1-day";
+"eth-price-impact-after-inflation-rate-1-day.md": {
+	id: "eth-price-impact-after-inflation-rate-1-day.md";
+  slug: "eth-price-impact-after-inflation-rate-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-inflation-rate-7-day-vs-gold.md": {
-	id: "ethereum-price-impact-after-inflation-rate-7-day-vs-gold.md";
-  slug: "ethereum-price-impact-after-inflation-rate-7-day-vs-gold";
+"eth-price-impact-after-inflation-rate-7-day-vs-gold.md": {
+	id: "eth-price-impact-after-inflation-rate-7-day-vs-gold.md";
+  slug: "eth-price-impact-after-inflation-rate-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-inflation-rate-7-day-vs-sp500.md": {
-	id: "ethereum-price-impact-after-inflation-rate-7-day-vs-sp500.md";
-  slug: "ethereum-price-impact-after-inflation-rate-7-day-vs-sp500";
+"eth-price-impact-after-inflation-rate-7-day-vs-sp500.md": {
+	id: "eth-price-impact-after-inflation-rate-7-day-vs-sp500.md";
+  slug: "eth-price-impact-after-inflation-rate-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-inflation-rate-7-day.md": {
-	id: "ethereum-price-impact-after-inflation-rate-7-day.md";
-  slug: "ethereum-price-impact-after-inflation-rate-7-day";
+"eth-price-impact-after-inflation-rate-7-day.md": {
+	id: "eth-price-impact-after-inflation-rate-7-day.md";
+  slug: "eth-price-impact-after-inflation-rate-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-nfp-data-1-day-vs-gold.md": {
-	id: "ethereum-price-impact-after-nfp-data-1-day-vs-gold.md";
-  slug: "ethereum-price-impact-after-nfp-data-1-day-vs-gold";
+"eth-price-impact-after-nfp-data-1-day-vs-gold.md": {
+	id: "eth-price-impact-after-nfp-data-1-day-vs-gold.md";
+  slug: "eth-price-impact-after-nfp-data-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-nfp-data-1-day-vs-sp500.md": {
-	id: "ethereum-price-impact-after-nfp-data-1-day-vs-sp500.md";
-  slug: "ethereum-price-impact-after-nfp-data-1-day-vs-sp500";
+"eth-price-impact-after-nfp-data-1-day-vs-sp500.md": {
+	id: "eth-price-impact-after-nfp-data-1-day-vs-sp500.md";
+  slug: "eth-price-impact-after-nfp-data-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-nfp-data-1-day.md": {
-	id: "ethereum-price-impact-after-nfp-data-1-day.md";
-  slug: "ethereum-price-impact-after-nfp-data-1-day";
+"eth-price-impact-after-nfp-data-1-day.md": {
+	id: "eth-price-impact-after-nfp-data-1-day.md";
+  slug: "eth-price-impact-after-nfp-data-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-nfp-data-7-day-vs-gold.md": {
-	id: "ethereum-price-impact-after-nfp-data-7-day-vs-gold.md";
-  slug: "ethereum-price-impact-after-nfp-data-7-day-vs-gold";
+"eth-price-impact-after-nfp-data-7-day-vs-gold.md": {
+	id: "eth-price-impact-after-nfp-data-7-day-vs-gold.md";
+  slug: "eth-price-impact-after-nfp-data-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-nfp-data-7-day-vs-sp500.md": {
-	id: "ethereum-price-impact-after-nfp-data-7-day-vs-sp500.md";
-  slug: "ethereum-price-impact-after-nfp-data-7-day-vs-sp500";
+"eth-price-impact-after-nfp-data-7-day-vs-sp500.md": {
+	id: "eth-price-impact-after-nfp-data-7-day-vs-sp500.md";
+  slug: "eth-price-impact-after-nfp-data-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-price-impact-after-nfp-data-7-day.md": {
-	id: "ethereum-price-impact-after-nfp-data-7-day.md";
-  slug: "ethereum-price-impact-after-nfp-data-7-day";
+"eth-price-impact-after-nfp-data-7-day.md": {
+	id: "eth-price-impact-after-nfp-data-7-day.md";
+  slug: "eth-price-impact-after-nfp-data-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-cpi-release-1-day-vs-gold.md": {
-	id: "ethereum-volatility-after-cpi-release-1-day-vs-gold.md";
-  slug: "ethereum-volatility-after-cpi-release-1-day-vs-gold";
+"eth-volatility-after-cpi-release-1-day-vs-gold.md": {
+	id: "eth-volatility-after-cpi-release-1-day-vs-gold.md";
+  slug: "eth-volatility-after-cpi-release-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-cpi-release-1-day-vs-sp500.md": {
-	id: "ethereum-volatility-after-cpi-release-1-day-vs-sp500.md";
-  slug: "ethereum-volatility-after-cpi-release-1-day-vs-sp500";
+"eth-volatility-after-cpi-release-1-day-vs-sp500.md": {
+	id: "eth-volatility-after-cpi-release-1-day-vs-sp500.md";
+  slug: "eth-volatility-after-cpi-release-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-cpi-release-1-day.md": {
-	id: "ethereum-volatility-after-cpi-release-1-day.md";
-  slug: "ethereum-volatility-after-cpi-release-1-day";
+"eth-volatility-after-cpi-release-1-day.md": {
+	id: "eth-volatility-after-cpi-release-1-day.md";
+  slug: "eth-volatility-after-cpi-release-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-cpi-release-7-day-vs-gold.md": {
-	id: "ethereum-volatility-after-cpi-release-7-day-vs-gold.md";
-  slug: "ethereum-volatility-after-cpi-release-7-day-vs-gold";
+"eth-volatility-after-cpi-release-7-day-vs-gold.md": {
+	id: "eth-volatility-after-cpi-release-7-day-vs-gold.md";
+  slug: "eth-volatility-after-cpi-release-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-cpi-release-7-day-vs-sp500.md": {
-	id: "ethereum-volatility-after-cpi-release-7-day-vs-sp500.md";
-  slug: "ethereum-volatility-after-cpi-release-7-day-vs-sp500";
+"eth-volatility-after-cpi-release-7-day-vs-sp500.md": {
+	id: "eth-volatility-after-cpi-release-7-day-vs-sp500.md";
+  slug: "eth-volatility-after-cpi-release-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-cpi-release-7-day.md": {
-	id: "ethereum-volatility-after-cpi-release-7-day.md";
-  slug: "ethereum-volatility-after-cpi-release-7-day";
+"eth-volatility-after-cpi-release-7-day.md": {
+	id: "eth-volatility-after-cpi-release-7-day.md";
+  slug: "eth-volatility-after-cpi-release-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-fed-rate-cut-1-day-vs-gold.md": {
-	id: "ethereum-volatility-after-fed-rate-cut-1-day-vs-gold.md";
-  slug: "ethereum-volatility-after-fed-rate-cut-1-day-vs-gold";
+"eth-volatility-after-fed-rate-cut-1-day-vs-gold.md": {
+	id: "eth-volatility-after-fed-rate-cut-1-day-vs-gold.md";
+  slug: "eth-volatility-after-fed-rate-cut-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-fed-rate-cut-1-day-vs-sp500.md": {
-	id: "ethereum-volatility-after-fed-rate-cut-1-day-vs-sp500.md";
-  slug: "ethereum-volatility-after-fed-rate-cut-1-day-vs-sp500";
+"eth-volatility-after-fed-rate-cut-1-day-vs-sp500.md": {
+	id: "eth-volatility-after-fed-rate-cut-1-day-vs-sp500.md";
+  slug: "eth-volatility-after-fed-rate-cut-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-fed-rate-cut-1-day.md": {
-	id: "ethereum-volatility-after-fed-rate-cut-1-day.md";
-  slug: "ethereum-volatility-after-fed-rate-cut-1-day";
+"eth-volatility-after-fed-rate-cut-1-day.md": {
+	id: "eth-volatility-after-fed-rate-cut-1-day.md";
+  slug: "eth-volatility-after-fed-rate-cut-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-fed-rate-cut-7-day-vs-gold.md": {
-	id: "ethereum-volatility-after-fed-rate-cut-7-day-vs-gold.md";
-  slug: "ethereum-volatility-after-fed-rate-cut-7-day-vs-gold";
+"eth-volatility-after-fed-rate-cut-7-day-vs-gold.md": {
+	id: "eth-volatility-after-fed-rate-cut-7-day-vs-gold.md";
+  slug: "eth-volatility-after-fed-rate-cut-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-fed-rate-cut-7-day-vs-sp500.md": {
-	id: "ethereum-volatility-after-fed-rate-cut-7-day-vs-sp500.md";
-  slug: "ethereum-volatility-after-fed-rate-cut-7-day-vs-sp500";
+"eth-volatility-after-fed-rate-cut-7-day-vs-sp500.md": {
+	id: "eth-volatility-after-fed-rate-cut-7-day-vs-sp500.md";
+  slug: "eth-volatility-after-fed-rate-cut-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-fed-rate-cut-7-day.md": {
-	id: "ethereum-volatility-after-fed-rate-cut-7-day.md";
-  slug: "ethereum-volatility-after-fed-rate-cut-7-day";
+"eth-volatility-after-fed-rate-cut-7-day.md": {
+	id: "eth-volatility-after-fed-rate-cut-7-day.md";
+  slug: "eth-volatility-after-fed-rate-cut-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-gdp-report-1-day-vs-gold.md": {
-	id: "ethereum-volatility-after-gdp-report-1-day-vs-gold.md";
-  slug: "ethereum-volatility-after-gdp-report-1-day-vs-gold";
+"eth-volatility-after-gdp-report-1-day-vs-gold.md": {
+	id: "eth-volatility-after-gdp-report-1-day-vs-gold.md";
+  slug: "eth-volatility-after-gdp-report-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-gdp-report-1-day-vs-sp500.md": {
-	id: "ethereum-volatility-after-gdp-report-1-day-vs-sp500.md";
-  slug: "ethereum-volatility-after-gdp-report-1-day-vs-sp500";
+"eth-volatility-after-gdp-report-1-day-vs-sp500.md": {
+	id: "eth-volatility-after-gdp-report-1-day-vs-sp500.md";
+  slug: "eth-volatility-after-gdp-report-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-gdp-report-1-day.md": {
-	id: "ethereum-volatility-after-gdp-report-1-day.md";
-  slug: "ethereum-volatility-after-gdp-report-1-day";
+"eth-volatility-after-gdp-report-1-day.md": {
+	id: "eth-volatility-after-gdp-report-1-day.md";
+  slug: "eth-volatility-after-gdp-report-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-gdp-report-7-day-vs-gold.md": {
-	id: "ethereum-volatility-after-gdp-report-7-day-vs-gold.md";
-  slug: "ethereum-volatility-after-gdp-report-7-day-vs-gold";
+"eth-volatility-after-gdp-report-7-day-vs-gold.md": {
+	id: "eth-volatility-after-gdp-report-7-day-vs-gold.md";
+  slug: "eth-volatility-after-gdp-report-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-gdp-report-7-day-vs-sp500.md": {
-	id: "ethereum-volatility-after-gdp-report-7-day-vs-sp500.md";
-  slug: "ethereum-volatility-after-gdp-report-7-day-vs-sp500";
+"eth-volatility-after-gdp-report-7-day-vs-sp500.md": {
+	id: "eth-volatility-after-gdp-report-7-day-vs-sp500.md";
+  slug: "eth-volatility-after-gdp-report-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-gdp-report-7-day.md": {
-	id: "ethereum-volatility-after-gdp-report-7-day.md";
-  slug: "ethereum-volatility-after-gdp-report-7-day";
+"eth-volatility-after-gdp-report-7-day.md": {
+	id: "eth-volatility-after-gdp-report-7-day.md";
+  slug: "eth-volatility-after-gdp-report-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-inflation-rate-1-day-vs-gold.md": {
-	id: "ethereum-volatility-after-inflation-rate-1-day-vs-gold.md";
-  slug: "ethereum-volatility-after-inflation-rate-1-day-vs-gold";
+"eth-volatility-after-inflation-rate-1-day-vs-gold.md": {
+	id: "eth-volatility-after-inflation-rate-1-day-vs-gold.md";
+  slug: "eth-volatility-after-inflation-rate-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-inflation-rate-1-day-vs-sp500.md": {
-	id: "ethereum-volatility-after-inflation-rate-1-day-vs-sp500.md";
-  slug: "ethereum-volatility-after-inflation-rate-1-day-vs-sp500";
+"eth-volatility-after-inflation-rate-1-day-vs-sp500.md": {
+	id: "eth-volatility-after-inflation-rate-1-day-vs-sp500.md";
+  slug: "eth-volatility-after-inflation-rate-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-inflation-rate-1-day.md": {
-	id: "ethereum-volatility-after-inflation-rate-1-day.md";
-  slug: "ethereum-volatility-after-inflation-rate-1-day";
+"eth-volatility-after-inflation-rate-1-day.md": {
+	id: "eth-volatility-after-inflation-rate-1-day.md";
+  slug: "eth-volatility-after-inflation-rate-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-inflation-rate-7-day-vs-gold.md": {
-	id: "ethereum-volatility-after-inflation-rate-7-day-vs-gold.md";
-  slug: "ethereum-volatility-after-inflation-rate-7-day-vs-gold";
+"eth-volatility-after-inflation-rate-7-day-vs-gold.md": {
+	id: "eth-volatility-after-inflation-rate-7-day-vs-gold.md";
+  slug: "eth-volatility-after-inflation-rate-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-inflation-rate-7-day-vs-sp500.md": {
-	id: "ethereum-volatility-after-inflation-rate-7-day-vs-sp500.md";
-  slug: "ethereum-volatility-after-inflation-rate-7-day-vs-sp500";
+"eth-volatility-after-inflation-rate-7-day-vs-sp500.md": {
+	id: "eth-volatility-after-inflation-rate-7-day-vs-sp500.md";
+  slug: "eth-volatility-after-inflation-rate-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-inflation-rate-7-day.md": {
-	id: "ethereum-volatility-after-inflation-rate-7-day.md";
-  slug: "ethereum-volatility-after-inflation-rate-7-day";
+"eth-volatility-after-inflation-rate-7-day.md": {
+	id: "eth-volatility-after-inflation-rate-7-day.md";
+  slug: "eth-volatility-after-inflation-rate-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-nfp-data-1-day-vs-gold.md": {
-	id: "ethereum-volatility-after-nfp-data-1-day-vs-gold.md";
-  slug: "ethereum-volatility-after-nfp-data-1-day-vs-gold";
+"eth-volatility-after-nfp-data-1-day-vs-gold.md": {
+	id: "eth-volatility-after-nfp-data-1-day-vs-gold.md";
+  slug: "eth-volatility-after-nfp-data-1-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-nfp-data-1-day-vs-sp500.md": {
-	id: "ethereum-volatility-after-nfp-data-1-day-vs-sp500.md";
-  slug: "ethereum-volatility-after-nfp-data-1-day-vs-sp500";
+"eth-volatility-after-nfp-data-1-day-vs-sp500.md": {
+	id: "eth-volatility-after-nfp-data-1-day-vs-sp500.md";
+  slug: "eth-volatility-after-nfp-data-1-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-nfp-data-1-day.md": {
-	id: "ethereum-volatility-after-nfp-data-1-day.md";
-  slug: "ethereum-volatility-after-nfp-data-1-day";
+"eth-volatility-after-nfp-data-1-day.md": {
+	id: "eth-volatility-after-nfp-data-1-day.md";
+  slug: "eth-volatility-after-nfp-data-1-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-nfp-data-7-day-vs-gold.md": {
-	id: "ethereum-volatility-after-nfp-data-7-day-vs-gold.md";
-  slug: "ethereum-volatility-after-nfp-data-7-day-vs-gold";
+"eth-volatility-after-nfp-data-7-day-vs-gold.md": {
+	id: "eth-volatility-after-nfp-data-7-day-vs-gold.md";
+  slug: "eth-volatility-after-nfp-data-7-day-vs-gold";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-nfp-data-7-day-vs-sp500.md": {
-	id: "ethereum-volatility-after-nfp-data-7-day-vs-sp500.md";
-  slug: "ethereum-volatility-after-nfp-data-7-day-vs-sp500";
+"eth-volatility-after-nfp-data-7-day-vs-sp500.md": {
+	id: "eth-volatility-after-nfp-data-7-day-vs-sp500.md";
+  slug: "eth-volatility-after-nfp-data-7-day-vs-sp500";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ethereum-volatility-after-nfp-data-7-day.md": {
-	id: "ethereum-volatility-after-nfp-data-7-day.md";
-  slug: "ethereum-volatility-after-nfp-data-7-day";
+"eth-volatility-after-nfp-data-7-day.md": {
+	id: "eth-volatility-after-nfp-data-7-day.md";
+  slug: "eth-volatility-after-nfp-data-7-day";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
