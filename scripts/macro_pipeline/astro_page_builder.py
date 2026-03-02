@@ -248,11 +248,10 @@ This page will be automatically updated when sufficient data is collected.
     platforms = []
     
     if asset in ["BTC", "ETH", "SOL"]:
-        platforms = ["BINANCE"]
-    elif asset in ["GOLD", "OIL", "TLT"]:
+        platforms = ["BINANCE"]  # Crypto only
+    else:
+        # Stocks, gold, oil - show both IBKR and FUTU
         platforms = ["IB", "FUTU"]  # IB on top, FUTU below
-    else:  # Stocks like SPY, QQQ, NVDA, TSLA
-        platforms = ["FUTU"]  # For HK users, FUTu is primary
     
     # Build CTA HTML
     cta_buttons = ""
