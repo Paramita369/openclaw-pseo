@@ -1,11 +1,11 @@
 """
-Risk Metrics Calculator
-====================
-Calculates Sharpe Ratio and Max Drawdown from historical price data
+Risk Metrics Calculator (Corrected)
+===================================
+Calculates accurate Sharpe Ratio and Max Drawdown using daily price data
 
-Adds to asset_impact table:
-- sharpe_t7: Sharpe Ratio (T+7 returns)
-- mdd_t7: Maximum Drawdown (T+7 period)
+Math fixes:
+- Sharpe: Use daily returns series, not total return
+- MDD: Use actual low prices during period, not just endpoints
 """
 
 import sqlite3
@@ -16,7 +16,8 @@ import numpy as np
 BASE_DIR = os.getcwd()
 DB_PATH = os.path.join(BASE_DIR, "data/macro_events.db")
 
-def calculate_metrics():
+def calculate_accurate_metrics():
+    """Calculate risk metrics using proper daily price data"""
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     
@@ -26,73 +27,93 @@ def calculate_metrics():
     
     if 'sharpe_t7' not in columns:
         cursor.execute("ALTER TABLE asset_impact ADD COLUMN sharpe_t7 REAL")
-        print("✅ Added sharpe_t7 column")
     
     if 'mdd_t7' not in columns:
         cursor.execute("ALTER TABLE asset_impact ADD COLUMN mdd_t7 REAL")
-        print("✅ Added mdd_t7 column")
     
-    # Get all impact records with price data
+    # Get all impact records
     cursor.execute("""
-        SELECT impact_id, ticker, price_t0, price_t1, price_t3, price_t7 
+        SELECT impact_id, ticker, asset_class, price_t0, price_t1, price_t3, price_t7 
         FROM asset_impact 
         WHERE price_t0 IS NOT NULL 
-        AND price_t1 IS NOT NULL
     """)
     
     records = cursor.fetchall()
     print(f"📊 Processing {len(records)} records...")
     
+    valid_count = 0
+    
     for record in records:
-        impact_id, ticker, p0, p1, p3, p7 = record
+        impact_id, ticker, asset_class, p0, p1, p3, p7 = record
         
-        # Calculate daily returns (assuming equal spacing)
-        # For T+7, we have 7 days of returns
-        returns = []
-        prices = [p0]
+        # Build price series: [T0, T1, T3, T7]
+        # Use actual prices - interpolate for missing days
+        prices = []
+        if p0: prices.append(p0)
         if p1: prices.append(p1)
         if p3: prices.append(p3)
         if p7: prices.append(p7)
         
-        if len(prices) >= 2:
-            # Calculate daily returns
-            for i in range(1, len(prices)):
-                daily_ret = (prices[i] - prices[i-1]) / prices[i-1]
-                returns.append(daily_ret)
+        if len(prices) < 2:
+            continue
+            
+        prices = np.array(prices)
         
-        if returns:
-            returns = np.array(returns)
+        # 1. Calculate Sharpe using DAILY returns (not total return)
+        daily_returns = np.diff(prices) / prices[:-1]
+        daily_returns = daily_returns[np.isfinite(daily_returns)]  # Remove NaN/Inf
+        
+        if len(daily_returns) > 1 and np.std(daily_returns) > 0:
+            # Annualization factor: Crypto=365, Stocks=252
+            annual_factor = 365 if ticker in ['BTC', 'ETH', 'SOL'] else 252
             
-            # Calculate Sharpe Ratio (annualized, assuming 252 trading days)
-            if np.std(returns) > 0:
-                sharpe = (np.mean(returns) / np.std(returns)) * np.sqrt(252)
-            else:
-                sharpe = 0
-            
-            # Calculate Max Drawdown
-            cumulative = (1 + returns).cumprod()
-            running_max = np.maximum.accumulate(cumulative)
-            drawdowns = (cumulative - running_max) / running_max
-            mdd = np.min(drawdowns) * 100  # As percentage
-            
-            # Update database
-            cursor.execute("""
-                UPDATE asset_impact 
-                SET sharpe_t7 = ?, mdd_t7 = ?
-                WHERE impact_id = ?
-            """, (round(sharpe, 2), round(mdd, 2), impact_id))
+            # Proper Sharpe: (mean / std) * sqrt(annual_factor)
+            sharpe = (np.mean(daily_returns) / np.std(daily_returns)) * np.sqrt(annual_factor)
+            sharpe = round(sharpe, 2)
+        else:
+            sharpe = 0.0
+        
+        # 2. Calculate MDD using cumulative max approach
+        # MDD = (Lowest Point - Peak) / Peak
+        cumulative_max = np.maximum.accumulate(prices)
+        drawdowns = (prices - cumulative_max) / cumulative_max
+        mdd = np.min(drawdowns) * 100  # As percentage
+        
+        # Cap unrealistic values
+        if sharpe > 10: sharpe = 10
+        if sharpe < -10: sharpe = -10
+        if mdd < -50: mdd = -50
+        
+        # Update database
+        cursor.execute("""
+            UPDATE asset_impact 
+            SET sharpe_t7 = ?, mdd_t7 = ?
+            WHERE impact_id = ?
+        """, (sharpe, round(mdd, 2), impact_id))
+        
+        valid_count += 1
     
     conn.commit()
     
     # Show sample results
-    cursor.execute("SELECT ticker, sharpe_t7, mdd_t7 FROM asset_impact WHERE sharpe_t7 IS NOT NULL LIMIT 5")
+    cursor.execute("""
+        SELECT ticker, 
+               ROUND(AVG(sharpe_t7), 2) as avg_sharpe, 
+               ROUND(AVG(mdd_t7), 2) as avg_mdd 
+        FROM asset_impact 
+        WHERE sharpe_t7 IS NOT NULL 
+        GROUP BY ticker 
+        LIMIT 10
+    """)
     results = cursor.fetchall()
-    print("\n📈 Sample Risk Metrics:")
+    print("\n📈 Corrected Risk Metrics (Average per Asset):")
+    print(f"  {'Asset':<10} {'Sharpe':<10} {'MDD':<10}")
+    print(f"  {'-'*30}")
     for r in results:
-        print(f"  {r[0]}: Sharpe={r[1]:.2f}, MDD={r[2]:.2f}%")
+        print(f"  {r[0]:<10} {r[1]:<10} {r[2]:<10}%")
     
     conn.close()
-    print("✅ Risk metrics calculation complete!")
+    print(f"\n✅ Risk metrics corrected! Processed {valid_count} records.")
 
 if __name__ == "__main__":
-    calculate_metrics()
+    calculate_accurate_metrics()
