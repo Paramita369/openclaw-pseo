@@ -38,6 +38,7 @@ const assetStats = Object.entries(assetGroups).map(([asset, items]) => {
     count: items.length,
     avgSharpe: Math.round(avgSharpe * 100) / 100,
     avgMdd: Math.round(avgMdd * 100) / 100,
+    latestDate: items[0]?.slug?.split('-').slice(-1)[0] || 'N/A',
     avgVol: Math.round(avgVol * 100) / 100,
   };
 }).sort((a, b) => b.avgSharpe - a.avgSharpe); // Sort by avg Sharpe (highest first)
@@ -67,6 +68,7 @@ const assetStats = Object.entries(assetGroups).map(([asset, items]) => {
             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Strategies</th>
             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Avg Sharpe</th>
             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Avg MDD</th>
+            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Latest Date</th>
             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Avg Volatility</th>
             <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Action</th>
           </tr>
@@ -93,6 +95,7 @@ const assetStats = Object.entries(assetGroups).map(([asset, items]) => {
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-red-600 font-medium">{stat.avgMdd}%</td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-600">{stat.latestDate}</td>
               <td class="px-6 py-4 whitespace-nowrap text-gray-600">{stat.avgVol && stat.avgVol !== 0 ? stat.avgVol + '%' : '-'}</td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <a href={`/tags/${stat.asset.toLowerCase()}`} class="text-indigo-600 hover:text-indigo-800 font-medium text-sm">
