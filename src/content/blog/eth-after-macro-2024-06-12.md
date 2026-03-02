@@ -13,14 +13,16 @@ metrics:
 
 # Historical Performance of ETH After Macro Events on 2024-06-12
 
-Welcome to the OpenClaw quantitative analysis report for **ETH** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
+Welcome to the QuantMacro quantitative analysis report for **ETH** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
 
 
 ## Historical Performance Data
 
-> ⏳ *Our models are currently gathering historical data for ETH during Macro events. Check back soon.*
+| Metric | Value |
+|--------|-------|| T+1 (24h) | -2.54% |
+| T+7 (1 Week) | -0.01% |
 
-This page will be automatically updated when sufficient data is collected.
+*Based on historical backtesting from our quant database.*
 
 
 ## Quantitative Analysis

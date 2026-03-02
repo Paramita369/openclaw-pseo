@@ -13,14 +13,16 @@ metrics:
 
 # Historical Performance of GOLD After Macro Events on 2024-04-05
 
-Welcome to the OpenClaw quantitative analysis report for **GOLD** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
+Welcome to the QuantMacro quantitative analysis report for **GOLD** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
 
 
 ## Historical Performance Data
 
-> ⏳ *Our models are currently gathering historical data for GOLD during Macro events. Check back soon.*
+| Metric | Value |
+|--------|-------|| T+1 (24h) | nan% |
+| T+7 (1 Week) | 1.31% |
 
-This page will be automatically updated when sufficient data is collected.
+*Based on historical backtesting from our quant database.*
 
 
 ## Quantitative Analysis

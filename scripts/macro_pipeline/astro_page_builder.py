@@ -220,12 +220,32 @@ Historically, based on **{data['sample_size']}** recorded events, **{asset}** sh
 """
         faq_answer = f"Based on our quant database of {data['sample_size']} events, {asset} has an average T+7 impact of {data['avg_t7']}%, indicating a {trend.replace('📈', 'positive').replace('📉', 'negative')} historical reaction."
     else:
-        data_section = f"""
+        # Show actual data from database
+        t1_val = row.get('impact_t1_pct')
+        t7_val = row.get('impact_t7_pct')
+        
+        if t1_val or t7_val:
+            data_lines = []
+            if t1_val:
+                data_lines.append(f"| T+1 (24h) | {t1_val}% |")
+            if t7_val:
+                data_lines.append(f"| T+7 (1 Week) | {t7_val}% |")
+            
+            data_section = f"""
 ## Historical Performance Data
 
-> ⏳ *Our models are currently gathering historical data for {asset} during {event} events. Check back soon.*
+| Metric | Value |
+|--------|-------|{chr(10).join(data_lines)}
 
-This page will be automatically updated when sufficient data is collected.
+*Based on historical backtesting from our quant database.*
+"""
+        else:
+            data_section = f"""
+## Historical Performance Data
+
+> ⏳ *Historical data for {asset} during {event} events is being compiled.*
+
+Check back soon for detailed backtesting results.
 """
         faq_answer = f"Historical data for {asset} following {event} is currently being compiled by our quantitative tracking system."
     
@@ -297,7 +317,7 @@ metrics:
 
 # {title}
 
-Welcome to the OpenClaw quantitative analysis report for **{asset}** reacting to **{event}**. We track historical price actions to provide data-driven trading insights.
+Welcome to the QuantMacro quantitative analysis report for **{asset}** reacting to **{event}**. We track historical price actions to provide data-driven trading insights.
 
 {data_section}
 
