@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
+// Load daily snapshot
+import dailySnapshot from '../public/daily_snapshot.json';
+
 // 1. Read all generated Markdown files
 const posts = await getCollection('blog');
 
@@ -13,14 +16,13 @@ posts.forEach(post => {
   if (!assetGroups[asset]) {
     assetGroups[asset] = [];
   }
-  // Max 6 per asset for homepage
   if (assetGroups[asset].length < 6) {
     assetGroups[asset].push(post);
   }
 });
 
-// 3. Sort assets
 const assets = Object.keys(assetGroups).sort();
+const markets = dailySnapshot.markets || {};
 ---
 
 <Layout title="QuantMacro Dashboard" description="Professional quantitative analysis for macro events">
@@ -39,9 +41,39 @@ const assets = Object.keys(assetGroups).sort();
                 <a href="/blog" class="bg-primary hover:bg-secondary text-dark-bg font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105">
                     Explore Analysis
                 </a>
-                <a href="#assets" class="border border-dark-border text-white hover:bg-dark-surface py-3 px-6 rounded-lg transition-all">
-                    Browse Assets
+                <a href="#markets" class="border border-dark-border text-white hover:bg-dark-surface py-3 px-6 rounded-lg transition-all">
+                    Live Markets
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Market Data -->
+    <section id="markets" class="bg-dark-surface border-b border-dark-border py-6">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold text-white font-heading">
+                    <span class="text-primary">●</span> Live Market Data
+                </h2>
+                <span class="text-gray-400 text-sm">
+                    {dailySnapshot.timestamp ? new Date(dailySnapshot.timestamp).toLocaleString() : 'Loading...'}
+                </span>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                {Object.entries(markets).map(([name, data]) => {
+                    const isPositive = data.change >= 0;
+                    return (
+                        <div class="bg-dark-bg border border-dark-border rounded-lg p-4 hover:border-primary/30 transition">
+                            <div class="text-gray-400 text-xs mb-1">{name}</div>
+                            <div class="text-xl font-bold text-white font-heading">
+                                ${typeof data.price === 'number' ? data.price.toLocaleString() : data.price}
+                            </div>
+                            <div class={`text-sm font-medium ${isPositive ? 'text-profit' : 'text-loss'}`}>
+                                {isPositive ? '↑' : '↓'} {data.change >= 0 ? '+' : ''}{data.change}%
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     </section>

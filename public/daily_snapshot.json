@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-03-02T17:38:33.203219",
+  "markets": {
+    "BTC": {
+      "price": 66446.45,
+      "change": 1.08,
+      "volume": 39653122048,
+      "high": 66972.8,
+      "low": 65574.89
+    },
+    "GOLD": {
+      "price": 5408.5,
+      "change": 0.0,
+      "volume": 86750,
+      "high": 5434.1,
+      "low": 5315.3
+    },
+    "SPY": {
+      "price": 685.99,
+      "change": -0.48,
+      "volume": 83105100,
+      "high": 686.86,
+      "low": 681.64
+    },
+    "QQQ": {
+      "price": 607.29,
+      "change": -0.32,
+      "volume": 68012000,
+      "high": 608.32,
+      "low": 602.19
+    },
+    "DXY": {
+      "price": 98.26,
+      "change": 0.0,
+      "volume": 0,
+      "high": 98.57,
+      "low": 97.77
+    },
+    "VIX": {
+      "price": 23.42,
+      "change": 17.93,
+      "volume": 0,
+      "high": 25.24,
+      "low": 23.35
+    },
+    "TNX": {
+      "price": 3.96,
+      "change": -1.37,
+      "volume": 0,
+      "high": 3.99,
+      "low": 3.96
+    }
+  },
+  "macro": {},
+  "events": {
+    "btc_halving": {
+      "estimate": "April 2028",
+      "days_remaining": "~730 days"
+    }
+  }
+}
