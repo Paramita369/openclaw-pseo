@@ -13,8 +13,8 @@ posts.forEach(post => {
   if (!assetGroups[asset]) {
     assetGroups[asset] = [];
   }
-  // Max 5 per asset for homepage
-  if (assetGroups[asset].length < 5) {
+  // Max 6 per asset for homepage
+  if (assetGroups[asset].length < 6) {
     assetGroups[asset].push(post);
   }
 });
@@ -23,40 +23,124 @@ posts.forEach(post => {
 const assets = Object.keys(assetGroups).sort();
 ---
 
-<Layout title="QuantMacro Dashboard" description="Quantitative backtesting data for cross-asset volatility post-macro events">
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <header class="mb-12 border-b border-gray-200 pb-8">
-            <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">QuantMacro Dashboard</h1>
-            <p class="mt-4 text-xl text-gray-500">
-                Quantitative backtesting data for cross-asset volatility post-macro events. Data driven trading insights.
+<Layout title="QuantMacro Dashboard" description="Professional quantitative analysis for macro events">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-dark-bg via-dark-surface to-dark-bg py-20">
+        <div class="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5"></div>
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <h1 class="text-5xl md:text-6xl font-bold text-white font-heading mb-4">
+                <span class="text-primary">Quant</span>Macro
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mb-8">
+                Professional quantitative analysis for macro events. 
+                Data-driven trading insights with historical backtesting.
             </p>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {assets.map(asset => (
-                <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
-                    <div class="bg-slate-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-slate-800">{asset} Markets</h2>
-                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Data</span>
-                    </div>
-                    <ul class="divide-y divide-gray-100 flex-grow">
-                        {assetGroups[asset].map(post => (
-                            <li>
-                                <a href={`/blog/${post.slug}`} class="block px-6 py-4 hover:bg-slate-50 transition-colors duration-150">
-                                    <span class="text-sm font-medium text-slate-700 hover:text-blue-600 line-clamp-2">
-                                        {post.data.title}
-                                    </span>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                    <div class="px-6 py-3 bg-gray-50 border-t">
-                        <a href={`/blog?asset=${asset.toLowerCase()}`} class="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                            View all {posts.filter(p => (p.data.tags?.[0] || '').toUpperCase() === asset).length} {asset} articles →
-                        </a>
-                    </div>
-                </div>
-            ))}
+            <div class="flex gap-4">
+                <a href="/blog" class="bg-primary hover:bg-secondary text-dark-bg font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105">
+                    Explore Analysis
+                </a>
+                <a href="#assets" class="border border-dark-border text-white hover:bg-dark-surface py-3 px-6 rounded-lg transition-all">
+                    Browse Assets
+                </a>
+            </div>
         </div>
-    </main>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="bg-dark-surface border-b border-dark-border py-6">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-primary font-heading">{posts.length}+</div>
+                    <div class="text-gray-400 text-sm">Analysis Articles</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-white font-heading">{assets.length}</div>
+                    <div class="text-gray-400 text-sm">Assets Tracked</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-profit font-heading">T+1</div>
+                    <div class="text-gray-400 text-sm">Win Rate Tracking</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-accent font-heading">24/7</div>
+                    <div class="text-gray-400 text-sm">Data Updates</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assets Grid -->
+    <section id="assets" class="py-16 bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-white font-heading mb-8">
+                <span class="text-primary">Browse</span> by Asset
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {assets.map(asset => {
+                    const colorClasses = {
+                        'BTC': 'from-orange-500 to-amber-600',
+                        'ETH': 'from-blue-500 to-indigo-600',
+                        'SOL': 'from-purple-500 to-pink-600',
+                        'GOLD': 'from-yellow-500 to-gold-600',
+                        'SPY': 'from-green-500 to-emerald-600',
+                        'DEFAULT': 'from-gray-500 to-slate-600'
+                    };
+                    const gradient = colorClasses[asset] || colorClasses['DEFAULT'];
+                    
+                    return (
+                        <a href={`/blog?asset=${asset.toLowerCase()}`} 
+                           class="group bg-dark-surface border border-dark-border rounded-xl overflow-hidden hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/10">
+                            <div class={`h-2 bg-gradient-to-r ${gradient}`}></div>
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-xl font-bold text-white font-heading group-hover:text-primary transition">
+                                        {asset}
+                                    </h3>
+                                    <span class="bg-dark-bg text-gray-400 text-xs px-2 py-1 rounded">
+                                        {posts.filter(p => (p.data.tags?.[0] || '').toUpperCase() === asset).length} articles
+                                    </span>
+                                </div>
+                                <ul class="space-y-2">
+                                    {assetGroups[asset].slice(0, 3).map(post => (
+                                        <li class="text-gray-400 text-sm truncate hover:text-primary transition cursor-pointer">
+                                            {post.data.title}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <div class="mt-4 text-primary text-sm font-medium group-hover:translate-x-1 transition flex items-center">
+                                    View all →
+                                </div>
+                            </div>
+                        </a>
+                    );
+                })}
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-primary/10 to-accent/10 border-t border-dark-border">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-white font-heading mb-4">
+                Start Trading Today
+            </h2>
+            <p class="text-gray-300 mb-8">
+                Get exclusive referral bonuses on major trading platforms.
+            </p>
+            <div class="flex justify-center gap-4 flex-wrap">
+                <a href="https://www.binance.com/referral/earn-together/refer2earn-usdc/claim?hl=zh-TC&ref=GRO_28502_NXG80" 
+                   target="_blank"
+                   class="bg-primary hover:bg-secondary text-dark-bg font-bold py-3 px-6 rounded-lg transition-all">
+                    Binance
+                </a>
+                <a href="https://invest.futuhk.com/invite-centre_share?lang=zh-hk&invite_code=MQHETN7N" 
+                   target="_blank"
+                   class="bg-accent hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-lg transition-all">
+                    Futu
+                </a>
+            </div>
+        </div>
+    </section>
 </Layout>
