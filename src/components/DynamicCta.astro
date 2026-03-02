@@ -1,0 +1,61 @@
+---
+// DynamicCta.astro - Dynamic referral links based on asset type
+const { asset } = Astro.props;
+
+// Asset type detection
+const cryptoAssets = ['BTC', 'ETH', 'SOL', 'DOGE', 'ETH'];
+const stockAssets = ['SPY', 'QQQ', 'NVDA', 'TSLA', 'AAPL', 'GOOGL'];
+const macroAssets = ['GOLD', 'DXY', 'US10Y', 'OIL', 'TLT'];
+
+let platform1 = { name: "Trading Platform", link: "#", color: "blue" };
+let platform2 = { name: "", link: "#", color: "" };
+
+if (cryptoAssets.includes(asset.toUpperCase())) {
+  platform1 = { name: "Binance", link: "https://www.binance.com/referral/earn-together/refer2earn-usdc/claim?hl=zh-TC&ref=GRO_28502_NXG80", color: "yellow" };
+  platform2 = { name: "", link: "", color: "" };
+} else {
+  // Stocks, gold, oil - show both IBKR and FUTU
+  platform1 = { name: "IBKR", link: "https://www.ibkr.com/referral/siohong248", color: "emerald" };
+  platform2 = { name: "Futu", link: "https://invest.futuhk.com/invite-centre_share?lang=zh-hk&invite_code=MQHETN7N", color: "purple" };
+}
+
+const getColorClasses = (color, isPrimary = true) => {
+  const colors = {
+    yellow: isPrimary ? "bg-yellow-500 hover:bg-yellow-600 text-slate-900" : "bg-yellow-50 text-yellow-800 border-yellow-200",
+    emerald: isPrimary ? "bg-emerald-600 hover:bg-emerald-700 text-white" : "bg-emerald-50 text-emerald-800 border-emerald-200",
+    purple: isPrimary ? "bg-purple-600 hover:bg-purple-700 text-white" : "bg-purple-50 text-purple-800 border-purple-200",
+    blue: isPrimary ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-blue-50 text-blue-800 border-blue-200",
+  };
+  return colors[color] || colors.blue;
+};
+---
+
+<div class="mt-8 mb-10 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg shadow-sm">
+  <h3 class="text-lg font-bold text-slate-900 mb-4">💡 Ready to Trade {asset}?</h3>
+  
+  {platform2.name ? (
+    <div class="space-y-3">
+      <p class="text-slate-700 mb-4">Choose your preferred trading platform:</p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href={platform1.link} target="_blank" rel="noopener noreferrer" 
+           class={`inline-block font-bold py-3 px-6 rounded-lg transition-colors text-center ${getColorClasses(platform1.color)}`}>
+          Open {platform1.name} →
+        </a>
+        <a href={platform2.link} target="_blank" rel="noopener noreferrer" 
+           class={`inline-block font-bold py-3 px-6 rounded-lg transition-colors text-center ${getColorClasses(platform2.color)}`}>
+          Open {platform2.name} →
+        </a>
+      </div>
+    </div>
+  ) : (
+    <div>
+      <p class="text-slate-700 mb-4">Trade {asset} with industry-lowest fees:</p>
+      <a href={platform1.link} target="_blank" rel="noopener noreferrer" 
+         class={`inline-block font-bold py-3 px-6 rounded-lg transition-colors ${getColorClasses(platform1.color)}`}>
+        Open {platform1.name} Account →
+      </a>
+    </div>
+  )}
+  
+  <p class="text-xs text-slate-500 mt-4">*Trading involves risk. This is for educational purposes only.</p>
+</div>
