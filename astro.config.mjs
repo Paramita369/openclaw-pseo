@@ -4,10 +4,7 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   site: 'https://quantmacro.vercel.app',
-  integrations: [
-    mdx(),
-    tailwind()
-  ],
+  integrations: [mdx(), tailwind()],
   markdown: {
     shikiConfig: {
       theme: 'github-dark'

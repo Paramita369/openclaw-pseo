@@ -25,7 +25,7 @@ const { Content } = await entry.render();
 const displayTitle = entry.data.title.replace(/Historical Correlation of |Price Impact after |Performance after /gi, '');
 ---
 
-<Layout title={displayTitle}>
+<Layout title={displayTitle} frontmatter={entry.data}>
   <main class="max-w-4xl mx-auto px-4 py-10">
     <nav class="mb-8">
       <a href="/" class="text-sm font-medium text-blue-600 hover:text-blue-800 font-mono">← Return to Matrix</a>

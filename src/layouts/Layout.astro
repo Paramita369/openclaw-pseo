@@ -1,6 +1,53 @@
 ---
 import Analytics from '@vercel/analytics/astro';
-const { title, description } = Astro.props;
+
+const { title, description, frontmatter } = Astro.props;
+
+const metaDesc = description || "Quantitative backtesting data for cross-asset volatility post-macro events. Data driven trading insights.";
+const siteUrl = "https://quantmacro.vercel.app";
+const currentUrl = Astro.url.href;
+
+// Dynamic JSON-LD for articles
+let schema = null;
+if (frontmatter) {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": title,
+    "description": metaDesc,
+    "author": {
+      "@type": "Organization",
+      "name": "QuantMacro",
+      "url": siteUrl
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "QuantMacro",
+      "logo": {
+        "@type": "ImageObject",
+        "url": siteUrl + "/favicon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": currentUrl
+    },
+    "datePublished": frontmatter.pubDate || new Date().toISOString().split('T')[0]
+  };
+} else {
+  // Website schema for homepage
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "QuantMacro",
+    "description": metaDesc,
+    "url": siteUrl,
+    "publisher": {
+      "@type": "Organization",
+      "name": "QuantMacro"
+    }
+  };
+}
 ---
 
 <!DOCTYPE html>
@@ -10,13 +57,16 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="kvvXjMnBnI-4oWLa66hB0XZP3q4t6go7Y37eaSm9g3Y" />
     <title>{title} | QuantMacro Analytics</title>
-    <meta name="description" content={description}>
+    <meta name="description" content={metaDesc}>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     
     <!-- Google Fonts: Poppins + Open Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 </head>
 
 <body class="bg-dark-bg text-dark-text font-body antialiased">
@@ -29,48 +79,16 @@ const { title, description } = Astro.props;
             </div>
         </nav>
     </header>
-    
-    <main class="max-w-7xl mx-auto px-4 py-8">
-        <slot />
-    </main>
-    
+
+    <slot />
+
     <footer class="bg-dark-surface border-t border-dark-border py-8 mt-16">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2026 QuantMacro Analytics. Data-driven trading insights.</p>
-            <p class="text-gray-500 text-sm mt-2">Data updated daily. Trading involves risk.</p>
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>&copy; 2026 QuantMacro Analytics. Data-driven trading insights.</p>
+            <p class="text-sm mt-2">Data updated daily. Trading involves risk.</p>
         </div>
     </footer>
-    
+
     <Analytics />
 </body>
 </html>
-
-<style is:global>
-    /* Custom font classes */
-    .font-heading {
-        font-family: 'Poppins', sans-serif;
-    }
-    .font-body {
-        font-family: 'Open Sans', sans-serif;
-    }
-    
-    /* Smooth scrolling */
-    html {
-        scroll-behavior: smooth;
-    }
-    
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-        width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #0F172A;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #334155;
-        border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #475569;
-    }
-</style>

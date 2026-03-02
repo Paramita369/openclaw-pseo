@@ -151,6 +151,20 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"blog": {
+"btc-after-geopolitics.md": {
+	id: "btc-after-geopolitics.md";
+  slug: "btc-after-geopolitics";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-macro.md": {
+	id: "btc-after-macro.md";
+  slug: "btc-after-macro";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-correlation-after-cpi-release-1-day-vs-gold.md": {
 	id: "btc-correlation-after-cpi-release-1-day-vs-gold.md";
   slug: "btc-correlation-after-cpi-release-1-day-vs-gold";
@@ -987,6 +1001,20 @@ declare module 'astro:content' {
 "btc-volatility-after-nfp-data-7-day.md": {
 	id: "btc-volatility-after-nfp-data-7-day.md";
   slug: "btc-volatility-after-nfp-data-7-day";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-geopolitics.md": {
+	id: "eth-after-geopolitics.md";
+  slug: "eth-after-geopolitics";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-macro.md": {
+	id: "eth-after-macro.md";
+  slug: "eth-after-macro";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

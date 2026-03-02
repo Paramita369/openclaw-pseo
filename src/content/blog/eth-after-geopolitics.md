@@ -5,9 +5,9 @@ pubDate: "2026-03-02"
 slug: "eth-after-geopolitics"
 tags: ["eth", "macro", "backtest", "general"]
 metrics:
-  sharpe_t7: nan
-  mdd_t7: nan
-  volatility: nan
+  sharpe_t7: 0
+  mdd_t7: 0
+  volatility: 0
 
 ---
 
