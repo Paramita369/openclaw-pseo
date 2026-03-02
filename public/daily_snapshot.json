@@ -1,17 +1,17 @@
 {
-  "timestamp": "2026-03-02T17:38:33.203219",
+  "timestamp": "2026-03-02T18:01:59.455809",
   "markets": {
     "BTC": {
-      "price": 66446.45,
-      "change": 1.08,
-      "volume": 39653122048,
+      "price": 66237.29,
+      "change": 0.76,
+      "volume": 40154820608,
       "high": 66972.8,
       "low": 65574.89
     },
     "GOLD": {
-      "price": 5408.5,
+      "price": 5405.9,
       "change": 0.0,
-      "volume": 86750,
+      "volume": 89058,
       "high": 5434.1,
       "low": 5315.3
     },
@@ -37,8 +37,8 @@
       "low": 97.77
     },
     "VIX": {
-      "price": 23.42,
-      "change": 17.93,
+      "price": 23.58,
+      "change": 18.73,
       "volume": 0,
       "high": 25.24,
       "low": 23.35
