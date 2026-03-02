@@ -24,11 +24,15 @@ jobs:
           pip install pandas yfinance requests google-generativeai
           
       - name: Run historical data backfill
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
         run: |
           cd scripts/macro_pipeline
           python history_backfill.py || echo "No new data"
           
       - name: Generate Astro pages
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
         run: |
           cd scripts/macro_pipeline
           python astro_page_builder.py
