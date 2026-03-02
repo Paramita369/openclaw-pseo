@@ -21,24 +21,22 @@ jobs:
           
       - name: Install dependencies
         run: |
-          pip install pandas sqlite3 requests yfinance
+          pip install pandas yfinance requests google-generativeai
           
-      - name: Update market data
+      - name: Run historical data backfill
         run: |
-          python scripts/macro_pipeline/daily_macro_snapshot.py
+          cd scripts/macro_pipeline
+          python history_backfill.py || echo "No new data"
           
-      - name: Update historical data
+      - name: Generate Astro pages
         run: |
-          python scripts/macro_pipeline/history_backfill.py || echo "No new data"
-          
-      - name: Regenerate articles
-        run: |
-          python scripts/macro_pipeline/astro_page_builder.py
+          cd scripts/macro_pipeline
+          python astro_page_builder.py
           
       - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add src/content/blog/ public/
-          git commit -m "chore: daily data update $(date +%Y-%m-%d)" || echo "No changes"
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "bot: daily data update $(date +%Y-%m-%d)"
           git push
