@@ -4,6 +4,17 @@ import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog');
 
+// Get ALL assets for the tabs (not just filtered ones)
+const allAssets = {};
+posts.forEach(post => {
+  const asset = (post.data.tags?.[0] || 'OTHER').toUpperCase();
+  if (!allAssets[asset]) {
+    allAssets[asset] = 0;
+  }
+  allAssets[asset]++;
+});
+const assetList = Object.keys(allAssets).sort();
+
 // Get asset query param
 const url = new URL(Astro.request.url);
 const assetFilter = url.searchParams.get('asset')?.toUpperCase();
@@ -12,18 +23,6 @@ const assetFilter = url.searchParams.get('asset')?.toUpperCase();
 const filteredPosts = assetFilter 
     ? posts.filter(p => (p.data.tags?.[0] || '').toUpperCase() === assetFilter)
     : posts;
-
-// Group by asset
-const assets = {};
-filteredPosts.forEach(post => {
-  const asset = (post.data.tags?.[0] || 'OTHER').toUpperCase();
-  if (!assets[asset]) {
-    assets[asset] = [];
-  }
-  assets[asset].push(post);
-});
-
-const assetList = Object.keys(assets).sort();
 ---
 
 <Layout title={assetFilter ? `${assetFilter} Analysis` : "All Analysis"} description="QuantMacro Analytics - Historical price impact analysis">
