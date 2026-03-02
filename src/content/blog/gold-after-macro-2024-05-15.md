@@ -1,19 +1,21 @@
 ---
 title: "Historical Performance of GOLD After Macro Events on 2024-05-15"
 description: "Quantitative analysis and historical performance of GOLD following Macro releases."
-pubDate: "2026-03-02"
+pubDate: "2026-03-03"
 slug: "gold-after-macro-2024-05-15"
 tags: ["gold", "macro", "backtest", "general"]
 metrics:
   sharpe_t7: 0.47
   mdd_t7: -0.36
-  volatility: nan
+  volatility: 0.0
 
 ---
 
 # Historical Performance of GOLD After Macro Events on 2024-05-15
 
-Welcome to the QuantMacro quantitative analysis report for **GOLD** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
+**Event Date:** 2024-05-15 | **Asset:** GOLD
+
+Welcome to the QuantMacro quantitative analysis report for **GOLD** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
 
 
 ## Historical Performance Data
@@ -25,6 +27,21 @@ Welcome to the QuantMacro quantitative analysis report for **GOLD** reacting to 
 
 *Based on historical backtesting from our quant database.*
 
+
+## Key Metrics Summary
+
+| Metric | T+1 (24h) | T+7 (1 Week) |
+| :--- | :--- | :--- |
+| Average Return | -0.36% | 0.02% |
+| Risk (Sharpe) | 0.47 | -0.36% |
+
+## Trading Recommendation
+
+**Neutral:** Mixed historical signals. Recommend waiting for clearer trends before taking positions.
+
+## Methodology
+
+This analysis is based on historical backtesting data. Past performance does not guarantee future results.
 
 ## Quantitative Analysis
 

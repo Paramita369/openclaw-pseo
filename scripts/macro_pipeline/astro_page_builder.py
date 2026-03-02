@@ -301,7 +301,21 @@ Check back soon for detailed backtesting results.
 </div>
 """
 
-    # 5. 組合 MDX 內容 (包含 Frontmatter)
+    # 5. Prepare template variables
+    t1_return = row.get('impact_t1_pct', 0) or 0
+    t7_return = row.get('impact_t7_pct', 0) or 0
+    sharpe = round(float(row.get('sharpe_t7') or 0), 2)
+    mdd = round(float(row.get('mdd_t7') or 0), 2)
+    
+    # Generate recommendation based on data
+    if t7_return > 2:
+        recommendation = "## Trading Recommendation\n\n**Bullish Outlook:** Historical data shows positive momentum for this asset following macro events. Consider monitoring for entry opportunities."
+    elif t7_return < -2:
+        recommendation = "## Trading Recommendation\n\n**Bearish Outlook:** Historical data shows negative momentum. Consider hedging or waiting for confirmation."
+    else:
+        recommendation = "## Trading Recommendation\n\n**Neutral:** Mixed historical signals. Recommend waiting for clearer trends before taking positions."
+    
+    # 6. 組合 MDX 內容 (包含 Frontmatter)
     mdx_content = f"""---
 title: "{title}"
 description: "Quantitative analysis and historical performance of {asset} following {event} releases."
@@ -317,9 +331,24 @@ metrics:
 
 # {title}
 
-Welcome to the QuantMacro quantitative analysis report for **{asset}** reacting to **{event}**. We track historical price actions to provide data-driven trading insights.
+**Event Date:** {event_date} | **Asset:** {asset}
+
+Welcome to the QuantMacro quantitative analysis report for **{asset}** reacting to **{event}** macro events. We track historical price actions to provide data-driven trading insights.
 
 {data_section}
+
+## Key Metrics Summary
+
+| Metric | T+1 (24h) | T+7 (1 Week) |
+| :--- | :--- | :--- |
+| Average Return | {t1_return}% | {t7_return}% |
+| Risk (Sharpe) | {sharpe} | {mdd}% |
+
+{recommendation}
+
+## Methodology
+
+This analysis is based on historical backtesting data. Past performance does not guarantee future results.
 
 ## Quantitative Analysis
 

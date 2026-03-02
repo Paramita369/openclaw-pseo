@@ -1,19 +1,21 @@
 ---
 title: "Historical Performance of QQQ After Macro Events on 2025-01-10"
 description: "Quantitative analysis and historical performance of QQQ following Macro releases."
-pubDate: "2026-03-02"
+pubDate: "2026-03-03"
 slug: "qqq-after-macro-2025-01-10"
 tags: ["qqq", "macro", "backtest", "general"]
 metrics:
   sharpe_t7: 7.64
   mdd_t7: -1.65
-  volatility: nan
+  volatility: 0.0
 
 ---
 
 # Historical Performance of QQQ After Macro Events on 2025-01-10
 
-Welcome to the QuantMacro quantitative analysis report for **QQQ** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
+**Event Date:** 2025-01-10 | **Asset:** QQQ
+
+Welcome to the QuantMacro quantitative analysis report for **QQQ** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
 
 
 ## Historical Performance Data
@@ -25,6 +27,21 @@ Welcome to the QuantMacro quantitative analysis report for **QQQ** reacting to *
 
 *Based on historical backtesting from our quant database.*
 
+
+## Key Metrics Summary
+
+| Metric | T+1 (24h) | T+7 (1 Week) |
+| :--- | :--- | :--- |
+| Average Return | nan% | 2.87% |
+| Risk (Sharpe) | 7.64 | -1.65% |
+
+## Trading Recommendation
+
+**Bullish Outlook:** Historical data shows positive momentum for this asset following macro events. Consider monitoring for entry opportunities.
+
+## Methodology
+
+This analysis is based on historical backtesting data. Past performance does not guarantee future results.
 
 ## Quantitative Analysis
 

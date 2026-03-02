@@ -1,29 +1,29 @@
 ---
-title: "Historical Performance of BTC After Macro Events on 2024-04-30"
-description: "Quantitative analysis and historical performance of BTC following Macro releases."
+title: "Historical Performance of ETH After Macro Events on 2024-04-05"
+description: "Quantitative analysis and historical performance of ETH following Macro releases."
 pubDate: "2026-03-03"
-slug: "btc-after-macro-2024-04-30"
-tags: ["btc", "macro", "backtest", "general"]
+slug: "eth-after-macro-2024-04-05"
+tags: ["eth", "macro", "backtest", "general"]
 metrics:
-  sharpe_t7: 5.37
-  mdd_t7: -3.93
+  sharpe_t7: -9.82
+  mdd_t7: -3.31
   volatility: 0.0
 
 ---
 
-# Historical Performance of BTC After Macro Events on 2024-04-30
+# Historical Performance of ETH After Macro Events on 2024-04-05
 
-**Event Date:** 2024-04-30 | **Asset:** BTC
+**Event Date:** 2024-04-05 | **Asset:** ETH
 
-Welcome to the QuantMacro quantitative analysis report for **BTC** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
+Welcome to the QuantMacro quantitative analysis report for **ETH** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
 
 
 ## Historical Performance Data
 
 | Metric | Value |
 |--------|-------|
-| T+1 (24h) | -3.93% |
-| T+7 (1 Week) | 2.8% |
+| T+1 (24h) | 1.06% |
+| T+7 (1 Week) | -2.29% |
 
 *Based on historical backtesting from our quant database.*
 
@@ -32,12 +32,12 @@ Welcome to the QuantMacro quantitative analysis report for **BTC** reacting to *
 
 | Metric | T+1 (24h) | T+7 (1 Week) |
 | :--- | :--- | :--- |
-| Average Return | -3.93% | 2.8% |
-| Risk (Sharpe) | 5.37 | -3.93% |
+| Average Return | 1.06% | -2.29% |
+| Risk (Sharpe) | -9.82 | -3.31% |
 
 ## Trading Recommendation
 
-**Bullish Outlook:** Historical data shows positive momentum for this asset following macro events. Consider monitoring for entry opportunities.
+**Bearish Outlook:** Historical data shows negative momentum. Consider hedging or waiting for confirmation.
 
 ## Methodology
 
@@ -45,7 +45,7 @@ This analysis is based on historical backtesting data. Past performance does not
 
 ## Quantitative Analysis
 
-Quantitative analysis for BTC following Macro events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+Quantitative analysis for ETH following Macro events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
 
 ## Market Context
 
@@ -54,10 +54,10 @@ Quantitative analysis for BTC following Macro events is currently being compiled
 
 <div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
     <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
-    <p class="text-blue-800 mb-4">Ready to trade **BTC**?</p>
+    <p class="text-blue-800 mb-4">Ready to trade **ETH**?</p>
     
     <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade BTC on Binance with reduced fees</p>
+        <p class="text-blue-800 text-sm mb-2">Trade ETH on Binance with reduced fees</p>
         <a href="https://www.binance.com/referral/earn-together/refer2earn-usdc/claim?hl=zh-TC&ref=GRO_28502_NXG80" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
             Open BINANCE Account →
         </a>
@@ -73,10 +73,10 @@ Quantitative analysis for BTC following Macro events is currently being compiled
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "How does BTC react to Macro?",
+      "name": "How does ETH react to Macro?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Historical data for BTC following Macro is currently being compiled by our quantitative tracking system."
+        "text": "Historical data for ETH following Macro is currently being compiled by our quantitative tracking system."
       }
     }
   ]

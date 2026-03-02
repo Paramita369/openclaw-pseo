@@ -1,19 +1,21 @@
 ---
 title: "Historical Performance of BTC After Macro Events on 2024-08-14"
 description: "Quantitative analysis and historical performance of BTC following Macro releases."
-pubDate: "2026-03-02"
+pubDate: "2026-03-03"
 slug: "btc-after-macro-2024-08-14"
 tags: ["btc", "macro", "backtest", "general"]
 metrics:
   sharpe_t7: 9.86
   mdd_t7: -2.0
-  volatility: nan
+  volatility: 0.0
 
 ---
 
 # Historical Performance of BTC After Macro Events on 2024-08-14
 
-Welcome to the QuantMacro quantitative analysis report for **BTC** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
+**Event Date:** 2024-08-14 | **Asset:** BTC
+
+Welcome to the QuantMacro quantitative analysis report for **BTC** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
 
 
 ## Historical Performance Data
@@ -25,6 +27,21 @@ Welcome to the QuantMacro quantitative analysis report for **BTC** reacting to *
 
 *Based on historical backtesting from our quant database.*
 
+
+## Key Metrics Summary
+
+| Metric | T+1 (24h) | T+7 (1 Week) |
+| :--- | :--- | :--- |
+| Average Return | -2.0% | 4.15% |
+| Risk (Sharpe) | 9.86 | -2.0% |
+
+## Trading Recommendation
+
+**Bullish Outlook:** Historical data shows positive momentum for this asset following macro events. Consider monitoring for entry opportunities.
+
+## Methodology
+
+This analysis is based on historical backtesting data. Past performance does not guarantee future results.
 
 ## Quantitative Analysis
 
