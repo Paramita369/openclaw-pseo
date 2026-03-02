@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
 // Load daily snapshot
-import dailySnapshot from '../public/daily_snapshot.json';
+import dailySnapshot from '../daily_snapshot.json';
 
 // 1. Read all generated Markdown files
 const posts = await getCollection('blog');
