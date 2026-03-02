@@ -1,0 +1,70 @@
+---
+// TradingChart.astro - Lightweight Charts Component
+const { data, asset, title } = Astro.props;
+---
+
+<div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm bg-white mb-8">
+  <div class="bg-slate-50 px-5 py-3 border-b border-gray-200 flex justify-between items-center">
+    <h4 class="text-sm font-bold text-gray-700">{title || asset + ' Price Action (T-3 to T+7)'}</h4>
+    <div class="flex gap-2">
+      <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+      <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+    </div>
+  </div>
+  <div id={`tv-chart-${asset}`} class="w-full h-[350px]" data-chart={JSON.stringify(data)}></div>
+</div>
+
+<script>
+  import { createChart } from 'lightweight-charts';
+
+  // Initialize charts after DOM loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const containers = document.querySelectorAll('[id^="tv-chart-"]');
+    
+    containers.forEach(container => {
+      const el = container as HTMLElement;
+      const rawData = el.getAttribute('data-chart');
+      if (!rawData) return;
+      
+      try {
+        const chartData = JSON.parse(rawData);
+        if (!chartData || chartData.length === 0) return;
+        
+        const chart = createChart(el, {
+          layout: {
+            background: { color: '#ffffff' },
+            textColor: '#333',
+          },
+          grid: {
+            vertLines: { color: '#f0f3fa' },
+            horzLines: { color: '#f0f3fa' },
+          },
+          timeScale: {
+            borderColor: '#e1e5ea',
+            timeVisible: true,
+          },
+          width: el.clientWidth,
+          height: 350,
+        });
+        
+        const candlestickSeries = chart.addCandlestickSeries({
+          upColor: '#26a69a',
+          downColor: '#ef5350',
+          borderVisible: false,
+          wickUpColor: '#26a69a',
+          wickDownColor: '#ef5350',
+        });
+        
+        candlestickSeries.setData(chartData);
+        chart.timeScale().fitContent();
+        
+        // Handle resize
+        window.addEventListener('resize', () => {
+          chart.applyOptions({ width: el.clientWidth });
+        });
+      } catch (e) {
+        console.error('Chart error:', e);
+      }
+    });
+  });
+</script>

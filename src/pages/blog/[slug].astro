@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import TradingChart from '../../components/TradingChart.astro';
 
 export async function getStaticPaths() {
   const allEntries = await getCollection('blog');
@@ -66,6 +67,14 @@ const displayTitle = entry.data.title.replace(/Historical Correlation of |Price 
           </div>
         )}
       </header>
+      
+      {/* TradingView Chart */}
+      {entry.data.chartData && entry.data.chartData.length > 0 && (
+        <TradingChart 
+          data={entry.data.chartData} 
+          asset={entry.data.tags?.[0]} 
+        />
+      )}
       
       <Content />
     </article>

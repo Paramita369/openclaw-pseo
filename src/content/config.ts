@@ -12,6 +12,13 @@ const blog = defineCollection({
       mdd_t7: z.number().optional(),
       volatility: z.number().optional(),
     }).optional(),
+    chartData: z.array(z.object({
+      time: z.string(),
+      open: z.number(),
+      high: z.number(),
+      low: z.number(),
+      close: z.number(),
+    })).optional(),
   }),
 });
 

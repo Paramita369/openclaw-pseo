@@ -185,6 +185,14 @@ def generate_mdx(row):
     # 1. 獲取量化數據
     data = fetch_historical_data(asset, event)
     
+    # 1.5 獲取圖表數據
+    chart_data = []
+    try:
+        event_date = row.get('date', datetime.now().strftime('%Y-%m-%d'))
+        chart_data = fetch_chart_data(asset.lower(), event_date)
+    except Exception as e:
+        pass
+    
     # 2. 生成 LLM 分析文本 (如果啟用)
     llm_analysis = ""
     if LLM_ENABLED:
@@ -263,6 +271,7 @@ metrics:
   sharpe_t7: {row.get('sharpe_t7', 0)}
   mdd_t7: {row.get('mdd_t7', 0)}
   volatility: {row.get('volatility', 0)}
+{('chartData: ' + json.dumps(chart_data)) if chart_data else ''}
 ---
 
 # {title}
@@ -350,3 +359,35 @@ def build_sitemap():
 
 if __name__ == "__main__":
     main()
+
+# ================= Chart Data Fetcher =================
+def fetch_chart_data(ticker, event_date, days=10):
+    """Fetch OHLC data for chart visualization"""
+    try:
+        import yfinance as yf
+        from datetime import timedelta
+        
+        start = (pd.to_datetime(event_date) - timedelta(days=3)).strftime('%Y-%m-%d')
+        end = (pd.to_datetime(event_date) + timedelta(days=7)).strftime('%Y-%m-%d')
+        
+        # Handle ticker format
+        yf_ticker = f"{ticker}-USD" if ticker in ['BTC', 'ETH', 'SOL'] else ticker
+        
+        data = yf.Ticker(yf_ticker).history(start=start, end=end)
+        
+        if len(data) > 0:
+            chart_data = []
+            for idx, row in data.iterrows():
+                chart_data.append({
+                    "time": idx.strftime('%Y-%m-%d'),
+                    "open": round(row['Open'], 2),
+                    "high": round(row['High'], 2),
+                    "low": round(row['Low'], 2),
+                    "close": round(row['Close'], 2)
+                })
+            return chart_data
+    except Exception as e:
+        print(f"Chart data error for {ticker}: {e}")
+    return []
+
+# ================================================
