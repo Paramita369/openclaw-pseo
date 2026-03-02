@@ -244,18 +244,40 @@ This page will be automatically updated when sufficient data is collected.
     }
     
     # 4. Generate CTA based on asset type (HTML with Tailwind classes)
-    platform = ASSET_PLATFORM_MAP.get(asset, "FUTU")
-    ref_info = REFERRAL_LINKS[platform]
-    cta_text = ref_info["text"].format(asset=asset)
-    ref_url = ref_info["url"]
+    # Support multiple platforms for stocks and commodities
+    platforms = []
+    
+    if asset in ["BTC", "ETH", "SOL"]:
+        platforms = ["BINANCE"]
+    elif asset in ["GOLD", "OIL", "TLT"]:
+        platforms = ["IB", "FUTU"]  # IB on top, FUTU below
+    else:  # Stocks like SPY, QQQ, NVDA, TSLA
+        platforms = ["FUTU"]  # For HK users, FUTu is primary
+    
+    # Build CTA HTML
+    cta_buttons = ""
+    for platform in platforms:
+        ref_info = REFERRAL_LINKS[platform]
+        cta_text = ref_info["text"].format(asset=asset)
+        ref_url = ref_info["url"]
+        
+        btn_class = "bg-blue-600 hover:bg-blue-700" if platform == "BINANCE" else \
+                   "bg-emerald-600 hover:bg-emerald-700" if platform == "IB" else \
+                   "bg-purple-600 hover:bg-purple-700"
+        
+        cta_buttons += f'''
+    <div class="mb-3">
+        <p class="text-blue-800 text-sm mb-2">{cta_text}</p>
+        <a href="{ref_url}" target="_blank" class="inline-block {btn_class} text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
+            Open {platform} Account →
+        </a>
+    </div>'''
     
     cta_section = f"""
 <div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
-    <h3 class="text-lg font-bold text-blue-900 mb-2">💡 Actionable Insight</h3>
-    <p class="text-blue-800 mb-4">Ready to trade **{asset}**? {cta_text}</p>
-    <a href="{ref_url}" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-        Open Trading Account →
-    </a>
+    <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
+    <p class="text-blue-800 mb-4">Ready to trade **{asset}**?</p>
+    {cta_buttons}
     <p class="text-xs text-gray-500 mt-3">*Trading involves risk. This is for educational purposes.</p>
 </div>
 """
