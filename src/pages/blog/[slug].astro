@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   return allEntries.map(entry => {
     // 找出具備相同標籤 (資產) 且排除當前文章的其他文章
     const relatedPosts = allEntries
-      .filter(p => p.slug !== entry.slug && p.data.tags?.some(tag => entry.data.tags?.includes(tag)))
+      .filter(p => p.slug !== entry.slug && p.data.tags?.[0]?.toLowerCase() === entry.data.tags?.[0]?.toLowerCase())
       .slice(0, 3);
     
     return {
