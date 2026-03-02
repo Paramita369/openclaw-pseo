@@ -7,7 +7,7 @@ tags: ["btc", "macro", "backtest", "general"]
 metrics:
   sharpe_t7: -10.0
   mdd_t7: -7.75
-  volatility: 0
+  volatility: nan
 
 ---
 

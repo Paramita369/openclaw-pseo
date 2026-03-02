@@ -5,9 +5,9 @@ pubDate: "2026-03-02"
 slug: "btc-after-geopolitics"
 tags: ["btc", "macro", "backtest", "general"]
 metrics:
-  sharpe_t7: 0
-  mdd_t7: 0
-  volatility: 0
+  sharpe_t7: nan
+  mdd_t7: nan
+  volatility: nan
 
 ---
 

@@ -7,7 +7,7 @@ tags: ["eth", "macro", "backtest", "general"]
 metrics:
   sharpe_t7: 10.0
   mdd_t7: 0
-  volatility: 0
+  volatility: nan
 
 ---
 
