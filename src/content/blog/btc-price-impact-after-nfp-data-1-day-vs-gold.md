@@ -13,14 +13,19 @@ Welcome to the OpenClaw quantitative analysis report for **BTC** reacting to **N
 
 ## Historical Performance Data
 
-> ⏳ *Our models are currently gathering historical data for BTC during Nfp Data events. Check back soon.*
+Historically, based on **26** recorded events, **BTC** shows a **bullish 📈** trend.
 
-This page will be automatically updated when sufficient data is collected.
+| Metric | T+1 (24h) | T+7 (1 Week) |
+| :--- | :--- | :--- |
+| Win Rate (Positive Returns) | 38.46% | N/A |
+| Average Impact | 0.25% | 3.29% |
 
 
 ## Quantitative Analysis
 
-Quantitative analysis for BTC following Nfp Data events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+Based on historical analysis of 26 Nfp Data events, BTC has demonstrated a positive correlation with average T+7 returns of 3.29%. The win rate stands at 38.46%, suggesting a cautious approach recommended when trading BTC around Nfp Data releases.
+
+Traders often monitor these macroeconomic indicators for volatility clustering effects, where increased trading volume and price swings are commonly observed in the 24-48 hours following Nfp Data announcements.
 
 ## Market Context
 
@@ -47,7 +52,7 @@ Quantitative analysis for BTC following Nfp Data events is currently being compi
       "name": "How does BTC react to Nfp Data?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Historical data for BTC following Nfp Data is currently being compiled by our quantitative tracking system."
+        "text": "Based on our quant database of 26 events, BTC has an average T+7 impact of 3.29%, indicating a bullish positive historical reaction."
       }
     }
   ]

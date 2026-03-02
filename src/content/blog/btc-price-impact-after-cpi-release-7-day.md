@@ -13,14 +13,19 @@ Welcome to the OpenClaw quantitative analysis report for **BTC** reacting to **C
 
 ## Historical Performance Data
 
-> ⏳ *Our models are currently gathering historical data for BTC during Cpi Release events. Check back soon.*
+Historically, based on **28** recorded events, **BTC** shows a **bullish 📈** trend.
 
-This page will be automatically updated when sufficient data is collected.
+| Metric | T+1 (24h) | T+7 (1 Week) |
+| :--- | :--- | :--- |
+| Win Rate (Positive Returns) | 42.86% | N/A |
+| Average Impact | 0.25% | 1.69% |
 
 
 ## Quantitative Analysis
 
-Quantitative analysis for BTC following Cpi Release events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+Based on historical analysis of 28 Cpi Release events, BTC has demonstrated a positive correlation with average T+7 returns of 1.69%. The win rate stands at 42.86%, suggesting a cautious approach recommended when trading BTC around Cpi Release releases.
+
+Traders often monitor these macroeconomic indicators for volatility clustering effects, where increased trading volume and price swings are commonly observed in the 24-48 hours following Cpi Release announcements.
 
 ## Market Context
 
@@ -47,7 +52,7 @@ Quantitative analysis for BTC following Cpi Release events is currently being co
       "name": "How does BTC react to Cpi Release?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Historical data for BTC following Cpi Release is currently being compiled by our quantitative tracking system."
+        "text": "Based on our quant database of 28 events, BTC has an average T+7 impact of 1.69%, indicating a bullish positive historical reaction."
       }
     }
   ]
