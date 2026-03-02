@@ -4,10 +4,10 @@ import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog');
 
-// Get ALL assets for the tabs (not just filtered ones)
+// Get ALL assets for the tabs (not just filtered ones) - use lowercase
 const allAssets = {};
 posts.forEach(post => {
-  const asset = (post.data.tags?.[0] || 'OTHER').toUpperCase();
+  const asset = (post.data.tags?.[0] || 'other').toLowerCase();
   if (!allAssets[asset]) {
     allAssets[asset] = 0;
   }
@@ -15,13 +15,13 @@ posts.forEach(post => {
 });
 const assetList = Object.keys(allAssets).sort();
 
-// Get asset query param
+// Get asset query param - use lowercase
 const url = new URL(Astro.request.url);
-const assetFilter = url.searchParams.get('asset')?.toUpperCase();
+const assetFilter = url.searchParams.get('asset')?.toLowerCase();
 
-// Filter by asset if specified - match first tag starts with asset
+// Filter by asset if specified
 const filteredPosts = assetFilter 
-    ? posts.filter(p => p.data.tags?.[0]?.toLowerCase().startsWith(assetFilter.toLowerCase()))
+    ? posts.filter(p => p.data.tags?.[0]?.toLowerCase() === assetFilter)
     : posts;
 ---
 
@@ -47,7 +47,7 @@ const filteredPosts = assetFilter
                 </a>
                 {assetList.map(asset => (
                     <a href={`/blog?asset=${asset.toLowerCase()}`} 
-                       class={`px-4 py-2 rounded-full text-sm font-medium transition ${assetFilter === asset ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+                       class={`px-4 py-2 rounded-full text-sm font-medium transition ${assetFilter === asset.toLowerCase() ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
                         {asset}
                     </a>
                 ))}
