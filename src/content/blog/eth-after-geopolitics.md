@@ -5,33 +5,16 @@ pubDate: "2026-03-02"
 slug: "eth-after-geopolitics"
 tags: ["eth", "macro", "backtest", "general"]
 metrics:
-  sharpe_t7: nan
-  mdd_t7: nan
-  volatility: nan
-
 ---
-
 # Historical Performance of ETH After Geopolitics
-
 Welcome to the OpenClaw quantitative analysis report for **ETH** reacting to **Geopolitics**. We track historical price actions to provide data-driven trading insights.
-
-
 ## Historical Performance Data
-
 > ⏳ *Our models are currently gathering historical data for ETH during Geopolitics events. Check back soon.*
-
 This page will be automatically updated when sufficient data is collected.
-
-
 ## Quantitative Analysis
-
 Quantitative analysis for ETH following Geopolitics events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
-
 ## Market Context
-
 *Macroeconomic indicators like **Geopolitics** often trigger high algorithmic trading volume. This page is automatically updated by our backend when new data is released.*
-
-
 <div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
     <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
     <p class="text-blue-800 mb-4">Ready to trade **ETH**?</p>
@@ -44,8 +27,6 @@ Quantitative analysis for ETH following Geopolitics events is currently being co
     </div>
     <p class="text-xs text-gray-500 mt-3">*Trading involves risk. This is for educational purposes.</p>
 </div>
-
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
