@@ -12,7 +12,7 @@ const leaderboardData = posts
     title: post.data.title.replace(/Historical Correlation of |Price Impact after |Performance after |Historical /gi, ''),
     asset: post.data.tags?.[0] || 'Unknown',
     slug: post.slug,
-    sharpe: post.data.metrics?.sharpe_t7 || 0,
+    sharpe: Number(post.data.metrics?.sharpe_t7) || 0,
     mdd: post.data.metrics?.mdd_t7 || 0,
     volatility: post.data.metrics?.volatility || 0,
   }))

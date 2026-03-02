@@ -8,17 +8,11 @@ const blog = defineCollection({
     pubDate: z.string().optional(),
     tags: z.array(z.string()).optional(),
     metrics: z.object({
-      sharpe_t7: z.number().optional().nullable(),
-      mdd_t7: z.number().optional().nullable(),
-      volatility: z.number().optional().nullable(),
+      sharpe_t7: z.union([z.number(), z.string()]).optional().nullable(),
+      mdd_t7: z.union([z.number(), z.string()]).optional().nullable(),
+      volatility: z.union([z.number(), z.string()]).optional().nullable(),
     }).optional().nullable(),
-    chartData: z.array(z.object({
-      time: z.string(),
-      open: z.number(),
-      high: z.number(),
-      low: z.number(),
-      close: z.number(),
-    })).optional().nullable(),
+    chartData: z.array(z.any()).optional().nullable(),
   }),
 });
 
