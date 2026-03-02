@@ -18,6 +18,10 @@ Welcome to the OpenClaw quantitative analysis report for **BTC** reacting to **N
 This page will be automatically updated when sufficient data is collected.
 
 
+## Quantitative Analysis
+
+Quantitative analysis for BTC following Nfp Data events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+
 ## Market Context
 
 *Macroeconomic indicators like **Nfp Data** often trigger high algorithmic trading volume. This page is automatically updated by our backend when new data is released.*
