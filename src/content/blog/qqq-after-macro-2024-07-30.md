@@ -50,8 +50,6 @@ Quantitative analysis for QQQ following Macro events is currently being compiled
 ## Market Context
 
 *Macroeconomic indicators like **Macro** often trigger high algorithmic trading volume. This page is automatically updated by our backend when new data is released.*
-
-
 <div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
     <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
     <p class="text-blue-800 mb-4">Ready to trade **QQQ**?</p>
@@ -70,8 +68,6 @@ Quantitative analysis for QQQ following Macro events is currently being compiled
     </div>
     <p class="text-xs text-gray-500 mt-3">*Trading involves risk. This is for educational purposes.</p>
 </div>
-
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
