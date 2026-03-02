@@ -78,6 +78,9 @@ const displayTitle = entry.data.title.replace(/Historical Correlation of |Price 
       )}
       
       <Content />
+      
+      {/* Dynamic CTA - Auto-inserted based on asset */}
+      <DynamicCta asset={entry.data.tags?.[0] || 'BTC'} />
     </article>
 
     {relatedPosts.length > 0 && (
