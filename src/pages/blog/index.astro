@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog');
 
-// Get ALL assets for the tabs (not just filtered ones) - use lowercase
+// Get ALL assets for the tabs
 const allAssets = {};
 posts.forEach(post => {
   const asset = (post.data.tags?.[0] || 'other').toLowerCase();
@@ -15,89 +15,114 @@ posts.forEach(post => {
 });
 const assetList = Object.keys(allAssets).sort();
 
-// Get asset query param - use lowercase
+// Get asset from URL
 const url = new URL(Astro.request.url);
-const assetFilter = url.searchParams.get('asset')?.toLowerCase();
-
-// Filter by asset if specified
-const filteredPosts = assetFilter 
-    ? posts.filter(p => p.data.tags?.[0]?.toLowerCase() === assetFilter)
-    : posts;
+const assetParam = url.searchParams.get('asset')?.toLowerCase();
 ---
 
-<Layout title={assetFilter ? `${assetFilter} Analysis` : "All Analysis"} description="QuantMacro Analytics - Historical price impact analysis">
+<Layout title={assetParam ? `${assetParam} Analysis` : "All Analysis"} description="QuantMacro Analytics - Historical price impact analysis">
+    <!-- Hidden data for client-side filtering -->
+    <div id="all-posts" data-posts={JSON.stringify(posts.map(p => ({
+        slug: p.slug,
+        title: p.data.title,
+        description: p.data.description,
+        tags: p.data.tags,
+        pubDate: p.data.pubDate,
+        asset: p.data.tags?.[0]?.toLowerCase() || 'other'
+    }))}></div>
+
+    <!-- Hero Section -->
     <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-16">
         <div class="max-w-6xl mx-auto px-4 text-center">
             <h1 class="text-4xl font-bold mb-4">
-                {assetFilter ? `${assetFilter} Analysis` : 'All Analysis'}
+                {assetParam ? `${assetParam.toUpperCase()} Analysis` : 'All Analysis'}
             </h1>
-            <p class="text-xl text-indigo-100">
-                {filteredPosts.length} quantitative analysis articles
-                {assetFilter ? ` for ${assetFilter}` : ''}
+            <p class="text-xl text-indigo-100" id="post-count">
+                {posts.length} quantitative analysis articles
             </p>
         </div>
     </section>
     
     <!-- Asset Filter Tabs -->
-    <div class="bg-white shadow-sm border-b">
+    <div class="bg-white shadow-sm border-b sticky top-0 z-10">
         <div class="max-w-6xl mx-auto px-4 py-4 overflow-x-auto">
             <div class="flex gap-2">
-                <a href="/blog" class={`px-4 py-2 rounded-full text-sm font-medium transition ${!assetFilter ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+                <a href="/blog" class={`px-4 py-2 rounded-full text-sm font-medium transition ${!assetParam ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
                     All
                 </a>
                 {assetList.map(asset => (
-                    <a href={`/blog?asset=${asset.toLowerCase()}`} 
-                       class={`px-4 py-2 rounded-full text-sm font-medium transition ${assetFilter === asset.toLowerCase() ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
-                        {asset}
+                    <a href={`/blog?asset=${asset}`} 
+                       class={`px-4 py-2 rounded-full text-sm font-medium transition ${assetParam === asset ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+                        {asset.toUpperCase()}
                     </a>
                 ))}
             </div>
         </div>
     </div>
     
-    <!-- Posts Grid -->
+    <!-- Posts Grid - Render all, will filter via JS -->
     <section class="max-w-6xl mx-auto px-4 py-12">
-        {assetFilter && (
-            <div class="mb-8">
-                <a href="/blog" class="text-indigo-600 hover:text-indigo-800 font-medium">
-                    ← Back to all assets
-                </a>
-            </div>
-        )}
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPosts.map(post => (
-                <a href={`/blog/${post.slug}`} class="block bg-white rounded-xl shadow-sm hover:shadow-lg transition border border-gray-200 overflow-hidden group">
+        <div id="posts-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {posts.map(post => (
+                <a href={`/blog/${post.slug}`} 
+                   class="post-card block bg-white rounded-xl shadow-sm hover:shadow-lg transition border border-gray-200 overflow-hidden"
+                   data-asset={post.data.tags?.[0]?.toLowerCase() || 'other'}>
                     <div class="p-6">
                         <div class="flex gap-2 mb-3">
                             {post.data.tags?.slice(0, 2).map(tag => (
                                 <span class="bg-indigo-50 text-indigo-700 px-2 py-1 rounded text-xs font-medium">{tag}</span>
                             ))}
                         </div>
-                        <h2 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition line-clamp-2">
-                            {post.data.title}
-                        </h2>
-                        <p class="text-gray-600 text-sm line-clamp-3 mb-4">
-                            {post.data.description}
-                        </p>
+                        <h2 class="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{post.data.title}</h2>
+                        <p class="text-gray-600 text-sm line-clamp-3 mb-4">{post.data.description}</p>
                         <div class="flex items-center justify-between text-sm text-gray-500">
                             <span>{post.data.pubDate}</span>
-                            <span class="text-indigo-600 font-medium group-hover:translate-x-1 transition">
-                                Read more →
-                            </span>
+                            <span class="text-indigo-600 font-medium">Read more →</span>
                         </div>
                     </div>
                 </a>
             ))}
         </div>
         
-        {filteredPosts.length === 0 && (
-            <div class="text-center py-12">
-                <p class="text-gray-500 text-lg">No articles found for this asset.</p>
-                <a href="/blog" class="text-indigo-600 hover:text-indigo-800 font-medium mt-4 inline-block">
-                    View all articles →
-                </a>
-            </div>
-        )}
+        <div id="no-results" class="hidden text-center py-12">
+            <p class="text-gray-500 text-lg">No articles found for this asset.</p>
+            <a href="/blog" class="text-indigo-600 hover:text-indigo-800 font-medium mt-4 inline-block">
+                View all articles →
+            </a>
+        </div>
     </section>
+
+    <script>
+        // Client-side filtering
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentAsset = urlParams.get('asset')?.toLowerCase();
+            
+            const posts = document.querySelectorAll('.post-card');
+            const noResults = document.getElementById('no-results');
+            const grid = document.getElementById('posts-grid');
+            const countEl = document.getElementById('post-count');
+            
+            let visibleCount = 0;
+            
+            posts.forEach(post => {
+                const asset = post.dataset.asset;
+                if (!currentAsset || asset === currentAsset) {
+                    post.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+            
+            if (countEl && currentAsset) {
+                countEl.textContent = `${visibleCount} quantitative analysis articles for ${currentAsset.toUpperCase()}`;
+            }
+            
+            if (visibleCount === 0 && noResults) {
+                noResults.classList.remove('hidden');
+                grid.classList.add('hidden');
+            }
+        });
+    </script>
 </Layout>
