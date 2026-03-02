@@ -259,6 +259,10 @@ description: "Quantitative analysis and historical performance of {asset} follow
 pubDate: "{datetime.now().strftime('%Y-%m-%d')}"
 slug: "{slug}"
 tags: ["{asset.lower()}", "macro", "backtest", "{row.get('intent', 'analysis').replace(' ', '-').lower()}"]
+metrics:
+  sharpe_t7: {row.get('sharpe_t7', 0)}
+  mdd_t7: {row.get('mdd_t7', 0)}
+  volatility: {row.get('volatility', 0)}
 ---
 
 # {title}
