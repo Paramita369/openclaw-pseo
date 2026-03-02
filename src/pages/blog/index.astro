@@ -19,9 +19,9 @@ const assetList = Object.keys(allAssets).sort();
 const url = new URL(Astro.request.url);
 const assetFilter = url.searchParams.get('asset')?.toUpperCase();
 
-// Filter by asset if specified (case-insensitive)
+// Filter by asset if specified - match first tag starts with asset
 const filteredPosts = assetFilter 
-    ? posts.filter(p => p.data.tags?.some(tag => tag.toLowerCase() === assetFilter.toLowerCase()))
+    ? posts.filter(p => p.data.tags?.[0]?.toLowerCase().startsWith(assetFilter.toLowerCase()))
     : posts;
 ---
 
