@@ -1,17 +1,17 @@
 ---
-title: "Historical Performance of BTC After Macro Events on 2024-01-30"
+title: "Historical Performance of BTC After Macro Events on 2024-04-30"
 description: "Quantitative analysis and historical performance of BTC following Macro releases."
 pubDate: "2026-03-02"
-slug: "btc-after-macro-2024-01-30"
+slug: "btc-after-macro-2024-04-30"
 tags: ["btc", "macro", "backtest", "general"]
 metrics:
-  sharpe_t7: 2.97
-  mdd_t7: -0.86
+  sharpe_t7: 5.37
+  mdd_t7: -3.93
   volatility: nan
 
 ---
 
-# Historical Performance of BTC After Macro Events on 2024-01-30
+# Historical Performance of BTC After Macro Events on 2024-04-30
 
 Welcome to the OpenClaw quantitative analysis report for **BTC** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
 

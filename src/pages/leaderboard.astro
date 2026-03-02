@@ -16,7 +16,8 @@ const leaderboardData = posts
     mdd: post.data.metrics?.mdd_t7 || 0,
     volatility: post.data.metrics?.volatility || 0,
   }))
-  .sort((a, b) => Math.abs(b.sharpe) - Math.abs(a.sharpe)); // Sort by absolute Sharpe
+  .filter(item => item.sharpe !== 0) // Remove zero Sharpe
+  .sort((a, b) => b.sharpe - a.sharpe); // Sort by Sharpe (highest first)
 
 // Group by asset
 const assetGroups = {};
@@ -39,7 +40,7 @@ const assetStats = Object.entries(assetGroups).map(([asset, items]) => {
     avgMdd: Math.round(avgMdd * 100) / 100,
     avgVol: Math.round(avgVol * 100) / 100,
   };
-}).sort((a, b) => Math.abs(b.avgSharpe) - Math.abs(a.avgSharpe));
+}).sort((a, b) => b.avgSharpe - a.avgSharpe); // Sort by avg Sharpe (highest first)
 ---
 
 <Layout title="Alpha Screener | QuantMacro" description="Top quantitative trading strategies ranked by risk-adjusted returns">

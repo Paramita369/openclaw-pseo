@@ -1,17 +1,17 @@
 ---
-title: "Historical Performance of GOLD After Macro Events on 2024-01-05"
+title: "Historical Performance of GOLD After Macro Events on 2024-11-06"
 description: "Quantitative analysis and historical performance of GOLD following Macro releases."
 pubDate: "2026-03-02"
-slug: "gold-after-macro-2024-01-05"
+slug: "gold-after-macro-2024-11-06"
 tags: ["gold", "macro", "backtest", "general"]
 metrics:
-  sharpe_t7: -1.21
-  mdd_t7: -5.97
+  sharpe_t7: -9.22
+  mdd_t7: -4.36
   volatility: nan
 
 ---
 
-# Historical Performance of GOLD After Macro Events on 2024-01-05
+# Historical Performance of GOLD After Macro Events on 2024-11-06
 
 Welcome to the OpenClaw quantitative analysis report for **GOLD** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
 

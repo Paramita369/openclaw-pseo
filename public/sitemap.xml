@@ -2,212 +2,166 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://quantmacro.vercel.app/</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://quantmacro.vercel.app/blog</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/eth-after-macro-2024-06-11</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-01-30</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/btc-after-macro-2024-04-05</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-05-15</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2024-03-12</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2025-01-10</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-05-15</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-09-06</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-01-30</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-12-06</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2024-10-04</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2025-01-10</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-07-30</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-12-17</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/eth-after-macro-2024-04-30</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-01-05</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-07-30</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/btc-after-macro-2024-04-30</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-08-02</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-11-06</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2024-11-14</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-08-02</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2024-02-02</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://quantmacro.vercel.app/blog/btc-after-macro-2024-01-30</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-04-05</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quantmacro.vercel.app/blog/eth-after-macro-2024-01-30</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-04-10</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2025-01-29</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-11-14</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2025-02-12</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2024-08-02</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-02-02</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://quantmacro.vercel.app/blog/btc-after-macro-2024-05-03</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-06-07</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/eth-after-macro-2024-08-14</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/btc-after-macro-2024-08-14</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-10-10</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-05-03</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-03-12</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2024-07-05</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2024-01-30</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://quantmacro.vercel.app/blog/gold-after-macro-2024-10-04</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2024-07-11</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-10-04</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/eth-after-macro-2025-02-12</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2024-05-15</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/eth-after-macro-2024-06-12</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2024-12-17</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/qqq-after-macro-2024-09-11</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://quantmacro.vercel.app/blog/spy-after-macro-2024-07-30</loc>
     <priority>0.8</priority>
   </url>
 </urlset>

@@ -1,31 +1,31 @@
 ---
-title: "Historical Performance of QQQ After Macro Events on 2024-01-30"
-description: "Quantitative analysis and historical performance of QQQ following Macro releases."
+title: "Historical Performance of GOLD After Macro Events on 2025-02-12"
+description: "Quantitative analysis and historical performance of GOLD following Macro releases."
 pubDate: "2026-03-02"
-slug: "qqq-after-macro-2024-01-30"
-tags: ["qqq", "macro", "backtest", "general"]
+slug: "gold-after-macro-2025-02-12"
+tags: ["gold", "macro", "backtest", "general"]
 metrics:
-  sharpe_t7: 2.07
-  mdd_t7: -1.96
+  sharpe_t7: 7.09
+  mdd_t7: -0.22
   volatility: nan
 
 ---
 
-# Historical Performance of QQQ After Macro Events on 2024-01-30
+# Historical Performance of GOLD After Macro Events on 2025-02-12
 
-Welcome to the OpenClaw quantitative analysis report for **QQQ** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
+Welcome to the OpenClaw quantitative analysis report for **GOLD** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
 
 
 ## Historical Performance Data
 
-> ⏳ *Our models are currently gathering historical data for QQQ during Macro events. Check back soon.*
+> ⏳ *Our models are currently gathering historical data for GOLD during Macro events. Check back soon.*
 
 This page will be automatically updated when sufficient data is collected.
 
 
 ## Quantitative Analysis
 
-Quantitative analysis for QQQ following Macro events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+Quantitative analysis for GOLD following Macro events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
 
 ## Market Context
 
@@ -34,16 +34,16 @@ Quantitative analysis for QQQ following Macro events is currently being compiled
 
 <div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
     <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
-    <p class="text-blue-800 mb-4">Ready to trade **QQQ**?</p>
+    <p class="text-blue-800 mb-4">Ready to trade **GOLD**?</p>
     
     <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade QQQ on Interactive Brokers</p>
+        <p class="text-blue-800 text-sm mb-2">Trade GOLD on Interactive Brokers</p>
         <a href="https://www.ibkr.com/referral/siohong248" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
             Open IB Account →
         </a>
     </div>
     <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade QQQ stocks with Futu</p>
+        <p class="text-blue-800 text-sm mb-2">Trade GOLD stocks with Futu</p>
         <a href="https://invest.futuhk.com/invite-centre_share?lang=zh-hk&invite_code=MQHETN7N" target="_blank" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
             Open FUTU Account →
         </a>
@@ -59,10 +59,10 @@ Quantitative analysis for QQQ following Macro events is currently being compiled
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "How does QQQ react to Macro?",
+      "name": "How does GOLD react to Macro?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Historical data for QQQ following Macro is currently being compiled by our quantitative tracking system."
+        "text": "Historical data for GOLD following Macro is currently being compiled by our quantitative tracking system."
       }
     }
   ]

@@ -1,17 +1,17 @@
 ---
-title: "Historical Performance of SPY After Macro Events on 2024-01-30"
+title: "Historical Performance of SPY After Macro Events on 2024-07-05"
 description: "Quantitative analysis and historical performance of SPY following Macro releases."
 pubDate: "2026-03-02"
-slug: "spy-after-macro-2024-01-30"
+slug: "spy-after-macro-2024-07-05"
 tags: ["spy", "macro", "backtest", "general"]
 metrics:
-  sharpe_t7: 2.69
-  mdd_t7: -1.63
+  sharpe_t7: 7.02
+  mdd_t7: -0.98
   volatility: nan
 
 ---
 
-# Historical Performance of SPY After Macro Events on 2024-01-30
+# Historical Performance of SPY After Macro Events on 2024-07-05
 
 Welcome to the OpenClaw quantitative analysis report for **SPY** reacting to **Macro**. We track historical price actions to provide data-driven trading insights.
 
