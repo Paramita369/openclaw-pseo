@@ -92,7 +92,7 @@ const assetStats = Object.entries(assetGroups).map(([asset, items]) => {
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-red-600 font-medium">{stat.avgMdd}%</td>
-              <td class="px-6 py-4 whitespace-nowrap text-gray-600">{stat.avgVol}%</td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-600">{stat.avgVol && stat.avgVol !== 0 ? stat.avgVol + '%' : '-'}</td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <a href={`/tags/${stat.asset.toLowerCase()}`} class="text-indigo-600 hover:text-indigo-800 font-medium text-sm">
                   View All →

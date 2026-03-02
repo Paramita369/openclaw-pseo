@@ -58,7 +58,7 @@ const displayTitle = entry.data.title.replace(/Historical Correlation of |Price 
                   <div class="text-xl font-black text-rose-600">{entry.data.metrics.mdd_t7}%</div>
                 </div>
               )}
-              {entry.data.metrics.volatility !== undefined && (
+              {entry.data.metrics.volatility !== undefined && entry.data.metrics.volatility !== 'nan' && Number(entry.data.metrics.volatility) !== 0 && (
                 <div class="bg-white p-4 rounded-lg border border-slate-200">
                   <div class="text-xs text-slate-500 mb-1">Volatility</div>
                   <div class="text-xl font-black text-slate-800">{entry.data.metrics.volatility}%</div>
@@ -79,9 +79,6 @@ const displayTitle = entry.data.title.replace(/Historical Correlation of |Price 
       
       <Content />
     </article>
-
-    {/* Dynamic CTA */}
-    <DynamicCta asset={entry.data.tags?.[0]} />
 
     {relatedPosts.length > 0 && (
       <section class="border-t border-gray-200 pt-10">

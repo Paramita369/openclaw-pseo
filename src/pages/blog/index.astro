@@ -15,6 +15,11 @@ const assetList = Object.keys(allAssets).sort();
 // Get asset from URL
 const url = new URL(Astro.request.url);
 const assetParam = url.searchParams.get('asset')?.toLowerCase();
+
+// Filter posts by asset if parameter exists
+const filteredPosts = assetParam 
+  ? posts.filter(post => post.data.tags?.[0]?.toLowerCase() === assetParam)
+  : posts;
 ---
 
 <Layout title={assetParam ? assetParam.toUpperCase() + " Analysis" : "All Analysis"}>
@@ -24,7 +29,7 @@ const assetParam = url.searchParams.get('asset')?.toLowerCase();
         {assetParam ? assetParam.toUpperCase() : 'All'} Analysis
       </h1>
       <p class="text-xl text-indigo-100">
-        {posts.length} quantitative analysis articles
+        {filteredPosts.length} quantitative analysis articles
       </p>
     </div>
   </section>
@@ -46,7 +51,7 @@ const assetParam = url.searchParams.get('asset')?.toLowerCase();
   
   <section class="max-w-6xl mx-auto px-4 py-12">
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {posts.map(post => (
+      {filteredPosts.map(post => (
         <a href={`/blog/${post.slug}`} class="block bg-white rounded-xl shadow-sm hover:shadow-lg transition border border-gray-200 overflow-hidden">
           <div class="p-6">
             <div class="flex gap-2 mb-3">
