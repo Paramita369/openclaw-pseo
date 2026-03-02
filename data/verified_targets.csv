@@ -1,51 +1,34 @@
 asset,intent,url_slug,h1_title,macro_event,date,impact_t1_pct,impact_t7_pct,volatility,sharpe_t7,mdd_t7
-BTC,general,btc-after-geopolitics,"Historical Performance of BTC After Geopolitics",Geopolitics,2026-03-02,,,,,
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2026-03-02,,,,,
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-01-15,1.51,-7.07,,-10.0,-8.45
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-02-20,-0.85,9.18,,10.0,-0.85
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-03-12,2.24,-13.39,,-10.0,-15.28
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-04-10,-0.75,-13.19,,-10.0,-13.19
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-05-15,-1.56,4.31,,10.0,-1.56
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-06-12,-2.18,-4.81,,-10.0,-4.81
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-07-11,0.97,11.56,,10.0,0.0
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-08-14,-2.0,4.15,,9.86,-2.0
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-09-11,1.37,7.51,,10.0,0.0
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-10-10,3.6,11.82,,10.0,0.0
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-11-14,4.37,12.9,,10.0,0.0
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-12-11,-1.12,-1.12,,-10.0,-1.12
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-01-05,-0.39,-2.97,,-10.0,-2.97
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-02-02,-0.45,9.17,,10.0,-0.45
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-03-01,-0.66,9.38,,10.0,-0.66
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-04-05,1.56,-0.95,,-4.3,-2.47
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-05-03,1.59,-3.33,,-9.66,-4.85
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-06-07,-0.05,-4.8,,-10.0,-4.8
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-07-05,2.9,2.18,,10.0,-0.69
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-08-02,-1.2,-0.87,,-10.0,-1.2
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-09-06,0.35,12.28,,10.0,0.0
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-10-04,0.04,0.61,,10.0,0.0
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-11-01,-0.28,10.17,,10.0,-0.28
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-12-06,0.0,1.54,,10.0,0.0
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-01-30,-0.86,0.31,,2.97,-0.86
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-03-19,9.69,13.04,,10.0,0.0
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-04-30,-3.93,2.8,,5.37,-3.93
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-06-11,1.35,-3.25,,-10.0,-4.54
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-07-30,-2.39,-15.36,,-10.0,-15.36
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-09-17,2.22,6.62,,10.0,0.0
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-11-06,0.35,19.76,,10.0,0.0
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2024-12-17,-5.75,-7.03,,-10.0,-7.03
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2025-01-15,-0.74,3.13,,10.0,-0.74
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2025-02-12,-1.29,-1.28,,-10.0,-1.29
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2025-01-10,-0.14,10.31,,10.0,-0.14
-BTC,general,btc-after-macro,"Historical Performance of BTC After Macro",Macro,2025-01-29,1.0,-6.83,,-10.0,-7.75
-ETH,general,eth-after-geopolitics,"Historical Performance of ETH After Geopolitics",Geopolitics,2026-03-02,,,,,
-ETH,general,eth-after-macro,"Historical Performance of ETH After Macro",Macro,2024-01-15,3.04,-7.99,,-10.0,-10.7
-ETH,general,eth-after-macro,"Historical Performance of ETH After Macro",Macro,2024-02-20,-1.43,7.67,,10.0,-1.43
-ETH,general,eth-after-macro,"Historical Performance of ETH After Macro",Macro,2024-03-12,0.66,-20.67,,-10.0,-21.19
-ETH,general,eth-after-macro,"Historical Performance of ETH After Macro",Macro,2024-04-10,-1.09,-15.77,,-10.0,-15.77
-ETH,general,eth-after-macro,"Historical Performance of ETH After Macro",Macro,2024-05-15,-3.03,23.05,,10.0,-3.03
-ETH,general,eth-after-macro,"Historical Performance of ETH After Macro",Macro,2024-06-12,-2.54,-0.01,,0.22,-2.54
-ETH,general,eth-after-macro,"Historical Performance of ETH After Macro",Macro,2024-07-11,1.09,10.51,,10.0,0.0
-ETH,general,eth-after-macro,"Historical Performance of ETH After Macro",Macro,2024-08-14,-3.49,-1.18,,-3.58,-3.49
-ETH,general,eth-after-macro,"Historical Performance of ETH After Macro",Macro,2024-09-11,0.94,1.28,,10.0,0.0
-ETH,general,eth-after-macro,"Historical Performance of ETH After Macro",Macro,2024-10-10,2.21,9.25,,10.0,0.0
-ETH,general,eth-after-macro,"Historical Performance of ETH After Macro",Macro,2024-11-14,1.44,9.88,,10.0,0.0
+BTC,general,btc-after-macro-2024-01-30,"Historical Performance of BTC After Macro Events on 2024-01-30",Macro,2024-01-30,-0.86,0.31,,2.97,-0.86
+BTC,general,btc-after-macro-2024-04-05,"Historical Performance of BTC After Macro Events on 2024-04-05",Macro,2024-04-05,1.56,-0.95,,-4.3,-2.47
+ETH,general,eth-after-macro-2024-01-30,"Historical Performance of ETH After Macro Events on 2024-01-30",Macro,2024-01-30,-2.64,1.18,,3.74,-2.64
+ETH,general,eth-after-macro-2024-04-30,"Historical Performance of ETH After Macro Events on 2024-04-30",Macro,2024-04-30,-1.41,-0.19,,-1.24,-1.41
+ETH,general,eth-after-macro-2024-06-11,"Historical Performance of ETH After Macro Events on 2024-06-11",Macro,2024-06-11,1.75,-0.42,,-1.88,-2.13
+ETH,general,eth-after-macro-2024-06-12,"Historical Performance of ETH After Macro Events on 2024-06-12",Macro,2024-06-12,-2.54,-0.01,,0.22,-2.54
+ETH,general,eth-after-macro-2024-08-14,"Historical Performance of ETH After Macro Events on 2024-08-14",Macro,2024-08-14,-3.49,-1.18,,-3.58,-3.49
+ETH,general,eth-after-macro-2025-02-12,"Historical Performance of ETH After Macro Events on 2025-02-12",Macro,2025-02-12,-2.23,-0.77,,-3.8,-2.23
+GOLD,general,gold-after-macro-2024-01-05,"Historical Performance of GOLD After Macro Events on 2024-01-05",Macro,2024-01-05,,0.21,,-1.21,-5.97
+GOLD,general,gold-after-macro-2024-01-30,"Historical Performance of GOLD After Macro Events on 2024-01-30",Macro,2024-01-30,0.83,0.15,,1.61,-0.68
+GOLD,general,gold-after-macro-2024-03-12,"Historical Performance of GOLD After Macro Events on 2024-03-12",Macro,2024-03-12,0.69,-0.19,,-1.85,-0.88
+GOLD,general,gold-after-macro-2024-04-05,"Historical Performance of GOLD After Macro Events on 2024-04-05",Macro,2024-04-05,,1.31,,4.16,-10.32
+GOLD,general,gold-after-macro-2024-05-03,"Historical Performance of GOLD After Macro Events on 2024-05-03",Macro,2024-05-03,,2.97,,-1.41,-15.3
+GOLD,general,gold-after-macro-2024-05-15,"Historical Performance of GOLD After Macro Events on 2024-05-15",Macro,2024-05-15,-0.36,0.02,,0.47,-0.36
+GOLD,general,gold-after-macro-2024-07-30,"Historical Performance of GOLD After Macro Events on 2024-07-30",Macro,2024-07-30,0.89,-0.66,,-4.22,-1.54
+GOLD,general,gold-after-macro-2024-08-02,"Historical Performance of GOLD After Macro Events on 2024-08-02",Macro,2024-08-02,,0.26,,-1.23,-10.03
+GOLD,general,gold-after-macro-2024-09-06,"Historical Performance of GOLD After Macro Events on 2024-09-06",Macro,2024-09-06,,3.52,,1.09,-6.54
+GOLD,general,gold-after-macro-2025-01-10,"Historical Performance of GOLD After Macro Events on 2025-01-10",Macro,2025-01-10,,1.32,,-3.71,-4.91
+QQQ,general,qqq-after-macro-2024-01-30,"Historical Performance of QQQ After Macro Events on 2024-01-30",Macro,2024-01-30,-1.96,0.54,,2.07,-1.96
+QQQ,general,qqq-after-macro-2024-02-02,"Historical Performance of QQQ After Macro Events on 2024-02-02",Macro,2024-02-02,,1.87,,-0.27,-2.68
+QQQ,general,qqq-after-macro-2024-08-02,"Historical Performance of QQQ After Macro Events on 2024-08-02",Macro,2024-08-02,,0.37,,3.35,-5.64
+QQQ,general,qqq-after-macro-2024-10-04,"Historical Performance of QQQ After Macro Events on 2024-10-04",Macro,2024-10-04,,1.24,,1.58,-1.77
+QQQ,general,qqq-after-macro-2024-11-14,"Historical Performance of QQQ After Macro Events on 2024-11-14",Macro,2024-11-14,-2.38,-0.73,,-2.68,-2.38
+QQQ,general,qqq-after-macro-2024-12-06,"Historical Performance of QQQ After Macro Events on 2024-12-06",Macro,2024-12-06,,0.77,,3.77,-1.39
+QQQ,general,qqq-after-macro-2024-12-17,"Historical Performance of QQQ After Macro Events on 2024-12-17",Macro,2024-12-17,-3.61,-0.93,,-2.06,-3.61
+SPY,general,spy-after-macro-2024-01-30,"Historical Performance of SPY After Macro Events on 2024-01-30",Macro,2024-01-30,-1.63,0.63,,2.69,-1.63
+SPY,general,spy-after-macro-2024-02-02,"Historical Performance of SPY After Macro Events on 2024-02-02",Macro,2024-02-02,,1.39,,-0.17,-2.09
+SPY,general,spy-after-macro-2024-03-12,"Historical Performance of SPY After Macro Events on 2024-03-12",Macro,2024-03-12,-0.16,0.1,,3.94,-0.16
+SPY,general,spy-after-macro-2024-05-15,"Historical Performance of SPY After Macro Events on 2024-05-15",Macro,2024-05-15,-0.21,0.01,,0.37,-0.21
+SPY,general,spy-after-macro-2024-08-02,"Historical Performance of SPY After Macro Events on 2024-08-02",Macro,2024-08-02,,0.02,,2.25,-4.25
+SPY,general,spy-after-macro-2024-10-04,"Historical Performance of SPY After Macro Events on 2024-10-04",Macro,2024-10-04,,1.15,,3.43,-1.11
+SPY,general,spy-after-macro-2024-11-14,"Historical Performance of SPY After Macro Events on 2024-11-14",Macro,2024-11-14,-1.28,0.05,,0.43,-1.28
+SPY,general,spy-after-macro-2024-12-17,"Historical Performance of SPY After Macro Events on 2024-12-17",Macro,2024-12-17,-2.98,-0.16,,-0.2,-2.98
