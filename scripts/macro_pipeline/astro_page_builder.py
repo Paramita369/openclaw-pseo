@@ -38,7 +38,7 @@ REFERRAL_LINKS = {
         "text": "Trade {asset} stocks with Futu"
     },
     "IB": {
-        "url": "https://ibkr.com/referral/siohong248",
+        "url": "https://www.ibkr.com/referral/siohong248",
         "text": "Trade {asset} on Interactive Brokers"
     }
 }
