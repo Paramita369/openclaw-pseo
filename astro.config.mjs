@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://your-domain.com', // TODO: 替換為你的網域
+  site: 'https://openclaw-pseo.vercel.app',
   integrations: [
     mdx(),
     sitemap(),
