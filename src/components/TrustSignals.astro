@@ -1,0 +1,31 @@
+---
+const { dataLastUpdatedAt = '', sampleSize = null, confidenceLevel = 'normal' } = Astro.props;
+const sampleNum = Number(sampleSize);
+const lowConfidence = String(confidenceLevel).toLowerCase() === 'low' || (Number.isFinite(sampleNum) && sampleNum < 5);
+---
+
+<section class="mt-6 rounded-xl border p-4" style="border-color:var(--border);background:var(--surface-alt);">
+  <h2 class="text-base font-bold">Trust &amp; Methodology</h2>
+  <ul class="mt-2 space-y-1 text-sm" style="color:var(--muted);">
+    <li>
+      Educational content only. This is <strong style="color:var(--text);">not investment advice</strong>.
+    </li>
+    <li>
+      Data sources: <strong style="color:var(--text);">FRED</strong> (event calendar/outcomes) and
+      <strong style="color:var(--text);"> yfinance</strong> (historical price windows).
+    </li>
+    <li>
+      Methodology: all-history and same-direction event windows (T+1/T+7 probability, median, mean, sample size).
+    </li>
+    <li>
+      Data last updated at:
+      <strong style="color:var(--text);"> {dataLastUpdatedAt || 'N/A'}</strong>
+    </li>
+    {lowConfidence && (
+      <li class="metric-down">
+        Low confidence: matched sample is limited, so signal reliability is lower than normal.
+      </li>
+    )}
+  </ul>
+</section>
+

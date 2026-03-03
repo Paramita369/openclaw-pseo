@@ -16,6 +16,17 @@ const conditionalProbability = z.object({
   t7: probabilityWindow,
 });
 
+const relatedEventItem = z.object({
+  slug: z.string().min(1),
+  title: z.string().min(1),
+  event_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  event_type: z.enum(['CPI', 'NFP', 'FOMC']),
+  signal: z.enum(['Bullish', 'Neutral', 'Bearish']),
+  sharpe_t7: z.number().finite(),
+  median_t7_pct: z.number().finite(),
+  sample_size: z.number().int().nonnegative(),
+});
+
 const blog = defineCollection({
   type: 'content',
   schema: z.object({
@@ -64,6 +75,7 @@ const blog = defineCollection({
       conditional: conditionalProbability,
       sample_size: z.number().int().nonnegative(),
     }),
+    related_events: z.array(relatedEventItem).max(3).optional(),
     chartData: z
       .array(
         z.object({

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
 const EVENT_ORDER = ['CPI', 'NFP', 'FOMC'];
 
@@ -25,6 +26,11 @@ export async function getStaticPaths() {
 }
 
 const { posts, currentTag, allTags } = Astro.props;
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Assets', url: '/blog' },
+  { name: currentTag, url: `/tags/${currentTag.toLowerCase()}` },
+];
 
 const groupedByEvent = EVENT_ORDER.map((eventType) => ({
   eventType,
@@ -32,9 +38,14 @@ const groupedByEvent = EVENT_ORDER.map((eventType) => ({
 }));
 ---
 
-<Layout title={`${currentTag} Asset Hub`} description={`${currentTag} CPI/NFP/FOMC event-driven probability pages.`}>
+<Layout
+  title={`${currentTag} Asset Hub`}
+  description={`${currentTag} CPI/NFP/FOMC event-driven probability pages.`}
+  breadcrumbs={breadcrumbs}
+>
   <section class="py-12 hero-panel">
     <div class="max-w-6xl mx-auto px-4">
+      <Breadcrumbs items={breadcrumbs} />
       <p class="badge-chip mb-4" style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.25);color:#e5ecfb;">Asset Hub</p>
       <h1 class="text-4xl font-extrabold text-white">{currentTag} Event Research</h1>
       <p class="text-blue-100 mt-3 text-lg">{posts.length} pages with historical event probabilities.</p>

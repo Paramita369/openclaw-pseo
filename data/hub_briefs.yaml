@@ -1,0 +1,199 @@
+# ------------------------------------------------------------------
+# QuantMacro Hub Briefs (Human + Template Strategy)
+# Last Reviewed: 2026-03-03
+# ------------------------------------------------------------------
+
+BTC_CPI:
+  asset: "BTC"
+  event_type: "CPI"
+  thesis: "Bitcoin's sensitivity to US inflation data has shifted from a pure risk-on asset to a complex liquidity proxy. Historical analysis reveals that upside CPI surprises often trigger acute T+1 drawdowns, followed by a robust T+7 recovery if the broader macroeconomic narrative anticipates eventual Fed intervention."
+  what_changed_recently: "Institutional ETF flows now absorb immediate volatility shockwaves faster than in the 2022 tightening cycle."
+  risk_watchouts: "Elevated funding rates on offshore exchanges can exacerbate liquidations independent of the CPI print."
+  execution_checklist:
+    - "Monitor CME futures basis pre-print."
+    - "Set limit orders 3-5% below current spot for flash crashes."
+    - "Wait for 1-hour candle close before deploying directional delta."
+  reviewed_at: "2026-03-03"
+  status: "approved"
+
+BTC_NFP:
+  asset: "BTC"
+  event_type: "NFP"
+  thesis: "BTC often responds to payroll surprises through USD liquidity expectations rather than labor data itself. Use the print as a volatility trigger and validate direction with rates and DXY reaction."
+  what_changed_recently: "Post-ETF positioning has reduced immediate panic selling on routine NFP beats."
+  risk_watchouts: "A sharp DXY spike can override crypto-specific momentum in the first hour."
+  execution_checklist:
+    - "Track DXY and US2Y move in the first 15 minutes."
+    - "Avoid full-size entries before volatility normalizes."
+    - "Use stop placement outside event candle extremes."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+BTC_FOMC:
+  asset: "BTC"
+  event_type: "FOMC"
+  thesis: "BTC tends to price the path of liquidity and real yields around FOMC, with press-conference tone frequently dominating the initial statement reaction."
+  what_changed_recently: "Rate-path sensitivity has increased versus headline policy-rate level."
+  risk_watchouts: "Whipsaw risk is highest between statement release and Powell Q&A."
+  execution_checklist:
+    - "Map expected policy path versus futures pricing pre-event."
+    - "Wait for confirmation after press conference starts."
+    - "Scale entries in multiple tranches, not one fill."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+ETH_CPI:
+  asset: "ETH"
+  event_type: "CPI"
+  thesis: "ETH reacts to inflation prints through both risk appetite and crypto-beta rotation, often showing larger relative swings than BTC during regime shifts."
+  what_changed_recently: "Layer-2 narrative flows can amplify post-CPI trend continuation."
+  risk_watchouts: "Network-specific headlines may contaminate pure macro interpretation."
+  execution_checklist:
+    - "Compare ETH/BTC ratio around event open."
+    - "Confirm spot-volume participation before breakout trades."
+    - "Reduce leverage when spread volatility widens."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+ETH_NFP:
+  asset: "ETH"
+  event_type: "NFP"
+  thesis: "ETH has historically shown mixed first-day response to payroll shocks, but directional follow-through improves when dollar trend aligns with crypto market breadth."
+  what_changed_recently: "Cross-exchange depth has improved, reducing single-venue distortion."
+  risk_watchouts: "Thin weekend-adjacent liquidity can produce false breaks."
+  execution_checklist:
+    - "Validate move with ETH perp funding and open interest."
+    - "Use smaller first entry and add on confirmation."
+    - "Monitor ETH/BTC and TOTAL3 for breadth confirmation."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+ETH_FOMC:
+  asset: "ETH"
+  event_type: "FOMC"
+  thesis: "ETH tends to inherit macro direction from rate expectations, but relative performance improves when policy uncertainty falls and volatility compresses."
+  what_changed_recently: "Macro-to-crypto transmission is faster due to tighter cross-asset monitoring."
+  risk_watchouts: "Policy surprise can trigger correlated liquidation cascades."
+  execution_checklist:
+    - "Track implied volatility term structure before event."
+    - "Avoid chasing first impulse candle."
+    - "Anchor exits to predefined volatility bands."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+GOLD_CPI:
+  asset: "GOLD"
+  event_type: "CPI"
+  thesis: "Gold's CPI behavior is primarily a real-yield and USD function; directional conviction increases when CPI surprise and Treasury move point the same way."
+  what_changed_recently: "Safe-haven allocation has become more sensitive to policy-cut expectations."
+  risk_watchouts: "Conflicting moves between yields and USD can produce range-bound noise."
+  execution_checklist:
+    - "Read US10Y real yield change alongside DXY."
+    - "Prefer breakout only after direction confirms on both metrics."
+    - "Set position size by ATR-based risk budget."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+GOLD_NFP:
+  asset: "GOLD"
+  event_type: "NFP"
+  thesis: "Gold often reacts inversely to payroll strength via rates repricing, but follow-through depends on whether labor surprise changes Fed expectations materially."
+  what_changed_recently: "Macro headline digestion has become faster, shortening reaction windows."
+  risk_watchouts: "Revisions and unemployment-rate cross-signals can flip initial direction."
+  execution_checklist:
+    - "Evaluate headline payroll plus revisions together."
+    - "Wait for rate market confirmation before adding size."
+    - "Use staggered exits around key session levels."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+GOLD_FOMC:
+  asset: "GOLD"
+  event_type: "FOMC"
+  thesis: "Gold's post-FOMC edge is strongest when statement, dots, and press conference align on easing or tightening trajectory."
+  what_changed_recently: "Terminal-rate narrative has given way to pace-of-easing narrative."
+  risk_watchouts: "Headline fade risk rises when policy message is mixed."
+  execution_checklist:
+    - "Map pre-event consensus versus actual guidance."
+    - "Reassess after press conference starts."
+    - "Use a hard invalidation level tied to yield reversal."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+QQQ_CPI:
+  asset: "QQQ"
+  event_type: "CPI"
+  thesis: "QQQ is highly duration-sensitive to CPI shocks. Positive inflation surprise usually pressures multiples first, then recovers if growth narrative stays intact."
+  what_changed_recently: "Mega-cap concentration has increased index-level event beta."
+  risk_watchouts: "Single-name earnings shocks can mask macro signal quality."
+  execution_checklist:
+    - "Track US2Y/US10Y move for duration impulse."
+    - "Observe semiconductor breadth for confirmation."
+    - "Use staged entries around first-hour range."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+QQQ_NFP:
+  asset: "QQQ"
+  event_type: "NFP"
+  thesis: "QQQ's NFP response is conditional: strong jobs can be bearish through yields, but bullish if interpreted as soft-landing without hawkish repricing."
+  what_changed_recently: "Market has shifted to balancing growth optimism against rate pressure."
+  risk_watchouts: "Conflicting wage and unemployment signals can increase intraday chop."
+  execution_checklist:
+    - "Check average hourly earnings alongside payrolls."
+    - "Confirm direction with Nasdaq futures breadth."
+    - "Avoid oversized 0DTE exposure in first 20 minutes."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+QQQ_FOMC:
+  asset: "QQQ"
+  event_type: "FOMC"
+  thesis: "QQQ generally trends with forward-rate expectations, and reactions are magnified when valuation is stretched before the meeting."
+  what_changed_recently: "Communication tone has become a bigger driver than rate level itself."
+  risk_watchouts: "A dovish statement can still fail if Q&A tone turns cautious."
+  execution_checklist:
+    - "Track implied cuts path before and after statement."
+    - "Wait for confirmation after Q&A begins."
+    - "Size positions based on realized volatility percentile."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+SPY_CPI:
+  asset: "SPY"
+  event_type: "CPI"
+  thesis: "SPY reacts to CPI through broad risk-premium repricing; downside inflation surprises often support index breadth while upside shocks compress valuation multiples."
+  what_changed_recently: "Sector rotation speed has accelerated in the post-tightening phase."
+  risk_watchouts: "Energy and healthcare moves can offset index-level signal clarity."
+  execution_checklist:
+    - "Track breadth (advance/decline) with index move."
+    - "Compare rate-sensitive sectors versus defensives."
+    - "Use predefined stop distance from event range."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+SPY_NFP:
+  asset: "SPY"
+  event_type: "NFP"
+  thesis: "SPY's payroll reaction depends on whether labor strength implies growth support or renewed rate pressure; context from wages and revisions is critical."
+  what_changed_recently: "Market has priced labor resilience with tighter tolerance for inflation reacceleration."
+  risk_watchouts: "False trend starts are common before cash-session participation increases."
+  execution_checklist:
+    - "Read payroll, wages, and revisions as a package."
+    - "Wait for cash equity open confirmation."
+    - "Scale out into intraday volatility spikes."
+  reviewed_at: "2026-03-03"
+  status: "draft"
+
+SPY_FOMC:
+  asset: "SPY"
+  event_type: "FOMC"
+  thesis: "The S&P 500's reaction to FOMC rate decisions is heavily dictated by the preceding 30-day index trajectory. A 'buy the rumor, sell the fact' dynamic dominates when equities enter the meeting at all-time highs. Conversely, preemptive market fear often yields a powerful relief rally on inline dot-plot projections."
+  what_changed_recently: "The market's focal point has pivoted from terminal rate pricing to the trajectory of quantitative tightening (QT) tapering."
+  risk_watchouts: "Jerome Powell's press conference (30 minutes post-release) frequently reverses the initial algorithmic reaction."
+  execution_checklist:
+    - "Hedge long portfolios with short-dated VIX call options 24h prior."
+    - "Avoid initiating 0DTE (Zero Days to Expiration) option strategies during the first 15 minutes of the release."
+    - "Analyze the initial sector rotation (e.g., Tech vs. Utilities) for duration risk clues."
+  reviewed_at: "2026-03-03"
+  status: "approved"

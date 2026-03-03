@@ -1,0 +1,114 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TrustSignals from '../../../components/TrustSignals.astro';
+import { getCollection } from 'astro:content';
+import { listHubRoutes, loadHubBriefs } from '../../../lib/hubBriefs';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const briefMap = loadHubBriefs();
+
+  return listHubRoutes().map((route) => {
+    const key = route.key;
+    const brief = briefMap[key];
+    const latestPost = posts
+      .filter((post) => {
+        const asset = String(post.data.tags?.[0] || '').toUpperCase();
+        const eventType = String(post.data.event_type || '').toUpperCase();
+        return asset === route.asset && eventType === route.event;
+      })
+      .sort((a, b) => {
+        const ad = a.data.event_date || a.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
+        const bd = b.data.event_date || b.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
+        return bd.localeCompare(ad);
+      })[0];
+
+    return {
+      params: { asset: route.asset.toLowerCase(), event: route.event.toLowerCase() },
+      props: {
+        asset: route.asset,
+        eventType: route.event,
+        brief,
+        latestSlug: latestPost?.slug || '',
+        latestEventDate: latestPost?.data?.event_date || '',
+      },
+    };
+  });
+}
+
+const { asset, eventType, brief, latestSlug, latestEventDate } = Astro.props;
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Playbooks', url: '/playbooks' },
+  { name: asset, url: `/tags/${asset.toLowerCase()}` },
+  { name: eventType, url: `/playbooks/${asset.toLowerCase()}/${eventType.toLowerCase()}` },
+];
+
+const reviewedAt = brief?.reviewed_at || '--';
+const status = String(brief?.status || 'draft').toLowerCase();
+---
+
+<Layout
+  title={`${asset} After ${eventType} Hub Playbook`}
+  description={`${asset} × ${eventType} human-guided playbook with thesis, risk watchouts, and execution checklist.`}
+  breadcrumbs={breadcrumbs}
+>
+  <section class="hero-panel py-14">
+    <div class="max-w-5xl mx-auto px-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="badge-chip" style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.25);color:#e5ecfb;">{asset}</span>
+        <span class="badge-chip" style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.25);color:#e5ecfb;">{eventType}</span>
+        {status === 'draft' ? (
+          <span class="badge-chip metric-down">Draft thesis</span>
+        ) : (
+          <span class="badge-chip metric-up">Approved</span>
+        )}
+      </div>
+      <h1 class="text-4xl font-extrabold text-white">{asset} × {eventType} Hub Playbook</h1>
+      <p class="text-blue-100 mt-3 text-lg">Human+Template operating view. Reviewed at {reviewedAt}.</p>
+    </div>
+  </section>
+
+  <section class="max-w-5xl mx-auto px-4 py-10 space-y-4">
+    <article class="surface-card p-6">
+      <h2 class="text-xl font-extrabold">Thesis</h2>
+      <p class="mt-3 text-sm leading-7" style="color:var(--muted);">{brief?.thesis}</p>
+    </article>
+
+    <article class="surface-card p-6">
+      <h2 class="text-xl font-extrabold">What Changed Recently</h2>
+      <p class="mt-3 text-sm leading-7" style="color:var(--muted);">{brief?.what_changed_recently}</p>
+    </article>
+
+    <article class="surface-card p-6">
+      <h2 class="text-xl font-extrabold">Risk Watchouts</h2>
+      <p class="mt-3 text-sm leading-7" style="color:var(--muted);">{brief?.risk_watchouts}</p>
+    </article>
+
+    <article class="surface-card p-6">
+      <h2 class="text-xl font-extrabold">Execution Checklist</h2>
+      <ul class="mt-3 space-y-2 text-sm" style="color:var(--muted);">
+        {(brief?.execution_checklist || []).map((item) => (
+          <li>• {item}</li>
+        ))}
+      </ul>
+    </article>
+
+    <article class="surface-card p-6">
+      <h2 class="text-xl font-extrabold">Related Entrypoints</h2>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <a class="btn-ghost text-sm" href={`/tags/${asset.toLowerCase()}`}>Open {asset} Asset Hub</a>
+        <a class="btn-ghost text-sm" href={`/events/${eventType.toLowerCase()}`}>Open {eventType} Event Hub</a>
+        {latestSlug ? (
+          <a class="btn-primary text-sm" href={`/blog/${latestSlug}`}>Open Latest Research ({latestEventDate || 'latest'})</a>
+        ) : (
+          <span class="badge-chip">No linked research yet</span>
+        )}
+      </div>
+    </article>
+
+    <TrustSignals dataLastUpdatedAt={reviewedAt} confidenceLevel={status === 'draft' ? 'low' : 'normal'} />
+  </section>
+</Layout>

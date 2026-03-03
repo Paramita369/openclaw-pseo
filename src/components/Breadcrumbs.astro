@@ -1,0 +1,43 @@
+---
+const { items = [] } = Astro.props;
+
+const crumbs = Array.isArray(items)
+  ? items.filter(
+      (item) =>
+        item &&
+        typeof item.name === 'string' &&
+        typeof item.url === 'string' &&
+        item.name.trim().length > 0 &&
+        item.url.trim().length > 0
+    )
+  : [];
+---
+
+{
+  crumbs.length > 0 && (
+    <nav aria-label="Breadcrumb" class="mb-5 text-sm" style="color:var(--muted);">
+      <ol class="flex flex-wrap items-center gap-2">
+        {crumbs.map((crumb, index) => {
+          const isLast = index === crumbs.length - 1;
+          return (
+            <>
+              <li>
+                {isLast ? (
+                  <span class="font-semibold" style="color:var(--text);">{crumb.name}</span>
+                ) : (
+                  <a href={crumb.url} class="hover:underline">{crumb.name}</a>
+                )}
+              </li>
+              {!isLast && (
+                <li aria-hidden="true" style="color:var(--muted);">
+                  &gt;
+                </li>
+              )}
+            </>
+          );
+        })}
+      </ol>
+    </nav>
+  )
+}
+

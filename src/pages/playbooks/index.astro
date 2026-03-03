@@ -1,0 +1,69 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { listHubRoutes, loadHubBriefs } from '../../lib/hubBriefs';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Playbooks', url: '/playbooks' },
+];
+
+const briefMap = loadHubBriefs();
+const cards = listHubRoutes().map((route) => {
+  const brief = briefMap[route.key];
+  return {
+    ...route,
+    status: brief.status,
+    reviewedAt: brief.reviewed_at,
+    title: `${route.asset} × ${route.event} Hub Playbook`,
+    href: `/playbooks/${route.asset.toLowerCase()}/${route.event.toLowerCase()}`,
+  };
+});
+
+const grouped = ['BTC', 'ETH', 'GOLD', 'QQQ', 'SPY'].map((asset) => ({
+  asset,
+  items: cards.filter((card) => card.asset === asset),
+}));
+---
+
+<Layout
+  title="Playbook Hubs"
+  description="Human+Template hub pages for BTC/ETH/GOLD/QQQ/SPY across CPI, NFP, and FOMC."
+  breadcrumbs={breadcrumbs}
+>
+  <section class="hero-panel py-14">
+    <div class="max-w-6xl mx-auto px-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <h1 class="text-4xl font-extrabold text-white">Playbook Hubs</h1>
+      <p class="text-blue-100 mt-3 text-lg">15 asset-event hubs with trust layer and operator checklist.</p>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-10 space-y-6">
+    {grouped.map((group) => (
+      <article class="surface-card p-5">
+        <div class="flex items-center justify-between gap-2 mb-4">
+          <h2 class="text-2xl font-extrabold">{group.asset}</h2>
+          <a class="btn-ghost text-sm" href={`/tags/${group.asset.toLowerCase()}`}>Open {group.asset} Asset Hub</a>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-3">
+          {group.items.map((item) => (
+            <a href={item.href} class="rounded-xl border p-4 hover:translate-y-[-2px] transition-transform" style="border-color:var(--border);background:var(--surface-alt);">
+              <div class="flex items-center gap-2">
+                <span class="badge-chip">{item.event}</span>
+                {item.status === 'draft' ? (
+                  <span class="badge-chip metric-down">Draft thesis</span>
+                ) : (
+                  <span class="badge-chip metric-up">Approved</span>
+                )}
+              </div>
+              <h3 class="mt-2 text-sm font-bold leading-snug">{item.title}</h3>
+              <p class="mt-2 text-xs" style="color:var(--muted);">Reviewed: {item.reviewedAt}</p>
+            </a>
+          ))}
+        </div>
+      </article>
+    ))}
+  </section>
+</Layout>

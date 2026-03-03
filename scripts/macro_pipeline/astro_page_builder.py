@@ -7,6 +7,7 @@ import argparse
 import csv
 import json
 import os
+import re
 import sqlite3
 import statistics
 from dataclasses import dataclass
@@ -18,6 +19,10 @@ try:
     import requests
 except Exception:  # pragma: no cover
     requests = None
+try:
+    import yaml
+except Exception:  # pragma: no cover
+    yaml = None
 
 from pipeline_utils import (
     ALLOWED_EVENT_TYPES,
@@ -86,6 +91,9 @@ EVENT_FRESHNESS_THRESHOLDS = {
     "NFP": 45,
     "FOMC": 90,
 }
+
+HUB_ASSETS = ["BTC", "ETH", "GOLD", "QQQ", "SPY"]
+HUB_EVENTS = ["CPI", "NFP", "FOMC"]
 
 
 @dataclass
@@ -453,6 +461,136 @@ def robust_penalty_breakdown(
     return breakdown, total
 
 
+def parse_int(value: object, fallback: int = 0) -> int:
+    number = parse_float(value)
+    if number is None:
+        return fallback
+    return int(round(number))
+
+
+def sort_date_rank(value: str) -> int:
+    text = str(value or "").strip()
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", text):
+        return int(text.replace("-", ""))
+    return 0
+
+
+def derive_signal_from_row(row: Dict[str, Any]) -> str:
+    signal = str(row.get("signal", "")).strip()
+    if signal in {"Bullish", "Neutral", "Bearish"}:
+        return signal
+
+    raw_score = parse_float(row.get("raw_signal_score"))
+    if raw_score is None:
+        t1_up = parse_float(row.get("rise_prob_t1"), 50.0)
+        t7_up = parse_float(row.get("rise_prob_t7"), 50.0)
+        median_t7 = parse_float(row.get("median_t7_pct"), parse_float(row.get("impact_t7_pct"), 0.0))
+        _, raw_score = signal_from_probabilities(float(t1_up or 50.0), float(t7_up or 50.0), float(median_t7 or 0.0))
+
+    if float(raw_score) >= 8:
+        return "Bullish"
+    if float(raw_score) <= -8:
+        return "Bearish"
+    return "Neutral"
+
+
+def build_related_lookup(rows: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
+    by_slug: Dict[str, Dict[str, Any]] = {}
+    by_asset_event: Dict[Tuple[str, str], List[Dict[str, Any]]] = {}
+    by_asset: Dict[str, List[Dict[str, Any]]] = {}
+
+    for row in rows:
+        asset = str(row.get("asset", "")).upper().strip()
+        event_date = str(row.get("date", "")).strip()
+        event_type = normalize_event_type(str(row.get("event_type", "")), event_date)
+        if not asset or event_type not in ALLOWED_EVENT_TYPES:
+            continue
+
+        slug = str(row.get("url_slug", "")).strip() or canonical_slug(asset, event_type, event_date)
+        if not slug:
+            continue
+
+        title = str(row.get("title", "")).strip() or f"{asset} After {event_type} ({event_date}): Historical T+1/T+7 Probability"
+        sharpe_t7 = round(float(parse_float(row.get("sharpe_t7"), 0.0) or 0.0), 2)
+        median_t7_pct = round(
+            float(parse_float(row.get("median_t7_pct"), parse_float(row.get("impact_t7_pct"), 0.0)) or 0.0), 2
+        )
+        sample_size = max(parse_int(row.get("sample_size"), 0), 0)
+
+        candidate = {
+            "slug": slug,
+            "asset": asset,
+            "event_type": event_type,
+            "event_date": event_date,
+            "title": title,
+            "signal": derive_signal_from_row(row),
+            "sharpe_t7": sharpe_t7,
+            "median_t7_pct": median_t7_pct,
+            "sample_size": sample_size,
+        }
+
+        existing = by_slug.get(slug)
+        if existing:
+            old_key = (-float(existing["sharpe_t7"]), -sort_date_rank(existing["event_date"]), str(existing["slug"]))
+            new_key = (-float(candidate["sharpe_t7"]), -sort_date_rank(candidate["event_date"]), str(candidate["slug"]))
+            if new_key < old_key:
+                by_slug[slug] = candidate
+        else:
+            by_slug[slug] = candidate
+
+    for candidate in by_slug.values():
+        asset = str(candidate["asset"])
+        event_type = str(candidate["event_type"])
+        by_asset_event.setdefault((asset, event_type), []).append(candidate)
+        by_asset.setdefault(asset, []).append(candidate)
+
+    sort_key = lambda item: (
+        -float(item.get("sharpe_t7", 0.0)),
+        -sort_date_rank(str(item.get("event_date", ""))),
+        str(item.get("slug", "")),
+    )
+    for key in list(by_asset_event.keys()):
+        by_asset_event[key] = sorted(by_asset_event[key], key=sort_key)
+    for key in list(by_asset.keys()):
+        by_asset[key] = sorted(by_asset[key], key=sort_key)
+
+    lookup: Dict[str, List[Dict[str, Any]]] = {}
+    for slug, candidate in by_slug.items():
+        asset = str(candidate["asset"])
+        event_type = str(candidate["event_type"])
+        preferred = [item for item in by_asset_event.get((asset, event_type), []) if item["slug"] != slug]
+        fallback = [
+            item
+            for item in by_asset.get(asset, [])
+            if item["slug"] != slug and str(item.get("event_type")) != event_type
+        ]
+
+        merged: List[Dict[str, Any]] = []
+        seen: set[str] = set()
+        for item in [*preferred, *fallback]:
+            item_slug = str(item.get("slug", ""))
+            if not item_slug or item_slug in seen:
+                continue
+            seen.add(item_slug)
+            merged.append(
+                {
+                    "slug": item_slug,
+                    "title": str(item.get("title", "")).strip(),
+                    "event_date": str(item.get("event_date", "")).strip(),
+                    "event_type": str(item.get("event_type", "")).upper(),
+                    "signal": str(item.get("signal", "Neutral")),
+                    "sharpe_t7": round(float(parse_float(item.get("sharpe_t7"), 0.0) or 0.0), 2),
+                    "median_t7_pct": round(float(parse_float(item.get("median_t7_pct"), 0.0) or 0.0), 2),
+                    "sample_size": max(parse_int(item.get("sample_size"), 0), 0),
+                }
+            )
+            if len(merged) >= 3:
+                break
+        lookup[slug] = merged
+
+    return lookup
+
+
 def fetch_chart_data(asset: str, event_date: str) -> List[Dict[str, Any]]:
     try:
         import yfinance as yf
@@ -576,6 +714,7 @@ def build_markdown(
     data_last_updated_at: str,
     metrics: Dict[str, float],
     probabilities: Dict[str, Any],
+    related_events: List[Dict[str, Any]],
     analysis: str,
     chart_data: List[Dict[str, Any]],
     event_direction: str,
@@ -662,6 +801,7 @@ probabilities:
       median: {probabilities['conditional']['t7']['median']}
       mean: {probabilities['conditional']['t7']['mean']}
       sample: {probabilities['conditional']['t7']['sample']}
+related_events: {json.dumps(related_events)}
 {chart_line}---
 
 ## Event Snapshot
@@ -774,15 +914,97 @@ def write_sitemap_index(
     path.write_text(payload, encoding="utf-8")
 
 
+def parse_yaml_scalar(value: str) -> str:
+    text = str(value or "").strip()
+    if (text.startswith('"') and text.endswith('"')) or (text.startswith("'") and text.endswith("'")):
+        return text[1:-1]
+    return text
+
+
+def parse_hub_briefs_fallback(content: str) -> Dict[str, Dict[str, Any]]:
+    payload: Dict[str, Dict[str, Any]] = {}
+    current_key: Optional[str] = None
+    in_checklist = False
+
+    for raw_line in content.splitlines():
+        line = raw_line.rstrip()
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+
+        if not line.startswith(" ") and stripped.endswith(":"):
+            key = stripped[:-1].strip()
+            if not key:
+                continue
+            payload[key] = {}
+            current_key = key
+            in_checklist = False
+            continue
+
+        if not current_key or current_key not in payload:
+            continue
+
+        if in_checklist and stripped.startswith("- "):
+            payload[current_key].setdefault("execution_checklist", [])
+            if isinstance(payload[current_key]["execution_checklist"], list):
+                payload[current_key]["execution_checklist"].append(parse_yaml_scalar(stripped[2:]))
+            continue
+
+        if line.startswith("  ") and ":" in stripped:
+            key, value = stripped.split(":", 1)
+            key = key.strip()
+            value = value.strip()
+            if key == "execution_checklist":
+                payload[current_key]["execution_checklist"] = []
+                in_checklist = True
+            else:
+                payload[current_key][key] = parse_yaml_scalar(value)
+                in_checklist = False
+
+    return payload
+
+
+def load_playbook_lastmods(project_root: Path, default_date: str) -> List[Dict[str, str]]:
+    fallback = [{"asset": asset, "event": event, "lastmod": default_date} for asset in HUB_ASSETS for event in HUB_EVENTS]
+    path = project_root / "data" / "hub_briefs.yaml"
+    if not path.exists():
+        return fallback
+
+    raw = path.read_text(encoding="utf-8")
+    payload: Any
+    if yaml is not None:
+        try:
+            payload = yaml.safe_load(raw)
+        except Exception:
+            payload = parse_hub_briefs_fallback(raw)
+    else:
+        payload = parse_hub_briefs_fallback(raw)
+
+    if not isinstance(payload, dict):
+        return fallback
+
+    items: List[Dict[str, str]] = []
+    for asset in HUB_ASSETS:
+        for event in HUB_EVENTS:
+            key = f"{asset}_{event}"
+            brief = payload.get(key) if isinstance(payload.get(key), dict) else {}
+            reviewed = str(brief.get("reviewed_at", "")).strip() if isinstance(brief, dict) else ""
+            reviewed_norm = reviewed if re.match(r"^\d{4}-\d{2}-\d{2}$", reviewed) else default_date
+            items.append({"asset": asset, "event": event, "lastmod": reviewed_norm})
+    return items
+
+
 def generate_dynamic_sitemaps(
     public_dir: Path,
     output_dir: Path,
     domain: str,
     manifest: Dict[str, Any],
     build_timestamp: str,
+    project_root: Path,
 ) -> None:
     ensure_dir(public_dir)
     today = (normalize_db_timestamp(build_timestamp) or datetime.now(timezone.utc).isoformat())[:10]
+    playbook_hubs = load_playbook_lastmods(project_root=project_root, default_date=today)
     slugs = sorted(path.stem for path in output_dir.glob("*.md"))
 
     pages_manifest = manifest.get("pages", {}) if isinstance(manifest.get("pages"), dict) else {}
@@ -824,12 +1046,14 @@ def generate_dynamic_sitemaps(
 
     blog_root_lastmod = max_lastmod(slugs)
     events_root_lastmod = max([max_lastmod(slugs_by_event[event]) for event in events], default=today)
-    home_lastmod = max(blog_root_lastmod, events_root_lastmod)
+    playbooks_root_lastmod = max((item["lastmod"] for item in playbook_hubs), default=today)
+    home_lastmod = max(blog_root_lastmod, events_root_lastmod, playbooks_root_lastmod)
 
     core_entries = [
         {"loc": f"{domain}/", "lastmod": home_lastmod, "changefreq": "daily", "priority": "1.0"},
         {"loc": f"{domain}/leaderboard", "lastmod": blog_root_lastmod, "changefreq": "daily", "priority": "0.95"},
         {"loc": f"{domain}/events", "lastmod": events_root_lastmod, "changefreq": "daily", "priority": "0.9"},
+        {"loc": f"{domain}/playbooks", "lastmod": playbooks_root_lastmod, "changefreq": "daily", "priority": "0.88"},
         {"loc": f"{domain}/blog", "lastmod": blog_root_lastmod, "changefreq": "daily", "priority": "0.85"},
     ]
     write_urlset(public_dir / "sitemap-core.xml", core_entries)
@@ -856,6 +1080,17 @@ def generate_dynamic_sitemaps(
     ]
     write_urlset(public_dir / "sitemap-events.xml", event_entries)
 
+    playbook_entries = [
+        {
+            "loc": f"{domain}/playbooks/{item['asset'].lower()}/{item['event'].lower()}",
+            "lastmod": item["lastmod"],
+            "changefreq": "weekly",
+            "priority": "0.78",
+        }
+        for item in playbook_hubs
+    ]
+    write_urlset(public_dir / "sitemap-playbooks.xml", playbook_entries)
+
     chunk_size = 1000
     blog_files: List[str] = []
     file_lastmods: Dict[str, str] = {}
@@ -879,8 +1114,9 @@ def generate_dynamic_sitemaps(
     file_lastmods["sitemap-core.xml"] = max([entry["lastmod"] for entry in core_entries], default=today)
     file_lastmods["sitemap-assets.xml"] = max([entry["lastmod"] for entry in asset_entries], default=today)
     file_lastmods["sitemap-events.xml"] = max([entry["lastmod"] for entry in event_entries], default=today)
+    file_lastmods["sitemap-playbooks.xml"] = max([entry["lastmod"] for entry in playbook_entries], default=today)
 
-    index_files = ["sitemap-core.xml", "sitemap-assets.xml", "sitemap-events.xml", *blog_files]
+    index_files = ["sitemap-core.xml", "sitemap-assets.xml", "sitemap-events.xml", "sitemap-playbooks.xml", *blog_files]
     write_sitemap_index(public_dir / "sitemap-index.xml", domain, index_files, file_lastmods, today)
     write_sitemap_index(public_dir / "sitemap.xml", domain, index_files, file_lastmods, today)
 
@@ -951,7 +1187,12 @@ def sync_vercel_redirects(vercel_config_path: Path, slug_redirects: Dict[str, st
     vercel_config_path.write_text(json.dumps(config, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
-def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, Any]) -> Dict[str, Any]:
+def process_row(
+    row: Dict[str, Any],
+    context: BuildContext,
+    manifest: Dict[str, Any],
+    related_lookup: Dict[str, List[Dict[str, Any]]],
+) -> Dict[str, Any]:
     asset = str(row.get("asset", "")).upper().strip()
     event_date = str(row.get("date", "")).strip()
     event_type = normalize_event_type(str(row.get("event_type", "")), event_date)
@@ -1115,6 +1356,7 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
     analysis = llm_text or fallback_analysis(asset, event_type, event_direction, probabilities, signal)
 
     previous = manifest.get("pages", {}).get(slug, {})
+    related_events = related_lookup.get(slug, [])
     chart_data = fetch_chart_data(asset, event_date)
     data_last_updated_at = (
         fetch_data_last_updated_at(context.db_path, asset, event_type, event_date)
@@ -1134,6 +1376,7 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         "intent": intent,
         "metrics": metrics,
         "probabilities": probabilities,
+        "related_events": related_events,
         "signal": signal,
         "raw_signal_score": raw_signal_score,
         "robust_score": robust_score,
@@ -1182,6 +1425,7 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
             data_last_updated_at=normalized_data_last_updated_at,
             metrics=metrics,
             probabilities=probabilities,
+            related_events=related_events,
             analysis=analysis,
             chart_data=chart_data,
             event_direction=event_direction,
@@ -1221,6 +1465,7 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         "robust_score": robust_score,
         "penalty_breakdown": penalty_breakdown,
         "sample_size": probabilities["sample_size"],
+        "related_count": len(related_events),
         "asof_date": asof_date,
         "event_direction": event_direction,
         "legacy_slugs": [legacy_slug] if legacy_slug and legacy_slug != slug else [],
@@ -1312,6 +1557,8 @@ def main() -> None:
     if context.max_pages is not None:
         changed_targets = changed_targets[: context.max_pages]
 
+    related_lookup = build_related_lookup(targets)
+
     print(f"📄 Total targets: {len(targets)}")
     print(f"🧩 Candidate targets: {len(changed_targets)}")
 
@@ -1321,7 +1568,7 @@ def main() -> None:
 
     for row in changed_targets:
         try:
-            result = process_row(row, context, manifest)
+            result = process_row(row, context, manifest, related_lookup)
             if result["status"] == "generated":
                 generated += 1
             else:
@@ -1358,6 +1605,7 @@ def main() -> None:
         domain=f"https://{context.offers_config.get('default_domain', 'quantmacro.vercel.app')}",
         manifest=manifest,
         build_timestamp=context.build_timestamp,
+        project_root=context.project_root,
     )
 
     write_slug_redirects(context.slug_redirects_path, manifest.get("slug_redirects", {}))

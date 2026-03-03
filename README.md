@@ -13,6 +13,11 @@ QuantMacro is a static-first pSEO system on Vercel focused on event-driven proba
 python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
 ```
 
+Skip remote crawler contract check when needed:
+```bash
+python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --skip-crawl-check
+```
+
 ## GitHub Actions Backup (Manual Only)
 - Workflow: `Daily QuantMacro Update`
 - Trigger: `Actions -> Daily QuantMacro Update -> Run workflow`
@@ -37,11 +42,12 @@ pip install -r requirements.txt
 4. Fetch event outcomes (`vs_previous`) from FRED
 5. Build full target matrix (`5 assets × all CPI/NFP/FOMC dates`)
 6. Compute risk metrics
-7. Generate event pages + redirects + segmented sitemaps
+7. Generate event pages + redirects + segmented sitemaps (core/assets/events/playbooks/blog)
 8. Run strict quality gates
 9. Run `astro build`
-10. Generate KPI report
-11. Commit/push only whitelisted paths
+10. Run crawler access contract check (`Googlebot` + `Google-Extended`)
+11. Generate KPI report
+12. Commit/push only whitelisted paths
 
 ## Git Whitelist
 - `src/content/blog/`
@@ -103,12 +109,23 @@ Strict failures include:
 - redirect map integrity issues
 - sitemap containing legacy macro slugs
 - missing segmented sitemap index (`sitemap-index.xml` + sub-sitemaps)
+- missing playbook sitemap chunk (`sitemap-playbooks.xml`)
 - non-full target matrix coverage (must match DB event-date matrix)
 - missing/invalid event outcome direction fields
 - stale event pool (`event_calendar`) for CPI/NFP/FOMC (>90 days)
 - missing QQQ/SPY CTA route contract (`primary=IBKR`, `secondary includes Futu`)
 - stale semantic mismatch (homepage should switch to `Latest Event Playbook` when data is old)
+- crawler policy mismatch (`robots.txt`/`vercel.json` blocks `Google-Extended` or sets global blocking `X-Robots-Tag`)
+- missing Hub route contract (`/playbooks/{asset}/{event}` + trust layer + sitemap coverage)
 
 ## Notes
 - `run_daily_ops` is the primary operation path; GitHub Actions is manual backup only.
 - Educational content only, not investment advice.
+
+## Search Console Operations
+- Submit only `https://quantmacro.vercel.app/sitemap.xml` (index entrypoint).
+- Remove duplicate failed sitemap submissions before re-submit.
+- Use URL Inspection -> Test live URL for:
+  - `/`
+  - `/leaderboard`
+  - one representative `/blog/{slug}`

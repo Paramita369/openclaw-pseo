@@ -2,7 +2,7 @@
 import Analytics from '@vercel/analytics/astro';
 import '../styles/global.css';
 
-const { title, description, frontmatter } = Astro.props;
+const { title, description, frontmatter, breadcrumbs = [] } = Astro.props;
 
 const metaDesc =
   description ||
@@ -10,46 +10,82 @@ const metaDesc =
 const siteUrl = 'https://quantmacro.vercel.app';
 const currentUrl = Astro.url.href;
 const ga4MeasurementId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID || '';
+const normalizedBreadcrumbs = Array.isArray(breadcrumbs)
+  ? breadcrumbs
+      .filter((crumb) => crumb && typeof crumb.name === 'string' && typeof crumb.url === 'string' && crumb.name.trim() && crumb.url.trim())
+      .map((crumb) => {
+        const relative = crumb.url.startsWith('http')
+          ? crumb.url
+          : `${siteUrl}${crumb.url.startsWith('/') ? crumb.url : `/${crumb.url}`}`;
+        return { name: crumb.name.trim(), url: relative };
+      })
+  : [];
 
-let schema = null;
-if (frontmatter) {
-  schema = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: title,
-    description: metaDesc,
-    author: {
-      '@type': 'Organization',
-      name: 'QuantMacro',
-      url: siteUrl,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'QuantMacro',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${siteUrl}/favicon.svg`,
-      },
-    },
-    mainEntityOfPage: {
+const organizationId = `${siteUrl}/#organization`;
+const websiteId = `${siteUrl}/#website`;
+const webpageId = `${currentUrl}#webpage`;
+const articleId = `${currentUrl}#article`;
+const breadcrumbId = `${currentUrl}#breadcrumb`;
+
+const organizationSchema = {
+  '@type': 'Organization',
+  '@id': organizationId,
+  name: 'QuantMacro',
+  url: siteUrl,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${siteUrl}/favicon.svg`,
+  },
+};
+
+const websiteSchema = {
+  '@type': 'WebSite',
+  '@id': websiteId,
+  name: 'QuantMacro',
+  url: siteUrl,
+  description: metaDesc,
+  publisher: { '@id': organizationId },
+};
+
+const pageSchema = frontmatter
+  ? {
+      '@type': 'Article',
+      '@id': articleId,
+      mainEntityOfPage: { '@id': webpageId },
+      headline: title,
+      description: metaDesc,
+      author: { '@id': organizationId },
+      publisher: { '@id': organizationId },
+      datePublished: frontmatter.pubDate || new Date().toISOString().split('T')[0],
+      dateModified: frontmatter.data_last_updated_at || frontmatter.pubDate || new Date().toISOString().split('T')[0],
+      url: currentUrl,
+    }
+  : {
       '@type': 'WebPage',
-      '@id': currentUrl,
-    },
-    datePublished: frontmatter.pubDate || new Date().toISOString().split('T')[0],
-  };
-} else {
-  schema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'QuantMacro',
-    description: metaDesc,
-    url: siteUrl,
-    publisher: {
-      '@type': 'Organization',
-      name: 'QuantMacro',
-    },
-  };
+      '@id': webpageId,
+      isPartOf: { '@id': websiteId },
+      name: title,
+      description: metaDesc,
+      url: currentUrl,
+    };
+
+const graphNodes = [organizationSchema, websiteSchema, pageSchema];
+if (normalizedBreadcrumbs.length > 0) {
+  graphNodes.push({
+    '@type': 'BreadcrumbList',
+    '@id': breadcrumbId,
+    itemListElement: normalizedBreadcrumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.url,
+    })),
+  });
 }
+const schemaGraph = {
+  '@context': 'https://schema.org',
+  '@graph': graphNodes,
+};
 ---
 
 <!doctype html>
@@ -82,7 +118,7 @@ if (frontmatter) {
       rel="stylesheet"
     />
 
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
 
     {ga4MeasurementId && (
       <>
@@ -107,6 +143,7 @@ if (frontmatter) {
           <div class="hidden md:flex items-center gap-2 text-sm font-semibold">
             <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/">Dashboard</a>
             <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/events">Events</a>
+            <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/playbooks">Playbooks</a>
             <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/leaderboard">Playbook</a>
             <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/blog">Research</a>
           </div>

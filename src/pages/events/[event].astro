@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
 export async function getStaticPaths() {
   const eventTypes = ['CPI', 'NFP', 'FOMC'];
@@ -30,11 +31,21 @@ for (const post of filtered) {
 }
 
 const assets = [...byAsset.keys()].sort();
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Events', url: '/events' },
+  { name: eventType, url: `/events/${eventType.toLowerCase()}` },
+];
 ---
 
-<Layout title={`${eventType} Event Hub`} description={`Cross-asset ${eventType} probability playbooks with event-direction context.`}>
+<Layout
+  title={`${eventType} Event Hub`}
+  description={`Cross-asset ${eventType} probability playbooks with event-direction context.`}
+  breadcrumbs={breadcrumbs}
+>
   <section class="hero-panel py-14">
     <div class="max-w-6xl mx-auto px-4">
+      <Breadcrumbs items={breadcrumbs} />
       <p class="badge-chip mb-4" style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.25);color:#e5ecfb;">Event Hub</p>
       <h1 class="text-4xl font-extrabold text-white">{eventType} Cross-Asset Playbook</h1>
       <p class="text-blue-100 mt-3 text-lg">{filtered.length} pages across {assets.length} assets.</p>

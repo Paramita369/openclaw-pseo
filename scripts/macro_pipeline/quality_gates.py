@@ -91,6 +91,9 @@ EVENT_FRESHNESS_THRESHOLDS = {
     "FOMC": 90,
 }
 
+HUB_ASSETS = ["BTC", "ETH", "GOLD", "QQQ", "SPY"]
+HUB_EVENTS = ["CPI", "NFP", "FOMC"]
+
 EXPECTED_ROBUST_PENALTIES = {
     "freshness_stale": 6.0,
     "freshness_fresh": 0.0,
@@ -485,6 +488,7 @@ def validate_sitemap(
     core_path = public_dir / "sitemap-core.xml"
     assets_path = public_dir / "sitemap-assets.xml"
     events_path = public_dir / "sitemap-events.xml"
+    playbooks_path = public_dir / "sitemap-playbooks.xml"
     blog_paths = sorted(public_dir.glob("sitemap-blog-*.xml"))
 
     if not index_path.exists():
@@ -497,17 +501,19 @@ def validate_sitemap(
         violations.append("missing_sitemap_assets")
     if not events_path.exists():
         violations.append("missing_sitemap_events")
+    if not playbooks_path.exists():
+        violations.append("missing_sitemap_playbooks")
     if not blog_paths:
         violations.append("missing_sitemap_blog")
 
     index_content = index_path.read_text(encoding="utf-8")
-    for name in ["sitemap-core.xml", "sitemap-assets.xml", "sitemap-events.xml"]:
+    for name in ["sitemap-core.xml", "sitemap-assets.xml", "sitemap-events.xml", "sitemap-playbooks.xml"]:
         if name not in index_content:
             violations.append(f"sitemap_index_missing_{name.replace('.xml', '')}")
     if "sitemap-blog-" not in index_content:
         violations.append("sitemap_index_missing_blog_chunk")
 
-    for sitemap_file in [index_path, core_path, assets_path, events_path, *blog_paths]:
+    for sitemap_file in [index_path, core_path, assets_path, events_path, playbooks_path, *blog_paths]:
         if not sitemap_file.exists():
             continue
         content = sitemap_file.read_text(encoding="utf-8")
@@ -522,6 +528,7 @@ def validate_sitemap(
             "/": "1.0",
             "/leaderboard": "0.95",
             "/events": "0.9",
+            "/playbooks": "0.88",
             "/blog": "0.85",
         }
         for route, priority in expected_priorities.items():
@@ -537,6 +544,8 @@ def validate_sitemap(
         violations.append("assets_sitemap_missing_tags")
     if events_path.exists() and "/events/" not in events_path.read_text(encoding="utf-8"):
         violations.append("events_sitemap_missing_event_routes")
+    if playbooks_path.exists() and "/playbooks/" not in playbooks_path.read_text(encoding="utf-8"):
+        violations.append("playbooks_sitemap_missing_playbook_routes")
 
     blog_lastmods: List[str] = []
     for blog_sitemap in blog_paths:
@@ -852,6 +861,345 @@ def validate_freshness_semantics(
     return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
 
 
+def validate_schema_graph_and_breadcrumbs(root: Path) -> Dict[str, object]:
+    violations: List[str] = []
+
+    layout_path = root / "src" / "layouts" / "Layout.astro"
+    breadcrumbs_component = root / "src" / "components" / "Breadcrumbs.astro"
+    required_pages = [
+        root / "src" / "pages" / "blog" / "[slug].astro",
+        root / "src" / "pages" / "events" / "[event].astro",
+        root / "src" / "pages" / "tags" / "[tag].astro",
+        root / "src" / "pages" / "leaderboard.astro",
+        root / "src" / "pages" / "playbooks" / "index.astro",
+        root / "src" / "pages" / "playbooks" / "[asset]" / "[event].astro",
+    ]
+
+    if not layout_path.exists():
+        return {"violations": ["missing_layout_astro"], "count": 1}
+
+    layout_text = layout_path.read_text(encoding="utf-8")
+    jsonld_count = len(re.findall(r'type="application/ld\+json"', layout_text))
+    if jsonld_count != 1:
+        violations.append("schema_graph_single_script_required")
+    if '"@graph"' not in layout_text and "'@graph'" not in layout_text:
+        violations.append("schema_graph_missing_at_graph")
+    if "BreadcrumbList" not in layout_text:
+        violations.append("schema_graph_missing_breadcrumb_list")
+    if "breadcrumbs" not in layout_text:
+        violations.append("layout_missing_breadcrumb_prop")
+
+    if not breadcrumbs_component.exists():
+        violations.append("missing_breadcrumbs_component")
+    else:
+        component_text = breadcrumbs_component.read_text(encoding="utf-8")
+        if "aria-label=\"Breadcrumb\"" not in component_text:
+            violations.append("breadcrumbs_component_missing_aria")
+
+    for page_path in required_pages:
+        if not page_path.exists():
+            violations.append(f"missing_breadcrumb_page:{page_path.relative_to(root)}")
+            continue
+        source = page_path.read_text(encoding="utf-8")
+        if "Breadcrumbs" not in source:
+            violations.append(f"page_missing_breadcrumb_component:{page_path.relative_to(root)}")
+        if "breadcrumbs" not in source:
+            violations.append(f"page_missing_breadcrumb_data:{page_path.relative_to(root)}")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_related_events_integrity(content_dir: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+
+    files = sorted(content_dir.glob("*.md"))
+    slug_set = {path.stem for path in files}
+
+    for path in files:
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        related = fm.get("related_events")
+        if related is None:
+            continue
+        if not isinstance(related, list):
+            violations.append("related_events_not_list")
+            continue
+        if len(related) > 3:
+            violations.append("related_events_overflow")
+            continue
+
+        for item in related:
+            if not isinstance(item, dict):
+                violations.append("related_event_item_not_object")
+                break
+            for key in ["slug", "title", "event_date", "event_type", "signal", "sharpe_t7", "median_t7_pct", "sample_size"]:
+                if key not in item:
+                    violations.append(f"related_event_missing_{key}")
+                    break
+
+            slug = str(item.get("slug", "")).strip()
+            if not slug:
+                violations.append("related_event_empty_slug")
+                continue
+            if slug == path.stem:
+                violations.append("related_event_self_link")
+            if slug not in slug_set:
+                violations.append("related_event_slug_not_found")
+
+            if str(item.get("event_type", "")).upper() not in ALLOWED_EVENT_TYPES:
+                violations.append("related_event_invalid_event_type")
+            if str(item.get("signal", "")) not in {"Bullish", "Neutral", "Bearish"}:
+                violations.append("related_event_invalid_signal")
+            if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(item.get("event_date", ""))):
+                violations.append("related_event_invalid_event_date")
+
+            for numeric_field in ["sharpe_t7", "median_t7_pct", "sample_size"]:
+                if not is_finite_number(item.get(numeric_field)):
+                    violations.append(f"related_event_invalid_{numeric_field}")
+            if is_finite_number(item.get("sample_size")) and float(item.get("sample_size")) < 0:
+                violations.append("related_event_negative_sample_size")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_trust_layer(root: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    trust_component = root / "src" / "components" / "TrustSignals.astro"
+    blog_page = root / "src" / "pages" / "blog" / "[slug].astro"
+    hub_page = root / "src" / "pages" / "playbooks" / "[asset]" / "[event].astro"
+
+    if not trust_component.exists():
+        return {"violations": ["missing_trust_signals_component"], "count": 1}
+    trust_text = trust_component.read_text(encoding="utf-8")
+    required_markers = [
+        "not investment advice",
+        "FRED",
+        "yfinance",
+        "Methodology",
+        "dataLastUpdatedAt",
+    ]
+    for marker in required_markers:
+        if marker not in trust_text:
+            violations.append(f"trust_component_missing_{marker.lower().replace(' ', '_')}")
+
+    if not blog_page.exists():
+        violations.append("missing_blog_slug_page")
+    else:
+        blog_text = blog_page.read_text(encoding="utf-8")
+        if "TrustSignals" not in blog_text:
+            violations.append("blog_page_missing_trust_signals")
+        if "data_last_updated_at" not in blog_text:
+            violations.append("blog_page_missing_data_last_updated_at_binding")
+
+    if not hub_page.exists():
+        violations.append("missing_playbook_hub_page")
+    else:
+        hub_text = hub_page.read_text(encoding="utf-8")
+        if "TrustSignals" not in hub_text:
+            violations.append("playbook_hub_missing_trust_signals")
+        if "reviewedAt" not in hub_text:
+            violations.append("playbook_hub_missing_reviewed_at_binding")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def parse_hub_briefs_fallback(content: str) -> Dict[str, object]:
+    payload: Dict[str, object] = {}
+    current_key: str | None = None
+    current_item: Dict[str, object] | None = None
+    in_checklist = False
+
+    for raw_line in content.splitlines():
+        line = raw_line.rstrip()
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+
+        if not line.startswith(" ") and stripped.endswith(":"):
+            current_key = stripped[:-1].strip()
+            if not current_key:
+                continue
+            current_item = {}
+            payload[current_key] = current_item
+            in_checklist = False
+            continue
+
+        if current_item is None:
+            continue
+
+        if in_checklist and stripped.startswith("- "):
+            current_item.setdefault("execution_checklist", [])
+            if isinstance(current_item["execution_checklist"], list):
+                current_item["execution_checklist"].append(parse_scalar(stripped[2:].strip()))
+            continue
+
+        if line.startswith("  ") and ":" in stripped:
+            key, value = stripped.split(":", 1)
+            key = key.strip()
+            value = value.strip()
+            if key == "execution_checklist":
+                current_item[key] = []
+                in_checklist = True
+            else:
+                current_item[key] = parse_scalar(value)
+                in_checklist = False
+
+    return payload
+
+
+def validate_hub_briefs_contract(root: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    path = root / "data" / "hub_briefs.yaml"
+    if not path.exists():
+        return {"violations": ["missing_hub_briefs_yaml"], "count": 1}
+
+    raw_content = path.read_text(encoding="utf-8")
+    payload: object
+    if yaml is not None:
+        try:
+            payload = yaml.safe_load(raw_content)
+        except Exception:
+            payload = parse_hub_briefs_fallback(raw_content)
+    else:
+        payload = parse_hub_briefs_fallback(raw_content)
+
+    if not isinstance(payload, dict):
+        return {"violations": ["hub_briefs_not_object"], "count": 1}
+
+    expected_keys = {f"{asset}_{event}" for asset in HUB_ASSETS for event in HUB_EVENTS}
+    actual_keys = set(payload.keys())
+    missing_keys = sorted(expected_keys - actual_keys)
+    if missing_keys:
+        violations.append(f"hub_briefs_missing_keys:{','.join(missing_keys)}")
+
+    for key in sorted(expected_keys & actual_keys):
+        item = payload.get(key)
+        if not isinstance(item, dict):
+            violations.append(f"hub_brief_not_object:{key}")
+            continue
+        required_fields = [
+            "asset",
+            "event_type",
+            "thesis",
+            "what_changed_recently",
+            "risk_watchouts",
+            "execution_checklist",
+            "reviewed_at",
+            "status",
+        ]
+        for field in required_fields:
+            value = item.get(field)
+            if value is None or (isinstance(value, str) and not value.strip()):
+                violations.append(f"hub_brief_missing_{field}:{key}")
+        if str(item.get("asset", "")).upper() not in HUB_ASSETS:
+            violations.append(f"hub_brief_invalid_asset:{key}")
+        if str(item.get("event_type", "")).upper() not in HUB_EVENTS:
+            violations.append(f"hub_brief_invalid_event_type:{key}")
+        checklist = item.get("execution_checklist")
+        if not isinstance(checklist, list) or len(checklist) < 3:
+            violations.append(f"hub_brief_invalid_checklist:{key}")
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(item.get("reviewed_at", ""))):
+            violations.append(f"hub_brief_invalid_reviewed_at:{key}")
+        if str(item.get("status", "")).lower() not in {"draft", "approved"}:
+            violations.append(f"hub_brief_invalid_status:{key}")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_crawl_policy_contract(
+    root: Path,
+    public_dir: Path | None = None,
+    vercel_path: Path | None = None,
+) -> Dict[str, object]:
+    violations: List[str] = []
+    public_dir = public_dir or (root / "public")
+    vercel_path = vercel_path or (root / "vercel.json")
+    robots_path = public_dir / "robots.txt"
+    crawl_script = root / "scripts" / "ops" / "crawl_access_check.py"
+
+    if not crawl_script.exists():
+        violations.append("missing_crawl_access_check_script")
+
+    if not robots_path.exists():
+        violations.append("missing_robots_txt")
+    else:
+        robots_text = robots_path.read_text(encoding="utf-8")
+        lowered = robots_text.lower()
+        if "user-agent: *" not in lowered:
+            violations.append("robots_missing_user_agent_all")
+        if "allow: /" not in lowered:
+            violations.append("robots_missing_allow_all")
+        if "sitemap: https://quantmacro.vercel.app/sitemap.xml" not in lowered:
+            violations.append("robots_missing_primary_sitemap")
+        if "sitemap: https://quantmacro.vercel.app/sitemap-index.xml" not in lowered:
+            violations.append("robots_missing_sitemap_index")
+        if re.search(r"user-agent:\s*google-extended[\s\S]*?disallow:\s*/", lowered):
+            violations.append("robots_disallow_google_extended")
+
+    if not vercel_path.exists():
+        violations.append("missing_vercel_json")
+    else:
+        try:
+            payload = json.loads(vercel_path.read_text(encoding="utf-8"))
+        except Exception:
+            payload = {}
+            violations.append("invalid_vercel_json_for_crawl_policy")
+        headers = payload.get("headers", []) if isinstance(payload, dict) else []
+        for header_rule in headers:
+            for header in header_rule.get("headers", []) if isinstance(header_rule, dict) else []:
+                key = str(header.get("key", "")).lower()
+                value = str(header.get("value", "")).lower()
+                if key == "x-robots-tag":
+                    if any(token in value for token in ["noindex", "noai", "nosnippet", "none"]):
+                        violations.append("vercel_blocks_index_or_ai_crawlers")
+                        break
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_hub_route_contract(root: Path, public_dir: Path | None = None) -> Dict[str, object]:
+    violations: List[str] = []
+    public_dir = public_dir or (root / "public")
+
+    index_page = root / "src" / "pages" / "playbooks" / "index.astro"
+    detail_page = root / "src" / "pages" / "playbooks" / "[asset]" / "[event].astro"
+    trust_component = root / "src" / "components" / "TrustSignals.astro"
+
+    if not index_page.exists():
+        violations.append("missing_playbooks_index_page")
+    if not detail_page.exists():
+        violations.append("missing_playbooks_detail_page")
+    if not trust_component.exists():
+        violations.append("missing_trust_signals_component")
+
+    if detail_page.exists():
+        source = detail_page.read_text(encoding="utf-8")
+        if "TrustSignals" not in source:
+            violations.append("playbook_detail_missing_trust_signals")
+        if "Breadcrumbs" not in source:
+            violations.append("playbook_detail_missing_breadcrumbs")
+
+    playbooks_sitemap = public_dir / "sitemap-playbooks.xml"
+    if not playbooks_sitemap.exists():
+        violations.append("missing_playbooks_sitemap")
+    else:
+        content = playbooks_sitemap.read_text(encoding="utf-8")
+        url_count = len(re.findall(r"<url>", content))
+        if url_count < 15:
+            violations.append("playbooks_sitemap_insufficient_urls")
+        for asset in HUB_ASSETS:
+            for event in HUB_EVENTS:
+                route = f"/playbooks/{asset.lower()}/{event.lower()}"
+                if route not in content:
+                    violations.append("playbooks_sitemap_missing_expected_route")
+                    break
+            if "playbooks_sitemap_missing_expected_route" in violations:
+                break
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
 def run_gates(
     root: Path,
     content_dir: Path,
@@ -896,6 +1244,12 @@ def run_gates(
         index_path=index_path,
         content_dir=content_dir,
     )
+    schema_breadcrumb_result = validate_schema_graph_and_breadcrumbs(root)
+    related_events_result = validate_related_events_integrity(content_dir)
+    trust_layer_result = validate_trust_layer(root)
+    hub_briefs_result = validate_hub_briefs_contract(root)
+    crawl_policy_result = validate_crawl_policy_contract(root, public_dir=public_dir, vercel_path=vercel_config_path)
+    hub_route_result = validate_hub_route_contract(root, public_dir=public_dir)
 
     for scope in [
         redirect_result,
@@ -905,6 +1259,12 @@ def run_gates(
         event_pool_result,
         cta_result,
         freshness_result,
+        schema_breadcrumb_result,
+        related_events_result,
+        trust_layer_result,
+        hub_briefs_result,
+        crawl_policy_result,
+        hub_route_result,
     ]:
         for issue in scope["violations"]:
             report["summary"][issue] = report["summary"].get(issue, 0) + 1
@@ -917,6 +1277,12 @@ def run_gates(
     report["event_pool_violations"] = event_pool_result
     report["cta_violations"] = cta_result
     report["freshness_violations"] = freshness_result
+    report["schema_breadcrumb_violations"] = schema_breadcrumb_result
+    report["related_events_violations"] = related_events_result
+    report["trust_layer_violations"] = trust_layer_result
+    report["hub_briefs_violations"] = hub_briefs_result
+    report["crawl_policy_violations"] = crawl_policy_result
+    report["hub_route_violations"] = hub_route_result
     report["warnings"] = {"cta": cta_result.get("warnings", [])}
 
     content_violations = sum(len(v) for v in violations_by_file.values())
@@ -929,6 +1295,12 @@ def run_gates(
         + int(event_pool_result["count"])
         + int(cta_result["count"])
         + int(freshness_result["count"])
+        + int(schema_breadcrumb_result["count"])
+        + int(related_events_result["count"])
+        + int(trust_layer_result["count"])
+        + int(hub_briefs_result["count"])
+        + int(crawl_policy_result["count"])
+        + int(hub_route_result["count"])
     )
     report["content_violations"] = content_violations
     report["total_violations"] = total_violations

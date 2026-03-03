@@ -68,6 +68,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--full", action="store_true", help="Force full content regeneration")
     parser.add_argument("--with-backfill", action="store_true", help="Run history backfill step")
     parser.add_argument("--skip-build", action="store_true", help="Skip astro build")
+    parser.add_argument("--skip-crawl-check", action="store_true", help="Skip remote crawler accessibility check")
     parser.add_argument("--runtime-root", default=None, help="Override runtime output root for dry-run")
     return parser.parse_args()
 
@@ -220,6 +221,7 @@ def main() -> None:
             slug_redirects_output = runtime_root / "data" / "slug_redirects.json"
             vercel_output = runtime_root / "vercel.json"
             quality_report_path = runtime_root / "logs" / f"quality_{args.as_of_date}.json"
+            crawl_report_path = runtime_root / "logs" / f"crawl_access_{args.as_of_date}.json"
             if (root / "vercel.json").exists():
                 ensure_dir(vercel_output.parent)
                 shutil.copy2(root / "vercel.json", vercel_output)
@@ -236,6 +238,7 @@ def main() -> None:
             slug_redirects_output = root / "data" / "slug_redirects.json"
             vercel_output = root / "vercel.json"
             quality_report_path = log_dir / f"quality_{args.as_of_date}.json"
+            crawl_report_path = log_dir / f"crawl_access_{args.as_of_date}.json"
 
         if args.with_backfill:
             steps.append(
@@ -404,6 +407,26 @@ def main() -> None:
 
         if not args.skip_build:
             steps.append(run_step("astro_build", ["npm", "run", "build"], cwd=root, required=True))
+
+        if not args.skip_crawl_check:
+            crawl_cmd = [
+                python,
+                "scripts/ops/crawl_access_check.py",
+                "--base-url",
+                "https://quantmacro.vercel.app",
+                "--report",
+                str(crawl_report_path),
+            ]
+            if args.strict:
+                crawl_cmd.append("--strict")
+            steps.append(
+                run_step(
+                    "crawl_access_check",
+                    crawl_cmd,
+                    cwd=root,
+                    required=bool(args.strict),
+                )
+            )
 
         steps.append(
             run_step(
