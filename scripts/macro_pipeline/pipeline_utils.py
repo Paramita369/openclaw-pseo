@@ -168,9 +168,14 @@ def normalize_event_type(event_type: str, event_date: str) -> str:
 
 def to_offer_key(asset: str, offers_config: Dict[str, Any]) -> str:
     asset_upper = asset.upper()
-    keys_map = offers_config.get("asset_offer_keys", {})
-    keys = keys_map.get(asset_upper) or keys_map.get("DEFAULT") or []
+    primary_map = offers_config.get("primary_offer_keys", {})
+    fallback_map = offers_config.get("asset_offer_keys", {})
+    keys = primary_map.get(asset_upper) or primary_map.get("DEFAULT") or []
     if not keys:
+        keys = fallback_map.get(asset_upper) or fallback_map.get("DEFAULT") or []
+    if isinstance(keys, str):
+        return keys
+    if not isinstance(keys, (list, tuple)) or not keys:
         return "ibkr"
     return str(keys[0])
 

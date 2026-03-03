@@ -75,9 +75,34 @@ def ensure_table(conn: sqlite3.Connection) -> None:
     conn.commit()
 
 
+def table_exists(conn: sqlite3.Connection, table_name: str) -> bool:
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name = ? LIMIT 1",
+        (table_name,),
+    )
+    return cursor.fetchone() is not None
+
+
 def fetch_event_dates(conn: sqlite3.Connection, as_of_cutoff: str) -> Dict[str, List[str]]:
     cursor = conn.cursor()
     grouped: Dict[str, List[str]] = {}
+    if table_exists(conn, "event_calendar"):
+        for event_type in sorted(ALLOWED_EVENT_TYPES):
+            cursor.execute(
+                """
+                SELECT DISTINCT ec.event_date
+                FROM event_calendar ec
+                WHERE ec.event_type = ?
+                  AND ec.event_date <= ?
+                  AND LOWER(COALESCE(ec.status, 'confirmed')) NOT IN ('disabled', 'skip')
+                ORDER BY ec.event_date ASC
+                """,
+                (event_type, as_of_cutoff),
+            )
+            grouped[event_type] = [str(row[0]) for row in cursor.fetchall()]
+        return grouped
+
     for event_type in sorted(ALLOWED_EVENT_TYPES):
         cursor.execute(
             f"""

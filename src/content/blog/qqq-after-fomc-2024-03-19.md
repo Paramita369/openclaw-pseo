@@ -13,6 +13,7 @@ signal: "Bullish"
 confidence_level: "normal"
 quality_score: 80
 sample_size: 9
+freshness_days: 713
 event_direction: "flat"
 event_actual: 5.5
 event_previous: 5.5
@@ -63,6 +64,7 @@ probabilities:
 - Asset: **QQQ**
 - Event date: **2024-03-19**
 - As-of date (T-1): **2026-03-02**
+- Freshness age: **713 days**
 - Sample size (all-history): **9**
 
 ## Event Outcome

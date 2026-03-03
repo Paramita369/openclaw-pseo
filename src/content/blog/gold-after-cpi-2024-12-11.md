@@ -13,6 +13,7 @@ signal: "Bullish"
 confidence_level: "normal"
 quality_score: 90
 sample_size: 14
+freshness_days: 446
 event_direction: "up"
 event_actual: 317.604
 event_previous: 316.528
@@ -63,6 +64,7 @@ probabilities:
 - Asset: **GOLD**
 - Event date: **2024-12-11**
 - As-of date (T-1): **2026-03-02**
+- Freshness age: **446 days**
 - Sample size (all-history): **14**
 
 ## Event Outcome

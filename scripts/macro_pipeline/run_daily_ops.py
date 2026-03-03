@@ -22,6 +22,7 @@ WHITELIST_PATHS = {
     "data/page_manifest.json",
     "data/slug_redirects.json",
     "data/verified_targets.csv",
+    "data/event_overrides.csv",
     "vercel.json",
 }
 WHITELIST_PREFIXES = (
@@ -202,6 +203,27 @@ def main() -> None:
         )
 
         source_db = root / "data" / "macro_events.db"
+        steps.append(
+            run_step(
+                "sync_event_calendar",
+                [
+                    python,
+                    "scripts/macro_pipeline/sync_event_calendar.py",
+                    "--project-root",
+                    str(root),
+                    "--db-path",
+                    str(source_db),
+                    "--as-of-date",
+                    args.as_of_date,
+                    "--override-file",
+                    str(root / "data" / "event_overrides.csv"),
+                    *(["--strict"] if args.strict else []),
+                ],
+                cwd=root,
+                required=True,
+            )
+        )
+
         runtime_db_dir = log_dir / "runtime"
         ensure_dir(runtime_db_dir)
         runtime_db = runtime_db_dir / "macro_events.runtime.db"

@@ -7,7 +7,7 @@ import argparse
 import csv
 import sqlite3
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
@@ -44,6 +44,7 @@ FIELDNAMES = [
     "median_t7_pct",
     "sample_size",
     "asof_date",
+    "freshness_days",
     "signal",
     "event_direction",
     "event_actual",
@@ -81,9 +82,34 @@ def to_text(value: Optional[float]) -> str:
     return str(round(float(value), 6))
 
 
+def table_exists(conn: sqlite3.Connection, table_name: str) -> bool:
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name = ? LIMIT 1",
+        (table_name,),
+    )
+    return cursor.fetchone() is not None
+
+
 def fetch_event_dates(conn: sqlite3.Connection, as_of_cutoff: str) -> Dict[str, List[str]]:
     cursor = conn.cursor()
     output: Dict[str, List[str]] = {}
+    if table_exists(conn, "event_calendar"):
+        for event_type in sorted(ALLOWED_EVENT_TYPES):
+            cursor.execute(
+                """
+                SELECT DISTINCT ec.event_date
+                FROM event_calendar ec
+                WHERE ec.event_type = ?
+                  AND ec.event_date <= ?
+                  AND LOWER(COALESCE(ec.status, 'confirmed')) NOT IN ('disabled', 'skip')
+                ORDER BY ec.event_date ASC
+                """,
+                (event_type, as_of_cutoff),
+            )
+            output[event_type] = [str(row[0]) for row in cursor.fetchall()]
+        return output
+
     for event_type in sorted(ALLOWED_EVENT_TYPES):
         cursor.execute(
             f"""
@@ -138,13 +164,16 @@ def fetch_metrics(conn: sqlite3.Connection, asset: str, event_type: str, event_d
 
 def fetch_outcomes(conn: sqlite3.Connection) -> Dict[Tuple[str, str], Outcome]:
     cursor = conn.cursor()
-    cursor.execute(
-        """
-        SELECT event_type, event_date, direction, actual_value, previous_value, delta_value, direction_basis, status
-        FROM event_outcomes
-        WHERE direction_basis = 'vs_previous'
-        """
-    )
+    try:
+        cursor.execute(
+            """
+            SELECT event_type, event_date, direction, actual_value, previous_value, delta_value, direction_basis, status
+            FROM event_outcomes
+            WHERE direction_basis = 'vs_previous'
+            """
+        )
+    except sqlite3.OperationalError:
+        return {}
     outcome_map: Dict[Tuple[str, str], Outcome] = {}
     for event_type, event_date, direction, actual_value, previous_value, delta_value, basis, status in cursor.fetchall():
         key = (str(event_type).upper(), str(event_date))
@@ -163,14 +192,18 @@ def build_rows(
     *,
     event_dates: Dict[str, Sequence[str]],
     assets: Sequence[str],
+    as_of_cutoff: str,
     metrics_lookup,
     outcomes: Dict[Tuple[str, str], Outcome],
 ) -> List[Dict[str, str]]:
     rows: List[Dict[str, str]] = []
+    cutoff_dt = datetime.strptime(as_of_cutoff, "%Y-%m-%d").date()
 
     for event_type in sorted(ALLOWED_EVENT_TYPES):
         dates = sorted(event_dates.get(event_type, []), reverse=True)
         for event_date in dates:
+            event_dt = datetime.strptime(event_date, "%Y-%m-%d").date()
+            freshness_days = max((cutoff_dt - event_dt).days, 0)
             for asset in assets:
                 metrics = metrics_lookup(asset, event_type, event_date)
                 outcome = outcomes.get((event_type, event_date))
@@ -209,6 +242,7 @@ def build_rows(
                         "median_t7_pct": "",
                         "sample_size": "",
                         "asof_date": "",
+                        "freshness_days": str(freshness_days),
                         "signal": "",
                         "event_direction": outcome.direction,
                         "event_actual": to_text(outcome.actual),
@@ -246,6 +280,7 @@ def main() -> None:
         rows = build_rows(
             event_dates=event_dates,
             assets=assets,
+            as_of_cutoff=as_of_cutoff,
             metrics_lookup=lambda asset, event_type, event_date: fetch_metrics(conn, asset, event_type, event_date),
             outcomes=outcomes,
         )

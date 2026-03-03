@@ -13,6 +13,7 @@ signal: "Neutral"
 confidence_level: "normal"
 quality_score: 80
 sample_size: 9
+freshness_days: 397
 event_direction: "flat"
 event_actual: 4.5
 event_previous: 4.5
@@ -63,6 +64,7 @@ probabilities:
 - Asset: **ETH**
 - Event date: **2025-01-29**
 - As-of date (T-1): **2026-03-02**
+- Freshness age: **397 days**
 - Sample size (all-history): **9**
 
 ## Event Outcome

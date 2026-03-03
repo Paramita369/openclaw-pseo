@@ -4,27 +4,36 @@ import offersConfig from '../data/offers.json';
 const { asset = 'BTC', slug = '' } = Astro.props;
 const normalizedAsset = String(asset).toUpperCase();
 
-const offerKeys = offersConfig.asset_offer_keys[normalizedAsset] || offersConfig.asset_offer_keys.DEFAULT || [];
-const selectedOffers = offerKeys
-  .map((key) => ({ key, ...offersConfig.offers[key] }))
+const fallbackKeys = offersConfig.asset_offer_keys?.[normalizedAsset] || offersConfig.asset_offer_keys?.DEFAULT || [];
+const primaryKey =
+  offersConfig.primary_offer_keys?.[normalizedAsset] ||
+  offersConfig.primary_offer_keys?.DEFAULT ||
+  fallbackKeys[0] ||
+  'ibkr';
+const secondaryKeys = (offersConfig.secondary_offer_keys?.[normalizedAsset] || offersConfig.secondary_offer_keys?.DEFAULT || [])
+  .filter((key) => key && key !== primaryKey);
+
+const primaryOffer = primaryKey && offersConfig.offers?.[primaryKey] ? { key: primaryKey, ...offersConfig.offers[primaryKey] } : null;
+const secondaryOffers = secondaryKeys
+  .map((key) => ({ key, ...offersConfig.offers?.[key] }))
   .filter((offer) => Boolean(offer && offer.url));
 
 const utmSource = offersConfig.utm?.source || 'quantmacro';
 const utmMedium = offersConfig.utm?.medium || 'affiliate';
 
-const withUtm = (offer) => {
+const withUtm = (offer, role) => {
   const url = new URL(offer.url);
   url.searchParams.set('utm_source', utmSource);
   url.searchParams.set('utm_medium', utmMedium);
   url.searchParams.set('utm_campaign', offer.utm_campaign || `affiliate_${offer.key}`);
   if (slug) {
-    url.searchParams.set('utm_content', slug);
+    url.searchParams.set('utm_content', `${slug}_${role}`);
   }
   return url.toString();
 };
 ---
 
-{selectedOffers.length > 0 && (
+{primaryOffer && (
   <aside class="mt-10 rounded-2xl border p-5" style="border-color:var(--border);background:var(--surface-alt);">
     <h3 class="text-lg font-extrabold">Execution Platforms</h3>
     <p class="text-sm mt-1" style="color:var(--muted);">
@@ -32,18 +41,34 @@ const withUtm = (offer) => {
     </p>
 
     <div class="mt-4 flex flex-col sm:flex-row gap-3">
-      {selectedOffers.map((offer) => (
+      <a
+        href={withUtm(primaryOffer, 'primary')}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-affiliate-click="1"
+        data-slug={slug}
+        data-asset={normalizedAsset}
+        data-offer-key={primaryOffer.key}
+        data-cta-role="primary"
+        data-cta-position="article_inline"
+        data-utm-campaign={primaryOffer.utm_campaign || `affiliate_${primaryOffer.key}`}
+        class="btn-primary focus-ring"
+      >
+        Open {primaryOffer.name}
+      </a>
+      {secondaryOffers.map((offer) => (
         <a
-          href={withUtm(offer)}
+          href={withUtm(offer, 'secondary')}
           target="_blank"
           rel="noopener noreferrer"
           data-affiliate-click="1"
           data-slug={slug}
           data-asset={normalizedAsset}
           data-offer-key={offer.key}
+          data-cta-role="secondary"
           data-cta-position="article_inline"
           data-utm-campaign={offer.utm_campaign || `affiliate_${offer.key}`}
-          class="btn-primary focus-ring"
+          class="btn-ghost focus-ring"
         >
           Open {offer.name}
         </a>

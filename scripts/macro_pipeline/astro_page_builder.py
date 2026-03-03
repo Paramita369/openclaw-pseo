@@ -54,6 +54,7 @@ REQUIRED_CSV_COLUMNS = {
     "event_delta",
     "direction_basis",
     "outcome_status",
+    "freshness_days",
 }
 
 CSV_EXTRA_COLUMNS = [
@@ -67,6 +68,7 @@ CSV_EXTRA_COLUMNS = [
     "median_t7_pct",
     "sample_size",
     "asof_date",
+    "freshness_days",
     "signal",
     "event_direction",
     "event_actual",
@@ -194,6 +196,7 @@ def load_targets(csv_path: Path, strict: bool) -> List[Dict[str, Any]]:
             row.setdefault("event_slug", str(row.get("event_type", "")).lower())
             row.setdefault("direction_basis", "vs_previous")
             row.setdefault("outcome_status", "pending")
+            row.setdefault("freshness_days", "")
             rows.append(row)
 
     ensure_csv_contract(csv_path, rows)
@@ -418,6 +421,7 @@ def build_markdown(
     confidence_level: str,
     quality: int,
     sample_size: int,
+    freshness_days: int,
     metrics: Dict[str, float],
     probabilities: Dict[str, Any],
     analysis: str,
@@ -452,6 +456,7 @@ signal: "{signal}"
 confidence_level: "{confidence_level}"
 quality_score: {quality}
 sample_size: {sample_size}
+freshness_days: {freshness_days}
 event_direction: "{event_direction}"
 event_actual: {event_actual}
 event_previous: {event_previous}
@@ -502,6 +507,7 @@ probabilities:
 - Asset: **{asset}**
 - Event date: **{event_date}**
 - As-of date (T-1): **{asof_date}**
+- Freshness age: **{freshness_days} days**
 - Sample size (all-history): **{sample_size}**
 
 ## Event Outcome
@@ -579,18 +585,18 @@ def write_urlset(path: Path, entries: Sequence[Dict[str, str]]) -> None:
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
-def write_sitemap_index(path: Path, domain: str, files: Sequence[str]) -> None:
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+def write_sitemap_index(path: Path, domain: str, files: Sequence[str], file_lastmods: Dict[str, str]) -> None:
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
     for filename in files:
+        lastmod = file_lastmods.get(filename) or datetime.now(timezone.utc).strftime("%Y-%m-%d")
         lines.extend(
             [
                 "  <sitemap>",
                 f"    <loc>{domain}/{filename}</loc>",
-                f"    <lastmod>{today}</lastmod>",
+                f"    <lastmod>{lastmod}</lastmod>",
                 "  </sitemap>",
             ]
         )
@@ -607,26 +613,50 @@ def generate_dynamic_sitemaps(public_dir: Path, output_dir: Path, domain: str, m
     pages_manifest = manifest.get("pages", {}) if isinstance(manifest.get("pages"), dict) else {}
 
     def slug_lastmod(slug: str) -> str:
-        value = str((pages_manifest.get(slug) or {}).get("last_generated", ""))
-        if len(value) >= 10:
-            return value[:10]
+        page = pages_manifest.get(slug) or {}
+        for key in ("last_content_change_at", "last_generated"):
+            value = str(page.get(key, ""))
+            if len(value) >= 10:
+                return value[:10]
         return today
+
+    slug_lastmods: Dict[str, str] = {slug: slug_lastmod(slug) for slug in slugs}
+
+    def max_lastmod(items: Sequence[str]) -> str:
+        if not items:
+            return today
+        return max(slug_lastmods.get(item, today) for item in items)
 
     assets = sorted({slug.split("-after-")[0] for slug in slugs if "-after-" in slug})
     events = sorted({slug.split("-after-")[1].split("-")[0] for slug in slugs if "-after-" in slug})
+    slugs_by_asset: Dict[str, List[str]] = {asset: [] for asset in assets}
+    slugs_by_event: Dict[str, List[str]] = {event: [] for event in events}
+    for slug in slugs:
+        if "-after-" not in slug:
+            continue
+        asset = slug.split("-after-")[0]
+        event = slug.split("-after-")[1].split("-")[0]
+        if asset in slugs_by_asset:
+            slugs_by_asset[asset].append(slug)
+        if event in slugs_by_event:
+            slugs_by_event[event].append(slug)
+
+    blog_root_lastmod = max_lastmod(slugs)
+    events_root_lastmod = max([max_lastmod(slugs_by_event[event]) for event in events], default=today)
+    home_lastmod = max(blog_root_lastmod, events_root_lastmod)
 
     core_entries = [
-        {"loc": f"{domain}/", "lastmod": today, "changefreq": "daily", "priority": "1.0"},
-        {"loc": f"{domain}/blog", "lastmod": today, "changefreq": "daily", "priority": "0.9"},
-        {"loc": f"{domain}/leaderboard", "lastmod": today, "changefreq": "daily", "priority": "0.8"},
-        {"loc": f"{domain}/events", "lastmod": today, "changefreq": "daily", "priority": "0.8"},
+        {"loc": f"{domain}/", "lastmod": home_lastmod, "changefreq": "daily", "priority": "1.0"},
+        {"loc": f"{domain}/blog", "lastmod": blog_root_lastmod, "changefreq": "daily", "priority": "0.9"},
+        {"loc": f"{domain}/leaderboard", "lastmod": blog_root_lastmod, "changefreq": "daily", "priority": "0.8"},
+        {"loc": f"{domain}/events", "lastmod": events_root_lastmod, "changefreq": "daily", "priority": "0.8"},
     ]
     write_urlset(public_dir / "sitemap-core.xml", core_entries)
 
     asset_entries = [
         {
             "loc": f"{domain}/tags/{asset}",
-            "lastmod": today,
+            "lastmod": max_lastmod(slugs_by_asset.get(asset, [])),
             "changefreq": "daily",
             "priority": "0.8",
         }
@@ -637,7 +667,7 @@ def generate_dynamic_sitemaps(public_dir: Path, output_dir: Path, domain: str, m
     event_entries = [
         {
             "loc": f"{domain}/events/{event}",
-            "lastmod": today,
+            "lastmod": max_lastmod(slugs_by_event.get(event, [])),
             "changefreq": "daily",
             "priority": "0.8",
         }
@@ -647,6 +677,7 @@ def generate_dynamic_sitemaps(public_dir: Path, output_dir: Path, domain: str, m
 
     chunk_size = 1000
     blog_files: List[str] = []
+    file_lastmods: Dict[str, str] = {}
     for idx in range(0, len(slugs), chunk_size):
         chunk = slugs[idx : idx + chunk_size]
         file_index = idx // chunk_size + 1
@@ -662,10 +693,15 @@ def generate_dynamic_sitemaps(public_dir: Path, output_dir: Path, domain: str, m
             for slug in chunk
         ]
         write_urlset(public_dir / filename, entries)
+        file_lastmods[filename] = max([entry["lastmod"] for entry in entries], default=today)
+
+    file_lastmods["sitemap-core.xml"] = max([entry["lastmod"] for entry in core_entries], default=today)
+    file_lastmods["sitemap-assets.xml"] = max([entry["lastmod"] for entry in asset_entries], default=today)
+    file_lastmods["sitemap-events.xml"] = max([entry["lastmod"] for entry in event_entries], default=today)
 
     index_files = ["sitemap-core.xml", "sitemap-assets.xml", "sitemap-events.xml", *blog_files]
-    write_sitemap_index(public_dir / "sitemap-index.xml", domain, index_files)
-    write_sitemap_index(public_dir / "sitemap.xml", domain, index_files)
+    write_sitemap_index(public_dir / "sitemap-index.xml", domain, index_files, file_lastmods)
+    write_sitemap_index(public_dir / "sitemap.xml", domain, index_files, file_lastmods)
 
     robots = "\n".join(
         [
@@ -745,6 +781,21 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
     intent = str(row.get("intent", "general")).strip() or "general"
 
     asof_cutoff = cutoff_date(context.as_of_date)
+    try:
+        freshness_days = max(
+            (
+                datetime.strptime(asof_cutoff, "%Y-%m-%d").date()
+                - datetime.strptime(event_date, "%Y-%m-%d").date()
+            ).days,
+            0,
+        )
+    except ValueError:
+        freshness_days = 0
+
+    raw_freshness = parse_float(row.get("freshness_days"))
+    if raw_freshness is not None:
+        freshness_days = max(int(round(raw_freshness)), 0)
+
     summary = fetch_event_distribution(
         db_path=context.db_path,
         ticker=asset,
@@ -891,6 +942,7 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         "event_previous": event_previous,
         "event_delta": event_delta,
         "direction_basis": direction_basis,
+        "freshness_days": freshness_days,
     }
     fingerprint = row_fingerprint(fingerprint_payload)
 
@@ -916,6 +968,7 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
             confidence_level=confidence_level,
             quality=quality,
             sample_size=probabilities["sample_size"],
+            freshness_days=freshness_days,
             metrics=metrics,
             probabilities=probabilities,
             analysis=analysis,
@@ -930,11 +983,22 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         ensure_dir(context.output_dir)
         target_file.write_text(content, encoding="utf-8")
 
+    now_iso = datetime.now(timezone.utc).isoformat()
+    previous_last_change = previous.get("last_content_change_at")
+    if not previous_last_change:
+        seeded_event_date = str(previous.get("event_date", "")).strip()
+        if len(seeded_event_date) == 10:
+            previous_last_change = f"{seeded_event_date}T00:00:00+00:00"
+        else:
+            previous_last_change = previous.get("last_generated")
+    last_content_change_at = now_iso if need_generate else (str(previous_last_change) if previous_last_change else now_iso)
+
     manifest.setdefault("pages", {})[slug] = {
         "hash": fingerprint,
         "source_event": event_type,
         "event_date": event_date,
-        "last_generated": datetime.now(timezone.utc).isoformat(),
+        "last_generated": now_iso,
+        "last_content_change_at": last_content_change_at,
         "quality_score": quality,
         "offer_key": offer_key,
         "signal": signal,
@@ -969,6 +1033,7 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
     row["median_t7_pct"] = str(t7_window["median"])
     row["sample_size"] = str(probabilities["sample_size"])
     row["asof_date"] = asof_date
+    row["freshness_days"] = str(freshness_days)
     row["signal"] = signal
     row["event_direction"] = event_direction
     row["event_actual"] = str(event_actual if event_actual is not None else "")
@@ -1052,6 +1117,20 @@ def main() -> None:
         old_file = context.output_dir / f"{old_slug}.md"
         if old_file.exists() and old_slug != new_slug:
             old_file.unlink()
+
+    page_entries = manifest.get("pages", {}) if isinstance(manifest.get("pages"), dict) else {}
+    content_lastmods = [
+        str(page.get("last_content_change_at", "")).strip()[:10]
+        for page in page_entries.values()
+        if isinstance(page, dict) and str(page.get("last_content_change_at", "")).strip()
+    ]
+    unique_content_dates = len(set(content_lastmods))
+    if unique_content_dates > 1:
+        manifest["allow_uniform_lastmod_once"] = False
+    elif generated > 0 and unique_content_dates <= 1:
+        manifest["allow_uniform_lastmod_once"] = True
+    elif unique_content_dates <= 1 and manifest.get("allow_uniform_lastmod_once") is None:
+        manifest["allow_uniform_lastmod_once"] = True
 
     generate_dynamic_sitemaps(
         public_dir=context.public_dir,

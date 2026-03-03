@@ -38,6 +38,7 @@ const blog = defineCollection({
     confidence_level: z.enum(['low', 'normal']),
     quality_score: z.number().min(0).max(100),
     sample_size: z.number().int().nonnegative(),
+    freshness_days: z.number().int().nonnegative(),
     tags: z.array(z.string()).min(1),
     metrics: z.object({
       sharpe_t7: z.number().finite(),

@@ -1,0 +1,101 @@
+---
+title: "ETH After FOMC (2025-05-07): Historical T+1/T+7 Probability"
+description: "Historical probability profile for ETH around FOMC events (T+1/T+7)."
+pubDate: "2026-03-03"
+event_type: "FOMC"
+event_label: "FOMC"
+event_slug: "fomc"
+event_date: "2025-05-07"
+asof_date: "2026-03-02"
+source: "verified_targets.csv"
+offer_key: "binance"
+signal: "Neutral"
+confidence_level: "normal"
+quality_score: 60
+sample_size: 9
+freshness_days: 299
+event_direction: "flat"
+event_actual: 4.5
+event_previous: 4.5
+event_delta: 0.0
+direction_basis: "vs_previous"
+tags: ["eth", "fomc", "event-probability", "general"]
+metrics:
+  sharpe_t7: -0.07
+  mdd_t7: -0.1
+  volatility: 1.48
+  impact_t1_pct: 1.38
+  impact_t7_pct: -0.1
+probabilities:
+  sample_size: 9
+  t1:
+    up: 55.56
+    down: 44.44
+    median: 1.2
+    mean: 1.38
+    sample: 9
+  t7:
+    up: 44.44
+    down: 55.56
+    median: -0.19
+    mean: -0.1
+    sample: 9
+  conditional:
+    basis: "event_direction"
+    direction: "flat"
+    sample_size: 9
+    t1:
+      up: 55.56
+      down: 44.44
+      median: 1.2
+      mean: 1.38
+      sample: 9
+    t7:
+      up: 44.44
+      down: 55.56
+      median: -0.19
+      mean: -0.1
+      sample: 9
+---
+
+## Event Snapshot
+
+- Event: **FOMC**
+- Asset: **ETH**
+- Event date: **2025-05-07**
+- As-of date (T-1): **2026-03-02**
+- Freshness age: **299 days**
+- Sample size (all-history): **9**
+
+## Event Outcome
+
+- FOMC Outcome: **FLAT** (Actual 4.5, Previous 4.5, Delta +0.0000)
+- Direction basis: **vs_previous**
+
+## Probability Table (All-history)
+
+| Window | P(up) | P(down) | Median return | Mean return | Sample |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| T+1 | 55.56% | 44.44% | 1.2% | 1.38% | 9 |
+| T+7 | 44.44% | 55.56% | -0.19% | -0.1% | 9 |
+
+## Probability Table (Same-direction)
+
+| Window | P(up) | P(down) | Median return | Mean return | Sample |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| T+1 | 55.56% | 44.44% | 1.2% | 1.38% | 9 |
+| T+7 | 44.44% | 55.56% | -0.19% | -0.1% | 9 |
+
+## Historical Distribution Summary
+
+When FOMC was **FLAT**, ETH T+1 up probability was **55.56%** (n=9).
+
+When FOMC was **FLAT**, ETH T+7 up probability was **44.44%** (n=9).
+
+Same-direction T+7 median return: **-0.19%**.
+
+For ETH, historical FOMC windows show all-history T+1 up probability of 55.56% and T+7 up probability of 44.44%. When FOMC printed Flat versus previous, T+1 up probability was 55.56% and T+7 up probability was 44.44% across 9 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+
+## Methodology
+
+This page aggregates historical windows for the same event type (FOMC) and deduplicates by event date. It reports both all-history probabilities and same-direction probabilities based on event outcome direction (vs previous) for educational use only.

@@ -20,15 +20,16 @@ pip install -r requirements.txt
 
 ## Pipeline Steps
 1. Fetch market snapshot
-2. Copy DB to runtime workspace
-3. Fetch event outcomes (`vs_previous`) from FRED
-4. Build full target matrix (`5 assets × all CPI/NFP/FOMC dates`)
-5. Compute risk metrics
-6. Generate event pages + redirects + segmented sitemaps
-7. Run strict quality gates
-8. Run `astro build`
-9. Generate KPI report
-10. Commit/push only whitelisted paths
+2. Sync event calendar (`FRED + override`) and backfill missing macro event rows
+3. Copy DB to runtime workspace
+4. Fetch event outcomes (`vs_previous`) from FRED
+5. Build full target matrix (`5 assets × all CPI/NFP/FOMC dates`)
+6. Compute risk metrics
+7. Generate event pages + redirects + segmented sitemaps
+8. Run strict quality gates
+9. Run `astro build`
+10. Generate KPI report
+11. Commit/push only whitelisted paths
 
 ## Git Whitelist
 - `src/content/blog/`
@@ -38,6 +39,7 @@ pip install -r requirements.txt
 - `data/page_manifest.json`
 - `data/slug_redirects.json`
 - `data/verified_targets.csv`
+- `data/event_overrides.csv`
 - `vercel.json`
 
 Runtime noisy paths are ignored during push checks:
@@ -50,7 +52,7 @@ Required base columns:
 - `asset,event_type,date,url_slug,title,impact_t1_pct,impact_t7_pct,volatility,sharpe_t7,mdd_t7,intent,source`
 
 V2 extension columns:
-- `event_label,event_slug,rise_prob_t1,fall_prob_t1,rise_prob_t7,fall_prob_t7,median_t1_pct,median_t7_pct,sample_size,asof_date,signal`
+- `event_label,event_slug,rise_prob_t1,fall_prob_t1,rise_prob_t7,fall_prob_t7,median_t1_pct,median_t7_pct,sample_size,asof_date,freshness_days,signal`
 - `event_direction,event_actual,event_previous,event_delta,direction_basis,outcome_status`
 
 ### Frontmatter Contract
@@ -58,6 +60,7 @@ Required fields include:
 - `event_type,event_label,event_slug,event_date,asof_date`
 - `event_direction,event_actual,event_previous,event_delta,direction_basis`
 - `signal,confidence_level,sample_size`
+- `freshness_days`
 - `metrics` numeric block
 - `probabilities` block (`t1`, `t7`, `conditional`, `sample_size`)
 
@@ -90,6 +93,9 @@ Strict failures include:
 - missing segmented sitemap index (`sitemap-index.xml` + sub-sitemaps)
 - non-full target matrix coverage (must match DB event-date matrix)
 - missing/invalid event outcome direction fields
+- stale event pool (`event_calendar`) for CPI/NFP/FOMC (>90 days)
+- missing QQQ/SPY CTA route contract (`primary=IBKR`, `secondary includes Futu`)
+- stale semantic mismatch (homepage should switch to `Latest Event Playbook` when data is old)
 
 ## Notes
 - `run_daily_ops` is the primary operation path; GitHub Actions is backup/manual.

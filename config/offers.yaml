@@ -4,6 +4,24 @@
     "source": "quantmacro",
     "medium": "affiliate"
   },
+  "primary_offer_keys": {
+    "BTC": "binance",
+    "ETH": "binance",
+    "SOL": "binance",
+    "DOGE": "binance",
+    "SPY": "ibkr",
+    "QQQ": "ibkr",
+    "GOLD": "ibkr",
+    "OIL": "ibkr",
+    "DEFAULT": "ibkr"
+  },
+  "secondary_offer_keys": {
+    "SPY": ["futu"],
+    "QQQ": ["futu"],
+    "GOLD": ["futu"],
+    "OIL": ["futu"],
+    "DEFAULT": []
+  },
   "asset_offer_keys": {
     "BTC": ["binance"],
     "ETH": ["binance"],

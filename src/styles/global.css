@@ -136,6 +136,18 @@ html[data-theme='dark'] .surface-card {
   color: #f6f8fc;
 }
 
+.chart-skeleton {
+  background:
+    linear-gradient(110deg, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0.45) 45%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(180deg, var(--surface-alt), var(--surface));
+}
+
+html[data-theme='dark'] .chart-skeleton {
+  background:
+    linear-gradient(110deg, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0.16) 45%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(180deg, var(--surface-alt), var(--surface));
+}
+
 .metric-up {
   color: var(--positive);
 }

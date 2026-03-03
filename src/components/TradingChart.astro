@@ -1,6 +1,8 @@
 ---
 const { data, asset, title } = Astro.props;
 const chartId = `tv-chart-${asset}-${Math.random().toString(36).slice(2, 8)}`;
+const skeletonId = `${chartId}-skeleton`;
+const fallbackId = `${chartId}-fallback`;
 ---
 
 <div class="rounded-xl border overflow-hidden mb-8" style="border-color:var(--border);background:var(--surface);">
@@ -8,10 +10,16 @@ const chartId = `tv-chart-${asset}-${Math.random().toString(36).slice(2, 8)}`;
     <h4 class="text-sm font-bold">{title || `${asset} Price Action (T-3 to T+7)`}</h4>
     <span class="text-xs" style="color:var(--muted);">Candlestick</span>
   </div>
-  <div id={chartId} class="w-full h-[350px]" data-chart={JSON.stringify(data)}></div>
+  <div class="relative w-full h-[350px]">
+    <div id={skeletonId} class="chart-skeleton absolute inset-0 animate-pulse"></div>
+    <div id={fallbackId} class="hidden absolute inset-0 p-5 text-sm" style="color:var(--muted);">
+      Chart data is temporarily unavailable for this event window.
+    </div>
+    <div id={chartId} class="w-full h-[350px] opacity-0 transition-opacity duration-200" data-chart={JSON.stringify(data)}></div>
+  </div>
 </div>
 
-<script define:vars={{ chartId }}>
+<script define:vars={{ chartId, skeletonId, fallbackId }}>
   import { createChart } from 'lightweight-charts';
 
   const getThemePalette = () => {
@@ -34,70 +42,109 @@ const chartId = `tv-chart-${asset}-${Math.random().toString(36).slice(2, 8)}`;
 
   const mountChart = () => {
     const el = document.getElementById(chartId);
+    const skeleton = document.getElementById(skeletonId);
+    const fallback = document.getElementById(fallbackId);
+    const showFallback = () => {
+      if (skeleton) skeleton.classList.add('hidden');
+      if (fallback) fallback.classList.remove('hidden');
+      if (el) el.classList.add('hidden');
+    };
+    const revealChart = () => {
+      if (skeleton) skeleton.classList.add('hidden');
+      if (fallback) fallback.classList.add('hidden');
+      if (el) {
+        el.classList.remove('hidden');
+        el.classList.remove('opacity-0');
+      }
+    };
+
     if (!el) return null;
 
     const rawData = el.getAttribute('data-chart');
-    if (!rawData) return null;
+    if (!rawData) {
+      showFallback();
+      return null;
+    }
 
     const chartData = JSON.parse(rawData);
-    if (!chartData || chartData.length === 0) return null;
+    if (!chartData || chartData.length === 0) {
+      showFallback();
+      return null;
+    }
 
     const palette = getThemePalette();
-    const chart = createChart(el, {
-      layout: {
-        background: { color: palette.bg },
-        textColor: palette.text,
-      },
-      grid: {
-        vertLines: { color: palette.grid },
-        horzLines: { color: palette.grid },
-      },
-      timeScale: {
-        borderColor: palette.border,
-        timeVisible: true,
-      },
-      rightPriceScale: {
-        borderColor: palette.border,
-      },
-      width: el.clientWidth,
-      height: 350,
-    });
-
-    const series = chart.addCandlestickSeries({
-      upColor: '#22a775',
-      downColor: '#d15757',
-      borderVisible: false,
-      wickUpColor: '#22a775',
-      wickDownColor: '#d15757',
-    });
-
-    series.setData(chartData);
-    chart.timeScale().fitContent();
-
-    const onResize = () => chart.applyOptions({ width: el.clientWidth });
-    window.addEventListener('resize', onResize);
-
-    const onThemeChange = () => {
-      const next = getThemePalette();
-      chart.applyOptions({
-        layout: { background: { color: next.bg }, textColor: next.text },
-        grid: { vertLines: { color: next.grid }, horzLines: { color: next.grid } },
-        timeScale: { borderColor: next.border },
-        rightPriceScale: { borderColor: next.border },
+    try {
+      const chart = createChart(el, {
+        layout: {
+          background: { color: palette.bg },
+          textColor: palette.text,
+        },
+        grid: {
+          vertLines: { color: palette.grid },
+          horzLines: { color: palette.grid },
+        },
+        timeScale: {
+          borderColor: palette.border,
+          timeVisible: true,
+        },
+        rightPriceScale: {
+          borderColor: palette.border,
+        },
+        width: el.clientWidth,
+        height: 350,
       });
-    };
-    window.addEventListener('theme-change', onThemeChange);
 
-    return () => {
-      window.removeEventListener('resize', onResize);
-      window.removeEventListener('theme-change', onThemeChange);
-      chart.remove();
-    };
+      const series = chart.addCandlestickSeries({
+        upColor: '#22a775',
+        downColor: '#d15757',
+        borderVisible: false,
+        wickUpColor: '#22a775',
+        wickDownColor: '#d15757',
+      });
+
+      series.setData(chartData);
+      chart.timeScale().fitContent();
+      revealChart();
+
+      const onResize = () => chart.applyOptions({ width: el.clientWidth });
+      window.addEventListener('resize', onResize);
+
+      const onThemeChange = () => {
+        const next = getThemePalette();
+        chart.applyOptions({
+          layout: { background: { color: next.bg }, textColor: next.text },
+          grid: { vertLines: { color: next.grid }, horzLines: { color: next.grid } },
+          timeScale: { borderColor: next.border },
+          rightPriceScale: { borderColor: next.border },
+        });
+      };
+      window.addEventListener('theme-change', onThemeChange);
+
+      return () => {
+        window.removeEventListener('resize', onResize);
+        window.removeEventListener('theme-change', onThemeChange);
+        chart.remove();
+      };
+    } catch {
+      showFallback();
+      return null;
+    }
+  };
+
+  const hydrateChart = () => {
+    try {
+      mountChart();
+    } catch {
+      const skeleton = document.getElementById(skeletonId);
+      const fallback = document.getElementById(fallbackId);
+      if (skeleton) skeleton.classList.add('hidden');
+      if (fallback) fallback.classList.remove('hidden');
+    }
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mountChart, { once: true });
+    document.addEventListener('DOMContentLoaded', hydrateChart, { once: true });
   } else {
-    mountChart();
+    hydrateChart();
   }
 </script>

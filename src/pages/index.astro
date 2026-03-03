@@ -7,9 +7,16 @@ import offersConfig from '../data/offers.json';
 const posts = await getCollection('blog');
 const markets = dailySnapshot.markets || {};
 
+const parseIsoDate = (value) => {
+  const text = String(value || '').slice(0, 10);
+  if (!text) return null;
+  const parsed = new Date(`${text}T00:00:00Z`);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+};
+
 const sortedPosts = [...posts].sort((a, b) => {
-  const ad = (a.data.event_date || a.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01');
-  const bd = (b.data.event_date || b.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01');
+  const ad = a.data.event_date || a.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
+  const bd = b.data.event_date || b.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
   return bd.localeCompare(ad);
 });
 
@@ -35,7 +42,13 @@ const playbookRows = preferredAssets
     const t7Median = p?.t7?.median;
     const sampleSize = p?.sample_size ?? p?.t1?.sample ?? entry.data.sample_size ?? 0;
 
-    const signal = entry.data.signal || ((entry.data.metrics?.impact_t7_pct || 0) > 1 ? 'Bullish' : (entry.data.metrics?.impact_t7_pct || 0) < -1 ? 'Bearish' : 'Neutral');
+    const signal =
+      entry.data.signal ||
+      ((entry.data.metrics?.impact_t7_pct || 0) > 1
+        ? 'Bullish'
+        : (entry.data.metrics?.impact_t7_pct || 0) < -1
+          ? 'Bearish'
+          : 'Neutral');
 
     return {
       asset,
@@ -44,7 +57,8 @@ const playbookRows = preferredAssets
       sampleSize,
       event: entry.data.event_label || entry.data.event_type || 'CPI',
       eventDate: entry.data.event_date || entry.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '',
-      asofDate: entry.data.asof_date || (dailySnapshot.timestamp ? new Date(dailySnapshot.timestamp).toISOString().slice(0, 10) : ''),
+      asofDate:
+        entry.data.asof_date || (dailySnapshot.timestamp ? new Date(dailySnapshot.timestamp).toISOString().slice(0, 10) : ''),
       t1Up,
       t1Down,
       t7Up,
@@ -55,22 +69,52 @@ const playbookRows = preferredAssets
   })
   .filter(Boolean);
 
+const latestEventDate = playbookRows.map((row) => row.eventDate).filter(Boolean).sort().at(-1) || '';
+const latestAsOfDate =
+  playbookRows.map((row) => row.asofDate).filter(Boolean).sort().at(-1) ||
+  (dailySnapshot.timestamp ? new Date(dailySnapshot.timestamp).toISOString().slice(0, 10) : '');
+const latestEventDt = parseIsoDate(latestEventDate);
+const latestAsOfDt = parseIsoDate(latestAsOfDate) || new Date();
+const freshnessAgeDays = latestEventDt
+  ? Math.max(Math.floor((latestAsOfDt.getTime() - latestEventDt.getTime()) / (1000 * 60 * 60 * 24)), 0)
+  : 0;
+const isStalePlaybook = Boolean(latestEventDt) && freshnessAgeDays > 14;
+const playbookHeading = isStalePlaybook ? 'Latest Event Playbook' : "Today's Event Playbook";
+const playbookSubline = isStalePlaybook
+  ? `Last event: ${latestEventDate} (age ${freshnessAgeDays} days). Showing latest validated playbook.`
+  : 'Probabilities are generated from historical CPI/NFP/FOMC event windows.';
+
 const utmSource = offersConfig.utm?.source || 'quantmacro';
 const utmMedium = offersConfig.utm?.medium || 'affiliate';
 
-const offerByAsset = (asset) => {
-  const keys = offersConfig.asset_offer_keys?.[asset] || offersConfig.asset_offer_keys?.DEFAULT || [];
-  const key = keys[0] || 'ibkr';
-  const offer = offersConfig.offers?.[key];
-  if (!offer?.url) return null;
+const resolveOfferSet = (asset) => {
+  const fallbackKeys = offersConfig.asset_offer_keys?.[asset] || offersConfig.asset_offer_keys?.DEFAULT || [];
+  const primaryKey =
+    offersConfig.primary_offer_keys?.[asset] ||
+    offersConfig.primary_offer_keys?.DEFAULT ||
+    fallbackKeys[0] ||
+    'ibkr';
+  const secondaryKeys = (offersConfig.secondary_offer_keys?.[asset] || offersConfig.secondary_offer_keys?.DEFAULT || [])
+    .filter((key) => key && key !== primaryKey);
 
-  const url = new URL(offer.url);
-  url.searchParams.set('utm_source', utmSource);
-  url.searchParams.set('utm_medium', utmMedium);
-  url.searchParams.set('utm_campaign', offer.utm_campaign || `affiliate_${key}`);
-  url.searchParams.set('utm_content', `dashboard_${asset.toLowerCase()}`);
+  const primaryOffer = primaryKey && offersConfig.offers?.[primaryKey] ? { key: primaryKey, ...offersConfig.offers[primaryKey] } : null;
+  const secondaryOffers = secondaryKeys
+    .map((key) => ({ key, ...offersConfig.offers?.[key] }))
+    .filter((offer) => Boolean(offer && offer.url));
 
-  return { key, ...offer, trackedUrl: url.toString() };
+  const attachTracking = (offer, role) => {
+    const url = new URL(offer.url);
+    url.searchParams.set('utm_source', utmSource);
+    url.searchParams.set('utm_medium', utmMedium);
+    url.searchParams.set('utm_campaign', offer.utm_campaign || `affiliate_${offer.key}`);
+    url.searchParams.set('utm_content', `dashboard_${asset.toLowerCase()}_${role}`);
+    return { ...offer, trackedUrl: url.toString() };
+  };
+
+  return {
+    primary: primaryOffer ? attachTracking(primaryOffer, 'primary') : null,
+    secondary: secondaryOffers.map((offer) => attachTracking(offer, 'secondary')),
+  };
 };
 
 const steps = [
@@ -103,7 +147,7 @@ const steps = [
           <p><strong>How:</strong> Pick asset → Read odds → Open execution platform.</p>
         </div>
         <div class="mt-7 flex flex-wrap gap-3">
-          <a href="#playbook" class="btn-primary focus-ring" data-track-event="playbook_open" data-surface="hero">Open Today's Playbook</a>
+          <a href="#playbook" class="btn-primary focus-ring" data-track-event="playbook_open" data-surface="hero">Open Playbook</a>
           <a href="/events" class="btn-ghost focus-ring" style="border-color:rgba(255,255,255,.4);color:#f2f6ff;">Open Event Hubs</a>
           <a href="/blog" class="btn-ghost focus-ring" style="border-color:rgba(255,255,255,.4);color:#f2f6ff;">Browse All Research</a>
         </div>
@@ -156,15 +200,18 @@ const steps = [
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex flex-wrap items-end justify-between gap-3 mb-4">
         <div>
-          <h2 class="text-2xl font-bold">Today's Event Playbook</h2>
-          <p class="text-sm mt-1" style="color:var(--muted);">Probabilities are generated from historical CPI/NFP/FOMC event windows.</p>
+          <h2 class="text-2xl font-bold">{playbookHeading}</h2>
+          <p class="text-sm mt-1" style="color:var(--muted);">{playbookSubline}</p>
+          {isStalePlaybook && (
+            <p class="text-xs mt-1 metric-down">Data freshness warning: showing latest available release set, not a same-day event.</p>
+          )}
         </div>
         <a class="btn-ghost focus-ring" href="/leaderboard">Open Full Playbook</a>
       </div>
 
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
         {playbookRows.map((row) => {
-          const offer = offerByAsset(row.asset);
+          const offerSet = resolveOfferSet(row.asset);
           const signalClass = row.signal === 'Bullish' ? 'metric-up' : row.signal === 'Bearish' ? 'metric-down' : 'metric-muted';
           return (
             <article class="surface-card p-5">
@@ -208,26 +255,49 @@ const steps = [
 
               <div class="flex flex-wrap items-center justify-between gap-2 mt-4 text-sm" style="color:var(--muted);">
                 <p>Sample size: <strong style="color:var(--text);">{row.sampleSize || '--'}</strong></p>
-                <p>Event date: <strong style="color:var(--text);">{row.eventDate || '--'}</strong> · As-of: <strong style="color:var(--text);">{row.asofDate || '--'}</strong></p>
+                <p>
+                  Event date: <strong style="color:var(--text);">{row.eventDate || '--'}</strong> · As-of:{' '}
+                  <strong style="color:var(--text);">{row.asofDate || '--'}</strong>
+                </p>
               </div>
 
-              {offer && (
+              {offerSet?.primary && (
                 <div class="mt-4 flex flex-wrap items-center justify-between gap-2">
                   <p class="text-sm" style="color:var(--muted);">Execution platform for {row.asset}</p>
-                  <a
-                    href={offer.trackedUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-affiliate-click="1"
-                    data-slug="homepage"
-                    data-asset={row.asset}
-                    data-offer-key={offer.key}
-                    data-cta-position="playbook_card"
-                    data-utm-campaign={offer.utm_campaign || `affiliate_${offer.key}`}
-                    class="btn-primary text-sm focus-ring"
-                  >
-                    Open {offer.name}
-                  </a>
+                  <div class="flex flex-wrap gap-2">
+                    <a
+                      href={offerSet.primary.trackedUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-affiliate-click="1"
+                      data-slug="homepage"
+                      data-asset={row.asset}
+                      data-offer-key={offerSet.primary.key}
+                      data-cta-role="primary"
+                      data-cta-position="playbook_card"
+                      data-utm-campaign={offerSet.primary.utm_campaign || `affiliate_${offerSet.primary.key}`}
+                      class="btn-primary text-sm focus-ring"
+                    >
+                      Open {offerSet.primary.name}
+                    </a>
+                    {offerSet.secondary.map((offer) => (
+                      <a
+                        href={offer.trackedUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-affiliate-click="1"
+                        data-slug="homepage"
+                        data-asset={row.asset}
+                        data-offer-key={offer.key}
+                        data-cta-role="secondary"
+                        data-cta-position="playbook_card"
+                        data-utm-campaign={offer.utm_campaign || `affiliate_${offer.key}`}
+                        class="btn-ghost text-sm focus-ring"
+                      >
+                        Open {offer.name}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               )}
             </article>

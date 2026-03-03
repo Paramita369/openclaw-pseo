@@ -13,6 +13,7 @@ signal: "Bullish"
 confidence_level: "normal"
 quality_score: 90
 sample_size: 13
+freshness_days: 451
 event_direction: "up"
 event_actual: 158316.0
 event_previous: 158079.0
@@ -63,6 +64,7 @@ probabilities:
 - Asset: **ETH**
 - Event date: **2024-12-06**
 - As-of date (T-1): **2026-03-02**
+- Freshness age: **451 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome

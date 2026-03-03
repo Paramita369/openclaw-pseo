@@ -13,6 +13,7 @@ signal: "Neutral"
 confidence_level: "normal"
 quality_score: 50
 sample_size: 13
+freshness_days: 486
 event_direction: "up"
 event_actual: 158079.0
 event_previous: 157945.0
@@ -63,6 +64,7 @@ probabilities:
 - Asset: **SPY**
 - Event date: **2024-11-01**
 - As-of date (T-1): **2026-03-02**
+- Freshness age: **486 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome

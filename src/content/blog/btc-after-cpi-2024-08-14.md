@@ -13,6 +13,7 @@ signal: "Neutral"
 confidence_level: "normal"
 quality_score: 90
 sample_size: 14
+freshness_days: 565
 event_direction: "up"
 event_actual: 314.062
 event_previous: 313.569
@@ -63,6 +64,7 @@ probabilities:
 - Asset: **BTC**
 - Event date: **2024-08-14**
 - As-of date (T-1): **2026-03-02**
+- Freshness age: **565 days**
 - Sample size (all-history): **14**
 
 ## Event Outcome

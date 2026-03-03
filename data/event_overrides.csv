@@ -1,0 +1,16 @@
+event_type,event_date,status,source,release_ref,notes
+FOMC,2025-03-19,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2025-05-07,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2025-06-18,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2025-07-30,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2025-09-17,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2025-10-29,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2025-12-10,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2026-01-28,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2026-03-18,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2026-04-29,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2026-06-17,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2026-07-29,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2026-09-16,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2026-10-28,confirmed,override,fed_schedule,manual schedule seed
+FOMC,2026-12-09,confirmed,override,fed_schedule,manual schedule seed

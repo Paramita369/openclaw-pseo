@@ -13,6 +13,7 @@ signal: "Bullish"
 confidence_level: "normal"
 quality_score: 90
 sample_size: 14
+freshness_days: 473
 event_direction: "up"
 event_actual: 316.528
 event_previous: 315.631
@@ -63,6 +64,7 @@ probabilities:
 - Asset: **SPY**
 - Event date: **2024-11-14**
 - As-of date (T-1): **2026-03-02**
+- Freshness age: **473 days**
 - Sample size (all-history): **14**
 
 ## Event Outcome

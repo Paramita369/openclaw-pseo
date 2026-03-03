@@ -9,7 +9,7 @@ import json
 import math
 import re
 import sqlite3
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Dict, List, Sequence, Tuple
 
@@ -32,6 +32,7 @@ REQUIRED_FRONTMATTER_KEYS = [
     "confidence_level",
     "quality_score",
     "sample_size",
+    "freshness_days",
     "metrics",
     "probabilities",
     "event_direction",
@@ -64,6 +65,7 @@ EXPECTED_CSV_COLUMNS = {
     "median_t7_pct",
     "sample_size",
     "asof_date",
+    "freshness_days",
     "signal",
     "event_direction",
     "event_actual",
@@ -77,6 +79,15 @@ EMBEDDED_AFFILIATE_PATTERN = re.compile(
     r"(binance\.com/referral|ibkr\.com/referral|invest\.futuhk\.com/invite-centre_share)",
     flags=re.IGNORECASE,
 )
+
+
+def table_exists(conn: sqlite3.Connection, table_name: str) -> bool:
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name = ? LIMIT 1",
+        (table_name,),
+    )
+    return cursor.fetchone() is not None
 
 
 def parse_args() -> argparse.Namespace:
@@ -263,7 +274,7 @@ def scan_file(path: Path) -> List[str]:
     if direction_basis != "vs_previous":
         violations.append("invalid_direction_basis")
 
-    for field in ["quality_score", "sample_size", "event_actual", "event_previous", "event_delta"]:
+    for field in ["quality_score", "sample_size", "freshness_days", "event_actual", "event_previous", "event_delta"]:
         if field in fm and not is_finite_number(fm.get(field)):
             violations.append(f"non_numeric_{field}")
 
@@ -395,6 +406,22 @@ def validate_sitemap(root: Path) -> Dict[str, object]:
     if events_path.exists() and "/events/" not in events_path.read_text(encoding="utf-8"):
         violations.append("events_sitemap_missing_event_routes")
 
+    blog_lastmods: List[str] = []
+    for blog_sitemap in blog_paths:
+        content = blog_sitemap.read_text(encoding="utf-8")
+        blog_lastmods.extend(re.findall(r"<lastmod>([^<]+)</lastmod>", content))
+    if len(blog_lastmods) >= 50 and len(set(blog_lastmods)) == 1:
+        manifest_path = root / "data" / "page_manifest.json"
+        allow_uniform = False
+        if manifest_path.exists():
+            try:
+                payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+                allow_uniform = bool(payload.get("allow_uniform_lastmod_once"))
+            except Exception:
+                allow_uniform = False
+        if not allow_uniform:
+            violations.append("sitemap_blog_lastmod_uniform")
+
     return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
 
 
@@ -455,6 +482,13 @@ def validate_target_matrix(root: Path, as_of_date: str) -> Dict[str, object]:
             if value is None or value == "" or not is_finite_number(value):
                 violations.append(f"invalid_csv_{field}")
                 break
+        freshness_value = row.get("freshness_days")
+        if freshness_value is None or freshness_value == "" or not is_finite_number(freshness_value):
+            violations.append("invalid_csv_freshness_days")
+            break
+        if float(freshness_value) < 0:
+            violations.append("negative_csv_freshness_days")
+            break
 
     if duplicate_count > 0:
         violations.append("duplicate_target_rows")
@@ -464,18 +498,33 @@ def validate_target_matrix(root: Path, as_of_date: str) -> Dict[str, object]:
     try:
         cursor = conn.cursor()
         expected_dates: Dict[str, List[str]] = {}
-        for event_type in sorted(ALLOWED_EVENT_TYPES):
-            cursor.execute(
-                f"""
-                SELECT DISTINCT m.date
-                FROM macro_events m
-                WHERE m.date <= ?
-                  AND {event_filter_sql(event_type)}
-                ORDER BY m.date ASC
-                """,
-                (as_of_cutoff,),
-            )
-            expected_dates[event_type] = [str(row[0]) for row in cursor.fetchall()]
+        if table_exists(conn, "event_calendar"):
+            for event_type in sorted(ALLOWED_EVENT_TYPES):
+                cursor.execute(
+                    """
+                    SELECT DISTINCT ec.event_date
+                    FROM event_calendar ec
+                    WHERE ec.event_type = ?
+                      AND ec.event_date <= ?
+                      AND LOWER(COALESCE(ec.status, 'confirmed')) NOT IN ('disabled', 'skip')
+                    ORDER BY ec.event_date ASC
+                    """,
+                    (event_type, as_of_cutoff),
+                )
+                expected_dates[event_type] = [str(row[0]) for row in cursor.fetchall()]
+        else:
+            for event_type in sorted(ALLOWED_EVENT_TYPES):
+                cursor.execute(
+                    f"""
+                    SELECT DISTINCT m.date
+                    FROM macro_events m
+                    WHERE m.date <= ?
+                      AND {event_filter_sql(event_type)}
+                    ORDER BY m.date ASC
+                    """,
+                    (as_of_cutoff,),
+                )
+                expected_dates[event_type] = [str(row[0]) for row in cursor.fetchall()]
     finally:
         conn.close()
 
@@ -506,6 +555,105 @@ def validate_target_matrix(root: Path, as_of_date: str) -> Dict[str, object]:
     }
 
 
+def validate_event_pool(root: Path, as_of_date: str) -> Dict[str, object]:
+    violations: List[str] = []
+    db_path = root / "data" / "macro_events.db"
+    if not db_path.exists():
+        return {"violations": ["missing_macro_events_db"], "count": 1}
+
+    as_of_cutoff = datetime.strptime(cutoff_date(as_of_date), "%Y-%m-%d").date()
+    threshold = as_of_cutoff - timedelta(days=90)
+
+    conn = sqlite3.connect(db_path)
+    try:
+        if not table_exists(conn, "event_calendar"):
+            return {"violations": ["missing_event_calendar_table"], "count": 1}
+        cursor = conn.cursor()
+        latest_by_event: Dict[str, str] = {}
+        for event_type in sorted(ALLOWED_EVENT_TYPES):
+            cursor.execute(
+                """
+                SELECT MAX(ec.event_date)
+                FROM event_calendar ec
+                WHERE ec.event_type = ?
+                  AND ec.event_date <= ?
+                  AND LOWER(COALESCE(ec.status, 'confirmed')) NOT IN ('disabled', 'skip')
+                """,
+                (event_type, as_of_cutoff.isoformat()),
+            )
+            result = cursor.fetchone()
+            latest = str(result[0]) if result and result[0] else ""
+            latest_by_event[event_type] = latest
+            if not latest:
+                violations.append(f"event_pool_missing_{event_type.lower()}")
+                continue
+            latest_dt = datetime.strptime(latest, "%Y-%m-%d").date()
+            if latest_dt < threshold:
+                violations.append(f"event_pool_stale_{event_type.lower()}_{latest}")
+    finally:
+        conn.close()
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_cta_routes(root: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    offers_path = root / "src" / "data" / "offers.json"
+    if not offers_path.exists():
+        return {"violations": ["missing_offers_json"], "count": 1}
+
+    try:
+        payload = json.loads(offers_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {"violations": ["invalid_offers_json"], "count": 1}
+
+    primary_map = payload.get("primary_offer_keys", {}) or {}
+    secondary_map = payload.get("secondary_offer_keys", {}) or {}
+    offers = payload.get("offers", {}) or {}
+
+    for asset in ["QQQ", "SPY"]:
+        primary = str(primary_map.get(asset) or primary_map.get("DEFAULT") or "").lower()
+        if primary != "ibkr":
+            violations.append(f"invalid_primary_offer_{asset.lower()}")
+        secondary = [str(item).lower() for item in (secondary_map.get(asset) or [])]
+        if "futu" not in secondary:
+            violations.append(f"missing_secondary_futu_{asset.lower()}")
+
+    for key in ["ibkr", "futu"]:
+        if key not in offers:
+            violations.append(f"missing_offer_definition_{key}")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_freshness_semantics(root: Path, as_of_date: str) -> Dict[str, object]:
+    violations: List[str] = []
+    csv_path = root / "data" / "verified_targets.csv"
+    index_path = root / "src" / "pages" / "index.astro"
+    if not csv_path.exists() or not index_path.exists():
+        return {"violations": ["missing_freshness_inputs"], "count": 1}
+
+    with csv_path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        dates = [str(row.get("date", "")).strip() for row in reader if str(row.get("date", "")).strip()]
+    if not dates:
+        return {"violations": ["missing_target_dates"], "count": 1}
+
+    latest_date = max(dates)
+    as_of_cutoff = datetime.strptime(cutoff_date(as_of_date), "%Y-%m-%d").date()
+    latest_dt = datetime.strptime(latest_date, "%Y-%m-%d").date()
+    age_days = (as_of_cutoff - latest_dt).days
+
+    source = index_path.read_text(encoding="utf-8")
+    if age_days > 14:
+        if "Latest Event Playbook" not in source:
+            violations.append("freshness_missing_latest_heading")
+        if "Last event:" not in source:
+            violations.append("freshness_missing_last_event_note")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
 def run_gates(root: Path, content_dir: Path, as_of_date: str) -> Dict[str, object]:
     files = sorted(content_dir.glob("*.md"))
 
@@ -529,8 +677,19 @@ def run_gates(root: Path, content_dir: Path, as_of_date: str) -> Dict[str, objec
     sitemap_result = validate_sitemap(root)
     route_filter_result = validate_filter_routes(root)
     matrix_result = validate_target_matrix(root, as_of_date)
+    event_pool_result = validate_event_pool(root, as_of_date)
+    cta_result = validate_cta_routes(root)
+    freshness_result = validate_freshness_semantics(root, as_of_date)
 
-    for scope in [redirect_result, sitemap_result, route_filter_result, matrix_result]:
+    for scope in [
+        redirect_result,
+        sitemap_result,
+        route_filter_result,
+        matrix_result,
+        event_pool_result,
+        cta_result,
+        freshness_result,
+    ]:
         for issue in scope["violations"]:
             report["summary"][issue] = report["summary"].get(issue, 0) + 1
 
@@ -539,6 +698,9 @@ def run_gates(root: Path, content_dir: Path, as_of_date: str) -> Dict[str, objec
     report["sitemap_violations"] = sitemap_result
     report["route_violations"] = route_filter_result
     report["matrix_violations"] = matrix_result
+    report["event_pool_violations"] = event_pool_result
+    report["cta_violations"] = cta_result
+    report["freshness_violations"] = freshness_result
 
     content_violations = sum(len(v) for v in violations_by_file.values())
     total_violations = (
@@ -547,6 +709,9 @@ def run_gates(root: Path, content_dir: Path, as_of_date: str) -> Dict[str, objec
         + int(sitemap_result["count"])
         + int(route_filter_result["count"])
         + int(matrix_result["count"])
+        + int(event_pool_result["count"])
+        + int(cta_result["count"])
+        + int(freshness_result["count"])
     )
     report["content_violations"] = content_violations
     report["total_violations"] = total_violations

@@ -13,6 +13,7 @@ signal: "Neutral"
 confidence_level: "normal"
 quality_score: 50
 sample_size: 13
+freshness_days: 605
 event_direction: "up"
 event_actual: 157748.0
 event_previous: 157695.0
@@ -63,6 +64,7 @@ probabilities:
 - Asset: **QQQ**
 - Event date: **2024-07-05**
 - As-of date (T-1): **2026-03-02**
+- Freshness age: **605 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome
