@@ -8,6 +8,14 @@ const probabilityWindow = z.object({
   sample: z.number().int().nonnegative(),
 });
 
+const conditionalProbability = z.object({
+  basis: z.literal('event_direction'),
+  direction: z.enum(['up', 'down', 'flat']),
+  sample_size: z.number().int().nonnegative(),
+  t1: probabilityWindow,
+  t7: probabilityWindow,
+});
+
 const blog = defineCollection({
   type: 'content',
   schema: z.object({
@@ -19,6 +27,11 @@ const blog = defineCollection({
     event_slug: z.string().min(1),
     event_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     asof_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    event_direction: z.enum(['up', 'down', 'flat']),
+    event_actual: z.number().finite(),
+    event_previous: z.number().finite(),
+    event_delta: z.number().finite(),
+    direction_basis: z.literal('vs_previous'),
     source: z.string().min(1),
     offer_key: z.string().min(1),
     signal: z.enum(['Bullish', 'Neutral', 'Bearish']),
@@ -36,6 +49,7 @@ const blog = defineCollection({
     probabilities: z.object({
       t1: probabilityWindow,
       t7: probabilityWindow,
+      conditional: conditionalProbability,
       sample_size: z.number().int().nonnegative(),
     }),
     chartData: z

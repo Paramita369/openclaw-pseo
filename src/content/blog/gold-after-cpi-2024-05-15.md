@@ -6,18 +6,23 @@ event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-05-15"
-asof_date: "2025-02-12"
+asof_date: "2026-03-02"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
 confidence_level: "normal"
 quality_score: 90
 sample_size: 14
+event_direction: "up"
+event_actual: 313.175
+event_previous: 313.023
+event_delta: 0.152
+direction_basis: "vs_previous"
 tags: ["gold", "cpi", "event-probability", "general"]
 metrics:
   sharpe_t7: 0.47
   mdd_t7: -0.36
-  volatility: 0.0
+  volatility: 0.38
   impact_t1_pct: -0.36
   impact_t7_pct: 0.02
 probabilities:
@@ -34,7 +39,22 @@ probabilities:
     median: 1.52
     mean: 1.07
     sample: 13
-chartData: [{"time": "2024-05-13", "open": 2358.3, "high": 2358.3, "low": 2336.1, "close": 2336.1}, {"time": "2024-05-14", "open": 2336.0, "high": 2358.0, "low": 2336.0, "close": 2353.4}, {"time": "2024-05-15", "open": 2361.6, "high": 2388.7, "low": 2356.0, "close": 2388.7}, {"time": "2024-05-16", "open": 2389.5, "high": 2392.2, "low": 2380.0, "close": 2380.0}, {"time": "2024-05-17", "open": 2380.7, "high": 2415.8, "low": 2380.7, "close": 2412.2}, {"time": "2024-05-20", "open": 2415.8, "high": 2435.8, "low": 2409.7, "close": 2433.9}, {"time": "2024-05-21", "open": 2429.5, "high": 2429.5, "low": 2421.0, "close": 2421.7}, {"time": "2024-05-22", "open": 2417.5, "high": 2417.6, "low": 2375.8, "close": 2389.2}]
+  conditional:
+    basis: "event_direction"
+    direction: "up"
+    sample_size: 13
+    t1:
+      up: 53.85
+      down: 46.15
+      median: 0.56
+      mean: 0.36
+      sample: 13
+    t7:
+      up: 76.92
+      down: 23.08
+      median: 1.52
+      mean: 1.07
+      sample: 13
 ---
 
 ## Event Snapshot
@@ -42,26 +62,38 @@ chartData: [{"time": "2024-05-13", "open": 2358.3, "high": 2358.3, "low": 2336.1
 - Event: **CPI**
 - Asset: **GOLD**
 - Event date: **2024-05-15**
-- As-of date (T-1): **2025-02-12**
-- Sample size: **14**
+- As-of date (T-1): **2026-03-02**
+- Sample size (all-history): **14**
 
-## Probability Table
+## Event Outcome
+
+- CPI Outcome: **UP** (Actual 313.175, Previous 313.023, Delta +0.1520)
+- Direction basis: **vs_previous**
+
+## Probability Table (All-history)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
 | T+1 | 50.0% | 50.0% | 0.27% | 0.22% | 14 |
 | T+7 | 76.92% | 23.08% | 1.52% | 1.07% | 13 |
 
+## Probability Table (Same-direction)
+
+| Window | P(up) | P(down) | Median return | Mean return | Sample |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| T+1 | 53.85% | 46.15% | 0.56% | 0.36% | 13 |
+| T+7 | 76.92% | 23.08% | 1.52% | 1.07% | 13 |
+
 ## Historical Distribution Summary
 
-T+1 Up Probability: **50.0%** (n=14)
+When CPI was **UP**, GOLD T+1 up probability was **53.85%** (n=13).
 
-T+7 Up Probability: **76.92%** (n=13)
+When CPI was **UP**, GOLD T+7 up probability was **76.92%** (n=13).
 
-T+7 Median Return: **1.52%**
+Same-direction T+7 median return: **1.52%**.
 
-For GOLD, historical CPI windows currently show a T+1 up probability of 50.0% and a T+7 up probability of 76.92%. Median T+7 return is 1.52% across 14 samples. Current classification is Bullish, which should be treated as an educational probability view, not a trade instruction.
+For GOLD, historical CPI windows show all-history T+1 up probability of 50.0% and T+7 up probability of 76.92%. When CPI printed Up versus previous, T+1 up probability was 53.85% and T+7 up probability was 76.92% across 13 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 
-This page aggregates historical windows for the same event type (CPI) and deduplicates by event date. It reports directional probabilities and return distribution summaries for educational use only.
+This page aggregates historical windows for the same event type (CPI) and deduplicates by event date. It reports both all-history probabilities and same-direction probabilities based on event outcome direction (vs previous) for educational use only.

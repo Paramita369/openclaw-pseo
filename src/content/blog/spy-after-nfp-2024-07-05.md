@@ -6,18 +6,23 @@ event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-07-05"
-asof_date: "2025-01-10"
+asof_date: "2026-03-02"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
 confidence_level: "normal"
-quality_score: 80
+quality_score: 50
 sample_size: 13
+event_direction: "up"
+event_actual: 157748.0
+event_previous: 157695.0
+event_delta: 53.0
+direction_basis: "vs_previous"
 tags: ["spy", "nfp", "event-probability", "general"]
 metrics:
   sharpe_t7: 7.02
   mdd_t7: -0.98
-  volatility: 0.0
+  volatility: 0.96
   impact_t1_pct: 0.0
   impact_t7_pct: 0.96
 probabilities:
@@ -34,7 +39,22 @@ probabilities:
     median: 1.39
     mean: 1.41
     sample: 13
-chartData: [{"time": "2024-07-02", "open": 533.95, "high": 539.16, "low": 533.9, "close": 539.16}, {"time": "2024-07-03", "open": 538.85, "high": 541.93, "low": 538.81, "close": 541.57}, {"time": "2024-07-05", "open": 541.87, "high": 545.1, "low": 541.24, "close": 544.69}, {"time": "2024-07-08", "open": 545.48, "high": 546.27, "low": 544.25, "close": 545.32}, {"time": "2024-07-09", "open": 546.28, "high": 547.19, "low": 545.56, "close": 545.85}, {"time": "2024-07-10", "open": 547.08, "high": 551.6, "low": 546.78, "close": 551.25}, {"time": "2024-07-11", "open": 551.37, "high": 552.24, "low": 545.86, "close": 546.5}, {"time": "2024-07-12", "open": 547.63, "high": 553.56, "low": 547.16, "close": 549.95}]
+  conditional:
+    basis: "event_direction"
+    direction: "up"
+    sample_size: 0
+    t1:
+      up: 0.0
+      down: 100.0
+      median: 0.0
+      mean: 0.0
+      sample: 0
+    t7:
+      up: 75.0
+      down: 25.0
+      median: 1.27
+      mean: 1.28
+      sample: 12
 ---
 
 ## Event Snapshot
@@ -42,26 +62,38 @@ chartData: [{"time": "2024-07-02", "open": 533.95, "high": 539.16, "low": 533.9,
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2024-07-05**
-- As-of date (T-1): **2025-01-10**
-- Sample size: **13**
+- As-of date (T-1): **2026-03-02**
+- Sample size (all-history): **13**
 
-## Probability Table
+## Event Outcome
+
+- NFP Outcome: **UP** (Actual 157748.0, Previous 157695.0, Delta +53.0000)
+- Direction basis: **vs_previous**
+
+## Probability Table (All-history)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
 | T+1 | 0.0% | 100.0% | 0.0% | 0.0% | 0 |
 | T+7 | 76.92% | 23.08% | 1.39% | 1.41% | 13 |
 
+## Probability Table (Same-direction)
+
+| Window | P(up) | P(down) | Median return | Mean return | Sample |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| T+1 | 0.0% | 100.0% | 0.0% | 0.0% | 0 |
+| T+7 | 75.0% | 25.0% | 1.27% | 1.28% | 12 |
+
 ## Historical Distribution Summary
 
-T+1 Up Probability: **0.0%** (n=0)
+When NFP was **UP**, SPY T+1 up probability was **0.0%** (n=0).
 
-T+7 Up Probability: **76.92%** (n=13)
+When NFP was **UP**, SPY T+7 up probability was **75.0%** (n=12).
 
-T+7 Median Return: **1.39%**
+Same-direction T+7 median return: **1.27%**.
 
-For SPY, historical NFP windows currently show a T+1 up probability of 0.0% and a T+7 up probability of 76.92%. Median T+7 return is 1.39% across 13 samples. Current classification is Neutral, which should be treated as an educational probability view, not a trade instruction.
+For SPY, historical NFP windows show all-history T+1 up probability of 0.0% and T+7 up probability of 76.92%. When NFP printed Up versus previous, T+1 up probability was 0.0% and T+7 up probability was 75.0% across 0 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 
-This page aggregates historical windows for the same event type (NFP) and deduplicates by event date. It reports directional probabilities and return distribution summaries for educational use only.
+This page aggregates historical windows for the same event type (NFP) and deduplicates by event date. It reports both all-history probabilities and same-direction probabilities based on event outcome direction (vs previous) for educational use only.

@@ -11,69 +11,98 @@ const sortedPosts = [...posts].sort((a, b) => {
 });
 
 const assetCounts = {};
+const eventCounts = {};
 for (const post of sortedPosts) {
   const asset = (post.data.tags?.[0] || 'other').toLowerCase();
+  const event = String(post.data.event_type || '').toLowerCase();
   assetCounts[asset] = (assetCounts[asset] || 0) + 1;
+  eventCounts[event] = (eventCounts[event] || 0) + 1;
 }
+
 const assets = Object.keys(assetCounts).sort();
-
-const url = new URL(Astro.request.url);
-const assetParam = url.searchParams.get('asset')?.toLowerCase() || '';
-
-const filtered = assetParam
-  ? sortedPosts.filter((post) => (post.data.tags?.[0] || '').toLowerCase() === assetParam)
-  : sortedPosts;
+const events = ['cpi', 'nfp', 'fomc'];
 ---
 
-<Layout title={assetParam ? `${assetParam.toUpperCase()} Event Research` : 'All Event Research'} description="QuantMacro archive for CPI/NFP/FOMC event-driven probability pages.">
+<Layout title="Event Research Archive" description="QuantMacro archive for CPI/NFP/FOMC event-driven probability pages.">
   <section class="py-12 hero-panel">
     <div class="max-w-6xl mx-auto px-4">
-      <h1 class="text-4xl font-extrabold text-white">
-        {assetParam ? `${assetParam.toUpperCase()} Event Research` : 'All Event Research'}
-      </h1>
+      <h1 class="text-4xl font-extrabold text-white">Event Research Archive</h1>
       <p class="text-blue-100 mt-3 text-lg">
-        {filtered.length} pages · event-driven probabilities across CPI, NFP, and FOMC.
+        {sortedPosts.length} pages · use asset hubs and event hubs for focused navigation.
       </p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <a href="/events" class="btn-ghost" style="border-color:rgba(255,255,255,.4);color:#f2f6ff;">Open Event Hubs</a>
+        <a href="/tags/btc" class="btn-ghost" style="border-color:rgba(255,255,255,.4);color:#f2f6ff;">Open Asset Hubs</a>
+      </div>
     </div>
   </section>
 
   <section class="py-6 border-b" style="border-color:var(--border);background:var(--surface);">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="flex flex-wrap gap-2">
-        <a
-          href="/blog"
-          class={`badge-chip ${assetParam ? '' : 'font-extrabold'}`}
-          data-track-event="filter_apply"
-          data-filter="all"
-        >
-          All ({sortedPosts.length})
-        </a>
-        {assets.map((asset) => (
-          <a
-            href={`/blog?asset=${asset}`}
-            class={`badge-chip ${assetParam === asset ? 'font-extrabold' : ''}`}
-            data-track-event="filter_apply"
-            data-filter={asset}
-          >
-            {asset.toUpperCase()} ({assetCounts[asset]})
-          </a>
-        ))}
+    <div class="max-w-6xl mx-auto px-4 space-y-4">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wide mb-2" style="color:var(--muted);">Asset Hubs</p>
+        <div class="flex flex-wrap gap-2">
+          {assets.map((asset) => (
+            <a href={`/tags/${asset}`} class="badge-chip" data-track-event="filter_apply" data-filter={asset}>
+              {asset.toUpperCase()} ({assetCounts[asset]})
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wide mb-2" style="color:var(--muted);">Event Hubs</p>
+        <div class="flex flex-wrap gap-2">
+          {events.map((event) => (
+            <a href={`/events/${event}`} class="badge-chip" data-track-event="filter_apply" data-filter={event}>
+              {event.toUpperCase()} ({eventCounts[event] || 0})
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <label for="archive-search" class="text-xs font-bold uppercase tracking-wide" style="color:var(--muted);">Archive Search</label>
+        <input
+          id="archive-search"
+          type="search"
+          placeholder="Search by asset, event, signal, or date..."
+          class="mt-2 w-full rounded-xl border px-3 py-2 text-sm"
+          style="border-color:var(--border);background:var(--surface-alt);"
+        />
       </div>
     </div>
   </section>
 
   <section class="max-w-6xl mx-auto px-4 py-10">
-    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-      {filtered.map((post) => {
+    <div id="archive-grid" class="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+      {sortedPosts.map((post, idx) => {
         const signal = post.data.signal || 'Neutral';
         const signalClass = signal === 'Bullish' ? 'metric-up' : signal === 'Bearish' ? 'metric-down' : 'metric-muted';
         const probs = post.data.probabilities;
+        const searchable = [
+          post.data.tags?.[0],
+          post.data.event_type,
+          post.data.signal,
+          post.data.event_date,
+          post.data.title,
+          post.data.event_direction,
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase();
 
         return (
-          <a href={`/blog/${post.slug}`} class="surface-card p-5 flex flex-col gap-3 hover:translate-y-[-2px] transition-transform">
+          <a
+            href={`/blog/${post.slug}`}
+            class="surface-card p-5 flex flex-col gap-3 hover:translate-y-[-2px] transition-transform archive-card"
+            data-search={searchable}
+            data-order={idx}
+          >
             <div class="flex flex-wrap items-center gap-2">
               <span class="badge-chip">{post.data.tags?.[0]?.toUpperCase()}</span>
               <span class="badge-chip">{post.data.event_label || post.data.event_type}</span>
+              <span class="badge-chip">{post.data.event_direction?.toUpperCase() || '--'}</span>
               <span class={`text-xs font-bold ${signalClass}`}>{signal}</span>
             </div>
 
@@ -98,5 +127,56 @@ const filtered = assetParam
         );
       })}
     </div>
+    <div class="mt-6 flex items-center justify-center">
+      <button id="archive-load-more" type="button" class="btn-ghost text-sm">Load More</button>
+    </div>
+    <p id="archive-empty" class="hidden mt-6 text-sm" style="color:var(--muted);">No pages match the current search.</p>
   </section>
+
+  <script is:inline>
+    (() => {
+      const input = document.getElementById('archive-search');
+      const cards = Array.from(document.querySelectorAll('.archive-card'));
+      const loadMore = document.getElementById('archive-load-more');
+      const empty = document.getElementById('archive-empty');
+      const pageSize = 30;
+      let visibleLimit = pageSize;
+
+      const apply = () => {
+        const query = (input?.value || '').trim().toLowerCase();
+        let visible = 0;
+        let shown = 0;
+
+        cards.forEach((card) => {
+          const searchable = card.getAttribute('data-search') || '';
+          const matchQuery = !query || searchable.includes(query);
+          if (!matchQuery) {
+            card.classList.add('hidden');
+            return;
+          }
+
+          visible += 1;
+          shown += 1;
+          const shouldShow = shown <= visibleLimit;
+          card.classList.toggle('hidden', !shouldShow);
+        });
+
+        empty?.classList.toggle('hidden', visible > 0);
+        if (loadMore) {
+          const hasMore = visible > visibleLimit;
+          loadMore.classList.toggle('hidden', !hasMore);
+        }
+      };
+
+      loadMore?.addEventListener('click', () => {
+        visibleLimit += pageSize;
+        apply();
+      });
+      input?.addEventListener('input', () => {
+        visibleLimit = pageSize;
+        apply();
+      });
+      apply();
+    })();
+  </script>
 </Layout>

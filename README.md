@@ -20,19 +20,24 @@ pip install -r requirements.txt
 
 ## Pipeline Steps
 1. Fetch market snapshot
-2. Copy DB to runtime workspace and compute risk metrics
-3. Generate event pages + redirects + sitemap
-4. Run strict quality gates
-5. Run `astro build`
-6. Generate KPI report
-7. Commit/push only whitelisted paths
+2. Copy DB to runtime workspace
+3. Fetch event outcomes (`vs_previous`) from FRED
+4. Build full target matrix (`5 assets × all CPI/NFP/FOMC dates`)
+5. Compute risk metrics
+6. Generate event pages + redirects + segmented sitemaps
+7. Run strict quality gates
+8. Run `astro build`
+9. Generate KPI report
+10. Commit/push only whitelisted paths
 
 ## Git Whitelist
 - `src/content/blog/`
-- `public/sitemap.xml`
+- `public/robots.txt`
+- `public/sitemap*.xml`
 - `src/daily_snapshot.json`
 - `data/page_manifest.json`
 - `data/slug_redirects.json`
+- `data/verified_targets.csv`
 - `vercel.json`
 
 Runtime noisy paths are ignored during push checks:
@@ -46,13 +51,15 @@ Required base columns:
 
 V2 extension columns:
 - `event_label,event_slug,rise_prob_t1,fall_prob_t1,rise_prob_t7,fall_prob_t7,median_t1_pct,median_t7_pct,sample_size,asof_date,signal`
+- `event_direction,event_actual,event_previous,event_delta,direction_basis,outcome_status`
 
 ### Frontmatter Contract
 Required fields include:
 - `event_type,event_label,event_slug,event_date,asof_date`
+- `event_direction,event_actual,event_previous,event_delta,direction_basis`
 - `signal,confidence_level,sample_size`
 - `metrics` numeric block
-- `probabilities` block (`t1`, `t7`, `sample_size`)
+- `probabilities` block (`t1`, `t7`, `conditional`, `sample_size`)
 
 ### Redirect Outputs
 - `data/slug_redirects.json` (legacy slug -> new event slug)
@@ -60,6 +67,7 @@ Required fields include:
 
 ## Environment Variables
 - `MINIMAX_API_KEY` (optional): LLM narrative enrichment.
+- `FRED_API_KEY` (optional): preferred for outcome fetch quota.
 - `PUBLIC_GA4_MEASUREMENT_ID` (optional): frontend GA4 events.
 - `GA4_PROPERTY_ID` (optional): KPI report (`affiliate_click`).
 - `GOOGLE_APPLICATION_CREDENTIALS` + `GSC_SITE_URL` (optional): GSC metrics.
@@ -79,6 +87,9 @@ Strict failures include:
 - embedded affiliate URL in markdown body
 - redirect map integrity issues
 - sitemap containing legacy macro slugs
+- missing segmented sitemap index (`sitemap-index.xml` + sub-sitemaps)
+- non-full target matrix coverage (must match DB event-date matrix)
+- missing/invalid event outcome direction fields
 
 ## Notes
 - `run_daily_ops` is the primary operation path; GitHub Actions is backup/manual.

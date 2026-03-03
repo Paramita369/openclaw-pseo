@@ -6,18 +6,23 @@ event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-10-04"
-asof_date: "2025-01-10"
+asof_date: "2026-03-02"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
 confidence_level: "normal"
-quality_score: 80
+quality_score: 50
 sample_size: 13
+event_direction: "up"
+event_actual: 157945.0
+event_previous: 157912.0
+event_delta: 33.0
+direction_basis: "vs_previous"
 tags: ["spy", "nfp", "event-probability", "general"]
 metrics:
   sharpe_t7: 3.43
   mdd_t7: -1.11
-  volatility: 0.0
+  volatility: 1.15
   impact_t1_pct: 0.0
   impact_t7_pct: 1.15
 probabilities:
@@ -34,7 +39,22 @@ probabilities:
     median: 1.39
     mean: 1.41
     sample: 13
-chartData: [{"time": "2024-10-01", "open": 564.84, "high": 565.49, "low": 557.55, "close": 560.13}, {"time": "2024-10-02", "open": 559.24, "high": 561.4, "low": 556.83, "close": 560.37}, {"time": "2024-10-03", "open": 558.89, "high": 561.3, "low": 557.05, "close": 559.35}, {"time": "2024-10-04", "open": 563.81, "high": 564.8, "low": 559.62, "close": 564.43}, {"time": "2024-10-07", "open": 562.77, "high": 563.42, "low": 558.17, "close": 559.33}, {"time": "2024-10-08", "open": 561.91, "high": 565.22, "low": 561.03, "close": 564.62}, {"time": "2024-10-09", "open": 564.61, "high": 569.09, "low": 564.01, "close": 568.53}, {"time": "2024-10-10", "open": 567.18, "high": 568.96, "low": 565.92, "close": 567.53}, {"time": "2024-10-11", "open": 567.45, "high": 571.67, "low": 567.32, "close": 570.93}]
+  conditional:
+    basis: "event_direction"
+    direction: "up"
+    sample_size: 0
+    t1:
+      up: 0.0
+      down: 100.0
+      median: 0.0
+      mean: 0.0
+      sample: 0
+    t7:
+      up: 75.0
+      down: 25.0
+      median: 1.27
+      mean: 1.28
+      sample: 12
 ---
 
 ## Event Snapshot
@@ -42,26 +62,38 @@ chartData: [{"time": "2024-10-01", "open": 564.84, "high": 565.49, "low": 557.55
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2024-10-04**
-- As-of date (T-1): **2025-01-10**
-- Sample size: **13**
+- As-of date (T-1): **2026-03-02**
+- Sample size (all-history): **13**
 
-## Probability Table
+## Event Outcome
+
+- NFP Outcome: **UP** (Actual 157945.0, Previous 157912.0, Delta +33.0000)
+- Direction basis: **vs_previous**
+
+## Probability Table (All-history)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
 | T+1 | 0.0% | 100.0% | 0.0% | 0.0% | 0 |
 | T+7 | 76.92% | 23.08% | 1.39% | 1.41% | 13 |
 
+## Probability Table (Same-direction)
+
+| Window | P(up) | P(down) | Median return | Mean return | Sample |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| T+1 | 0.0% | 100.0% | 0.0% | 0.0% | 0 |
+| T+7 | 75.0% | 25.0% | 1.27% | 1.28% | 12 |
+
 ## Historical Distribution Summary
 
-T+1 Up Probability: **0.0%** (n=0)
+When NFP was **UP**, SPY T+1 up probability was **0.0%** (n=0).
 
-T+7 Up Probability: **76.92%** (n=13)
+When NFP was **UP**, SPY T+7 up probability was **75.0%** (n=12).
 
-T+7 Median Return: **1.39%**
+Same-direction T+7 median return: **1.27%**.
 
-For SPY, historical NFP windows currently show a T+1 up probability of 0.0% and a T+7 up probability of 76.92%. Median T+7 return is 1.39% across 13 samples. Current classification is Neutral, which should be treated as an educational probability view, not a trade instruction.
+For SPY, historical NFP windows show all-history T+1 up probability of 0.0% and T+7 up probability of 76.92%. When NFP printed Up versus previous, T+1 up probability was 0.0% and T+7 up probability was 75.0% across 0 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 
-This page aggregates historical windows for the same event type (NFP) and deduplicates by event date. It reports directional probabilities and return distribution summaries for educational use only.
+This page aggregates historical windows for the same event type (NFP) and deduplicates by event date. It reports both all-history probabilities and same-direction probabilities based on event outcome direction (vs previous) for educational use only.

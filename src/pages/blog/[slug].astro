@@ -25,6 +25,9 @@ const displayTitle = entry.data.title;
 const p = entry.data.probabilities || null;
 const t1 = p?.t1 || {};
 const t7 = p?.t7 || {};
+const conditional = p?.conditional || {};
+const c1 = conditional?.t1 || {};
+const c7 = conditional?.t7 || {};
 const signal = entry.data.signal || 'Neutral';
 const signalText =
   signal === 'Bullish'
@@ -37,6 +40,11 @@ const sampleSize = p?.sample_size ?? t1.sample ?? t7.sample ?? entry.data.sample
 const eventDate = entry.data.event_date || entry.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '--';
 const eventLabel = entry.data.event_label || entry.data.event_type || '--';
 const asofDate = entry.data.asof_date || '--';
+const eventDirection = String(entry.data.event_direction || conditional?.direction || '--').toUpperCase();
+const eventActual = entry.data.event_actual;
+const eventPrevious = entry.data.event_previous;
+const eventDelta = entry.data.event_delta;
+const conditionalSample = conditional?.sample_size ?? '--';
 ---
 
 <Layout title={displayTitle} description={entry.data.description} frontmatter={entry.data}>
@@ -62,7 +70,7 @@ const asofDate = entry.data.asof_date || '--';
           <p class="mt-3 text-sm" style="color:var(--muted);">{entry.data.description}</p>
         </header>
 
-        <section class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-3">
+        <section class="mt-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-3">
           <div class="rounded-xl border p-4" style="border-color:var(--border);background:var(--surface-alt);">
             <p class="text-xs font-bold uppercase tracking-wide" style="color:var(--muted);">Event Snapshot</p>
             <p class="mt-2 text-sm">Event: <strong>{eventLabel}</strong></p>
@@ -72,17 +80,31 @@ const asofDate = entry.data.asof_date || '--';
           </div>
 
           <div class="rounded-xl border p-4" style="border-color:var(--border);background:var(--surface-alt);">
-            <p class="text-xs font-bold uppercase tracking-wide" style="color:var(--muted);">T+1 Probability</p>
-            <p class="mt-2 metric-up">P(up): <strong>{t1.up ?? '--'}%</strong></p>
-            <p class="metric-down">P(down): <strong>{t1.down ?? '--'}%</strong></p>
-            <p class="metric-muted">Median return: <strong>{t1.median ?? '--'}%</strong></p>
+            <p class="text-xs font-bold uppercase tracking-wide" style="color:var(--muted);">Event Outcome</p>
+            <p class="mt-2 text-sm">Direction: <strong>{eventDirection}</strong></p>
+            <p class="text-sm">Actual: <strong>{eventActual ?? '--'}</strong></p>
+            <p class="text-sm">Previous: <strong>{eventPrevious ?? '--'}</strong></p>
+            <p class={`text-sm font-semibold ${Number(eventDelta) >= 0 ? 'metric-up' : 'metric-down'}`}>
+              Delta: {Number.isFinite(Number(eventDelta)) ? Number(eventDelta).toFixed(4) : '--'}
+            </p>
           </div>
 
           <div class="rounded-xl border p-4" style="border-color:var(--border);background:var(--surface-alt);">
-            <p class="text-xs font-bold uppercase tracking-wide" style="color:var(--muted);">T+7 Probability</p>
-            <p class="mt-2 metric-up">P(up): <strong>{t7.up ?? '--'}%</strong></p>
-            <p class="metric-down">P(down): <strong>{t7.down ?? '--'}%</strong></p>
-            <p class="metric-muted">Median return: <strong>{t7.median ?? '--'}%</strong></p>
+            <p class="text-xs font-bold uppercase tracking-wide" style="color:var(--muted);">All-history</p>
+            <p class="mt-2 metric-up">P(up): <strong>{t1.up ?? '--'}%</strong></p>
+            <p class="metric-down">P(down): <strong>{t1.down ?? '--'}%</strong></p>
+            <p class="metric-muted">T+1 median: <strong>{t1.median ?? '--'}%</strong></p>
+            <p class="metric-up mt-1">T+7 P(up): <strong>{t7.up ?? '--'}%</strong></p>
+            <p class="metric-muted">T+7 median: <strong>{t7.median ?? '--'}%</strong></p>
+          </div>
+
+          <div class="rounded-xl border p-4" style="border-color:var(--border);background:var(--surface-alt);">
+            <p class="text-xs font-bold uppercase tracking-wide" style="color:var(--muted);">Same-direction</p>
+            <p class="mt-2 metric-up">T+1 P(up): <strong>{c1.up ?? '--'}%</strong></p>
+            <p class="metric-down">T+1 P(down): <strong>{c1.down ?? '--'}%</strong></p>
+            <p class="metric-up mt-1">T+7 P(up): <strong>{c7.up ?? '--'}%</strong></p>
+            <p class="metric-down">T+7 P(down): <strong>{c7.down ?? '--'}%</strong></p>
+            <p class="metric-muted">Matched sample: <strong>{conditionalSample}</strong></p>
           </div>
         </section>
 

@@ -12,15 +12,19 @@ import statistics
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
-import requests
+try:
+    import requests
+except Exception:  # pragma: no cover
+    requests = None
 
 from pipeline_utils import (
     ALLOWED_EVENT_TYPES,
     canonical_slug,
     cutoff_date,
     ensure_dir,
+    event_filter_sql,
     load_config,
     load_manifest,
     normalize_event_type,
@@ -44,6 +48,12 @@ REQUIRED_CSV_COLUMNS = {
     "intent",
     "event_type",
     "source",
+    "event_direction",
+    "event_actual",
+    "event_previous",
+    "event_delta",
+    "direction_basis",
+    "outcome_status",
 }
 
 CSV_EXTRA_COLUMNS = [
@@ -58,6 +68,12 @@ CSV_EXTRA_COLUMNS = [
     "sample_size",
     "asof_date",
     "signal",
+    "event_direction",
+    "event_actual",
+    "event_previous",
+    "event_delta",
+    "direction_basis",
+    "outcome_status",
 ]
 
 
@@ -172,31 +188,17 @@ def load_targets(csv_path: Path, strict: bool) -> List[Dict[str, Any]]:
                     raise ValueError(f"Row missing url_slug/date: {row}")
                 continue
 
-            if not row.get("title") and row.get("h1_title"):
-                row["title"] = row.get("h1_title")
-            if not row.get("event_type"):
-                row["event_type"] = row.get("macro_event", "")
-            if not row.get("source"):
-                row["source"] = "verified_targets.csv"
-            if not row.get("intent"):
-                row["intent"] = "analysis"
-
+            row.setdefault("source", "verified_targets.csv")
+            row.setdefault("intent", "general")
+            row.setdefault("event_label", row.get("event_type", ""))
+            row.setdefault("event_slug", str(row.get("event_type", "")).lower())
+            row.setdefault("direction_basis", "vs_previous")
+            row.setdefault("outcome_status", "pending")
             rows.append(row)
 
     ensure_csv_contract(csv_path, rows)
-
     rows.sort(key=lambda item: item.get("date", ""), reverse=True)
     return rows
-
-
-def event_filter_sql(event_type: str) -> str:
-    if event_type == "CPI":
-        return "UPPER(m.headline) LIKE '%CPI%'"
-    if event_type == "NFP":
-        return "UPPER(m.headline) LIKE '%NFP%'"
-    if event_type == "FOMC":
-        return "UPPER(m.headline) LIKE '%FOMC%'"
-    return "1=0"
 
 
 def fetch_event_distribution(db_path: Path, ticker: str, event_type: str, asof_date: str) -> Dict[str, Any]:
@@ -216,34 +218,46 @@ def fetch_event_distribution(db_path: Path, ticker: str, event_type: str, asof_d
             SELECT
               m.date AS event_date,
               AVG(a.impact_t1_pct) AS impact_t1_pct,
-              AVG(a.impact_t7_pct) AS impact_t7_pct
+              AVG(a.impact_t7_pct) AS impact_t7_pct,
+              MAX(eo.direction) AS event_direction,
+              MAX(eo.actual_value) AS event_actual,
+              MAX(eo.previous_value) AS event_previous,
+              MAX(eo.delta_value) AS event_delta,
+              MAX(eo.status) AS outcome_status
             FROM asset_impact a
             JOIN macro_events m ON a.event_id = m.event_id
+            LEFT JOIN event_outcomes eo
+              ON eo.event_type = ?
+             AND eo.event_date = m.date
+             AND eo.direction_basis = 'vs_previous'
             WHERE a.ticker = ?
               AND m.date <= ?
               AND {event_filter_sql(event_type)}
             GROUP BY m.date
             ORDER BY m.date ASC
             """,
-            (ticker.upper(), asof_date),
+            (event_type.upper(), ticker.upper(), asof_date),
         )
         fetched = cursor.fetchall()
     finally:
         conn.close()
 
     rows = []
-    by_date: Dict[str, Dict[str, Optional[float]]] = {}
-    for event_date, impact_t1, impact_t7 in fetched:
+    by_date: Dict[str, Dict[str, Any]] = {}
+    for event_date, impact_t1, impact_t7, event_direction, event_actual, event_previous, event_delta, outcome_status in fetched:
+        direction = str(event_direction or "unknown").lower()
         item = {
             "event_date": event_date,
             "impact_t1_pct": parse_float(impact_t1),
             "impact_t7_pct": parse_float(impact_t7),
+            "event_direction": direction,
+            "event_actual": parse_float(event_actual),
+            "event_previous": parse_float(event_previous),
+            "event_delta": parse_float(event_delta),
+            "outcome_status": str(outcome_status or "pending").lower(),
         }
         rows.append(item)
-        by_date[event_date] = {
-            "impact_t1_pct": item["impact_t1_pct"],
-            "impact_t7_pct": item["impact_t7_pct"],
-        }
+        by_date[event_date] = item
 
     latest = rows[-1]["event_date"] if rows else asof_date
 
@@ -330,17 +344,20 @@ def fetch_chart_data(asset: str, event_date: str) -> List[Dict[str, Any]]:
     return data
 
 
-def generate_llm_analysis(asset: str, event_type: str, probabilities: Dict[str, Any], context: BuildContext) -> Optional[str]:
-    if not context.llm_enabled:
+def generate_llm_analysis(asset: str, event_type: str, event_direction: str, probabilities: Dict[str, Any], context: BuildContext) -> Optional[str]:
+    if not context.llm_enabled or requests is None:
         return None
 
     prompt = f"""Write a concise quantitative analysis in English.
 Asset: {asset}
 Event: {event_type}
-T+1 Up Probability: {probabilities['t1']['up']}%
-T+7 Up Probability: {probabilities['t7']['up']}%
-T+7 Median Return: {probabilities['t7']['median']}%
-Sample Size: {probabilities['sample_size']}
+Event Direction (vs previous): {event_direction}
+All-history T+1 Up Probability: {probabilities['t1']['up']}%
+All-history T+7 Up Probability: {probabilities['t7']['up']}%
+Same-direction T+1 Up Probability: {probabilities['conditional']['t1']['up']}%
+Same-direction T+7 Up Probability: {probabilities['conditional']['t7']['up']}%
+Same-direction T+7 Median Return: {probabilities['conditional']['t7']['median']}%
+Same-direction Sample Size: {probabilities['conditional']['sample_size']}
 
 Rules:
 - 90-130 words
@@ -372,12 +389,15 @@ Rules:
         return None
 
 
-def fallback_analysis(asset: str, event_type: str, probabilities: Dict[str, Any], signal: str) -> str:
+def fallback_analysis(asset: str, event_type: str, event_direction: str, probabilities: Dict[str, Any], signal: str) -> str:
+    direction_text = event_direction.capitalize()
     return (
-        f"For {asset}, historical {event_type} windows currently show a T+1 up probability of "
-        f"{probabilities['t1']['up']}% and a T+7 up probability of {probabilities['t7']['up']}%. "
-        f"Median T+7 return is {probabilities['t7']['median']}% across {probabilities['sample_size']} samples. "
-        f"Current classification is {signal}, which should be treated as an educational probability view, not a trade instruction."
+        f"For {asset}, historical {event_type} windows show all-history T+1 up probability of "
+        f"{probabilities['t1']['up']}% and T+7 up probability of {probabilities['t7']['up']}%. "
+        f"When {event_type} printed {direction_text} versus previous, T+1 up probability was "
+        f"{probabilities['conditional']['t1']['up']}% and T+7 up probability was {probabilities['conditional']['t7']['up']}% "
+        f"across {probabilities['conditional']['sample_size']} matched cases. "
+        f"Current classification is {signal}; this remains an educational probability lens, not investment advice."
     )
 
 
@@ -402,10 +422,20 @@ def build_markdown(
     probabilities: Dict[str, Any],
     analysis: str,
     chart_data: List[Dict[str, Any]],
+    event_direction: str,
+    event_actual: float,
+    event_previous: float,
+    event_delta: float,
+    direction_basis: str,
 ) -> str:
     tags = [asset.lower(), event_type.lower(), "event-probability", intent.replace(" ", "-").lower()]
 
     chart_line = f"chartData: {json.dumps(chart_data)}\n" if chart_data else ""
+
+    outcome_sentence = (
+        f"{event_label} Outcome: **{event_direction.upper()}** "
+        f"(Actual {event_actual}, Previous {event_previous}, Delta {event_delta:+.4f})"
+    )
 
     return f"""---
 title: "{title}"
@@ -422,6 +452,11 @@ signal: "{signal}"
 confidence_level: "{confidence_level}"
 quality_score: {quality}
 sample_size: {sample_size}
+event_direction: "{event_direction}"
+event_actual: {event_actual}
+event_previous: {event_previous}
+event_delta: {event_delta}
+direction_basis: "{direction_basis}"
 tags: {json.dumps(tags)}
 metrics:
   sharpe_t7: {metrics['sharpe_t7']}
@@ -443,6 +478,22 @@ probabilities:
     median: {probabilities['t7']['median']}
     mean: {probabilities['t7']['mean']}
     sample: {probabilities['t7']['sample']}
+  conditional:
+    basis: "event_direction"
+    direction: "{event_direction}"
+    sample_size: {probabilities['conditional']['sample_size']}
+    t1:
+      up: {probabilities['conditional']['t1']['up']}
+      down: {probabilities['conditional']['t1']['down']}
+      median: {probabilities['conditional']['t1']['median']}
+      mean: {probabilities['conditional']['t1']['mean']}
+      sample: {probabilities['conditional']['t1']['sample']}
+    t7:
+      up: {probabilities['conditional']['t7']['up']}
+      down: {probabilities['conditional']['t7']['down']}
+      median: {probabilities['conditional']['t7']['median']}
+      mean: {probabilities['conditional']['t7']['mean']}
+      sample: {probabilities['conditional']['t7']['sample']}
 {chart_line}---
 
 ## Event Snapshot
@@ -451,28 +502,40 @@ probabilities:
 - Asset: **{asset}**
 - Event date: **{event_date}**
 - As-of date (T-1): **{asof_date}**
-- Sample size: **{sample_size}**
+- Sample size (all-history): **{sample_size}**
 
-## Probability Table
+## Event Outcome
+
+- {outcome_sentence}
+- Direction basis: **{direction_basis}**
+
+## Probability Table (All-history)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
 | T+1 | {probabilities['t1']['up']}% | {probabilities['t1']['down']}% | {probabilities['t1']['median']}% | {probabilities['t1']['mean']}% | {probabilities['t1']['sample']} |
 | T+7 | {probabilities['t7']['up']}% | {probabilities['t7']['down']}% | {probabilities['t7']['median']}% | {probabilities['t7']['mean']}% | {probabilities['t7']['sample']} |
 
+## Probability Table (Same-direction)
+
+| Window | P(up) | P(down) | Median return | Mean return | Sample |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| T+1 | {probabilities['conditional']['t1']['up']}% | {probabilities['conditional']['t1']['down']}% | {probabilities['conditional']['t1']['median']}% | {probabilities['conditional']['t1']['mean']}% | {probabilities['conditional']['t1']['sample']} |
+| T+7 | {probabilities['conditional']['t7']['up']}% | {probabilities['conditional']['t7']['down']}% | {probabilities['conditional']['t7']['median']}% | {probabilities['conditional']['t7']['mean']}% | {probabilities['conditional']['t7']['sample']} |
+
 ## Historical Distribution Summary
 
-T+1 Up Probability: **{probabilities['t1']['up']}%** (n={probabilities['t1']['sample']})
+When {event_label} was **{event_direction.upper()}**, {asset} T+1 up probability was **{probabilities['conditional']['t1']['up']}%** (n={probabilities['conditional']['t1']['sample']}).
 
-T+7 Up Probability: **{probabilities['t7']['up']}%** (n={probabilities['t7']['sample']})
+When {event_label} was **{event_direction.upper()}**, {asset} T+7 up probability was **{probabilities['conditional']['t7']['up']}%** (n={probabilities['conditional']['t7']['sample']}).
 
-T+7 Median Return: **{probabilities['t7']['median']}%**
+Same-direction T+7 median return: **{probabilities['conditional']['t7']['median']}%**.
 
 {analysis}
 
 ## Methodology
 
-This page aggregates historical windows for the same event type ({event_label}) and deduplicates by event date. It reports directional probabilities and return distribution summaries for educational use only.
+This page aggregates historical windows for the same event type ({event_label}) and deduplicates by event date. It reports both all-history probabilities and same-direction probabilities based on event outcome direction (vs previous) for educational use only.
 """
 
 
@@ -495,48 +558,125 @@ def row_fingerprint(payload: Dict[str, Any]) -> str:
     return stable_hash(payload)
 
 
-def generate_dynamic_sitemap(public_dir: Path, output_dir: Path, domain: str) -> None:
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    slugs = sorted(path.stem for path in output_dir.glob("*.md"))
-
+def write_urlset(path: Path, entries: Sequence[Dict[str, str]]) -> None:
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
-
-    core_routes = [
-        (f"{domain}/", "1.0", "daily"),
-        (f"{domain}/blog", "0.9", "daily"),
-        (f"{domain}/leaderboard", "0.8", "daily"),
-    ]
-
-    for loc, priority, freq in core_routes:
+    for entry in entries:
         lines.extend(
             [
                 "  <url>",
-                f"    <loc>{loc}</loc>",
-                f"    <lastmod>{today}</lastmod>",
-                f"    <changefreq>{freq}</changefreq>",
-                f"    <priority>{priority}</priority>",
-                "  </url>",
-            ]
-        )
-
-    for slug in slugs:
-        lines.extend(
-            [
-                "  <url>",
-                f"    <loc>{domain}/blog/{slug}</loc>",
-                f"    <lastmod>{today}</lastmod>",
-                "    <changefreq>weekly</changefreq>",
-                "    <priority>0.7</priority>",
+                f"    <loc>{entry['loc']}</loc>",
+                f"    <lastmod>{entry['lastmod']}</lastmod>",
+                f"    <changefreq>{entry['changefreq']}</changefreq>",
+                f"    <priority>{entry['priority']}</priority>",
                 "  </url>",
             ]
         )
 
     lines.append("</urlset>")
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def write_sitemap_index(path: Path, domain: str, files: Sequence[str]) -> None:
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+    for filename in files:
+        lines.extend(
+            [
+                "  <sitemap>",
+                f"    <loc>{domain}/{filename}</loc>",
+                f"    <lastmod>{today}</lastmod>",
+                "  </sitemap>",
+            ]
+        )
+    lines.append("</sitemapindex>")
+    payload = "\n".join(lines)
+    path.write_text(payload, encoding="utf-8")
+
+
+def generate_dynamic_sitemaps(public_dir: Path, output_dir: Path, domain: str, manifest: Dict[str, Any]) -> None:
     ensure_dir(public_dir)
-    (public_dir / "sitemap.xml").write_text("\n".join(lines), encoding="utf-8")
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    slugs = sorted(path.stem for path in output_dir.glob("*.md"))
+
+    pages_manifest = manifest.get("pages", {}) if isinstance(manifest.get("pages"), dict) else {}
+
+    def slug_lastmod(slug: str) -> str:
+        value = str((pages_manifest.get(slug) or {}).get("last_generated", ""))
+        if len(value) >= 10:
+            return value[:10]
+        return today
+
+    assets = sorted({slug.split("-after-")[0] for slug in slugs if "-after-" in slug})
+    events = sorted({slug.split("-after-")[1].split("-")[0] for slug in slugs if "-after-" in slug})
+
+    core_entries = [
+        {"loc": f"{domain}/", "lastmod": today, "changefreq": "daily", "priority": "1.0"},
+        {"loc": f"{domain}/blog", "lastmod": today, "changefreq": "daily", "priority": "0.9"},
+        {"loc": f"{domain}/leaderboard", "lastmod": today, "changefreq": "daily", "priority": "0.8"},
+        {"loc": f"{domain}/events", "lastmod": today, "changefreq": "daily", "priority": "0.8"},
+    ]
+    write_urlset(public_dir / "sitemap-core.xml", core_entries)
+
+    asset_entries = [
+        {
+            "loc": f"{domain}/tags/{asset}",
+            "lastmod": today,
+            "changefreq": "daily",
+            "priority": "0.8",
+        }
+        for asset in assets
+    ]
+    write_urlset(public_dir / "sitemap-assets.xml", asset_entries)
+
+    event_entries = [
+        {
+            "loc": f"{domain}/events/{event}",
+            "lastmod": today,
+            "changefreq": "daily",
+            "priority": "0.8",
+        }
+        for event in events
+    ]
+    write_urlset(public_dir / "sitemap-events.xml", event_entries)
+
+    chunk_size = 1000
+    blog_files: List[str] = []
+    for idx in range(0, len(slugs), chunk_size):
+        chunk = slugs[idx : idx + chunk_size]
+        file_index = idx // chunk_size + 1
+        filename = f"sitemap-blog-{file_index}.xml"
+        blog_files.append(filename)
+        entries = [
+            {
+                "loc": f"{domain}/blog/{slug}",
+                "lastmod": slug_lastmod(slug),
+                "changefreq": "weekly",
+                "priority": "0.7",
+            }
+            for slug in chunk
+        ]
+        write_urlset(public_dir / filename, entries)
+
+    index_files = ["sitemap-core.xml", "sitemap-assets.xml", "sitemap-events.xml", *blog_files]
+    write_sitemap_index(public_dir / "sitemap-index.xml", domain, index_files)
+    write_sitemap_index(public_dir / "sitemap.xml", domain, index_files)
+
+    robots = "\n".join(
+        [
+            "User-agent: *",
+            "Allow: /",
+            "",
+            f"Sitemap: {domain}/sitemap-index.xml",
+            "",
+        ]
+    )
+    (public_dir / "robots.txt").write_text(robots, encoding="utf-8")
 
 
 def write_slug_redirects(path: Path, slug_redirects: Dict[str, str]) -> None:
@@ -602,13 +742,14 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
     legacy_slug = str(row.get("url_slug", "")).strip()
 
     source = str(row.get("source", "verified_targets.csv")).strip() or "verified_targets.csv"
-    intent = str(row.get("intent", "analysis")).strip() or "analysis"
+    intent = str(row.get("intent", "general")).strip() or "general"
 
+    asof_cutoff = cutoff_date(context.as_of_date)
     summary = fetch_event_distribution(
         db_path=context.db_path,
         ticker=asset,
         event_type=event_type,
-        asof_date=cutoff_date(context.as_of_date),
+        asof_date=asof_cutoff,
     )
     by_date = summary.get("by_date", {})
     current_event = by_date.get(event_date, {})
@@ -624,16 +765,70 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
     if raw_t7 is None:
         raw_t7 = parse_float(current_event.get("impact_t7_pct"))
 
-    t1_values = [r["impact_t1_pct"] for r in summary["rows"] if r["impact_t1_pct"] is not None]
-    t7_values = [r["impact_t7_pct"] for r in summary["rows"] if r["impact_t7_pct"] is not None]
+    event_direction = str(row.get("event_direction") or current_event.get("event_direction") or "unknown").lower()
+    event_actual = parse_float(row.get("event_actual"), parse_float(current_event.get("event_actual")))
+    event_previous = parse_float(row.get("event_previous"), parse_float(current_event.get("event_previous")))
+    event_delta = parse_float(row.get("event_delta"), parse_float(current_event.get("event_delta")))
+    direction_basis = str(row.get("direction_basis") or "vs_previous").lower()
+    outcome_status = str(row.get("outcome_status") or current_event.get("outcome_status") or "pending").lower()
 
-    t1_window = probability_window([float(v) for v in t1_values])
-    t7_window = probability_window([float(v) for v in t7_values])
+    if context.strict:
+        if event_direction not in {"up", "down", "flat"}:
+            raise ValueError(f"Invalid event_direction for {asset} {event_type} {event_date}: {event_direction}")
+        if direction_basis != "vs_previous":
+            raise ValueError(f"Invalid direction_basis for {asset} {event_type} {event_date}: {direction_basis}")
+        if outcome_status != "ok":
+            raise ValueError(f"Outcome pending for {asset} {event_type} {event_date}")
+        for val_name, val in [
+            ("event_actual", event_actual),
+            ("event_previous", event_previous),
+            ("event_delta", event_delta),
+        ]:
+            if val is None:
+                raise ValueError(f"Missing {val_name} for {asset} {event_type} {event_date}")
+
+    if event_direction not in {"up", "down", "flat"}:
+        event_direction = "flat"
+    if direction_basis != "vs_previous":
+        direction_basis = "vs_previous"
+    if outcome_status not in {"ok", "pending"}:
+        outcome_status = "pending"
+
+    t1_values = [float(r["impact_t1_pct"]) for r in summary["rows"] if r["impact_t1_pct"] is not None]
+    t7_values = [float(r["impact_t7_pct"]) for r in summary["rows"] if r["impact_t7_pct"] is not None]
+
+    conditional_t1_values = [
+        float(r["impact_t1_pct"])
+        for r in summary["rows"]
+        if r["impact_t1_pct"] is not None and str(r.get("event_direction", "")).lower() == event_direction
+    ]
+    conditional_t7_values = [
+        float(r["impact_t7_pct"])
+        for r in summary["rows"]
+        if r["impact_t7_pct"] is not None and str(r.get("event_direction", "")).lower() == event_direction
+    ]
+
+    t1_window = probability_window(t1_values)
+    t7_window = probability_window(t7_values)
+    conditional_t1_window = probability_window(conditional_t1_values)
+    conditional_t7_window = probability_window(conditional_t7_values)
 
     probabilities = {
         "sample_size": int(summary.get("sample_size", 0)),
         "t1": t1_window,
         "t7": t7_window,
+        "conditional": {
+            "basis": "event_direction",
+            "direction": event_direction,
+            "sample_size": int(
+                min(
+                    conditional_t1_window.get("sample", 0),
+                    conditional_t7_window.get("sample", 0),
+                )
+            ),
+            "t1": conditional_t1_window,
+            "t7": conditional_t7_window,
+        },
     }
 
     signal, signal_score = signal_from_probabilities(t1_window["up"], t7_window["up"], t7_window["median"])
@@ -663,16 +858,16 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         "mdd_t7": round(float(mdd or 0.0), 2),
     }
 
-    quality = quality_score(raw_t1, raw_t7, raw_vol, probabilities["sample_size"])
+    quality = quality_score(raw_t1, raw_t7, raw_vol, probabilities["conditional"]["sample_size"])
     offer_key = to_offer_key(asset, context.offers_config)
 
     title = f"{asset} After {event_type} ({event_date}): Historical T+1/T+7 Probability"
     event_label = event_type
     event_slug = event_type.lower()
-    asof_date = summary.get("latest_event_date") or cutoff_date(context.as_of_date)
+    asof_date = asof_cutoff
 
-    llm_text = generate_llm_analysis(asset, event_type, probabilities, context)
-    analysis = llm_text or fallback_analysis(asset, event_type, probabilities, signal)
+    llm_text = generate_llm_analysis(asset, event_type, event_direction, probabilities, context)
+    analysis = llm_text or fallback_analysis(asset, event_type, event_direction, probabilities, signal)
 
     chart_data = fetch_chart_data(asset, event_date)
 
@@ -691,6 +886,11 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         "quality": quality,
         "offer_key": offer_key,
         "asof_date": asof_date,
+        "event_direction": event_direction,
+        "event_actual": event_actual,
+        "event_previous": event_previous,
+        "event_delta": event_delta,
+        "direction_basis": direction_basis,
     }
     fingerprint = row_fingerprint(fingerprint_payload)
 
@@ -699,7 +899,6 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
 
     need_generate = context.full or previous.get("hash") != fingerprint or (not target_file.exists())
 
-    content = ""
     if need_generate:
         content = build_markdown(
             asset=asset,
@@ -721,6 +920,11 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
             probabilities=probabilities,
             analysis=analysis,
             chart_data=chart_data,
+            event_direction=event_direction,
+            event_actual=float(event_actual or 0.0),
+            event_previous=float(event_previous or 0.0),
+            event_delta=float(event_delta or 0.0),
+            direction_basis=direction_basis,
         )
 
         ensure_dir(context.output_dir)
@@ -737,6 +941,7 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         "signal_score": signal_score,
         "sample_size": probabilities["sample_size"],
         "asof_date": asof_date,
+        "event_direction": event_direction,
         "legacy_slugs": [legacy_slug] if legacy_slug and legacy_slug != slug else [],
     }
 
@@ -752,7 +957,6 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         if legacy_file.exists():
             legacy_file.unlink()
 
-    # enrich row with new contract fields
     row["url_slug"] = slug
     row["title"] = title
     row["event_label"] = event_label
@@ -766,6 +970,12 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
     row["sample_size"] = str(probabilities["sample_size"])
     row["asof_date"] = asof_date
     row["signal"] = signal
+    row["event_direction"] = event_direction
+    row["event_actual"] = str(event_actual if event_actual is not None else "")
+    row["event_previous"] = str(event_previous if event_previous is not None else "")
+    row["event_delta"] = str(event_delta if event_delta is not None else "")
+    row["direction_basis"] = direction_basis
+    row["outcome_status"] = outcome_status
 
     return {"status": "generated" if need_generate else "skipped", "slug": slug}
 
@@ -838,16 +1048,16 @@ def main() -> None:
             if context.strict:
                 raise
 
-    # remove stale macro slugs that were migrated
     for old_slug, new_slug in list(manifest.get("slug_redirects", {}).items()):
         old_file = context.output_dir / f"{old_slug}.md"
         if old_file.exists() and old_slug != new_slug:
             old_file.unlink()
 
-    generate_dynamic_sitemap(
+    generate_dynamic_sitemaps(
         public_dir=context.public_dir,
         output_dir=context.output_dir,
         domain=f"https://{context.offers_config.get('default_domain', 'quantmacro.vercel.app')}",
+        manifest=manifest,
     )
 
     write_slug_redirects(context.slug_redirects_path, manifest.get("slug_redirects", {}))

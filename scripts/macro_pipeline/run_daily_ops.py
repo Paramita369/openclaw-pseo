@@ -17,13 +17,15 @@ from pipeline_utils import ensure_dir, resolve_project_root
 
 
 WHITELIST_PATHS = {
-    "public/sitemap.xml",
+    "public/robots.txt",
     "src/daily_snapshot.json",
     "data/page_manifest.json",
     "data/slug_redirects.json",
+    "data/verified_targets.csv",
     "vercel.json",
 }
 WHITELIST_PREFIXES = (
+    "public/sitemap",
     "src/content/blog/",
 )
 IGNORED_RUNTIME_PATHS = {
@@ -141,20 +143,11 @@ def commit_and_push(root: Path, as_of_date: str, dry_run: bool) -> Dict[str, obj
     if dry_run:
         return {"status": "dry_run", "changed": changed, "ignored_runtime_changes": ignored}
 
-    subprocess.run(
-        [
-            "git",
-            "add",
-            "src/content/blog",
-            "public/sitemap.xml",
-            "src/daily_snapshot.json",
-            "data/page_manifest.json",
-            "data/slug_redirects.json",
-            "vercel.json",
-        ],
-        cwd=str(root),
-        check=True,
-    )
+    staged_paths = [path for path in changed if is_whitelisted(path)]
+    if not staged_paths:
+        return {"status": "nothing_whitelisted", "changed": changed, "ignored_runtime_changes": ignored}
+
+    subprocess.run(["git", "add", *staged_paths], cwd=str(root), check=True)
     staged_check = subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=str(root))
     if staged_check.returncode == 0:
         return {"status": "nothing_staged", "changed": changed, "ignored_runtime_changes": ignored}
@@ -219,6 +212,46 @@ def main() -> None:
 
         steps.append(
             run_step(
+                "fetch_event_outcomes",
+                [
+                    python,
+                    "scripts/macro_pipeline/fetch_event_outcomes.py",
+                    "--project-root",
+                    str(root),
+                    "--db-path",
+                    str(runtime_db),
+                    "--as-of-date",
+                    args.as_of_date,
+                    *(["--strict"] if args.strict else []),
+                ],
+                cwd=root,
+                required=True,
+            )
+        )
+
+        steps.append(
+            run_step(
+                "build_target_matrix",
+                [
+                    python,
+                    "scripts/macro_pipeline/build_target_matrix.py",
+                    "--project-root",
+                    str(root),
+                    "--db-path",
+                    str(runtime_db),
+                    "--output",
+                    str(root / "data" / "verified_targets.csv"),
+                    "--as-of-date",
+                    args.as_of_date,
+                    *(["--strict"] if args.strict else []),
+                ],
+                cwd=root,
+                required=True,
+            )
+        )
+
+        steps.append(
+            run_step(
                 "risk_metrics",
                 [
                     python,
@@ -257,6 +290,8 @@ def main() -> None:
             str(root),
             "--report",
             str(log_dir / f"quality_{args.as_of_date}.json"),
+            "--as-of-date",
+            args.as_of_date,
         ]
         if args.strict:
             gate_cmd.append("--strict")

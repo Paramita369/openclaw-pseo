@@ -1,0 +1,63 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const eventOrder = ['CPI', 'NFP', 'FOMC'];
+
+const eventCards = eventOrder.map((event) => {
+  const eventPosts = posts
+    .filter((post) => (post.data.event_type || '').toUpperCase() === event)
+    .sort((a, b) => {
+      const ad = a.data.event_date || a.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
+      const bd = b.data.event_date || b.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
+      return bd.localeCompare(ad);
+    });
+
+  const assets = [...new Set(eventPosts.map((post) => String(post.data.tags?.[0] || '').toUpperCase()).filter(Boolean))].sort();
+
+  return {
+    event,
+    eventSlug: event.toLowerCase(),
+    count: eventPosts.length,
+    assets,
+    latestDate: eventPosts[0]?.data?.event_date || '--',
+    latestAsOf: eventPosts[0]?.data?.asof_date || '--',
+  };
+});
+---
+
+<Layout title="Event Center" description="Browse CPI, NFP, and FOMC event hubs with cross-asset probability playbooks.">
+  <section class="hero-panel py-14">
+    <div class="max-w-6xl mx-auto px-4">
+      <h1 class="text-4xl font-extrabold text-white">Event Center</h1>
+      <p class="text-blue-100 mt-3 text-lg">
+        Compare cross-asset probabilities by event type and move from macro outcome to specific asset playbooks.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <div class="grid md:grid-cols-3 gap-4">
+      {eventCards.map((card) => (
+        <article class="surface-card p-5 flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-extrabold">{card.event}</h2>
+            <span class="badge-chip">{card.count} pages</span>
+          </div>
+          <p class="text-sm" style="color:var(--muted);">
+            Latest event date: <strong style="color:var(--text);">{card.latestDate}</strong>
+            <br />
+            As-of cutoff: <strong style="color:var(--text);">{card.latestAsOf}</strong>
+          </p>
+          <div class="flex flex-wrap gap-2">
+            {card.assets.map((asset) => (
+              <a class="badge-chip" href={`/tags/${asset.toLowerCase()}`}>{asset}</a>
+            ))}
+          </div>
+          <a class="btn-primary mt-auto" href={`/events/${card.eventSlug}`}>Open {card.event} Hub</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

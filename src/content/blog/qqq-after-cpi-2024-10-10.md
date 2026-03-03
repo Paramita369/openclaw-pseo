@@ -6,18 +6,23 @@ event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-10-10"
-asof_date: "2025-02-12"
+asof_date: "2026-03-02"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
 confidence_level: "normal"
 quality_score: 90
 sample_size: 14
+event_direction: "up"
+event_actual: 315.631
+event_previous: 314.732
+event_delta: 0.899
+direction_basis: "vs_previous"
 tags: ["qqq", "cpi", "event-probability", "general"]
 metrics:
   sharpe_t7: -7.38
   mdd_t7: -0.43
-  volatility: 0.0
+  volatility: 0.43
   impact_t1_pct: 0.16
   impact_t7_pct: -0.27
 probabilities:
@@ -34,7 +39,22 @@ probabilities:
     median: 0.6
     mean: 0.54
     sample: 13
-chartData: [{"time": "2024-10-07", "open": 482.16, "high": 483.34, "low": 477.67, "close": 478.9}, {"time": "2024-10-08", "open": 481.44, "high": 486.73, "low": 480.63, "close": 486.05}, {"time": "2024-10-09", "open": 485.75, "high": 490.45, "low": 484.71, "close": 489.87}, {"time": "2024-10-10", "open": 487.59, "high": 491.18, "low": 486.28, "close": 489.32}, {"time": "2024-10-11", "open": 487.48, "high": 491.1, "low": 486.91, "close": 490.08}, {"time": "2024-10-14", "open": 492.47, "high": 495.51, "low": 491.97, "close": 494.19}, {"time": "2024-10-15", "open": 494.52, "high": 495.19, "low": 485.43, "close": 487.59}, {"time": "2024-10-16", "open": 487.91, "high": 488.42, "low": 484.33, "close": 487.65}, {"time": "2024-10-17", "open": 493.14, "high": 493.19, "low": 487.92, "close": 487.98}]
+  conditional:
+    basis: "event_direction"
+    direction: "up"
+    sample_size: 13
+    t1:
+      up: 53.85
+      down: 46.15
+      median: 0.16
+      mean: 0.26
+      sample: 13
+    t7:
+      up: 53.85
+      down: 46.15
+      median: 0.6
+      mean: 0.54
+      sample: 13
 ---
 
 ## Event Snapshot
@@ -42,26 +62,38 @@ chartData: [{"time": "2024-10-07", "open": 482.16, "high": 483.34, "low": 477.67
 - Event: **CPI**
 - Asset: **QQQ**
 - Event date: **2024-10-10**
-- As-of date (T-1): **2025-02-12**
-- Sample size: **14**
+- As-of date (T-1): **2026-03-02**
+- Sample size (all-history): **14**
 
-## Probability Table
+## Event Outcome
+
+- CPI Outcome: **UP** (Actual 315.631, Previous 314.732, Delta +0.8990)
+- Direction basis: **vs_previous**
+
+## Probability Table (All-history)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
 | T+1 | 57.14% | 42.86% | 0.35% | 0.28% | 14 |
 | T+7 | 53.85% | 46.15% | 0.6% | 0.54% | 13 |
 
+## Probability Table (Same-direction)
+
+| Window | P(up) | P(down) | Median return | Mean return | Sample |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| T+1 | 53.85% | 46.15% | 0.16% | 0.26% | 13 |
+| T+7 | 53.85% | 46.15% | 0.6% | 0.54% | 13 |
+
 ## Historical Distribution Summary
 
-T+1 Up Probability: **57.14%** (n=14)
+When CPI was **UP**, QQQ T+1 up probability was **53.85%** (n=13).
 
-T+7 Up Probability: **53.85%** (n=13)
+When CPI was **UP**, QQQ T+7 up probability was **53.85%** (n=13).
 
-T+7 Median Return: **0.6%**
+Same-direction T+7 median return: **0.6%**.
 
-For QQQ, historical CPI windows currently show a T+1 up probability of 57.14% and a T+7 up probability of 53.85%. Median T+7 return is 0.6% across 14 samples. Current classification is Neutral, which should be treated as an educational probability view, not a trade instruction.
+For QQQ, historical CPI windows show all-history T+1 up probability of 57.14% and T+7 up probability of 53.85%. When CPI printed Up versus previous, T+1 up probability was 53.85% and T+7 up probability was 53.85% across 13 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 
-This page aggregates historical windows for the same event type (CPI) and deduplicates by event date. It reports directional probabilities and return distribution summaries for educational use only.
+This page aggregates historical windows for the same event type (CPI) and deduplicates by event date. It reports both all-history probabilities and same-direction probabilities based on event outcome direction (vs previous) for educational use only.

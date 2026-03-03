@@ -16,6 +16,7 @@ const rows = posts
       slug: post.slug,
       asset: post.data.tags?.[0]?.toUpperCase() || 'UNKNOWN',
       event: post.data.event_label || post.data.event_type,
+      direction: (post.data.event_direction || '--').toUpperCase(),
       title: post.data.title,
       signal: post.data.signal || 'Neutral',
       signalScore: Number(signalScore.toFixed(2)),
@@ -48,6 +49,7 @@ const bestRows = rows.slice(0, 30);
               <th class="text-left px-4 py-3 font-bold">#</th>
               <th class="text-left px-4 py-3 font-bold">Asset</th>
               <th class="text-left px-4 py-3 font-bold">Event</th>
+              <th class="text-left px-4 py-3 font-bold">Outcome</th>
               <th class="text-left px-4 py-3 font-bold">Signal</th>
               <th class="text-left px-4 py-3 font-bold">Signal Score</th>
               <th class="text-left px-4 py-3 font-bold">T+1 P(up)</th>
@@ -66,6 +68,7 @@ const bestRows = rows.slice(0, 30);
                   <td class="px-4 py-3 font-bold">{idx + 1}</td>
                   <td class="px-4 py-3 font-semibold">{row.asset}</td>
                   <td class="px-4 py-3">{row.event}</td>
+                  <td class="px-4 py-3">{row.direction}</td>
                   <td class={`px-4 py-3 font-bold ${signalClass}`}>{row.signal}</td>
                   <td class="px-4 py-3">{row.signalScore}</td>
                   <td class="px-4 py-3">{row.riseT1}%</td>

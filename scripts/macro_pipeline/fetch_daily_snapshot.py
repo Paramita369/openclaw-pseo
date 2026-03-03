@@ -13,8 +13,8 @@ from pipeline_utils import ensure_dir, resolve_project_root
 
 try:
     import yfinance as yf
-except ImportError as exc:  # pragma: no cover
-    raise SystemExit("yfinance is required: pip install yfinance") from exc
+except ImportError:  # pragma: no cover
+    yf = None
 
 
 ASSETS = {
@@ -37,8 +37,16 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def fetch_snapshot() -> Dict[str, object]:
+def fetch_snapshot(previous: Dict[str, object] | None = None) -> Dict[str, object]:
     results: Dict[str, Dict[str, float]] = {}
+    if yf is None:
+        previous_markets = (previous or {}).get("markets", {})
+        return {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "markets": previous_markets if isinstance(previous_markets, dict) else {},
+            "macro": {},
+        }
+
     for name, ticker in ASSETS.items():
         data = yf.Ticker(ticker).history(period="5d")
         if len(data) < 2:
@@ -67,7 +75,14 @@ def main() -> None:
     root = resolve_project_root(args.project_root)
     output = Path(args.output).resolve() if args.output else root / "src" / "daily_snapshot.json"
 
-    snapshot = fetch_snapshot()
+    previous = None
+    if output.exists():
+        try:
+            previous = json.loads(output.read_text(encoding="utf-8"))
+        except Exception:
+            previous = None
+
+    snapshot = fetch_snapshot(previous=previous)
     ensure_dir(output.parent)
     output.write_text(json.dumps(snapshot, indent=2, ensure_ascii=False), encoding="utf-8")
 

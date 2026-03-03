@@ -2,9 +2,11 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
+const EVENT_ORDER = ['CPI', 'NFP', 'FOMC'];
+
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
-  const uniqueTags = [...new Set(allPosts.map((post) => (post.data.tags?.[0] || 'other').toLowerCase()))];
+  const uniqueTags = [...new Set(allPosts.map((post) => (post.data.tags?.[0] || 'other').toLowerCase()))].sort();
 
   return uniqueTags.map((tag) => {
     const posts = allPosts
@@ -17,26 +19,32 @@ export async function getStaticPaths() {
 
     return {
       params: { tag },
-      props: { posts, currentTag: tag.toUpperCase(), allTags: uniqueTags.sort() },
+      props: { posts, currentTag: tag.toUpperCase(), allTags: uniqueTags },
     };
   });
 }
 
 const { posts, currentTag, allTags } = Astro.props;
+
+const groupedByEvent = EVENT_ORDER.map((eventType) => ({
+  eventType,
+  items: posts.filter((post) => (post.data.event_type || '').toUpperCase() === eventType),
+}));
 ---
 
-<Layout title={`${currentTag} Event Research`} description={`${currentTag} CPI/NFP/FOMC event-driven probability pages.`}>
+<Layout title={`${currentTag} Asset Hub`} description={`${currentTag} CPI/NFP/FOMC event-driven probability pages.`}>
   <section class="py-12 hero-panel">
     <div class="max-w-6xl mx-auto px-4">
+      <p class="badge-chip mb-4" style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.25);color:#e5ecfb;">Asset Hub</p>
       <h1 class="text-4xl font-extrabold text-white">{currentTag} Event Research</h1>
       <p class="text-blue-100 mt-3 text-lg">{posts.length} pages with historical event probabilities.</p>
     </div>
   </section>
 
   <section class="py-6 border-b" style="border-color:var(--border);background:var(--surface);">
-    <div class="max-w-6xl mx-auto px-4">
+    <div class="max-w-6xl mx-auto px-4 space-y-4">
       <div class="flex flex-wrap gap-2">
-        <a href="/blog" class="badge-chip" data-track-event="filter_apply" data-filter="all">All</a>
+        <a href="/blog" class="badge-chip" data-track-event="filter_apply" data-filter="all">Archive</a>
         {allTags.map((tag) => (
           <a
             href={`/tags/${tag}`}
@@ -48,28 +56,54 @@ const { posts, currentTag, allTags } = Astro.props;
           </a>
         ))}
       </div>
+      <div class="flex flex-wrap gap-2">
+        <a href="/events" class="badge-chip">All Events</a>
+        <a href="/events/cpi" class="badge-chip">CPI Hub</a>
+        <a href="/events/nfp" class="badge-chip">NFP Hub</a>
+        <a href="/events/fomc" class="badge-chip">FOMC Hub</a>
+      </div>
     </div>
   </section>
 
   <section class="max-w-6xl mx-auto px-4 py-10">
-    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-      {posts.map((post) => {
-        const signal = post.data.signal || 'Neutral';
-        const signalClass = signal === 'Bullish' ? 'metric-up' : signal === 'Bearish' ? 'metric-down' : 'metric-muted';
-        return (
-          <a href={`/blog/${post.slug}`} class="surface-card p-5 flex flex-col gap-3 hover:translate-y-[-2px] transition-transform">
+    <div class="space-y-6">
+      {groupedByEvent.map((group) => (
+        <article class="surface-card p-5">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <h2 class="text-2xl font-bold">{group.eventType}</h2>
             <div class="flex items-center gap-2">
-              <span class="badge-chip">{post.data.event_label || post.data.event_type}</span>
-              <span class={`text-xs font-bold ${signalClass}`}>{signal}</span>
+              <span class="badge-chip">{group.items.length} strategies</span>
+              <a href={`/events/${group.eventType.toLowerCase()}`} class="btn-ghost text-xs">Open {group.eventType} Event Hub</a>
             </div>
-            <h2 class="text-lg font-bold">{post.data.title}</h2>
-            <p class="text-sm" style="color:var(--muted);">{post.data.description}</p>
-            <div class="text-xs mt-auto" style="color:var(--muted);">
-              Event date: {post.data.event_date || '--'} · As-of: {post.data.asof_date || '--'}
+          </div>
+
+          {group.items.length > 0 ? (
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
+              {group.items.map((post) => {
+                const signal = post.data.signal || 'Neutral';
+                const signalClass = signal === 'Bullish' ? 'metric-up' : signal === 'Bearish' ? 'metric-down' : 'metric-muted';
+                return (
+                  <a href={`/blog/${post.slug}`} class="rounded-xl border p-4 hover:translate-y-[-2px] transition-transform" style="border-color:var(--border);background:var(--surface-alt);">
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="badge-chip">{post.data.event_direction?.toUpperCase() || '--'}</span>
+                      <span class={`text-xs font-bold ${signalClass}`}>{signal}</span>
+                    </div>
+                    <h3 class="text-sm font-bold leading-snug">{post.data.title}</h3>
+                    <p class="text-xs mt-2" style="color:var(--muted);">
+                      T+1 {post.data.probabilities?.t1?.up ?? '--'}% up · T+7 {post.data.probabilities?.t7?.up ?? '--'}% up
+                    </p>
+                    <p class="text-xs mt-1" style="color:var(--muted);">
+                      Event: {post.data.event_date || '--'} · As-of: {post.data.asof_date || '--'}
+                    </p>
+                  </a>
+                );
+              })}
             </div>
-          </a>
-        );
-      })}
+          ) : (
+            <p class="text-sm" style="color:var(--muted);">No {group.eventType} pages available for {currentTag} yet.</p>
+          )}
+        </article>
+      ))}
     </div>
   </section>
 </Layout>

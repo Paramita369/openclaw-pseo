@@ -1,0 +1,94 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const eventTypes = ['CPI', 'NFP', 'FOMC'];
+  return eventTypes.map((event) => ({
+    params: { event: event.toLowerCase() },
+    props: { eventType: event },
+  }));
+}
+
+const { eventType } = Astro.props;
+const posts = await getCollection('blog');
+
+const filtered = posts
+  .filter((post) => (post.data.event_type || '').toUpperCase() === eventType)
+  .sort((a, b) => {
+    const ad = a.data.event_date || a.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
+    const bd = b.data.event_date || b.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
+    return bd.localeCompare(ad);
+  });
+
+const byAsset = new Map();
+for (const post of filtered) {
+  const asset = String(post.data.tags?.[0] || '').toUpperCase();
+  if (!asset) continue;
+  if (!byAsset.has(asset)) byAsset.set(asset, []);
+  byAsset.get(asset).push(post);
+}
+
+const assets = [...byAsset.keys()].sort();
+---
+
+<Layout title={`${eventType} Event Hub`} description={`Cross-asset ${eventType} probability playbooks with event-direction context.`}>
+  <section class="hero-panel py-14">
+    <div class="max-w-6xl mx-auto px-4">
+      <p class="badge-chip mb-4" style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.25);color:#e5ecfb;">Event Hub</p>
+      <h1 class="text-4xl font-extrabold text-white">{eventType} Cross-Asset Playbook</h1>
+      <p class="text-blue-100 mt-3 text-lg">{filtered.length} pages across {assets.length} assets.</p>
+    </div>
+  </section>
+
+  <section class="py-6 border-b" style="border-color:var(--border);background:var(--surface);">
+    <div class="max-w-6xl mx-auto px-4 flex flex-wrap gap-2">
+      <a href="/events" class="badge-chip">All Events</a>
+      <a href="/events/cpi" class={`badge-chip ${eventType === 'CPI' ? 'font-extrabold' : ''}`}>CPI</a>
+      <a href="/events/nfp" class={`badge-chip ${eventType === 'NFP' ? 'font-extrabold' : ''}`}>NFP</a>
+      <a href="/events/fomc" class={`badge-chip ${eventType === 'FOMC' ? 'font-extrabold' : ''}`}>FOMC</a>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <div class="space-y-6">
+      {assets.map((asset) => {
+        const assetPosts = byAsset.get(asset) || [];
+        return (
+          <article class="surface-card p-5">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2">
+                <h2 class="text-2xl font-bold">{asset}</h2>
+                <span class="badge-chip">{assetPosts.length} strategies</span>
+              </div>
+              <a href={`/tags/${asset.toLowerCase()}`} class="btn-ghost text-sm">Open {asset} Asset Hub</a>
+            </div>
+
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
+              {assetPosts.map((post) => {
+                const probs = post.data.probabilities;
+                return (
+                  <a href={`/blog/${post.slug}`} class="rounded-xl border p-4 hover:translate-y-[-2px] transition-transform" style="border-color:var(--border);background:var(--surface-alt);">
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="badge-chip">{post.data.event_direction?.toUpperCase() || '--'}</span>
+                      <span class={`text-xs font-bold ${post.data.signal === 'Bullish' ? 'metric-up' : post.data.signal === 'Bearish' ? 'metric-down' : 'metric-muted'}`}>
+                        {post.data.signal}
+                      </span>
+                    </div>
+                    <h3 class="font-bold text-sm leading-snug">{post.data.title}</h3>
+                    <p class="text-xs mt-2" style="color:var(--muted);">
+                      T+1 {probs?.t1?.up ?? '--'}% up · T+7 {probs?.t7?.up ?? '--'}% up
+                    </p>
+                    <p class="text-xs mt-1" style="color:var(--muted);">
+                      Event: {post.data.event_date || '--'} · As-of: {post.data.asof_date || '--'}
+                    </p>
+                  </a>
+                );
+              })}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+</Layout>

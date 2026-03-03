@@ -151,9 +151,100 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"blog": {
+"btc-after-cpi-2024-01-15.md": {
+	id: "btc-after-cpi-2024-01-15.md";
+  slug: "btc-after-cpi-2024-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-02-20.md": {
+	id: "btc-after-cpi-2024-02-20.md";
+  slug: "btc-after-cpi-2024-02-20";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-03-12.md": {
+	id: "btc-after-cpi-2024-03-12.md";
+  slug: "btc-after-cpi-2024-03-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-04-10.md": {
+	id: "btc-after-cpi-2024-04-10.md";
+  slug: "btc-after-cpi-2024-04-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-05-15.md": {
+	id: "btc-after-cpi-2024-05-15.md";
+  slug: "btc-after-cpi-2024-05-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-06-12.md": {
+	id: "btc-after-cpi-2024-06-12.md";
+  slug: "btc-after-cpi-2024-06-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-07-11.md": {
+	id: "btc-after-cpi-2024-07-11.md";
+  slug: "btc-after-cpi-2024-07-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-cpi-2024-08-14.md": {
 	id: "btc-after-cpi-2024-08-14.md";
   slug: "btc-after-cpi-2024-08-14";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-09-11.md": {
+	id: "btc-after-cpi-2024-09-11.md";
+  slug: "btc-after-cpi-2024-09-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-10-10.md": {
+	id: "btc-after-cpi-2024-10-10.md";
+  slug: "btc-after-cpi-2024-10-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-11-14.md": {
+	id: "btc-after-cpi-2024-11-14.md";
+  slug: "btc-after-cpi-2024-11-14";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-12-11.md": {
+	id: "btc-after-cpi-2024-12-11.md";
+  slug: "btc-after-cpi-2024-12-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2025-01-15.md": {
+	id: "btc-after-cpi-2025-01-15.md";
+  slug: "btc-after-cpi-2025-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2025-02-12.md": {
+	id: "btc-after-cpi-2025-02-12.md";
+  slug: "btc-after-cpi-2025-02-12";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -165,9 +256,79 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-fomc-2024-03-19.md": {
+	id: "btc-after-fomc-2024-03-19.md";
+  slug: "btc-after-fomc-2024-03-19";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-fomc-2024-04-30.md": {
 	id: "btc-after-fomc-2024-04-30.md";
   slug: "btc-after-fomc-2024-04-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-fomc-2024-06-11.md": {
+	id: "btc-after-fomc-2024-06-11.md";
+  slug: "btc-after-fomc-2024-06-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-fomc-2024-07-30.md": {
+	id: "btc-after-fomc-2024-07-30.md";
+  slug: "btc-after-fomc-2024-07-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-fomc-2024-09-17.md": {
+	id: "btc-after-fomc-2024-09-17.md";
+  slug: "btc-after-fomc-2024-09-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-fomc-2024-11-06.md": {
+	id: "btc-after-fomc-2024-11-06.md";
+  slug: "btc-after-fomc-2024-11-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-fomc-2024-12-17.md": {
+	id: "btc-after-fomc-2024-12-17.md";
+  slug: "btc-after-fomc-2024-12-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-fomc-2025-01-29.md": {
+	id: "btc-after-fomc-2025-01-29.md";
+  slug: "btc-after-fomc-2025-01-29";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2024-01-05.md": {
+	id: "btc-after-nfp-2024-01-05.md";
+  slug: "btc-after-nfp-2024-01-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2024-02-02.md": {
+	id: "btc-after-nfp-2024-02-02.md";
+  slug: "btc-after-nfp-2024-02-02";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2024-03-01.md": {
+	id: "btc-after-nfp-2024-03-01.md";
+  slug: "btc-after-nfp-2024-03-01";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -186,6 +347,97 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-nfp-2024-06-07.md": {
+	id: "btc-after-nfp-2024-06-07.md";
+  slug: "btc-after-nfp-2024-06-07";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2024-07-05.md": {
+	id: "btc-after-nfp-2024-07-05.md";
+  slug: "btc-after-nfp-2024-07-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2024-08-02.md": {
+	id: "btc-after-nfp-2024-08-02.md";
+  slug: "btc-after-nfp-2024-08-02";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2024-09-06.md": {
+	id: "btc-after-nfp-2024-09-06.md";
+  slug: "btc-after-nfp-2024-09-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2024-10-04.md": {
+	id: "btc-after-nfp-2024-10-04.md";
+  slug: "btc-after-nfp-2024-10-04";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2024-11-01.md": {
+	id: "btc-after-nfp-2024-11-01.md";
+  slug: "btc-after-nfp-2024-11-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2024-12-06.md": {
+	id: "btc-after-nfp-2024-12-06.md";
+  slug: "btc-after-nfp-2024-12-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2025-01-10.md": {
+	id: "btc-after-nfp-2025-01-10.md";
+  slug: "btc-after-nfp-2025-01-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-01-15.md": {
+	id: "eth-after-cpi-2024-01-15.md";
+  slug: "eth-after-cpi-2024-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-02-20.md": {
+	id: "eth-after-cpi-2024-02-20.md";
+  slug: "eth-after-cpi-2024-02-20";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-03-12.md": {
+	id: "eth-after-cpi-2024-03-12.md";
+  slug: "eth-after-cpi-2024-03-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-04-10.md": {
+	id: "eth-after-cpi-2024-04-10.md";
+  slug: "eth-after-cpi-2024-04-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-05-15.md": {
+	id: "eth-after-cpi-2024-05-15.md";
+  slug: "eth-after-cpi-2024-05-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-cpi-2024-06-12.md": {
 	id: "eth-after-cpi-2024-06-12.md";
   slug: "eth-after-cpi-2024-06-12";
@@ -193,9 +445,51 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-cpi-2024-07-11.md": {
+	id: "eth-after-cpi-2024-07-11.md";
+  slug: "eth-after-cpi-2024-07-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-cpi-2024-08-14.md": {
 	id: "eth-after-cpi-2024-08-14.md";
   slug: "eth-after-cpi-2024-08-14";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-09-11.md": {
+	id: "eth-after-cpi-2024-09-11.md";
+  slug: "eth-after-cpi-2024-09-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-10-10.md": {
+	id: "eth-after-cpi-2024-10-10.md";
+  slug: "eth-after-cpi-2024-10-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-11-14.md": {
+	id: "eth-after-cpi-2024-11-14.md";
+  slug: "eth-after-cpi-2024-11-14";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-12-11.md": {
+	id: "eth-after-cpi-2024-12-11.md";
+  slug: "eth-after-cpi-2024-12-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2025-01-15.md": {
+	id: "eth-after-cpi-2025-01-15.md";
+  slug: "eth-after-cpi-2025-01-15";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -214,6 +508,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-fomc-2024-03-19.md": {
+	id: "eth-after-fomc-2024-03-19.md";
+  slug: "eth-after-fomc-2024-03-19";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-fomc-2024-04-30.md": {
 	id: "eth-after-fomc-2024-04-30.md";
   slug: "eth-after-fomc-2024-04-30";
@@ -228,9 +529,135 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-fomc-2024-07-30.md": {
+	id: "eth-after-fomc-2024-07-30.md";
+  slug: "eth-after-fomc-2024-07-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-fomc-2024-09-17.md": {
+	id: "eth-after-fomc-2024-09-17.md";
+  slug: "eth-after-fomc-2024-09-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-fomc-2024-11-06.md": {
+	id: "eth-after-fomc-2024-11-06.md";
+  slug: "eth-after-fomc-2024-11-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-fomc-2024-12-17.md": {
+	id: "eth-after-fomc-2024-12-17.md";
+  slug: "eth-after-fomc-2024-12-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-fomc-2025-01-29.md": {
+	id: "eth-after-fomc-2025-01-29.md";
+  slug: "eth-after-fomc-2025-01-29";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-01-05.md": {
+	id: "eth-after-nfp-2024-01-05.md";
+  slug: "eth-after-nfp-2024-01-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-02-02.md": {
+	id: "eth-after-nfp-2024-02-02.md";
+  slug: "eth-after-nfp-2024-02-02";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-03-01.md": {
+	id: "eth-after-nfp-2024-03-01.md";
+  slug: "eth-after-nfp-2024-03-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-nfp-2024-04-05.md": {
 	id: "eth-after-nfp-2024-04-05.md";
   slug: "eth-after-nfp-2024-04-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-05-03.md": {
+	id: "eth-after-nfp-2024-05-03.md";
+  slug: "eth-after-nfp-2024-05-03";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-06-07.md": {
+	id: "eth-after-nfp-2024-06-07.md";
+  slug: "eth-after-nfp-2024-06-07";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-07-05.md": {
+	id: "eth-after-nfp-2024-07-05.md";
+  slug: "eth-after-nfp-2024-07-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-08-02.md": {
+	id: "eth-after-nfp-2024-08-02.md";
+  slug: "eth-after-nfp-2024-08-02";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-09-06.md": {
+	id: "eth-after-nfp-2024-09-06.md";
+  slug: "eth-after-nfp-2024-09-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-10-04.md": {
+	id: "eth-after-nfp-2024-10-04.md";
+  slug: "eth-after-nfp-2024-10-04";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-11-01.md": {
+	id: "eth-after-nfp-2024-11-01.md";
+  slug: "eth-after-nfp-2024-11-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-12-06.md": {
+	id: "eth-after-nfp-2024-12-06.md";
+  slug: "eth-after-nfp-2024-12-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2025-01-10.md": {
+	id: "eth-after-nfp-2025-01-10.md";
+  slug: "eth-after-nfp-2025-01-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2024-01-15.md": {
+	id: "gold-after-cpi-2024-01-15.md";
+  slug: "gold-after-cpi-2024-01-15";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -249,9 +676,72 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-cpi-2024-04-10.md": {
+	id: "gold-after-cpi-2024-04-10.md";
+  slug: "gold-after-cpi-2024-04-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-cpi-2024-05-15.md": {
 	id: "gold-after-cpi-2024-05-15.md";
   slug: "gold-after-cpi-2024-05-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2024-06-12.md": {
+	id: "gold-after-cpi-2024-06-12.md";
+  slug: "gold-after-cpi-2024-06-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2024-07-11.md": {
+	id: "gold-after-cpi-2024-07-11.md";
+  slug: "gold-after-cpi-2024-07-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2024-08-14.md": {
+	id: "gold-after-cpi-2024-08-14.md";
+  slug: "gold-after-cpi-2024-08-14";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2024-09-11.md": {
+	id: "gold-after-cpi-2024-09-11.md";
+  slug: "gold-after-cpi-2024-09-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2024-10-10.md": {
+	id: "gold-after-cpi-2024-10-10.md";
+  slug: "gold-after-cpi-2024-10-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2024-11-14.md": {
+	id: "gold-after-cpi-2024-11-14.md";
+  slug: "gold-after-cpi-2024-11-14";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2024-12-11.md": {
+	id: "gold-after-cpi-2024-12-11.md";
+  slug: "gold-after-cpi-2024-12-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2025-01-15.md": {
+	id: "gold-after-cpi-2025-01-15.md";
+  slug: "gold-after-cpi-2025-01-15";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -270,9 +760,37 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-fomc-2024-03-19.md": {
+	id: "gold-after-fomc-2024-03-19.md";
+  slug: "gold-after-fomc-2024-03-19";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-fomc-2024-04-30.md": {
+	id: "gold-after-fomc-2024-04-30.md";
+  slug: "gold-after-fomc-2024-04-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-fomc-2024-06-11.md": {
+	id: "gold-after-fomc-2024-06-11.md";
+  slug: "gold-after-fomc-2024-06-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-fomc-2024-07-30.md": {
 	id: "gold-after-fomc-2024-07-30.md";
   slug: "gold-after-fomc-2024-07-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-fomc-2024-09-17.md": {
+	id: "gold-after-fomc-2024-09-17.md";
+  slug: "gold-after-fomc-2024-09-17";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -284,9 +802,30 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-fomc-2024-12-17.md": {
+	id: "gold-after-fomc-2024-12-17.md";
+  slug: "gold-after-fomc-2024-12-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-fomc-2025-01-29.md": {
+	id: "gold-after-fomc-2025-01-29.md";
+  slug: "gold-after-fomc-2025-01-29";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-nfp-2024-01-05.md": {
 	id: "gold-after-nfp-2024-01-05.md";
   slug: "gold-after-nfp-2024-01-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-nfp-2024-02-02.md": {
+	id: "gold-after-nfp-2024-02-02.md";
+  slug: "gold-after-nfp-2024-02-02";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -319,6 +858,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-nfp-2024-07-05.md": {
+	id: "gold-after-nfp-2024-07-05.md";
+  slug: "gold-after-nfp-2024-07-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-nfp-2024-08-02.md": {
 	id: "gold-after-nfp-2024-08-02.md";
   slug: "gold-after-nfp-2024-08-02";
@@ -340,9 +886,44 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-nfp-2024-11-01.md": {
+	id: "gold-after-nfp-2024-11-01.md";
+  slug: "gold-after-nfp-2024-11-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-nfp-2024-12-06.md": {
+	id: "gold-after-nfp-2024-12-06.md";
+  slug: "gold-after-nfp-2024-12-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-nfp-2025-01-10.md": {
 	id: "gold-after-nfp-2025-01-10.md";
   slug: "gold-after-nfp-2025-01-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2024-01-15.md": {
+	id: "qqq-after-cpi-2024-01-15.md";
+  slug: "qqq-after-cpi-2024-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2024-02-20.md": {
+	id: "qqq-after-cpi-2024-02-20.md";
+  slug: "qqq-after-cpi-2024-02-20";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2024-03-12.md": {
+	id: "qqq-after-cpi-2024-03-12.md";
+  slug: "qqq-after-cpi-2024-03-12";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -357,6 +938,27 @@ declare module 'astro:content' {
 "qqq-after-cpi-2024-05-15.md": {
 	id: "qqq-after-cpi-2024-05-15.md";
   slug: "qqq-after-cpi-2024-05-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2024-06-12.md": {
+	id: "qqq-after-cpi-2024-06-12.md";
+  slug: "qqq-after-cpi-2024-06-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2024-07-11.md": {
+	id: "qqq-after-cpi-2024-07-11.md";
+  slug: "qqq-after-cpi-2024-07-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2024-08-14.md": {
+	id: "qqq-after-cpi-2024-08-14.md";
+  slug: "qqq-after-cpi-2024-08-14";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -382,9 +984,51 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-cpi-2024-12-11.md": {
+	id: "qqq-after-cpi-2024-12-11.md";
+  slug: "qqq-after-cpi-2024-12-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2025-01-15.md": {
+	id: "qqq-after-cpi-2025-01-15.md";
+  slug: "qqq-after-cpi-2025-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2025-02-12.md": {
+	id: "qqq-after-cpi-2025-02-12.md";
+  slug: "qqq-after-cpi-2025-02-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-fomc-2024-01-30.md": {
 	id: "qqq-after-fomc-2024-01-30.md";
   slug: "qqq-after-fomc-2024-01-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-fomc-2024-03-19.md": {
+	id: "qqq-after-fomc-2024-03-19.md";
+  slug: "qqq-after-fomc-2024-03-19";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-fomc-2024-04-30.md": {
+	id: "qqq-after-fomc-2024-04-30.md";
+  slug: "qqq-after-fomc-2024-04-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-fomc-2024-06-11.md": {
+	id: "qqq-after-fomc-2024-06-11.md";
+  slug: "qqq-after-fomc-2024-06-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -396,9 +1040,37 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-fomc-2024-09-17.md": {
+	id: "qqq-after-fomc-2024-09-17.md";
+  slug: "qqq-after-fomc-2024-09-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-fomc-2024-11-06.md": {
+	id: "qqq-after-fomc-2024-11-06.md";
+  slug: "qqq-after-fomc-2024-11-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-fomc-2024-12-17.md": {
 	id: "qqq-after-fomc-2024-12-17.md";
   slug: "qqq-after-fomc-2024-12-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-fomc-2025-01-29.md": {
+	id: "qqq-after-fomc-2025-01-29.md";
+  slug: "qqq-after-fomc-2025-01-29";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-nfp-2024-01-05.md": {
+	id: "qqq-after-nfp-2024-01-05.md";
+  slug: "qqq-after-nfp-2024-01-05";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -410,6 +1082,41 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-nfp-2024-03-01.md": {
+	id: "qqq-after-nfp-2024-03-01.md";
+  slug: "qqq-after-nfp-2024-03-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-nfp-2024-04-05.md": {
+	id: "qqq-after-nfp-2024-04-05.md";
+  slug: "qqq-after-nfp-2024-04-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-nfp-2024-05-03.md": {
+	id: "qqq-after-nfp-2024-05-03.md";
+  slug: "qqq-after-nfp-2024-05-03";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-nfp-2024-06-07.md": {
+	id: "qqq-after-nfp-2024-06-07.md";
+  slug: "qqq-after-nfp-2024-06-07";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-nfp-2024-07-05.md": {
+	id: "qqq-after-nfp-2024-07-05.md";
+  slug: "qqq-after-nfp-2024-07-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-nfp-2024-08-02.md": {
 	id: "qqq-after-nfp-2024-08-02.md";
   slug: "qqq-after-nfp-2024-08-02";
@@ -417,9 +1124,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-nfp-2024-09-06.md": {
+	id: "qqq-after-nfp-2024-09-06.md";
+  slug: "qqq-after-nfp-2024-09-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-nfp-2024-10-04.md": {
 	id: "qqq-after-nfp-2024-10-04.md";
   slug: "qqq-after-nfp-2024-10-04";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-nfp-2024-11-01.md": {
+	id: "qqq-after-nfp-2024-11-01.md";
+  slug: "qqq-after-nfp-2024-11-01";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -438,9 +1159,30 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-cpi-2024-01-15.md": {
+	id: "spy-after-cpi-2024-01-15.md";
+  slug: "spy-after-cpi-2024-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2024-02-20.md": {
+	id: "spy-after-cpi-2024-02-20.md";
+  slug: "spy-after-cpi-2024-02-20";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-cpi-2024-03-12.md": {
 	id: "spy-after-cpi-2024-03-12.md";
   slug: "spy-after-cpi-2024-03-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2024-04-10.md": {
+	id: "spy-after-cpi-2024-04-10.md";
+  slug: "spy-after-cpi-2024-04-10";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -452,6 +1194,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-cpi-2024-06-12.md": {
+	id: "spy-after-cpi-2024-06-12.md";
+  slug: "spy-after-cpi-2024-06-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-cpi-2024-07-11.md": {
 	id: "spy-after-cpi-2024-07-11.md";
   slug: "spy-after-cpi-2024-07-11";
@@ -459,9 +1208,51 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-cpi-2024-08-14.md": {
+	id: "spy-after-cpi-2024-08-14.md";
+  slug: "spy-after-cpi-2024-08-14";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2024-09-11.md": {
+	id: "spy-after-cpi-2024-09-11.md";
+  slug: "spy-after-cpi-2024-09-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2024-10-10.md": {
+	id: "spy-after-cpi-2024-10-10.md";
+  slug: "spy-after-cpi-2024-10-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-cpi-2024-11-14.md": {
 	id: "spy-after-cpi-2024-11-14.md";
   slug: "spy-after-cpi-2024-11-14";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2024-12-11.md": {
+	id: "spy-after-cpi-2024-12-11.md";
+  slug: "spy-after-cpi-2024-12-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2025-01-15.md": {
+	id: "spy-after-cpi-2025-01-15.md";
+  slug: "spy-after-cpi-2025-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2025-02-12.md": {
+	id: "spy-after-cpi-2025-02-12.md";
+  slug: "spy-after-cpi-2025-02-12";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -480,9 +1271,37 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-fomc-2024-04-30.md": {
+	id: "spy-after-fomc-2024-04-30.md";
+  slug: "spy-after-fomc-2024-04-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-fomc-2024-06-11.md": {
+	id: "spy-after-fomc-2024-06-11.md";
+  slug: "spy-after-fomc-2024-06-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-fomc-2024-07-30.md": {
 	id: "spy-after-fomc-2024-07-30.md";
   slug: "spy-after-fomc-2024-07-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-fomc-2024-09-17.md": {
+	id: "spy-after-fomc-2024-09-17.md";
+  slug: "spy-after-fomc-2024-09-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-fomc-2024-11-06.md": {
+	id: "spy-after-fomc-2024-11-06.md";
+  slug: "spy-after-fomc-2024-11-06";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -515,6 +1334,34 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-nfp-2024-03-01.md": {
+	id: "spy-after-nfp-2024-03-01.md";
+  slug: "spy-after-nfp-2024-03-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-nfp-2024-04-05.md": {
+	id: "spy-after-nfp-2024-04-05.md";
+  slug: "spy-after-nfp-2024-04-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-nfp-2024-05-03.md": {
+	id: "spy-after-nfp-2024-05-03.md";
+  slug: "spy-after-nfp-2024-05-03";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-nfp-2024-06-07.md": {
+	id: "spy-after-nfp-2024-06-07.md";
+  slug: "spy-after-nfp-2024-06-07";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-nfp-2024-07-05.md": {
 	id: "spy-after-nfp-2024-07-05.md";
   slug: "spy-after-nfp-2024-07-05";
@@ -529,9 +1376,37 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-nfp-2024-09-06.md": {
+	id: "spy-after-nfp-2024-09-06.md";
+  slug: "spy-after-nfp-2024-09-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-nfp-2024-10-04.md": {
 	id: "spy-after-nfp-2024-10-04.md";
   slug: "spy-after-nfp-2024-10-04";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-nfp-2024-11-01.md": {
+	id: "spy-after-nfp-2024-11-01.md";
+  slug: "spy-after-nfp-2024-11-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-nfp-2024-12-06.md": {
+	id: "spy-after-nfp-2024-12-06.md";
+  slug: "spy-after-nfp-2024-12-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-nfp-2025-01-10.md": {
+	id: "spy-after-nfp-2025-01-10.md";
+  slug: "spy-after-nfp-2025-01-10";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

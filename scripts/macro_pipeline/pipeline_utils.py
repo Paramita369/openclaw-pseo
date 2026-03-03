@@ -11,6 +11,18 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 ALLOWED_EVENT_TYPES = {"CPI", "NFP", "FOMC"}
+PRIMARY_ASSETS = ("BTC", "ETH", "GOLD", "QQQ", "SPY")
+
+
+def event_filter_sql(event_type: str) -> str:
+    normalized = (event_type or "").strip().upper()
+    if normalized == "CPI":
+        return "UPPER(m.headline) LIKE '%CPI%'"
+    if normalized == "NFP":
+        return "UPPER(m.headline) LIKE '%NFP%'"
+    if normalized == "FOMC":
+        return "UPPER(m.headline) LIKE '%FOMC%'"
+    return "1=0"
 
 
 def resolve_project_root(project_root: Optional[str] = None) -> Path:
