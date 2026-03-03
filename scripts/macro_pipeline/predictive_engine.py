@@ -15,7 +15,9 @@ import argparse
 from datetime import datetime, timedelta
 import math
 
-DB_PATH = os.path.expanduser("~/.openclaw/workspace/data/macro_events.db")
+from pipeline_utils import resolve_project_root
+
+DB_PATH = str(resolve_project_root(None) / "data" / "macro_events.db")
 
 def cosine_similarity(a: list, b: list) -> float:
     """計算兩個向量的cosine相似度"""
@@ -282,6 +284,8 @@ def save_prediction(query: str, target_ticker: str, similar_ids: list,
 
 def main():
     parser = argparse.ArgumentParser(description="Predictive Engine")
+    parser.add_argument("--project-root", default=None, help="Repository root")
+    parser.add_argument("--db-path", default=None, help="Database path")
     parser.add_argument("--headline", help="New event headline")
     parser.add_argument("--event-id", type=int, help="Use existing event as query")
     parser.add_argument("--ticker", required=True, help="Target ticker to predict")
@@ -291,6 +295,11 @@ def main():
     
     args = parser.parse_args()
     
+    root = resolve_project_root(args.project_root)
+    db_path = args.db_path or str(root / "data" / "macro_events.db")
+    global DB_PATH
+    DB_PATH = db_path
+
     # Find similar events
     if args.headline:
         similar = find_similar_events(headline=args.headline, domain=args.domain, limit=args.limit)

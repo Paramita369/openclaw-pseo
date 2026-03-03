@@ -1,43 +1,35 @@
-# QuantMacro Daily Operations Prompt
-# This file defines the daily maintenance tasks for OpenClaw to execute
-
----
+# QuantMacro Daily Operations Prompt (OpenClaw)
 
 ## Mission
-You are the DevOps engineer for QuantMacro website. Execute the following daily maintenance in order:
+Run the local daily pSEO pipeline in fail-fast mode. Do not manually edit content files during this run.
 
-### Step 1: Data Fetch (Historical)
-1. Change directory: `~/.openclaw/workspace/astro_project`
-2. Run: `python3 scripts/macro_pipeline/history_backfill.py`
+## Command
+```bash
+python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
+```
 
-### Step 2: Daily Snapshot (Real-time Prices)
-1. Run: `python3 scripts/macro_pipeline/fetch_daily_snapshot.py`
-2. This generates `src/data/daily_snapshot.json`
+## Pipeline Contract
+1. Fetch/update data
+2. Compute risk metrics (on runtime DB copy)
+3. Build changed targets and generate pages
+4. Generate sitemap
+5. Run quality gates
+6. Run astro build
+7. Generate KPI report
+8. Commit/push only whitelisted files when changes exist
 
-### Step 3: Risk Metrics Calculation
-1. Run: `python3 scripts/macro_pipeline/risk_metrics_calculator.py`
-2. This updates asset_impact table with Sharpe and MDD data
+## Fail-Fast Rules
+- Stop immediately when a required step fails.
+- Write error details to `logs/daily_ops/YYYY-MM-DD.json`.
+- Do not push when any required step fails.
 
-### Step 4: Generate Pages
-1. Run: `python3 scripts/macro_pipeline/astro_page_builder.py`
-2. Check for any Python exceptions
+## Git Whitelist
+- `src/content/blog/`
+- `public/sitemap.xml`
+- `src/daily_snapshot.json`
+- `data/page_manifest.json`
 
-### Step 4: Git Commit
-1. Run: `git status`
-2. If files changed, run: `git add .`
-3. Generate commit message: "chore: daily data sync $(date +%Y-%m-%d)"
-4. Run: `git commit -m "your message"`
-
-### Step 5: Deploy
-1. Run: `git push origin main`
-
-### Error Handling
-- If any step fails, analyze the error log
-- Try to fix the code or clean up
-- If cannot fix, send alert to user via message tool
-
----
-
-## Environment
-- Working dir: ~/.openclaw/workspace/astro_project
-- MiniMax API is available in system env
+## Notes
+- The system is educational content only and should avoid trading advice language.
+- Keep output deterministic and avoid generating `nan%` values.
+- Runtime artifacts (`node_modules`, `.astro`, `dist`, local DB runtime noise) must not block whitelist push.

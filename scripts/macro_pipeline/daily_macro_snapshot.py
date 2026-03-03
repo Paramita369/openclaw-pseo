@@ -18,7 +18,11 @@ import os
 import json
 import requests
 import time
+import argparse
 from datetime import datetime
+from pathlib import Path
+
+from pipeline_utils import resolve_project_root
 
 try:
     import yfinance as yf
@@ -27,7 +31,14 @@ except ImportError:
     YF_AVAILABLE = False
     print("⚠️ yfinance not installed")
 
-OUTPUT_PATH = os.path.expanduser("~/.openclaw/workspace/astro_project/public/daily_snapshot.json")
+OUTPUT_PATH = ""
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Daily macro snapshot")
+    parser.add_argument("--project-root", default=None, help="Repository root")
+    parser.add_argument("--output", default=None, help="Output path")
+    return parser.parse_args()
 
 def get_market_data():
     """獲取每日市場數據"""
@@ -95,6 +106,12 @@ def save_snapshot(data):
     print(f"\n✅ Snapshot saved: {OUTPUT_PATH}")
 
 def main():
+    args = parse_args()
+    root = resolve_project_root(args.project_root)
+    output_path = Path(args.output).resolve() if args.output else root / "public" / "daily_snapshot.json"
+    global OUTPUT_PATH
+    OUTPUT_PATH = str(output_path)
+
     print("📊 Generating Daily Macro Snapshot...")
     print(f"⏰ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
     

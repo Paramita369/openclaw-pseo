@@ -1,89 +1,44 @@
 ---
 title: "Historical Performance of QQQ After Macro Events on 2024-04-10"
-description: "Quantitative analysis and historical performance of QQQ following Macro releases."
+description: "Quantitative analysis of QQQ around CPI events based on historical backtesting."
 pubDate: "2026-03-03"
-slug: "qqq-after-macro-2024-04-10"
-tags: ["qqq", "macro", "backtest", "general"]
+event_type: "CPI"
+source: "verified_targets.csv"
+offer_key: "ibkr"
+quality_score: 75
+tags: ["qqq", "cpi", "backtest", "general"]
 metrics:
   sharpe_t7: -7.4
   mdd_t7: -4.39
   volatility: 0.0
-
+  impact_t1_pct: 1.6
+  impact_t7_pct: -2.86
+chartData: [{"time": "2024-04-08", "open": 437.17, "high": 438.24, "low": 434.98, "close": 436.36}, {"time": "2024-04-09", "open": 438.7, "high": 438.98, "low": 433.23, "close": 437.98}, {"time": "2024-04-10", "open": 432.8, "high": 435.02, "low": 432.08, "close": 434.15}, {"time": "2024-04-11", "open": 436.03, "high": 442.04, "low": 433.75, "close": 441.09}, {"time": "2024-04-12", "open": 436.86, "high": 437.99, "low": 432.68, "close": 434.06}, {"time": "2024-04-15", "open": 437.81, "high": 437.9, "low": 426.07, "close": 426.91}, {"time": "2024-04-16", "open": 426.76, "high": 429.59, "low": 425.57, "close": 426.95}, {"time": "2024-04-17", "open": 428.94, "high": 428.96, "low": 420.81, "close": 421.75}]
 ---
 
 # Historical Performance of QQQ After Macro Events on 2024-04-10
 
-**Event Date:** 2024-04-10 | **Asset:** QQQ
-
-Welcome to the QuantMacro quantitative analysis report for **QQQ** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
-
+**Event Date:** 2024-04-10  
+**Asset:** QQQ  
+**Event Type:** CPI
 
 ## Historical Performance Data
 
-| Metric | Value |
-|--------|-------|| T+1 (24h) | 1.6% |
-| T+7 (1 Week) | -2.86% |
-
-*Based on historical backtesting from our quant database.*
-
-
-## Key Metrics Summary
-
 | Metric | T+1 (24h) | T+7 (1 Week) |
-| :--- | :--- | :--- |
+| :--- | :---: | :---: |
 | Average Return | 1.6% | -2.86% |
-| Risk (Sharpe) | -7.4 | -4.39% |
+| Sharpe Ratio | -7.4 | - |
+| Max Drawdown | - | -4.39% |
+| Volatility | - | 0.0% |
 
-## Trading Recommendation
+## Trading Context (Educational)
 
-**Bearish Outlook:** Historical data shows negative momentum. Consider hedging or waiting for confirmation.
-
-## Methodology
-
-This analysis is based on historical backtesting data. Past performance does not guarantee future results.
+**Bearish bias:** This page is informational and should not be treated as investment advice.
 
 ## Quantitative Analysis
 
-Quantitative analysis for QQQ following Macro events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+Historical data indicates that QQQ reacts to CPI releases with a T+1 average move of 0.17% and a T+7 average move of 0.08%. Across 24 comparable events, short-horizon win rate is 58.33%. Current risk metrics for this page show Sharpe -7.4 and max drawdown -4.39%. Use this as an educational reference for event-driven volatility behavior.
 
-## Market Context
+## Methodology
 
-*Macroeconomic indicators like **Macro** often trigger high algorithmic trading volume. This page is automatically updated by our backend when new data is released.*
-
-
-<div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
-    <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
-    <p class="text-blue-800 mb-4">Ready to trade **QQQ**?</p>
-    
-    <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade QQQ on Interactive Brokers</p>
-        <a href="https://www.ibkr.com/referral/siohong248" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-            Open IB Account →
-        </a>
-    </div>
-    <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade QQQ stocks with Futu</p>
-        <a href="https://invest.futuhk.com/invite-centre_share?lang=zh-hk&invite_code=MQHETN7N" target="_blank" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-            Open FUTU Account →
-        </a>
-    </div>
-    <p class="text-xs text-gray-500 mt-3">*Trading involves risk. This is for educational purposes.</p>
-</div>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How does QQQ react to Macro?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Historical data for QQQ following Macro is currently being compiled by our quantitative tracking system."
-      }
-    }
-  ]
-}
-</script>
+Metrics are generated from historical event windows and normalized into T+1/T+7 returns. Past performance does not guarantee future results.

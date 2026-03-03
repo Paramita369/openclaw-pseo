@@ -1,70 +1,85 @@
 ---
-// DynamicCta.astro - Dynamic referral links based on asset type
-const { asset } = Astro.props;
+import offersConfig from '../data/offers.json';
 
-// Read from environment variables (Vercel/astro)
-const BINANCE_LINK = "https://www.binance.com/referral/earn-together/refer2earn-usdc/claim?hl=zh-TC&ref=GRO_28502_NXG80";
-const FUTU_LINK = "https://invest.futuhk.com/invite-centre_share?lang=zh-hk&invite_code=MQHETN7N";
-const IBKR_LINK = "https://www.ibkr.com/referral/siohong248";
+const { asset = 'BTC', slug = '' } = Astro.props;
+const normalizedAsset = String(asset).toUpperCase();
 
-// Asset type detection
-const cryptoAssets = ['BTC', 'ETH', 'SOL', 'DOGE'];
-const stockAssets = ['SPY', 'QQQ', 'NVDA', 'TSLA', 'AAPL', 'GOOGL'];
-const macroAssets = ['GOLD', 'DXY', 'US10Y', 'OIL', 'TLT'];
+const offerKeys = offersConfig.asset_offer_keys[normalizedAsset] || offersConfig.asset_offer_keys.DEFAULT || [];
+const selectedOffers = offerKeys
+  .map((key) => ({ key, ...offersConfig.offers[key] }))
+  .filter((offer) => Boolean(offer && offer.url));
 
-const upperAsset = asset.toUpperCase();
-let platforms = [];
+const utmSource = offersConfig.utm?.source || 'quantmacro';
+const utmMedium = offersConfig.utm?.medium || 'affiliate';
 
-if (cryptoAssets.includes(upperAsset)) {
-  platforms = [{ name: "Binance", link: BINANCE_LINK, color: "yellow", message: "Deploy automated trading bots with industry-lowest fees" }];
-} else {
-  // Stocks, gold, oil - show both IBKR and FUTU
-  platforms = [
-    { name: "IBKR", link: IBKR_LINK, color: "emerald", message: "Access global markets with institutional spreads" },
-    { name: "Futu", link: FUTU_LINK, color: "purple", message: "Execute options wheel strategies with zero commission" }
-  ];
-}
+const withUtm = (offer) => {
+  const url = new URL(offer.url);
+  url.searchParams.set('utm_source', utmSource);
+  url.searchParams.set('utm_medium', utmMedium);
+  url.searchParams.set('utm_campaign', offer.utm_campaign || `affiliate_${offer.key}`);
+  if (slug) {
+    url.searchParams.set('utm_content', slug);
+  }
+  return url.toString();
+};
 
-const getColorClasses = (color, isPrimary = true) => {
-  const colors = {
-    yellow: isPrimary ? "bg-yellow-500 hover:bg-yellow-600 text-slate-900" : "bg-yellow-50 text-yellow-800 border-yellow-200",
-    emerald: isPrimary ? "bg-emerald-600 hover:bg-emerald-700 text-white" : "bg-emerald-50 text-emerald-800 border-emerald-200",
-    purple: isPrimary ? "bg-purple-600 hover:bg-purple-700 text-white" : "bg-purple-50 text-purple-800 border-purple-200",
-    blue: isPrimary ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-blue-50 text-blue-800 border-blue-200",
+const colorClass = (name, primary = true) => {
+  const map = {
+    yellow: primary ? 'bg-yellow-500 hover:bg-yellow-600 text-slate-900' : 'bg-yellow-50 text-yellow-800 border-yellow-200',
+    emerald: primary ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-800 border-emerald-200',
+    purple: primary ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'bg-purple-50 text-purple-800 border-purple-200',
+    blue: primary ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-blue-50 text-blue-800 border-blue-200',
   };
-  return colors[color] || colors.blue;
+  return map[name] || map.blue;
 };
 ---
 
-<div class="mt-10 mb-8 p-6 border-l-4 rounded-r-xl shadow-sm bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-600">
-  <h3 class="text-lg font-black text-slate-900 mb-2 flex items-center gap-2">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-    </svg>
-    Quantitative Action Plan
-  </h3>
-  
-  {platforms.length === 1 ? (
-    <div>
-      <p class="text-slate-700 mb-4 font-medium">{platforms[0].message}</p>
-      <a href={platforms[0].link} target="_blank" rel="noopener noreferrer" 
-         class={`inline-flex items-center gap-2 font-bold py-3 px-6 rounded-lg transition-all shadow-sm ${getColorClasses(platforms[0].color)}`}>
-        Open {platforms[0].name} Account →
-      </a>
-    </div>
-  ) : (
-    <div class="space-y-3">
-      <p class="text-slate-700 mb-2 font-medium">Choose your preferred trading platform:</p>
-      <div class="flex flex-col sm:flex-row gap-3">
-        {platforms.map((p, idx) => (
-          <a href={p.link} target="_blank" rel="noopener noreferrer" 
-             class={`inline-flex items-center justify-center gap-2 font-bold py-3 px-4 rounded-lg transition-all shadow-sm ${getColorClasses(p.color, idx === 0)}`}>
-            Open {p.name} →
-          </a>
-        ))}
+{selectedOffers.length > 0 && (
+  <div class="mt-10 mb-8 p-6 border-l-4 rounded-r-xl shadow-sm bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-600">
+    <h3 class="text-lg font-black text-slate-900 mb-2">Quantitative Action Plan</h3>
+
+    {selectedOffers.length === 1 ? (
+      <div>
+        <p class="text-slate-700 mb-4 font-medium">{selectedOffers[0].message_template.replace('{asset}', normalizedAsset)}</p>
+        <a
+          href={withUtm(selectedOffers[0])}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-affiliate-click="1"
+          data-slug={slug}
+          data-asset={normalizedAsset}
+          data-offer-key={selectedOffers[0].key}
+          data-cta-position="article_inline"
+          data-utm-campaign={selectedOffers[0].utm_campaign || `affiliate_${selectedOffers[0].key}`}
+          class={`inline-flex items-center gap-2 font-bold py-3 px-6 rounded-lg transition-all shadow-sm ${colorClass(selectedOffers[0].button_style)}`}
+        >
+          Open {selectedOffers[0].name} Account →
+        </a>
       </div>
-    </div>
-  )}
-  
-  <p class="text-xs text-slate-500 mt-4">*Trading involves risk. This is for educational purposes only.</p>
-</div>
+    ) : (
+      <div class="space-y-3">
+        <p class="text-slate-700 mb-2 font-medium">Choose your preferred trading platform:</p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          {selectedOffers.map((offer, idx) => (
+            <a
+              href={withUtm(offer)}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-affiliate-click="1"
+              data-slug={slug}
+              data-asset={normalizedAsset}
+              data-offer-key={offer.key}
+              data-cta-position="article_inline"
+              data-utm-campaign={offer.utm_campaign || `affiliate_${offer.key}`}
+              class={`inline-flex items-center justify-center gap-2 font-bold py-3 px-4 rounded-lg transition-all shadow-sm ${colorClass(offer.button_style, idx === 0)}`}
+            >
+              Open {offer.name} →
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <p class="text-xs text-slate-500 mt-4">*Trading involves risk. This is for educational purposes only.</p>
+  </div>
+)}

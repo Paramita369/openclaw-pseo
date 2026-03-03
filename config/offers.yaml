@@ -1,0 +1,41 @@
+{
+  "default_domain": "quantmacro.vercel.app",
+  "utm": {
+    "source": "quantmacro",
+    "medium": "affiliate"
+  },
+  "asset_offer_keys": {
+    "BTC": ["binance"],
+    "ETH": ["binance"],
+    "SOL": ["binance"],
+    "DOGE": ["binance"],
+    "SPY": ["ibkr", "futu"],
+    "QQQ": ["ibkr", "futu"],
+    "GOLD": ["ibkr", "futu"],
+    "OIL": ["ibkr", "futu"],
+    "DEFAULT": ["ibkr"]
+  },
+  "offers": {
+    "binance": {
+      "name": "Binance",
+      "url": "https://www.binance.com/referral/earn-together/refer2earn-usdc/claim?hl=zh-TC&ref=GRO_28502_NXG80",
+      "message_template": "Trade {asset} on Binance with reduced fees",
+      "utm_campaign": "affiliate_binance",
+      "button_style": "yellow"
+    },
+    "ibkr": {
+      "name": "IBKR",
+      "url": "https://www.ibkr.com/referral/siohong248",
+      "message_template": "Trade {asset} on Interactive Brokers",
+      "utm_campaign": "affiliate_ibkr",
+      "button_style": "emerald"
+    },
+    "futu": {
+      "name": "Futu",
+      "url": "https://invest.futuhk.com/invite-centre_share?lang=zh-hk&invite_code=MQHETN7N",
+      "message_template": "Trade {asset} stocks with Futu",
+      "utm_campaign": "affiliate_futu",
+      "button_style": "purple"
+    }
+  }
+}

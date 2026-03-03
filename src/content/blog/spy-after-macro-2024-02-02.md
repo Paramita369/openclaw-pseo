@@ -1,89 +1,44 @@
 ---
 title: "Historical Performance of SPY After Macro Events on 2024-02-02"
-description: "Quantitative analysis and historical performance of SPY following Macro releases."
+description: "Quantitative analysis of SPY around NFP events based on historical backtesting."
 pubDate: "2026-03-03"
-slug: "spy-after-macro-2024-02-02"
-tags: ["spy", "macro", "backtest", "general"]
+event_type: "NFP"
+source: "verified_targets.csv"
+offer_key: "ibkr"
+quality_score: 60
+tags: ["spy", "nfp", "backtest", "general"]
 metrics:
   sharpe_t7: -0.17
   mdd_t7: -2.09
   volatility: 0.0
-
+  impact_t1_pct: 0.0
+  impact_t7_pct: 1.39
+chartData: [{"time": "2024-01-30", "open": 478.73, "high": 479.76, "low": 478.29, "close": 479.05}, {"time": "2024-01-31", "open": 476.83, "high": 477.28, "low": 471.21, "close": 471.23}, {"time": "2024-02-01", "open": 472.94, "high": 477.43, "low": 472.13, "close": 477.4}, {"time": "2024-02-02", "open": 477.84, "high": 484.08, "low": 477.5, "close": 482.42}, {"time": "2024-02-05", "open": 481.79, "high": 482.45, "low": 478.4, "close": 480.67}, {"time": "2024-02-06", "open": 481.61, "high": 482.39, "low": 480.18, "close": 482.06}, {"time": "2024-02-07", "open": 484.32, "high": 486.5, "low": 483.41, "close": 486.08}, {"time": "2024-02-08", "open": 486.08, "high": 486.68, "low": 485.26, "close": 486.3}, {"time": "2024-02-09", "open": 486.81, "high": 489.55, "low": 486.46, "close": 489.11}]
 ---
 
 # Historical Performance of SPY After Macro Events on 2024-02-02
 
-**Event Date:** 2024-02-02 | **Asset:** SPY
-
-Welcome to the QuantMacro quantitative analysis report for **SPY** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
-
+**Event Date:** 2024-02-02  
+**Asset:** SPY  
+**Event Type:** NFP
 
 ## Historical Performance Data
 
-| Metric | Value |
-|--------|-------|| T+1 (24h) | nan% |
-| T+7 (1 Week) | 1.39% |
-
-*Based on historical backtesting from our quant database.*
-
-
-## Key Metrics Summary
-
 | Metric | T+1 (24h) | T+7 (1 Week) |
-| :--- | :--- | :--- |
-| Average Return | nan% | 1.39% |
-| Risk (Sharpe) | -0.17 | -2.09% |
+| :--- | :---: | :---: |
+| Average Return | 0.0% | 1.39% |
+| Sharpe Ratio | -0.17 | - |
+| Max Drawdown | - | -2.09% |
+| Volatility | - | 0.0% |
 
-## Trading Recommendation
+## Trading Context (Educational)
 
-**Neutral:** Mixed historical signals. Recommend waiting for clearer trends before taking positions.
-
-## Methodology
-
-This analysis is based on historical backtesting data. Past performance does not guarantee future results.
+**Neutral:** This page is informational and should not be treated as investment advice.
 
 ## Quantitative Analysis
 
-Quantitative analysis for SPY following Macro events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+Historical data indicates that SPY reacts to NFP releases with a T+1 average move of 0.0% and a T+7 average move of 1.32%. Across 18 comparable events, short-horizon win rate is 0.0%. Current risk metrics for this page show Sharpe -0.17 and max drawdown -2.09%. Use this as an educational reference for event-driven volatility behavior.
 
-## Market Context
+## Methodology
 
-*Macroeconomic indicators like **Macro** often trigger high algorithmic trading volume. This page is automatically updated by our backend when new data is released.*
-
-
-<div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
-    <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
-    <p class="text-blue-800 mb-4">Ready to trade **SPY**?</p>
-    
-    <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade SPY on Interactive Brokers</p>
-        <a href="https://www.ibkr.com/referral/siohong248" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-            Open IB Account →
-        </a>
-    </div>
-    <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade SPY stocks with Futu</p>
-        <a href="https://invest.futuhk.com/invite-centre_share?lang=zh-hk&invite_code=MQHETN7N" target="_blank" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-            Open FUTU Account →
-        </a>
-    </div>
-    <p class="text-xs text-gray-500 mt-3">*Trading involves risk. This is for educational purposes.</p>
-</div>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How does SPY react to Macro?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Historical data for SPY following Macro is currently being compiled by our quantitative tracking system."
-      }
-    }
-  ]
-}
-</script>
+Metrics are generated from historical event windows and normalized into T+1/T+7 returns. Past performance does not guarantee future results.

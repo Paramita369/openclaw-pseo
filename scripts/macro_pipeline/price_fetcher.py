@@ -17,7 +17,9 @@ import time
 import random
 from datetime import datetime, timedelta
 
-DB_PATH = os.path.expanduser("~/.openclaw/workspace/data/macro_events.db")
+from pipeline_utils import resolve_project_root
+
+DB_PATH = str(resolve_project_root(None) / "data" / "macro_events.db")
 
 # Try to import APIs
 try:
@@ -213,6 +215,8 @@ def fetch_latest_prices(symbols: list = None) -> dict:
 
 def main():
     parser = argparse.ArgumentParser(description="Price Fetcher Pipeline")
+    parser.add_argument("--project-root", default=None, help="Repository root")
+    parser.add_argument("--db-path", default=None, help="Database path")
     parser.add_argument("--update-all", action="store_true", help="Update all pending")
     parser.add_argument("--fetch-symbol", help="Fetch specific symbol")
     parser.add_argument("--fetch-all", action="store_true", help="Fetch all stock assets")
@@ -221,6 +225,11 @@ def main():
     
     args = parser.parse_args()
     
+    root = resolve_project_root(args.project_root)
+    db_path = args.db_path or str(root / "data" / "macro_events.db")
+    global DB_PATH
+    DB_PATH = db_path
+
     if args.update_all:
         pending = get_pending_events(limit=args.limit)
         print(f"📊 Pending events: {len(pending)}")

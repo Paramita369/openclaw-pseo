@@ -1,101 +1,94 @@
-"""
-pSEO Keyword Matrix Generator
-============================
-生成標準化既長尾詞清單與對應既 URL Slug
+#!/usr/bin/env python3
+"""Generate pSEO target matrix compatible with the strict CSV contract."""
 
-用法:
-    python3 keyword_generator.py
-"""
+from __future__ import annotations
 
-import itertools
-import pandas as pd
-import os
 import argparse
+import csv
+import itertools
+from pathlib import Path
+from typing import Iterable, List
 
-# 1. 定義 pSEO 變數矩陣
-ASSETS = ["btc", "ethereum", "gold", "spy", "tsla", "nvda", "sol"]
-INTENTS = ["price impact", "historical performance", "volatility", "correlation"]
-MACRO_EVENTS = ["cpi release", "fed rate cut", "nfp data", "inflation rate", "gdp report"]
-TIMEFRAMES = ["1-day", "7-day"]
-COMPARISONS = ["", "vs sp500", "vs gold"]
+from pipeline_utils import ensure_dir, normalize_event_type, resolve_project_root
 
-OUTPUT_PATH = os.path.expanduser("~/.openclaw/workspace/data/pseo_keywords.csv")
+ASSETS = ["BTC", "ETH", "GOLD", "SPY", "QQQ", "SOL"]
+INTENTS = ["analysis", "historical-performance", "volatility", "correlation"]
+EVENT_TYPES = ["CPI", "NFP", "FOMC"]
 
-def generate_pseo_matrix(assets=None, intents=None, macro_events=None, timeframes=None, comparisons=None):
-    """將維度交叉組合，生成 pSEO 關鍵詞與 URL Slug 矩陣"""
-    
-    # Use defaults if not provided
-    assets = assets or ASSETS
-    intents = intents or INTENTS
-    macro_events = macro_events or MACRO_EVENTS
-    timeframes = timeframes or TIMEFRAMES
-    comparisons = comparisons or COMPARISONS
-    
-    combinations = list(itertools.product(assets, intents, macro_events, timeframes, comparisons))
-    
-    data = []
-    for asset, intent, event, timeframe, comp in combinations:
-        # 組合自然語言關鍵詞 (Search Query)
-        keyword_parts = [asset, intent, "after", event]
-        if timeframe:
-            keyword_parts.append(f"({timeframe})")
-        if comp:
-            keyword_parts.append(comp)
-        keyword = " ".join(keyword_parts)
-        
-        # 組合 URL Slug (必須小寫、無特殊符號、以連字符分隔)
-        slug = keyword.replace(" ", "-").replace("(", "").replace(")", "").lower()
-        
-        # 建立頁面 Title 模板 (Frontmatter 預備)
-        title = f"Historical {intent.title()} of {asset.upper()} After {event.title()}"
-        if timeframe:
-            title += f" ({timeframe})"
-        if comp:
-            title += f" {comp.title()}"
-        
-        # 提取事件類型 (用於數據庫匹配)
-        event_type = event.lower().replace(" ", "_")
-        
-        data.append({
-            "keyword": keyword,
-            "url_slug": slug,
-            "h1_title": title,
-            "asset": asset,
-            "macro_event": event,
-            "macro_event_type": event_type,
-            "timeframe": timeframe,
-            "comparison": comp if comp else "",
-            "intent": intent
-        })
-    
-    df = pd.DataFrame(data)
-    
-    # 匯出 CSV
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    df.to_csv(OUTPUT_PATH, index=False)
-    
-    return f"✅ 成功生成 {len(df)} 筆 pSEO 頁面組合，已儲存至 {OUTPUT_PATH}"
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Keyword matrix generator")
+    parser.add_argument("--project-root", default=None, help="Repository root")
+    parser.add_argument("--output", default=None, help="CSV output path")
+    parser.add_argument("--assets", nargs="*", default=None, help="Override assets")
+    parser.add_argument("--intents", nargs="*", default=None, help="Override intents")
+    parser.add_argument("--events", nargs="*", default=None, help="Override event types")
+    return parser.parse_args()
+
+
+def slugify(parts: Iterable[str]) -> str:
+    return "-".join(str(part).strip().lower().replace(" ", "-") for part in parts if str(part).strip())
+
+
+def generate_rows(assets: List[str], intents: List[str], events: List[str]) -> List[dict]:
+    rows: List[dict] = []
+    for asset, intent, event_type in itertools.product(assets, intents, events):
+        normalized_event = normalize_event_type(event_type, "")
+        slug = slugify([asset, "after", normalized_event, intent])
+        title = f"Historical {intent.replace('-', ' ').title()} of {asset} After {normalized_event} Events"
+        rows.append(
+            {
+                "asset": asset,
+                "event_type": normalized_event,
+                "date": "",
+                "url_slug": slug,
+                "title": title,
+                "impact_t1_pct": "",
+                "impact_t7_pct": "",
+                "volatility": "",
+                "sharpe_t7": "",
+                "mdd_t7": "",
+                "intent": intent,
+                "source": "keyword_generator",
+            }
+        )
+    return rows
+
+
+def main() -> None:
+    args = parse_args()
+    root = resolve_project_root(args.project_root)
+    output = Path(args.output).resolve() if args.output else root / "data" / "verified_targets.csv"
+
+    assets = [a.upper() for a in (args.assets or ASSETS)]
+    intents = [i.lower() for i in (args.intents or INTENTS)]
+    events = [e.upper() for e in (args.events or EVENT_TYPES)]
+
+    rows = generate_rows(assets, intents, events)
+    ensure_dir(output.parent)
+
+    columns = [
+        "asset",
+        "event_type",
+        "date",
+        "url_slug",
+        "title",
+        "impact_t1_pct",
+        "impact_t7_pct",
+        "volatility",
+        "sharpe_t7",
+        "mdd_t7",
+        "intent",
+        "source",
+    ]
+
+    with output.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=columns)
+        writer.writeheader()
+        writer.writerows(rows)
+
+    print(f"✅ Generated {len(rows)} keyword rows -> {output}")
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="pSEO Keyword Matrix Generator")
-    parser.add_argument("--assets", nargs="+", help="Custom assets list")
-    parser.add_argument("--intents", nargs="+", help="Custom intents list")
-    parser.add_argument("--events", nargs="+", help="Custom macro events list")
-    args = parser.parse_args()
-    
-    result = generate_pseo_matrix(
-        assets=args.assets,
-        intents=args.intents,
-        macro_events=args.events
-    )
-    print(result)
-    
-    # Print summary
-    df = pd.read_csv(OUTPUT_PATH)
-    print(f"\n📊 Summary:")
-    print(f"   Total combinations: {len(df)}")
-    print(f"   Unique assets: {df['asset'].nunique()}")
-    print(f"   Unique events: {df['macro_event'].nunique()}")
-    print(f"\n📋 Sample keywords:")
-    for _, row in df.head(5).iterrows():
-        print(f"   - {row['keyword']}")
+    main()

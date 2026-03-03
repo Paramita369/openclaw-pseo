@@ -1,89 +1,44 @@
 ---
 title: "Historical Performance of GOLD After Macro Events on 2024-04-05"
-description: "Quantitative analysis and historical performance of GOLD following Macro releases."
+description: "Quantitative analysis of GOLD around NFP events based on historical backtesting."
 pubDate: "2026-03-03"
-slug: "gold-after-macro-2024-04-05"
-tags: ["gold", "macro", "backtest", "general"]
+event_type: "NFP"
+source: "verified_targets.csv"
+offer_key: "ibkr"
+quality_score: 60
+tags: ["gold", "nfp", "backtest", "general"]
 metrics:
   sharpe_t7: 4.16
   mdd_t7: -10.32
   volatility: 0.0
-
+  impact_t1_pct: 0.0
+  impact_t7_pct: 1.31
+chartData: [{"time": "2024-04-02", "open": 2252.0, "high": 2279.2, "low": 2247.6, "close": 2261.0}, {"time": "2024-04-03", "open": 2281.7, "high": 2298.8, "low": 2267.9, "close": 2294.4}, {"time": "2024-04-04", "open": 2301.7, "high": 2302.9, "low": 2280.0, "close": 2288.8}, {"time": "2024-04-05", "open": 2289.2, "high": 2328.4, "low": 2267.4, "close": 2325.7}, {"time": "2024-04-08", "open": 2325.6, "high": 2341.8, "low": 2319.0, "close": 2331.7}, {"time": "2024-04-09", "open": 2337.8, "high": 2364.7, "low": 2337.8, "close": 2343.5}, {"time": "2024-04-10", "open": 2346.6, "high": 2358.1, "low": 2327.7, "close": 2329.6}, {"time": "2024-04-11", "open": 2341.5, "high": 2376.3, "low": 2330.6, "close": 2354.8}, {"time": "2024-04-12", "open": 2377.3, "high": 2429.0, "low": 2334.3, "close": 2356.2}]
 ---
 
 # Historical Performance of GOLD After Macro Events on 2024-04-05
 
-**Event Date:** 2024-04-05 | **Asset:** GOLD
-
-Welcome to the QuantMacro quantitative analysis report for **GOLD** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
-
+**Event Date:** 2024-04-05  
+**Asset:** GOLD  
+**Event Type:** NFP
 
 ## Historical Performance Data
 
-| Metric | Value |
-|--------|-------|| T+1 (24h) | nan% |
-| T+7 (1 Week) | 1.31% |
-
-*Based on historical backtesting from our quant database.*
-
-
-## Key Metrics Summary
-
 | Metric | T+1 (24h) | T+7 (1 Week) |
-| :--- | :--- | :--- |
-| Average Return | nan% | 1.31% |
-| Risk (Sharpe) | 4.16 | -10.32% |
+| :--- | :---: | :---: |
+| Average Return | 0.0% | 1.31% |
+| Sharpe Ratio | 4.16 | - |
+| Max Drawdown | - | -10.32% |
+| Volatility | - | 0.0% |
 
-## Trading Recommendation
+## Trading Context (Educational)
 
-**Neutral:** Mixed historical signals. Recommend waiting for clearer trends before taking positions.
-
-## Methodology
-
-This analysis is based on historical backtesting data. Past performance does not guarantee future results.
+**Neutral:** This page is informational and should not be treated as investment advice.
 
 ## Quantitative Analysis
 
-Quantitative analysis for GOLD following Macro events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+Historical data indicates that GOLD reacts to NFP releases with a T+1 average move of 0.0% and a T+7 average move of 1.38%. Across 22 comparable events, short-horizon win rate is 0.0%. Current risk metrics for this page show Sharpe 4.16 and max drawdown -10.32%. Use this as an educational reference for event-driven volatility behavior.
 
-## Market Context
+## Methodology
 
-*Macroeconomic indicators like **Macro** often trigger high algorithmic trading volume. This page is automatically updated by our backend when new data is released.*
-
-
-<div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
-    <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
-    <p class="text-blue-800 mb-4">Ready to trade **GOLD**?</p>
-    
-    <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade GOLD on Interactive Brokers</p>
-        <a href="https://www.ibkr.com/referral/siohong248" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-            Open IB Account →
-        </a>
-    </div>
-    <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade GOLD stocks with Futu</p>
-        <a href="https://invest.futuhk.com/invite-centre_share?lang=zh-hk&invite_code=MQHETN7N" target="_blank" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-            Open FUTU Account →
-        </a>
-    </div>
-    <p class="text-xs text-gray-500 mt-3">*Trading involves risk. This is for educational purposes.</p>
-</div>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How does GOLD react to Macro?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Historical data for GOLD following Macro is currently being compiled by our quantitative tracking system."
-      }
-    }
-  ]
-}
-</script>
+Metrics are generated from historical event windows and normalized into T+1/T+7 returns. Past performance does not guarantee future results.

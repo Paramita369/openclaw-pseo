@@ -1,83 +1,44 @@
 ---
 title: "Historical Performance of BTC After Macro Events on 2024-01-30"
-description: "Quantitative analysis and historical performance of BTC following Macro releases."
+description: "Quantitative analysis of BTC around FOMC events based on historical backtesting."
 pubDate: "2026-03-03"
-slug: "btc-after-macro-2024-01-30"
-tags: ["btc", "macro", "backtest", "general"]
+event_type: "FOMC"
+source: "verified_targets.csv"
+offer_key: "binance"
+quality_score: 75
+tags: ["btc", "fomc", "backtest", "general"]
 metrics:
   sharpe_t7: 2.97
   mdd_t7: -0.86
   volatility: 0.0
-
+  impact_t1_pct: -0.86
+  impact_t7_pct: 0.31
+chartData: [{"time": "2024-01-27", "open": 41815.62, "high": 42195.63, "low": 41431.28, "close": 42120.05}, {"time": "2024-01-28", "open": 42126.12, "high": 42797.18, "low": 41696.91, "close": 42035.59}, {"time": "2024-01-29", "open": 42030.91, "high": 43305.87, "low": 41818.33, "close": 43288.25}, {"time": "2024-01-30", "open": 43300.23, "high": 43838.95, "low": 42711.37, "close": 42952.61}, {"time": "2024-01-31", "open": 42946.25, "high": 43717.41, "low": 42298.95, "close": 42582.61}, {"time": "2024-02-01", "open": 42569.76, "high": 43243.17, "low": 41879.19, "close": 43075.77}, {"time": "2024-02-02", "open": 43077.64, "high": 43422.49, "low": 42584.34, "close": 43185.86}, {"time": "2024-02-03", "open": 43184.96, "high": 43359.94, "low": 42890.81, "close": 42992.25}, {"time": "2024-02-04", "open": 42994.94, "high": 43097.64, "low": 42374.83, "close": 42583.58}, {"time": "2024-02-05", "open": 42577.62, "high": 43494.25, "low": 42264.82, "close": 42658.67}, {"time": "2024-02-06", "open": 42657.39, "high": 43344.15, "low": 42529.02, "close": 43084.67}]
 ---
 
 # Historical Performance of BTC After Macro Events on 2024-01-30
 
-**Event Date:** 2024-01-30 | **Asset:** BTC
-
-Welcome to the QuantMacro quantitative analysis report for **BTC** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
-
+**Event Date:** 2024-01-30  
+**Asset:** BTC  
+**Event Type:** FOMC
 
 ## Historical Performance Data
 
-| Metric | Value |
-|--------|-------|| T+1 (24h) | -0.86% |
-| T+7 (1 Week) | 0.31% |
-
-*Based on historical backtesting from our quant database.*
-
-
-## Key Metrics Summary
-
 | Metric | T+1 (24h) | T+7 (1 Week) |
-| :--- | :--- | :--- |
+| :--- | :---: | :---: |
 | Average Return | -0.86% | 0.31% |
-| Risk (Sharpe) | 2.97 | -0.86% |
+| Sharpe Ratio | 2.97 | - |
+| Max Drawdown | - | -0.86% |
+| Volatility | - | 0.0% |
 
-## Trading Recommendation
+## Trading Context (Educational)
 
-**Neutral:** Mixed historical signals. Recommend waiting for clearer trends before taking positions.
-
-## Methodology
-
-This analysis is based on historical backtesting data. Past performance does not guarantee future results.
+**Neutral:** This page is informational and should not be treated as investment advice.
 
 ## Quantitative Analysis
 
-Quantitative analysis for BTC following Macro events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+Historical data indicates that BTC reacts to FOMC releases with a T+1 average move of -0.61% and a T+7 average move of 1.25%. Across 13 comparable events, short-horizon win rate is 38.46%. Current risk metrics for this page show Sharpe 2.97 and max drawdown -0.86%. Use this as an educational reference for event-driven volatility behavior.
 
-## Market Context
+## Methodology
 
-*Macroeconomic indicators like **Macro** often trigger high algorithmic trading volume. This page is automatically updated by our backend when new data is released.*
-
-
-<div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
-    <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
-    <p class="text-blue-800 mb-4">Ready to trade **BTC**?</p>
-    
-    <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade BTC on Binance with reduced fees</p>
-        <a href="https://www.binance.com/referral/earn-together/refer2earn-usdc/claim?hl=zh-TC&ref=GRO_28502_NXG80" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-            Open BINANCE Account →
-        </a>
-    </div>
-    <p class="text-xs text-gray-500 mt-3">*Trading involves risk. This is for educational purposes.</p>
-</div>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How does BTC react to Macro?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Historical data for BTC following Macro is currently being compiled by our quantitative tracking system."
-      }
-    }
-  ]
-}
-</script>
+Metrics are generated from historical event windows and normalized into T+1/T+7 returns. Past performance does not guarantee future results.

@@ -14,7 +14,9 @@ import json
 import os
 import argparse
 
-DB_PATH = os.path.expanduser("~/.openclaw/workspace/data/macro_events.db")
+from pipeline_utils import resolve_project_root
+
+DB_PATH = str(resolve_project_root(None) / "data" / "macro_events.db")
 
 # Default stock assets
 DEFAULT_ASSETS = [
@@ -225,6 +227,8 @@ def get_asset_count() -> dict:
 
 def main():
     parser = argparse.ArgumentParser(description="Stock Assets Manager")
+    parser.add_argument("--project-root", default=None, help="Repository root")
+    parser.add_argument("--db-path", default=None, help="Database path")
     parser.add_argument("--init", action="store_true", help="Initialize stock_assets table")
     parser.add_argument("--init-defaults", action="store_true", help="Add default assets")
     parser.add_argument("--list", action="store_true", help="List all assets")
@@ -236,6 +240,11 @@ def main():
     
     args = parser.parse_args()
     
+    root = resolve_project_root(args.project_root)
+    db_path = args.db_path or str(root / "data" / "macro_events.db")
+    global DB_PATH
+    DB_PATH = db_path
+
     if args.init:
         init_stock_assets_table()
     

@@ -53,6 +53,8 @@ def init_event_database():
             impact_t7_pct REAL,
             compound_return_pct REAL,
             volatility REAL,
+            sharpe_t7 REAL,
+            mdd_t7 REAL,
             updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(event_id) REFERENCES macro_events(event_id)
         )

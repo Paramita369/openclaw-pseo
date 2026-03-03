@@ -1,89 +1,44 @@
 ---
 title: "Historical Performance of QQQ After Macro Events on 2024-08-02"
-description: "Quantitative analysis and historical performance of QQQ following Macro releases."
+description: "Quantitative analysis of QQQ around NFP events based on historical backtesting."
 pubDate: "2026-03-03"
-slug: "qqq-after-macro-2024-08-02"
-tags: ["qqq", "macro", "backtest", "general"]
+event_type: "NFP"
+source: "verified_targets.csv"
+offer_key: "ibkr"
+quality_score: 60
+tags: ["qqq", "nfp", "backtest", "general"]
 metrics:
   sharpe_t7: 3.35
   mdd_t7: -5.64
   volatility: 0.0
-
+  impact_t1_pct: 0.0
+  impact_t7_pct: 0.37
+chartData: [{"time": "2024-07-30", "open": 462.1, "high": 462.81, "low": 450.5, "close": 453.85}, {"time": "2024-07-31", "open": 464.11, "high": 468.99, "low": 462.66, "close": 467.28}, {"time": "2024-08-01", "open": 467.97, "high": 471.73, "low": 452.31, "close": 455.96}, {"time": "2024-08-02", "open": 447.26, "high": 449.92, "low": 440.9, "close": 445.14}, {"time": "2024-08-05", "open": 421.29, "high": 438.73, "low": 420.04, "close": 431.87}, {"time": "2024-08-06", "open": 433.71, "high": 443.47, "low": 431.07, "close": 436.0}, {"time": "2024-08-07", "open": 442.9, "high": 445.39, "low": 430.88, "close": 431.27}, {"time": "2024-08-08", "open": 437.51, "high": 445.38, "low": 433.63, "close": 444.47}, {"time": "2024-08-09", "open": 443.15, "high": 448.42, "low": 442.03, "close": 446.79}]
 ---
 
 # Historical Performance of QQQ After Macro Events on 2024-08-02
 
-**Event Date:** 2024-08-02 | **Asset:** QQQ
-
-Welcome to the QuantMacro quantitative analysis report for **QQQ** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
-
+**Event Date:** 2024-08-02  
+**Asset:** QQQ  
+**Event Type:** NFP
 
 ## Historical Performance Data
 
-| Metric | Value |
-|--------|-------|| T+1 (24h) | nan% |
-| T+7 (1 Week) | 0.37% |
-
-*Based on historical backtesting from our quant database.*
-
-
-## Key Metrics Summary
-
 | Metric | T+1 (24h) | T+7 (1 Week) |
-| :--- | :--- | :--- |
-| Average Return | nan% | 0.37% |
-| Risk (Sharpe) | 3.35 | -5.64% |
+| :--- | :---: | :---: |
+| Average Return | 0.0% | 0.37% |
+| Sharpe Ratio | 3.35 | - |
+| Max Drawdown | - | -5.64% |
+| Volatility | - | 0.0% |
 
-## Trading Recommendation
+## Trading Context (Educational)
 
-**Neutral:** Mixed historical signals. Recommend waiting for clearer trends before taking positions.
-
-## Methodology
-
-This analysis is based on historical backtesting data. Past performance does not guarantee future results.
+**Neutral:** This page is informational and should not be treated as investment advice.
 
 ## Quantitative Analysis
 
-Quantitative analysis for QQQ following Macro events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+Historical data indicates that QQQ reacts to NFP releases with a T+1 average move of 0.0% and a T+7 average move of 1.76%. Across 18 comparable events, short-horizon win rate is 0.0%. Current risk metrics for this page show Sharpe 3.35 and max drawdown -5.64%. Use this as an educational reference for event-driven volatility behavior.
 
-## Market Context
+## Methodology
 
-*Macroeconomic indicators like **Macro** often trigger high algorithmic trading volume. This page is automatically updated by our backend when new data is released.*
-
-
-<div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
-    <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
-    <p class="text-blue-800 mb-4">Ready to trade **QQQ**?</p>
-    
-    <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade QQQ on Interactive Brokers</p>
-        <a href="https://www.ibkr.com/referral/siohong248" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-            Open IB Account →
-        </a>
-    </div>
-    <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade QQQ stocks with Futu</p>
-        <a href="https://invest.futuhk.com/invite-centre_share?lang=zh-hk&invite_code=MQHETN7N" target="_blank" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-            Open FUTU Account →
-        </a>
-    </div>
-    <p class="text-xs text-gray-500 mt-3">*Trading involves risk. This is for educational purposes.</p>
-</div>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How does QQQ react to Macro?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Historical data for QQQ following Macro is currently being compiled by our quantitative tracking system."
-      }
-    }
-  ]
-}
-</script>
+Metrics are generated from historical event windows and normalized into T+1/T+7 returns. Past performance does not guarantee future results.

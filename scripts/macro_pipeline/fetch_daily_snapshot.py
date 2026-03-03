@@ -1,62 +1,78 @@
-"""
-Daily Macro Snapshot Fetcher
-===========================
-Fetches real-time prices for key macro assets using yfinance
-Output: src/data/daily_snapshot.json
-"""
+#!/usr/bin/env python3
+"""Fetch daily market snapshot for homepage widgets."""
 
-import yfinance as yf
+from __future__ import annotations
+
+import argparse
 import json
-import os
-from datetime import datetime
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Dict
 
-# Configuration
-BASE_DIR = os.getcwd()
-DATA_DIR = os.path.join(BASE_DIR, "src/data")
-os.makedirs(DATA_DIR, exist_ok=True)
-JSON_PATH = os.path.join(DATA_DIR, "daily_snapshot.json")
+from pipeline_utils import ensure_dir, resolve_project_root
 
-# Target assets (yfinance Tickers)
-assets = {
+try:
+    import yfinance as yf
+except ImportError as exc:  # pragma: no cover
+    raise SystemExit("yfinance is required: pip install yfinance") from exc
+
+
+ASSETS = {
     "BTC": "BTC-USD",
+    "ETH": "ETH-USD",
+    "SOL": "SOL-USD",
     "GOLD": "GC=F",
     "SPY": "SPY",
-    "NVDA": "NVDA",
-    "TSLA": "TSLA",
-    "SOL": "SOL-USD",
-    "ETH": "ETH-USD"
+    "QQQ": "QQQ",
+    "DXY": "DX-Y.NYB",
+    "VIX": "^VIX",
+    "TNX": "^TNX",
 }
 
-results = {}
 
-for name, ticker in assets.items():
-    try:
-        # Fetch last 5 days to ensure we have previous close
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Fetch daily snapshot")
+    parser.add_argument("--project-root", default=None, help="Repository root")
+    parser.add_argument("--output", default=None, help="Override output json path")
+    return parser.parse_args()
+
+
+def fetch_snapshot() -> Dict[str, object]:
+    results: Dict[str, Dict[str, float]] = {}
+    for name, ticker in ASSETS.items():
         data = yf.Ticker(ticker).history(period="5d")
-        
-        if len(data) >= 2:
-            latest_price = data['Close'].iloc[-1]
-            prev_price = data['Close'].iloc[-2]
-            pct_change = ((latest_price - prev_price) / prev_price) * 100
-            
-            results[name] = {
-                "price": float(latest_price),
-                "change": round(pct_change, 2)
-            }
-            print(f"✅ {name}: ${latest_price:.2f} ({pct_change:+.2f}%)")
-        else:
-            print(f"⚠️ {name}: Insufficient data")
-            
-    except Exception as e:
-        print(f"❌ Error fetching {name}: {e}")
+        if len(data) < 2:
+            continue
+        latest = data.iloc[-1]
+        prev = data.iloc[-2]
+        prev_close = float(prev["Close"]) if float(prev["Close"]) != 0 else 1.0
+        pct_change = ((float(latest["Close"]) - prev_close) / prev_close) * 100
+        results[name] = {
+            "price": round(float(latest["Close"]), 2),
+            "change": round(pct_change, 2),
+            "volume": int(latest.get("Volume", 0)),
+            "high": round(float(latest["High"]), 2),
+            "low": round(float(latest["Low"]), 2),
+        }
 
-# Save as JSON for Astro
-output = {
-    "timestamp": datetime.utcnow().isoformat() + "Z",
-    "markets": results
-}
+    return {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "markets": results,
+        "macro": {},
+    }
 
-with open(JSON_PATH, "w") as f:
-    json.dump(output, f, indent=2)
 
-print(f"✅ Daily snapshot saved to {JSON_PATH}")
+def main() -> None:
+    args = parse_args()
+    root = resolve_project_root(args.project_root)
+    output = Path(args.output).resolve() if args.output else root / "src" / "daily_snapshot.json"
+
+    snapshot = fetch_snapshot()
+    ensure_dir(output.parent)
+    output.write_text(json.dumps(snapshot, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    print(f"✅ Daily snapshot saved: {output}")
+
+
+if __name__ == "__main__":
+    main()

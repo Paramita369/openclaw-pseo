@@ -13,7 +13,9 @@ import os
 import argparse
 from datetime import datetime
 
-DB_PATH = os.path.expanduser("~/.openclaw/workspace/data/macro_events.db")
+from pipeline_utils import resolve_project_root
+
+DB_PATH = str(resolve_project_root(None) / "data" / "macro_events.db")
 
 # Domain enumeration
 DOMAINS = ["AI", "Crypto", "Macro", "Geopolitics", "TechStock", "Commodity"]
@@ -134,6 +136,8 @@ def get_recent_events(limit: int = 10, domain: str = None) -> list:
 
 def main():
     parser = argparse.ArgumentParser(description="Event Ingestion Pipeline")
+    parser.add_argument("--project-root", default=None, help="Repository root")
+    parser.add_argument("--db-path", default=None, help="Database path")
     parser.add_argument("--domain", required=True, choices=DOMAINS, help="Event domain")
     parser.add_argument("--headline", required=True, help="News headline")
     parser.add_argument("--summary", default="", help="News summary")
@@ -144,6 +148,11 @@ def main():
     
     args = parser.parse_args()
     
+    root = resolve_project_root(args.project_root)
+    db_path = args.db_path or str(root / "data" / "macro_events.db")
+    global DB_PATH
+    DB_PATH = db_path
+
     assets = [a.strip() for a in args.assets.split(",")]
     metadata = {"source": args.source}
     

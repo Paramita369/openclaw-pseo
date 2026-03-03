@@ -1,83 +1,44 @@
 ---
 title: "Historical Performance of BTC After Macro Events on 2024-04-05"
-description: "Quantitative analysis and historical performance of BTC following Macro releases."
+description: "Quantitative analysis of BTC around NFP events based on historical backtesting."
 pubDate: "2026-03-03"
-slug: "btc-after-macro-2024-04-05"
-tags: ["btc", "macro", "backtest", "general"]
+event_type: "NFP"
+source: "verified_targets.csv"
+offer_key: "binance"
+quality_score: 75
+tags: ["btc", "nfp", "backtest", "general"]
 metrics:
   sharpe_t7: -4.3
   mdd_t7: -2.47
   volatility: 0.0
-
+  impact_t1_pct: 1.56
+  impact_t7_pct: -0.95
+chartData: [{"time": "2024-04-02", "open": 69705.02, "high": 69708.38, "low": 64586.59, "close": 65446.97}, {"time": "2024-04-03", "open": 65446.67, "high": 66914.32, "low": 64559.9, "close": 65980.81}, {"time": "2024-04-04", "open": 65975.7, "high": 69291.26, "low": 65113.8, "close": 68508.84}, {"time": "2024-04-05", "open": 68515.76, "high": 68725.76, "low": 66011.48, "close": 67837.64}, {"time": "2024-04-06", "open": 67840.57, "high": 69629.6, "low": 67491.72, "close": 68896.11}, {"time": "2024-04-07", "open": 68897.11, "high": 70284.43, "low": 68851.63, "close": 69362.55}, {"time": "2024-04-08", "open": 69362.55, "high": 72715.36, "low": 69064.24, "close": 71631.36}, {"time": "2024-04-09", "open": 71632.5, "high": 71742.51, "low": 68212.92, "close": 69139.02}, {"time": "2024-04-10", "open": 69140.24, "high": 71093.43, "low": 67503.56, "close": 70587.88}, {"time": "2024-04-11", "open": 70575.73, "high": 71256.23, "low": 69571.81, "close": 70060.61}, {"time": "2024-04-12", "open": 70061.38, "high": 71222.74, "low": 65254.84, "close": 67195.87}]
 ---
 
 # Historical Performance of BTC After Macro Events on 2024-04-05
 
-**Event Date:** 2024-04-05 | **Asset:** BTC
-
-Welcome to the QuantMacro quantitative analysis report for **BTC** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
-
+**Event Date:** 2024-04-05  
+**Asset:** BTC  
+**Event Type:** NFP
 
 ## Historical Performance Data
 
-| Metric | Value |
-|--------|-------|| T+1 (24h) | 1.56% |
-| T+7 (1 Week) | -0.95% |
-
-*Based on historical backtesting from our quant database.*
-
-
-## Key Metrics Summary
-
 | Metric | T+1 (24h) | T+7 (1 Week) |
-| :--- | :--- | :--- |
+| :--- | :---: | :---: |
 | Average Return | 1.56% | -0.95% |
-| Risk (Sharpe) | -4.3 | -2.47% |
+| Sharpe Ratio | -4.3 | - |
+| Max Drawdown | - | -2.47% |
+| Volatility | - | 0.0% |
 
-## Trading Recommendation
+## Trading Context (Educational)
 
-**Neutral:** Mixed historical signals. Recommend waiting for clearer trends before taking positions.
-
-## Methodology
-
-This analysis is based on historical backtesting data. Past performance does not guarantee future results.
+**Neutral:** This page is informational and should not be treated as investment advice.
 
 ## Quantitative Analysis
 
-Quantitative analysis for BTC following Macro events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+Historical data indicates that BTC reacts to NFP releases with a T+1 average move of 0.56% and a T+7 average move of 2.01%. Across 17 comparable events, short-horizon win rate is 52.94%. Current risk metrics for this page show Sharpe -4.3 and max drawdown -2.47%. Use this as an educational reference for event-driven volatility behavior.
 
-## Market Context
+## Methodology
 
-*Macroeconomic indicators like **Macro** often trigger high algorithmic trading volume. This page is automatically updated by our backend when new data is released.*
-
-
-<div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
-    <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
-    <p class="text-blue-800 mb-4">Ready to trade **BTC**?</p>
-    
-    <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade BTC on Binance with reduced fees</p>
-        <a href="https://www.binance.com/referral/earn-together/refer2earn-usdc/claim?hl=zh-TC&ref=GRO_28502_NXG80" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-            Open BINANCE Account →
-        </a>
-    </div>
-    <p class="text-xs text-gray-500 mt-3">*Trading involves risk. This is for educational purposes.</p>
-</div>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How does BTC react to Macro?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Historical data for BTC following Macro is currently being compiled by our quantitative tracking system."
-      }
-    }
-  ]
-}
-</script>
+Metrics are generated from historical event windows and normalized into T+1/T+7 returns. Past performance does not guarantee future results.

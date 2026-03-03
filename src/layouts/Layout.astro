@@ -6,6 +6,7 @@ const { title, description, frontmatter } = Astro.props;
 const metaDesc = description || "Quantitative backtesting data for cross-asset volatility post-macro events. Data driven trading insights.";
 const siteUrl = "https://quantmacro.vercel.app";
 const currentUrl = Astro.url.href;
+const ga4MeasurementId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID || "";
 
 // Dynamic JSON-LD for articles
 let schema = null;
@@ -58,6 +59,7 @@ if (frontmatter) {
     <meta name="google-site-verification" content="kvvXjMnBnI-4oWLa66hB0XZP3q4t6go7Y37eaSm9g3Y" />
     <title>{title} | QuantMacro Analytics</title>
     <meta name="description" content={metaDesc}>
+    <link rel="canonical" href={currentUrl}>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     
     <!-- Google Fonts: Poppins + Open Sans -->
@@ -67,6 +69,18 @@ if (frontmatter) {
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    {ga4MeasurementId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`}></script>
+        <script is:inline define:vars={{ ga4MeasurementId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', ga4MeasurementId);
+        </script>
+      </>
+    )}
 </head>
 
 <body class="bg-dark-bg text-dark-text font-body antialiased">
@@ -91,5 +105,24 @@ if (frontmatter) {
     </footer>
 
     <Analytics />
+    <script is:inline>
+      if (!window.__quantmacroAffiliateTracker) {
+        window.__quantmacroAffiliateTracker = true;
+        document.addEventListener('click', (event) => {
+          const target = event.target && event.target.closest && event.target.closest('a[data-affiliate-click=\"1\"]');
+          if (!target) return;
+          const payload = {
+            slug: target.dataset.slug || '',
+            asset: target.dataset.asset || '',
+            offer_key: target.dataset.offerKey || '',
+            cta_position: target.dataset.ctaPosition || '',
+            utm_campaign: target.dataset.utmCampaign || '',
+          };
+          if (window.gtag) {
+            window.gtag('event', 'affiliate_click', payload);
+          }
+        });
+      }
+    </script>
 </body>
 </html>

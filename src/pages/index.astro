@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 
 // Load daily snapshot
 import dailySnapshot from '../daily_snapshot.json';
+import offersConfig from '../data/offers.json';
 
 // 1. Read all generated Markdown files
 const posts = await getCollection('blog');
@@ -23,6 +24,21 @@ posts.forEach(post => {
 
 const assets = Object.keys(assetGroups).sort();
 const markets = dailySnapshot.markets || {};
+
+const homepageOfferKeys = ['binance', 'futu', 'ibkr'];
+const utmSource = offersConfig.utm?.source || 'quantmacro';
+const utmMedium = offersConfig.utm?.medium || 'affiliate';
+const homepageOffers = homepageOfferKeys
+  .map((key) => ({ key, ...offersConfig.offers[key] }))
+  .filter((offer) => offer?.url)
+  .map((offer) => {
+    const url = new URL(offer.url);
+    url.searchParams.set('utm_source', utmSource);
+    url.searchParams.set('utm_medium', utmMedium);
+    url.searchParams.set('utm_campaign', offer.utm_campaign || `affiliate_${offer.key}`);
+    url.searchParams.set('utm_content', 'homepage');
+    return { ...offer, trackedUrl: url.toString() };
+  });
 ---
 
 <Layout title="QuantMacro Dashboard" description="Professional quantitative analysis for macro events">
@@ -162,21 +178,28 @@ const markets = dailySnapshot.markets || {};
                 Get exclusive referral bonuses on major trading platforms.
             </p>
             <div class="flex justify-center gap-4 flex-wrap">
-                <a href="https://www.binance.com/referral/earn-together/refer2earn-usdc/claim?hl=zh-TC&ref=GRO_28502_NXG80" 
-                   target="_blank"
-                   class="bg-primary hover:bg-secondary text-dark-bg font-bold py-3 px-6 rounded-lg transition-all">
-                    Binance
-                </a>
-                <a href="https://invest.futuhk.com/invite-centre_share?lang=zh-hk&invite_code=MQHETN7N" 
-                   target="_blank"
-                   class="bg-accent hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-lg transition-all">
-                    Futu
-                </a>
-                <a href="https://www.ibkr.com/referral/siohong248" 
-                   target="_blank"
-                   class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-lg transition-all">
-                    IBKR
-                </a>
+                {homepageOffers.map((offer) => (
+                    <a
+                        href={offer.trackedUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-affiliate-click="1"
+                        data-slug="homepage"
+                        data-asset="MIXED"
+                        data-offer-key={offer.key}
+                        data-cta-position="homepage_footer"
+                        data-utm-campaign={offer.utm_campaign || `affiliate_${offer.key}`}
+                        class={`font-bold py-3 px-6 rounded-lg transition-all ${
+                            offer.key === 'binance'
+                                ? 'bg-primary hover:bg-secondary text-dark-bg'
+                                : offer.key === 'ibkr'
+                                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                                    : 'bg-accent hover:bg-purple-600 text-white'
+                        }`}
+                    >
+                        {offer.name}
+                    </a>
+                ))}
             </div>
         </div>
     </section>

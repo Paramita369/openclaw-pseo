@@ -1,83 +1,44 @@
 ---
 title: "Historical Performance of ETH After Macro Events on 2024-06-12"
-description: "Quantitative analysis and historical performance of ETH following Macro releases."
+description: "Quantitative analysis of ETH around CPI events based on historical backtesting."
 pubDate: "2026-03-03"
-slug: "eth-after-macro-2024-06-12"
-tags: ["eth", "macro", "backtest", "general"]
+event_type: "CPI"
+source: "verified_targets.csv"
+offer_key: "binance"
+quality_score: 75
+tags: ["eth", "cpi", "backtest", "general"]
 metrics:
   sharpe_t7: 0.22
   mdd_t7: -2.54
   volatility: 0.0
-
+  impact_t1_pct: -2.54
+  impact_t7_pct: -0.01
+chartData: [{"time": "2024-06-09", "open": 3680.94, "high": 3719.37, "low": 3668.12, "close": 3705.9}, {"time": "2024-06-10", "open": 3705.88, "high": 3711.43, "low": 3648.16, "close": 3666.72}, {"time": "2024-06-11", "open": 3666.36, "high": 3669.89, "low": 3434.75, "close": 3498.33}, {"time": "2024-06-12", "open": 3497.9, "high": 3652.49, "low": 3463.78, "close": 3559.62}, {"time": "2024-06-13", "open": 3559.73, "high": 3559.73, "low": 3431.33, "close": 3469.28}, {"time": "2024-06-14", "open": 3467.97, "high": 3528.6, "low": 3366.22, "close": 3480.27}, {"time": "2024-06-15", "open": 3479.79, "high": 3589.89, "low": 3473.45, "close": 3565.55}, {"time": "2024-06-16", "open": 3566.76, "high": 3648.09, "low": 3541.53, "close": 3620.56}, {"time": "2024-06-17", "open": 3622.38, "high": 3634.29, "low": 3468.15, "close": 3511.38}, {"time": "2024-06-18", "open": 3510.57, "high": 3514.18, "low": 3371.59, "close": 3483.68}, {"time": "2024-06-19", "open": 3482.35, "high": 3583.32, "low": 3466.48, "close": 3559.35}]
 ---
 
 # Historical Performance of ETH After Macro Events on 2024-06-12
 
-**Event Date:** 2024-06-12 | **Asset:** ETH
-
-Welcome to the QuantMacro quantitative analysis report for **ETH** reacting to **Macro** macro events. We track historical price actions to provide data-driven trading insights.
-
+**Event Date:** 2024-06-12  
+**Asset:** ETH  
+**Event Type:** CPI
 
 ## Historical Performance Data
 
-| Metric | Value |
-|--------|-------|| T+1 (24h) | -2.54% |
-| T+7 (1 Week) | -0.01% |
-
-*Based on historical backtesting from our quant database.*
-
-
-## Key Metrics Summary
-
 | Metric | T+1 (24h) | T+7 (1 Week) |
-| :--- | :--- | :--- |
+| :--- | :---: | :---: |
 | Average Return | -2.54% | -0.01% |
-| Risk (Sharpe) | 0.22 | -2.54% |
+| Sharpe Ratio | 0.22 | - |
+| Max Drawdown | - | -2.54% |
+| Volatility | - | 0.0% |
 
-## Trading Recommendation
+## Trading Context (Educational)
 
-**Neutral:** Mixed historical signals. Recommend waiting for clearer trends before taking positions.
-
-## Methodology
-
-This analysis is based on historical backtesting data. Past performance does not guarantee future results.
+**Neutral:** This page is informational and should not be treated as investment advice.
 
 ## Quantitative Analysis
 
-Quantitative analysis for ETH following Macro events is currently being compiled. Check back for detailed historical performance metrics, win rates, and average price impacts.
+Historical data indicates that ETH reacts to CPI releases with a T+1 average move of -1.19% and a T+7 average move of -0.02%. Across 20 comparable events, short-horizon win rate is 35.0%. Current risk metrics for this page show Sharpe 0.22 and max drawdown -2.54%. Use this as an educational reference for event-driven volatility behavior.
 
-## Market Context
+## Methodology
 
-*Macroeconomic indicators like **Macro** often trigger high algorithmic trading volume. This page is automatically updated by our backend when new data is released.*
-
-
-<div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-r-lg">
-    <h3 class="text-lg font-bold text-blue-900 mb-4">💡 Actionable Insight</h3>
-    <p class="text-blue-800 mb-4">Ready to trade **ETH**?</p>
-    
-    <div class="mb-3">
-        <p class="text-blue-800 text-sm mb-2">Trade ETH on Binance with reduced fees</p>
-        <a href="https://www.binance.com/referral/earn-together/refer2earn-usdc/claim?hl=zh-TC&ref=GRO_28502_NXG80" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">
-            Open BINANCE Account →
-        </a>
-    </div>
-    <p class="text-xs text-gray-500 mt-3">*Trading involves risk. This is for educational purposes.</p>
-</div>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How does ETH react to Macro?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Historical data for ETH following Macro is currently being compiled by our quantitative tracking system."
-      }
-    }
-  ]
-}
-</script>
+Metrics are generated from historical event windows and normalized into T+1/T+7 returns. Past performance does not guarantee future results.
