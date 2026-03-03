@@ -867,6 +867,98 @@ def row_fingerprint(payload: Dict[str, Any]) -> str:
     return stable_hash(payload)
 
 
+def build_lastmod_metric_signature(probabilities: Dict[str, Any]) -> Dict[str, float]:
+    t1 = probabilities.get("t1", {}) if isinstance(probabilities, dict) else {}
+    t7 = probabilities.get("t7", {}) if isinstance(probabilities, dict) else {}
+    conditional = probabilities.get("conditional", {}) if isinstance(probabilities, dict) else {}
+    c1 = conditional.get("t1", {}) if isinstance(conditional, dict) else {}
+    c7 = conditional.get("t7", {}) if isinstance(conditional, dict) else {}
+
+    return {
+        "all_t1_up": round(float(parse_float(t1.get("up"), 0.0) or 0.0), 2),
+        "all_t1_down": round(float(parse_float(t1.get("down"), 0.0) or 0.0), 2),
+        "all_t7_up": round(float(parse_float(t7.get("up"), 0.0) or 0.0), 2),
+        "all_t7_down": round(float(parse_float(t7.get("down"), 0.0) or 0.0), 2),
+        "same_t1_up": round(float(parse_float(c1.get("up"), 0.0) or 0.0), 2),
+        "same_t1_down": round(float(parse_float(c1.get("down"), 0.0) or 0.0), 2),
+        "same_t7_up": round(float(parse_float(c7.get("up"), 0.0) or 0.0), 2),
+        "same_t7_down": round(float(parse_float(c7.get("down"), 0.0) or 0.0), 2),
+        "sample_size": float(parse_int(probabilities.get("sample_size"), 0)),
+        "conditional_sample_size": float(parse_int(conditional.get("sample_size"), 0)),
+    }
+
+
+def parse_lastmod_metric_signature(value: object) -> Dict[str, float]:
+    if isinstance(value, dict):
+        payload = value
+    elif isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return {}
+        try:
+            parsed = json.loads(text)
+        except Exception:
+            return {}
+        if not isinstance(parsed, dict):
+            return {}
+        payload = parsed
+    else:
+        return {}
+
+    normalized: Dict[str, float] = {}
+    for key in [
+        "all_t1_up",
+        "all_t1_down",
+        "all_t7_up",
+        "all_t7_down",
+        "same_t1_up",
+        "same_t1_down",
+        "same_t7_up",
+        "same_t7_down",
+        "sample_size",
+        "conditional_sample_size",
+    ]:
+        parsed_value = parse_float(payload.get(key))
+        if parsed_value is not None:
+            normalized[key] = round(float(parsed_value), 2)
+    return normalized
+
+
+def lastmod_threshold_decision(
+    previous_signature: Dict[str, float],
+    current_signature: Dict[str, float],
+) -> Tuple[bool, str]:
+    if not previous_signature:
+        return True, "initial_signature"
+
+    probability_fields = [
+        "all_t1_up",
+        "all_t1_down",
+        "all_t7_up",
+        "all_t7_down",
+        "same_t1_up",
+        "same_t1_down",
+        "same_t7_up",
+        "same_t7_down",
+    ]
+    for field in probability_fields:
+        old = previous_signature.get(field)
+        new = current_signature.get(field)
+        if old is None or new is None:
+            return True, f"signature_missing_{field}"
+        if abs(float(new) - float(old)) > 5.0:
+            return True, f"probability_delta_gt_5:{field}"
+
+    sample_fields = ["sample_size", "conditional_sample_size"]
+    for field in sample_fields:
+        old = previous_signature.get(field, 0.0)
+        new = current_signature.get(field, 0.0)
+        if float(new) > float(old):
+            return True, f"sample_increase:{field}"
+
+    return False, "threshold_not_met"
+
+
 def write_urlset(path: Path, entries: Sequence[Dict[str, str]]) -> None:
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
@@ -964,8 +1056,24 @@ def parse_hub_briefs_fallback(content: str) -> Dict[str, Dict[str, Any]]:
     return payload
 
 
-def load_playbook_lastmods(project_root: Path, default_date: str) -> List[Dict[str, str]]:
-    fallback = [{"asset": asset, "event": event, "lastmod": default_date} for asset in HUB_ASSETS for event in HUB_EVENTS]
+def normalize_hub_status(value: object) -> str:
+    status = str(value or "").strip().lower()
+    return status if status in {"draft", "approved"} else "draft"
+
+
+def normalize_hub_indexing(status: str, value: object) -> str:
+    indexing = str(value or "").strip().lower()
+    if indexing in {"index", "noindex"}:
+        return indexing
+    return "index" if status == "approved" else "noindex"
+
+
+def load_playbook_hubs(project_root: Path, default_date: str) -> List[Dict[str, str]]:
+    fallback = [
+        {"asset": asset, "event": event, "lastmod": default_date, "status": "draft", "indexing": "noindex"}
+        for asset in HUB_ASSETS
+        for event in HUB_EVENTS
+    ]
     path = project_root / "data" / "hub_briefs.yaml"
     if not path.exists():
         return fallback
@@ -990,7 +1098,17 @@ def load_playbook_lastmods(project_root: Path, default_date: str) -> List[Dict[s
             brief = payload.get(key) if isinstance(payload.get(key), dict) else {}
             reviewed = str(brief.get("reviewed_at", "")).strip() if isinstance(brief, dict) else ""
             reviewed_norm = reviewed if re.match(r"^\d{4}-\d{2}-\d{2}$", reviewed) else default_date
-            items.append({"asset": asset, "event": event, "lastmod": reviewed_norm})
+            status = normalize_hub_status(brief.get("status") if isinstance(brief, dict) else None)
+            indexing = normalize_hub_indexing(status, brief.get("indexing") if isinstance(brief, dict) else None)
+            items.append(
+                {
+                    "asset": asset,
+                    "event": event,
+                    "lastmod": reviewed_norm,
+                    "status": status,
+                    "indexing": indexing,
+                }
+            )
     return items
 
 
@@ -1004,7 +1122,8 @@ def generate_dynamic_sitemaps(
 ) -> None:
     ensure_dir(public_dir)
     today = (normalize_db_timestamp(build_timestamp) or datetime.now(timezone.utc).isoformat())[:10]
-    playbook_hubs = load_playbook_lastmods(project_root=project_root, default_date=today)
+    playbook_hubs = load_playbook_hubs(project_root=project_root, default_date=today)
+    indexable_playbook_hubs = [item for item in playbook_hubs if str(item.get("indexing", "")).lower() == "index"]
     slugs = sorted(path.stem for path in output_dir.glob("*.md"))
 
     pages_manifest = manifest.get("pages", {}) if isinstance(manifest.get("pages"), dict) else {}
@@ -1046,7 +1165,7 @@ def generate_dynamic_sitemaps(
 
     blog_root_lastmod = max_lastmod(slugs)
     events_root_lastmod = max([max_lastmod(slugs_by_event[event]) for event in events], default=today)
-    playbooks_root_lastmod = max((item["lastmod"] for item in playbook_hubs), default=today)
+    playbooks_root_lastmod = max((item["lastmod"] for item in indexable_playbook_hubs), default=today)
     home_lastmod = max(blog_root_lastmod, events_root_lastmod, playbooks_root_lastmod)
 
     core_entries = [
@@ -1087,7 +1206,7 @@ def generate_dynamic_sitemaps(
             "changefreq": "weekly",
             "priority": "0.78",
         }
-        for item in playbook_hubs
+        for item in indexable_playbook_hubs
     ]
     write_urlset(public_dir / "sitemap-playbooks.xml", playbook_entries)
 
@@ -1347,7 +1466,7 @@ def process_row(
     quality = quality_score(raw_t1, raw_t7, raw_vol, probabilities["conditional"]["sample_size"])
     offer_key = to_offer_key(asset, context.offers_config)
 
-    title = f"{asset} After {event_type} ({event_date}): Historical T+1/T+7 Probability"
+    title = f"Historical Performance of {asset} After {event_type} ({event_date})"
     event_label = event_type
     event_slug = event_type.lower()
     asof_date = asof_cutoff
@@ -1445,7 +1564,20 @@ def process_row(
         previous_last_change = previous.get("created_at") or previous.get("last_generated")
     last_content_change_at = now_iso if need_generate else (str(previous_last_change) if previous_last_change else context.build_timestamp)
     created_at = str(previous.get("created_at", "")).strip() or now_iso
-    sitemap_lastmod = pick_max_timestamp(last_content_change_at, normalized_data_last_updated_at) or context.build_timestamp
+    current_metric_signature = build_lastmod_metric_signature(probabilities)
+    previous_metric_signature = parse_lastmod_metric_signature(previous.get("lastmod_metric_signature"))
+    should_update_lastmod, lastmod_decision_reason = lastmod_threshold_decision(
+        previous_signature=previous_metric_signature,
+        current_signature=current_metric_signature,
+    )
+    previous_sitemap_lastmod = normalize_db_timestamp(previous.get("sitemap_lastmod"))
+    if should_update_lastmod or not previous_sitemap_lastmod:
+        sitemap_lastmod = (
+            pick_max_timestamp(last_content_change_at, normalized_data_last_updated_at, context.build_timestamp)
+            or context.build_timestamp
+        )
+    else:
+        sitemap_lastmod = previous_sitemap_lastmod
 
     manifest.setdefault("pages", {})[slug] = {
         "hash": fingerprint,
@@ -1455,6 +1587,8 @@ def process_row(
         "last_content_change_at": last_content_change_at,
         "data_last_updated_at": normalized_data_last_updated_at,
         "sitemap_lastmod": sitemap_lastmod,
+        "lastmod_metric_signature": current_metric_signature,
+        "lastmod_decision_reason": lastmod_decision_reason,
         "freshness_status": freshness_status_value,
         "created_at": created_at,
         "quality_score": quality,

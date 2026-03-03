@@ -1,5 +1,5 @@
 ---
-title: "QQQ After NFP (2025-06-06): Historical T+1/T+7 Probability"
+title: "Historical Performance of QQQ After NFP (2025-06-06)"
 description: "Historical probability profile for QQQ around NFP events (T+1/T+7)."
 pubDate: "2026-03-03"
 event_type: "NFP"
@@ -66,6 +66,7 @@ probabilities:
       median: 2.87
       mean: 2.87
       sample: 1
+related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "QQQ After NFP (2025-01-10): Historical T+1/T+7 Probability", "event_date": "2025-01-10", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.64, "median_t7_pct": 2.87, "sample_size": 0}, {"slug": "qqq-after-nfp-2024-12-06", "title": "QQQ After NFP (2024-12-06): Historical T+1/T+7 Probability", "event_date": "2024-12-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.77, "median_t7_pct": 0.77, "sample_size": 0}, {"slug": "qqq-after-nfp-2024-08-02", "title": "QQQ After NFP (2024-08-02): Historical T+1/T+7 Probability", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.35, "median_t7_pct": 0.37, "sample_size": 0}]
 ---
 
 ## Event Snapshot

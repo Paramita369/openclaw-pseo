@@ -7,6 +7,7 @@ export const HUB_EVENTS = ['CPI', 'NFP', 'FOMC'] as const;
 export type HubAsset = (typeof HUB_ASSETS)[number];
 export type HubEvent = (typeof HUB_EVENTS)[number];
 export type HubStatus = 'draft' | 'approved';
+export type HubIndexing = 'index' | 'noindex';
 
 export type HubBrief = {
   asset: HubAsset;
@@ -17,6 +18,7 @@ export type HubBrief = {
   execution_checklist: string[];
   reviewed_at: string;
   status: HubStatus;
+  indexing: HubIndexing;
 };
 
 type PartialHubBrief = Partial<HubBrief> & Record<string, unknown>;
@@ -98,6 +100,13 @@ function normalizeBrief(key: string, value: PartialHubBrief | undefined): HubBri
 
   const rawStatus = String(value?.status || 'draft').toLowerCase();
   const status: HubStatus = rawStatus === 'approved' ? 'approved' : 'draft';
+  const rawIndexing = String(value?.indexing || '').toLowerCase();
+  const indexing: HubIndexing =
+    rawIndexing === 'index' || rawIndexing === 'noindex'
+      ? (rawIndexing as HubIndexing)
+      : status === 'approved'
+        ? 'index'
+        : 'noindex';
 
   return {
     asset,
@@ -114,6 +123,7 @@ function normalizeBrief(key: string, value: PartialHubBrief | undefined): HubBri
     execution_checklist: nonEmptyChecklist,
     reviewed_at: String(value?.reviewed_at || new Date().toISOString().slice(0, 10)),
     status,
+    indexing,
   };
 }
 

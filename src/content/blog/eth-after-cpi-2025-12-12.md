@@ -1,5 +1,5 @@
 ---
-title: "ETH After CPI (2025-12-12): Historical T+1/T+7 Probability"
+title: "Historical Performance of ETH After CPI (2025-12-12)"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
 pubDate: "2026-03-03"
 event_type: "CPI"
@@ -66,6 +66,7 @@ probabilities:
       median: -0.77
       mean: 0.28
       sample: 13
+related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH After CPI (2024-06-12): Historical T+1/T+7 Probability", "event_date": "2024-06-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.22, "median_t7_pct": -0.01, "sample_size": 0}, {"slug": "eth-after-cpi-2026-02-12", "title": "ETH After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "eth-after-cpi-2026-01-12", "title": "ETH After CPI (2026-01-12): Historical T+1/T+7 Probability", "event_date": "2026-01-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
 ---
 
 ## Event Snapshot

@@ -1,5 +1,5 @@
 ---
-title: "GOLD After NFP (2024-09-06): Historical T+1/T+7 Probability"
+title: "Historical Performance of GOLD After NFP (2024-09-06)"
 description: "Historical probability profile for GOLD around NFP events (T+1/T+7)."
 pubDate: "2026-03-03"
 event_type: "NFP"
@@ -22,7 +22,7 @@ quality_score: 50
 sample_size: 13
 freshness_days: 542
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T09:55:20+00:00"
+data_last_updated_at: "2026-03-03T14:52:49+00:00"
 event_direction: "up"
 event_actual: 157912.0
 event_previous: 157757.0
@@ -66,6 +66,7 @@ probabilities:
       median: 0.86
       mean: 1.12
       sample: 12
+related_events: [{"slug": "gold-after-nfp-2024-03-01", "title": "GOLD After NFP (2024-03-01): Historical T+1/T+7 Probability", "event_date": "2024-03-01", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.57, "median_t7_pct": 4.39, "sample_size": 0}, {"slug": "gold-after-nfp-2024-04-05", "title": "GOLD After NFP (2024-04-05): Historical T+1/T+7 Probability", "event_date": "2024-04-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 4.16, "median_t7_pct": 1.31, "sample_size": 0}, {"slug": "gold-after-nfp-2026-02-06", "title": "GOLD After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
 ---
 
 ## Event Snapshot

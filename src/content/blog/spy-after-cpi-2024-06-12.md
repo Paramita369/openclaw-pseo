@@ -1,5 +1,5 @@
 ---
-title: "SPY After CPI (2024-06-12): Historical T+1/T+7 Probability"
+title: "Historical Performance of SPY After CPI (2024-06-12)"
 description: "Historical probability profile for SPY around CPI events (T+1/T+7)."
 pubDate: "2026-03-03"
 event_type: "CPI"
@@ -22,7 +22,7 @@ quality_score: 50
 sample_size: 14
 freshness_days: 628
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T09:55:20+00:00"
+data_last_updated_at: "2026-03-03T14:52:49+00:00"
 event_direction: "down"
 event_actual: 313.044
 event_previous: 313.175
@@ -66,6 +66,7 @@ probabilities:
       median: 0.0
       mean: 0.0
       sample: 0
+related_events: [{"slug": "spy-after-cpi-2024-03-12", "title": "SPY After CPI (2024-03-12): Historical T+1/T+7 Probability", "event_date": "2024-03-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 3.94, "median_t7_pct": 0.1, "sample_size": 0}, {"slug": "spy-after-cpi-2024-11-14", "title": "SPY After CPI (2024-11-14): Historical T+1/T+7 Probability", "event_date": "2024-11-14", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.43, "median_t7_pct": 0.05, "sample_size": 0}, {"slug": "spy-after-cpi-2024-05-15", "title": "SPY After CPI (2024-05-15): Historical T+1/T+7 Probability", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.37, "median_t7_pct": 0.01, "sample_size": 0}]
 ---
 
 ## Event Snapshot

@@ -2,7 +2,7 @@
 import Analytics from '@vercel/analytics/astro';
 import '../styles/global.css';
 
-const { title, description, frontmatter, breadcrumbs = [] } = Astro.props;
+const { title, description, frontmatter, breadcrumbs = [], robotsDirective = 'index,follow' } = Astro.props;
 
 const metaDesc =
   description ||
@@ -96,6 +96,7 @@ const schemaGraph = {
     <meta name="google-site-verification" content="kvvXjMnBnI-4oWLa66hB0XZP3q4t6go7Y37eaSm9g3Y" />
     <title>{title} | QuantMacro</title>
     <meta name="description" content={metaDesc} />
+    <meta name="robots" content={robotsDirective} />
     <link rel="canonical" href={currentUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 

@@ -1,5 +1,5 @@
 ---
-title: "GOLD After FOMC (2024-03-19): Historical T+1/T+7 Probability"
+title: "Historical Performance of GOLD After FOMC (2024-03-19)"
 description: "Historical probability profile for GOLD around FOMC events (T+1/T+7)."
 pubDate: "2026-03-03"
 event_type: "FOMC"
@@ -22,7 +22,7 @@ quality_score: 80
 sample_size: 9
 freshness_days: 713
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T09:55:20+00:00"
+data_last_updated_at: "2026-03-03T14:52:49+00:00"
 event_direction: "flat"
 event_actual: 5.5
 event_previous: 5.5
@@ -66,6 +66,7 @@ probabilities:
       median: 0.9
       mean: 0.59
       sample: 9
+related_events: [{"slug": "gold-after-fomc-2024-01-30", "title": "GOLD After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 1.61, "median_t7_pct": 0.15, "sample_size": 0}, {"slug": "gold-after-fomc-2026-01-28", "title": "GOLD After FOMC (2026-01-28): Historical T+1/T+7 Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "gold-after-fomc-2025-12-10", "title": "GOLD After FOMC (2025-12-10): Historical T+1/T+7 Probability", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
 ---
 
 ## Event Snapshot

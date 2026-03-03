@@ -8,6 +8,7 @@ import json
 import shutil
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -169,6 +170,19 @@ def commit_and_push(root: Path, as_of_date: str, dry_run: bool) -> Dict[str, obj
     subprocess.run(["git", "push", "origin", "main"], cwd=str(root), check=True)
 
     return {"status": "pushed", "changed": changed, "ignored_runtime_changes": ignored, "message": message}
+
+
+def validate_playbooks_sitemap(public_dir: Path) -> None:
+    sitemap_path = public_dir / "sitemap-playbooks.xml"
+    if not sitemap_path.exists():
+        raise RuntimeError(f"Post-build gate failed: missing {sitemap_path}")
+    content = sitemap_path.read_text(encoding="utf-8").strip()
+    if "<urlset" not in content or "</urlset>" not in content:
+        raise RuntimeError("Post-build gate failed: sitemap-playbooks.xml malformed envelope")
+    try:
+        ET.fromstring(content)
+    except Exception as exc:
+        raise RuntimeError(f"Post-build gate failed: invalid sitemap-playbooks.xml ({exc})") from exc
 
 
 def main() -> None:
@@ -407,6 +421,20 @@ def main() -> None:
 
         if not args.skip_build:
             steps.append(run_step("astro_build", ["npm", "run", "build"], cwd=root, required=True))
+            validate_playbooks_sitemap(public_output)
+            steps.append(
+                StepResult(
+                    name="post_build_sitemap_playbooks_gate",
+                    status="ok",
+                    start_time=utc_now().isoformat(),
+                    end_time=utc_now().isoformat(),
+                    duration_ms=0,
+                    command=["internal:validate_playbooks_sitemap", str(public_output / "sitemap-playbooks.xml")],
+                    returncode=0,
+                    stdout="validated sitemap-playbooks.xml",
+                    stderr="",
+                )
+            )
 
         if not args.skip_crawl_check:
             crawl_cmd = [

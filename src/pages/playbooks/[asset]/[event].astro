@@ -3,7 +3,7 @@ import Layout from '../../../layouts/Layout.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import TrustSignals from '../../../components/TrustSignals.astro';
 import { getCollection } from 'astro:content';
-import { listHubRoutes, loadHubBriefs } from '../../../lib/hubBriefs';
+import { HUB_EVENTS, listHubRoutes, loadHubBriefs } from '../../../lib/hubBriefs';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -12,6 +12,7 @@ export async function getStaticPaths() {
   return listHubRoutes().map((route) => {
     const key = route.key;
     const brief = briefMap[key];
+    const assetPosts = posts.filter((post) => String(post.data.tags?.[0] || '').toUpperCase() === route.asset);
     const latestPost = posts
       .filter((post) => {
         const asset = String(post.data.tags?.[0] || '').toUpperCase();
@@ -23,6 +24,24 @@ export async function getStaticPaths() {
         const bd = b.data.event_date || b.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
         return bd.localeCompare(ad);
       })[0];
+    const crossEventRows = HUB_EVENTS.map((event) => {
+      const latest = assetPosts
+        .filter((post) => String(post.data.event_type || '').toUpperCase() === event)
+        .sort((a, b) => {
+          const ad = a.data.event_date || a.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
+          const bd = b.data.event_date || b.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
+          return bd.localeCompare(ad);
+        })[0];
+      return {
+        event,
+        eventDate: latest?.data?.event_date || '--',
+        t1Up: latest?.data?.probabilities?.t1?.up ?? null,
+        t7Up: latest?.data?.probabilities?.t7?.up ?? null,
+        t7Median: latest?.data?.probabilities?.t7?.median ?? null,
+        sample: latest?.data?.sample_size ?? null,
+        slug: latest?.slug || '',
+      };
+    });
 
     return {
       params: { asset: route.asset.toLowerCase(), event: route.event.toLowerCase() },
@@ -32,12 +51,13 @@ export async function getStaticPaths() {
         brief,
         latestSlug: latestPost?.slug || '',
         latestEventDate: latestPost?.data?.event_date || '',
+        crossEventRows,
       },
     };
   });
 }
 
-const { asset, eventType, brief, latestSlug, latestEventDate } = Astro.props;
+const { asset, eventType, brief, latestSlug, latestEventDate, crossEventRows = [] } = Astro.props;
 const breadcrumbs = [
   { name: 'Home', url: '/' },
   { name: 'Playbooks', url: '/playbooks' },
@@ -47,12 +67,17 @@ const breadcrumbs = [
 
 const reviewedAt = brief?.reviewed_at || '--';
 const status = String(brief?.status || 'draft').toLowerCase();
+const indexing = String(brief?.indexing || (status === 'approved' ? 'index' : 'noindex')).toLowerCase();
+const robotsDirective = indexing === 'index' ? 'index,follow' : 'noindex,follow';
+const reviewedYear = String(reviewedAt).match(/^\d{4}/)?.[0] || String(new Date().getUTCFullYear());
+const hubTitle = `${asset} ${eventType} Probability Playbook & Execution Guide (${reviewedYear} Update)`;
 ---
 
 <Layout
-  title={`${asset} After ${eventType} Hub Playbook`}
+  title={hubTitle}
   description={`${asset} × ${eventType} human-guided playbook with thesis, risk watchouts, and execution checklist.`}
   breadcrumbs={breadcrumbs}
+  robotsDirective={robotsDirective}
 >
   <section class="hero-panel py-14">
     <div class="max-w-5xl mx-auto px-4">
@@ -66,7 +91,7 @@ const status = String(brief?.status || 'draft').toLowerCase();
           <span class="badge-chip metric-up">Approved</span>
         )}
       </div>
-      <h1 class="text-4xl font-extrabold text-white">{asset} × {eventType} Hub Playbook</h1>
+      <h1 class="text-4xl font-extrabold text-white">{hubTitle}</h1>
       <p class="text-blue-100 mt-3 text-lg">Human+Template operating view. Reviewed at {reviewedAt}.</p>
     </div>
   </section>
@@ -85,6 +110,48 @@ const status = String(brief?.status || 'draft').toLowerCase();
     <article class="surface-card p-6">
       <h2 class="text-xl font-extrabold">Risk Watchouts</h2>
       <p class="mt-3 text-sm leading-7" style="color:var(--muted);">{brief?.risk_watchouts}</p>
+    </article>
+
+    <article class="surface-card p-6">
+      <h2 class="text-xl font-extrabold">Cross-event Comparison</h2>
+      <p class="mt-2 text-sm" style="color:var(--muted);">
+        Compare latest CPI/NFP/FOMC observations for {asset}. This section is unique to Hub pages and is used to avoid
+        one-event narrative bias.
+      </p>
+      <div class="mt-4 overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-left" style="color:var(--muted);">
+              <th class="py-2 pr-3">Event</th>
+              <th class="py-2 pr-3">Latest Date</th>
+              <th class="py-2 pr-3">T+1 P(up)</th>
+              <th class="py-2 pr-3">T+7 P(up)</th>
+              <th class="py-2 pr-3">T+7 Median</th>
+              <th class="py-2 pr-3">Sample</th>
+              <th class="py-2">Research</th>
+            </tr>
+          </thead>
+          <tbody>
+            {crossEventRows.map((row) => (
+              <tr class="border-t" style="border-color:var(--border);">
+                <td class="py-2 pr-3 font-semibold">{row.event}</td>
+                <td class="py-2 pr-3">{row.eventDate}</td>
+                <td class="py-2 pr-3">{row.t1Up ?? '--'}{row.t1Up !== null ? '%' : ''}</td>
+                <td class="py-2 pr-3">{row.t7Up ?? '--'}{row.t7Up !== null ? '%' : ''}</td>
+                <td class="py-2 pr-3">{row.t7Median ?? '--'}{row.t7Median !== null ? '%' : ''}</td>
+                <td class="py-2 pr-3">{row.sample ?? '--'}</td>
+                <td class="py-2">
+                  {row.slug ? (
+                    <a class="btn-ghost text-xs" href={`/blog/${row.slug}`}>Open</a>
+                  ) : (
+                    <span class="badge-chip">N/A</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </article>
 
     <article class="surface-card p-6">

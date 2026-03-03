@@ -1,5 +1,5 @@
 ---
-title: "SPY After NFP (2025-12-05): Historical T+1/T+7 Probability"
+title: "Historical Performance of SPY After NFP (2025-12-05)"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
 pubDate: "2026-03-03"
 event_type: "NFP"
@@ -66,6 +66,7 @@ probabilities:
       median: 1.27
       mean: 1.28
       sample: 12
+related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "SPY After NFP (2024-07-05): Historical T+1/T+7 Probability", "event_date": "2024-07-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.02, "median_t7_pct": 0.96, "sample_size": 0}, {"slug": "spy-after-nfp-2024-01-05", "title": "SPY After NFP (2024-01-05): Historical T+1/T+7 Probability", "event_date": "2024-01-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.04, "median_t7_pct": 1.87, "sample_size": 0}, {"slug": "spy-after-nfp-2024-10-04", "title": "SPY After NFP (2024-10-04): Historical T+1/T+7 Probability", "event_date": "2024-10-04", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.43, "median_t7_pct": 1.15, "sample_size": 0}]
 ---
 
 ## Event Snapshot

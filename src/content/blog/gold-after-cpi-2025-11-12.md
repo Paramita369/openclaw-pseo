@@ -1,5 +1,5 @@
 ---
-title: "GOLD After CPI (2025-11-12): Historical T+1/T+7 Probability"
+title: "Historical Performance of GOLD After CPI (2025-11-12)"
 description: "Historical probability profile for GOLD around CPI events (T+1/T+7)."
 pubDate: "2026-03-03"
 event_type: "CPI"
@@ -66,6 +66,7 @@ probabilities:
       median: 1.52
       mean: 1.07
       sample: 13
+related_events: [{"slug": "gold-after-cpi-2025-02-12", "title": "GOLD After CPI (2025-02-12): Historical T+1/T+7 Probability", "event_date": "2025-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 7.09, "median_t7_pct": 0.36, "sample_size": 0}, {"slug": "gold-after-cpi-2024-02-20", "title": "GOLD After CPI (2024-02-20): Historical T+1/T+7 Probability", "event_date": "2024-02-20", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 6.12, "median_t7_pct": 0.32, "sample_size": 0}, {"slug": "gold-after-cpi-2024-05-15", "title": "GOLD After CPI (2024-05-15): Historical T+1/T+7 Probability", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.47, "median_t7_pct": 0.02, "sample_size": 0}]
 ---
 
 ## Event Snapshot

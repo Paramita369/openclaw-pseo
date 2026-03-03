@@ -544,8 +544,30 @@ def validate_sitemap(
         violations.append("assets_sitemap_missing_tags")
     if events_path.exists() and "/events/" not in events_path.read_text(encoding="utf-8"):
         violations.append("events_sitemap_missing_event_routes")
-    if playbooks_path.exists() and "/playbooks/" not in playbooks_path.read_text(encoding="utf-8"):
-        violations.append("playbooks_sitemap_missing_playbook_routes")
+    if playbooks_path.exists():
+        playbooks_content = playbooks_path.read_text(encoding="utf-8")
+        if "/playbooks/" not in playbooks_content:
+            expected_indexable = 0
+            hub_briefs_path = root / "data" / "hub_briefs.yaml"
+            if hub_briefs_path.exists():
+                try:
+                    raw = hub_briefs_path.read_text(encoding="utf-8")
+                    payload = yaml.safe_load(raw) if yaml is not None else parse_hub_briefs_fallback(raw)
+                except Exception:
+                    payload = parse_hub_briefs_fallback(raw)
+                if isinstance(payload, dict):
+                    for asset in HUB_ASSETS:
+                        for event in HUB_EVENTS:
+                            key = f"{asset}_{event}"
+                            item = payload.get(key) if isinstance(payload.get(key), dict) else {}
+                            status = str(item.get("status", "")).lower()
+                            indexing = str(item.get("indexing", "")).lower()
+                            if indexing not in {"index", "noindex"}:
+                                indexing = "index" if status == "approved" else "noindex"
+                            if indexing == "index":
+                                expected_indexable += 1
+            if expected_indexable > 0:
+                violations.append("playbooks_sitemap_missing_playbook_routes")
 
     blog_lastmods: List[str] = []
     for blog_sitemap in blog_paths:
@@ -1087,6 +1109,7 @@ def validate_hub_briefs_contract(root: Path) -> Dict[str, object]:
             "execution_checklist",
             "reviewed_at",
             "status",
+            "indexing",
         ]
         for field in required_fields:
             value = item.get(field)
@@ -1101,8 +1124,14 @@ def validate_hub_briefs_contract(root: Path) -> Dict[str, object]:
             violations.append(f"hub_brief_invalid_checklist:{key}")
         if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(item.get("reviewed_at", ""))):
             violations.append(f"hub_brief_invalid_reviewed_at:{key}")
-        if str(item.get("status", "")).lower() not in {"draft", "approved"}:
+        status = str(item.get("status", "")).lower()
+        indexing = str(item.get("indexing", "")).lower()
+        if status not in {"draft", "approved"}:
             violations.append(f"hub_brief_invalid_status:{key}")
+        if indexing not in {"index", "noindex"}:
+            violations.append(f"hub_brief_invalid_indexing:{key}")
+        if status == "draft" and indexing == "index":
+            violations.append(f"hub_brief_draft_must_be_noindex:{key}")
 
     return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
 
@@ -1160,6 +1189,7 @@ def validate_crawl_policy_contract(
 
 def validate_hub_route_contract(root: Path, public_dir: Path | None = None) -> Dict[str, object]:
     violations: List[str] = []
+    warnings: List[str] = []
     public_dir = public_dir or (root / "public")
 
     index_page = root / "src" / "pages" / "playbooks" / "index.astro"
@@ -1186,16 +1216,214 @@ def validate_hub_route_contract(root: Path, public_dir: Path | None = None) -> D
     else:
         content = playbooks_sitemap.read_text(encoding="utf-8")
         url_count = len(re.findall(r"<url>", content))
-        if url_count < 15:
-            violations.append("playbooks_sitemap_insufficient_urls")
-        for asset in HUB_ASSETS:
-            for event in HUB_EVENTS:
-                route = f"/playbooks/{asset.lower()}/{event.lower()}"
-                if route not in content:
-                    violations.append("playbooks_sitemap_missing_expected_route")
-                    break
-            if "playbooks_sitemap_missing_expected_route" in violations:
+        hub_briefs_path = root / "data" / "hub_briefs.yaml"
+        expected_indexable_routes: List[str] = []
+        draft_routes: List[str] = []
+        if hub_briefs_path.exists():
+            raw = hub_briefs_path.read_text(encoding="utf-8")
+            payload: object
+            if yaml is not None:
+                try:
+                    payload = yaml.safe_load(raw)
+                except Exception:
+                    payload = parse_hub_briefs_fallback(raw)
+            else:
+                payload = parse_hub_briefs_fallback(raw)
+
+            if isinstance(payload, dict):
+                for asset in HUB_ASSETS:
+                    for event in HUB_EVENTS:
+                        key = f"{asset}_{event}"
+                        item = payload.get(key)
+                        status = str(item.get("status", "")).lower() if isinstance(item, dict) else "draft"
+                        indexing = str(item.get("indexing", "")).lower() if isinstance(item, dict) else ""
+                        if indexing not in {"index", "noindex"}:
+                            indexing = "index" if status == "approved" else "noindex"
+                        route = f"/playbooks/{asset.lower()}/{event.lower()}"
+                        if indexing == "index":
+                            expected_indexable_routes.append(route)
+                        else:
+                            draft_routes.append(route)
+
+        if len(expected_indexable_routes) < 3:
+            warnings.append("approved_hub_count_low")
+
+        if url_count != len(expected_indexable_routes):
+            violations.append("playbooks_sitemap_indexable_count_mismatch")
+
+        for route in expected_indexable_routes:
+            if route not in content:
+                violations.append("playbooks_sitemap_missing_indexable_route")
                 break
+        for route in draft_routes:
+            if route in content:
+                violations.append("playbooks_sitemap_contains_noindex_route")
+                break
+
+    return {
+        "violations": sorted(set(violations)),
+        "warnings": sorted(set(warnings)),
+        "count": len(sorted(set(violations))),
+    }
+
+
+def validate_hub_draft_noindex_contract(root: Path, public_dir: Path | None = None) -> Dict[str, object]:
+    violations: List[str] = []
+    public_dir = public_dir or (root / "public")
+
+    playbook_page = root / "src" / "pages" / "playbooks" / "[asset]" / "[event].astro"
+    if not playbook_page.exists():
+        return {"violations": ["missing_playbook_detail_page"], "count": 1}
+
+    source = playbook_page.read_text(encoding="utf-8")
+    required_markers = ["robotsDirective", "noindex,follow", "index,follow", "indexing"]
+    for marker in required_markers:
+        if marker not in source:
+            violations.append(f"playbook_detail_missing_{marker.replace(',', '_')}")
+
+    playbooks_sitemap = public_dir / "sitemap-playbooks.xml"
+    if not playbooks_sitemap.exists():
+        violations.append("missing_playbooks_sitemap")
+        return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+    sitemap_text = playbooks_sitemap.read_text(encoding="utf-8")
+    hub_briefs_path = root / "data" / "hub_briefs.yaml"
+    if not hub_briefs_path.exists():
+        violations.append("missing_hub_briefs_yaml")
+        return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+    raw = hub_briefs_path.read_text(encoding="utf-8")
+    payload: object
+    if yaml is not None:
+        try:
+            payload = yaml.safe_load(raw)
+        except Exception:
+            payload = parse_hub_briefs_fallback(raw)
+    else:
+        payload = parse_hub_briefs_fallback(raw)
+
+    if not isinstance(payload, dict):
+        violations.append("hub_briefs_not_object")
+        return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+    for asset in HUB_ASSETS:
+        for event in HUB_EVENTS:
+            key = f"{asset}_{event}"
+            item = payload.get(key) if isinstance(payload.get(key), dict) else {}
+            status = str(item.get("status", "")).lower()
+            indexing = str(item.get("indexing", "")).lower()
+            if indexing not in {"index", "noindex"}:
+                indexing = "index" if status == "approved" else "noindex"
+            route = f"/playbooks/{asset.lower()}/{event.lower()}"
+            if indexing == "noindex" and route in sitemap_text:
+                violations.append("draft_or_noindex_hub_present_in_sitemap")
+                break
+        if "draft_or_noindex_hub_present_in_sitemap" in violations:
+            break
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_blog_hub_link_contract(root: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    blog_page = root / "src" / "pages" / "blog" / "[slug].astro"
+    if not blog_page.exists():
+        return {"violations": ["missing_blog_slug_page"], "count": 1}
+
+    source = blog_page.read_text(encoding="utf-8")
+    required_markers = [
+        "hubIsIndexable",
+        "hubPrimaryHref",
+        "/playbooks/",
+        "/events/",
+    ]
+    for marker in required_markers:
+        if marker not in source:
+            violations.append(f"blog_hub_link_missing_{marker.strip('/').replace('/', '_')}")
+    if "hub.status === 'approved'" not in source or "hub.indexing === 'index'" not in source:
+        violations.append("blog_hub_link_missing_approved_index_gate")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_lastmod_threshold_contract(manifest_path: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not manifest_path.exists():
+        return {"violations": ["missing_page_manifest"], "count": 1}
+
+    try:
+        payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {"violations": ["invalid_page_manifest_json"], "count": 1}
+
+    pages = payload.get("pages", {}) if isinstance(payload, dict) else {}
+    if not isinstance(pages, dict):
+        return {"violations": ["manifest_pages_not_object"], "count": 1}
+
+    required_signature_keys = {
+        "all_t1_up",
+        "all_t1_down",
+        "all_t7_up",
+        "all_t7_down",
+        "same_t1_up",
+        "same_t1_down",
+        "same_t7_up",
+        "same_t7_down",
+        "sample_size",
+        "conditional_sample_size",
+    }
+
+    for slug, page in pages.items():
+        if not isinstance(page, dict):
+            continue
+        signature = page.get("lastmod_metric_signature")
+        decision_reason = str(page.get("lastmod_decision_reason", "")).strip()
+        if not isinstance(signature, dict):
+            violations.append("manifest_missing_lastmod_metric_signature")
+            break
+        if not required_signature_keys.issubset(set(signature.keys())):
+            violations.append("manifest_lastmod_signature_incomplete")
+            break
+        if not decision_reason:
+            violations.append("manifest_missing_lastmod_decision_reason")
+            break
+        if decision_reason == "threshold_not_met" and not str(page.get("sitemap_lastmod", "")).strip():
+            violations.append(f"manifest_invalid_sitemap_lastmod:{slug}")
+            break
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_ymyl_regex_contract(root: Path, content_dir: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    trust_component = root / "src" / "components" / "TrustSignals.astro"
+    if not trust_component.exists():
+        return {"violations": ["missing_trust_signals_component"], "count": 1}
+
+    trust_text = trust_component.read_text(encoding="utf-8")
+    trust_patterns = [
+        r"(?i)Methodology",
+        r"(?i)Not investment advice",
+        r"(?i)FRED",
+        r"(?i)yfinance",
+    ]
+    for pattern in trust_patterns:
+        if not re.search(pattern, trust_text):
+            violations.append(f"ymyl_missing_trust_pattern:{pattern}")
+
+    files = sorted(content_dir.glob("*.md"))
+    if not files:
+        violations.append("ymyl_missing_blog_markdown_files")
+        return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+    for path in files[:50]:
+        content = path.read_text(encoding="utf-8")
+        if not re.search(r"(?i)Methodology", content):
+            violations.append("ymyl_missing_methodology_in_blog")
+            break
+        if not re.search(r"\d{4}-\d{2}-\d{2}", content):
+            violations.append("ymyl_missing_date_stamp_in_blog")
+            break
 
     return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
 
@@ -1250,6 +1478,10 @@ def run_gates(
     hub_briefs_result = validate_hub_briefs_contract(root)
     crawl_policy_result = validate_crawl_policy_contract(root, public_dir=public_dir, vercel_path=vercel_config_path)
     hub_route_result = validate_hub_route_contract(root, public_dir=public_dir)
+    hub_draft_noindex_result = validate_hub_draft_noindex_contract(root, public_dir=public_dir)
+    blog_hub_link_result = validate_blog_hub_link_contract(root)
+    lastmod_threshold_result = validate_lastmod_threshold_contract(manifest_path)
+    ymyl_regex_result = validate_ymyl_regex_contract(root, content_dir)
 
     for scope in [
         redirect_result,
@@ -1265,6 +1497,10 @@ def run_gates(
         hub_briefs_result,
         crawl_policy_result,
         hub_route_result,
+        hub_draft_noindex_result,
+        blog_hub_link_result,
+        lastmod_threshold_result,
+        ymyl_regex_result,
     ]:
         for issue in scope["violations"]:
             report["summary"][issue] = report["summary"].get(issue, 0) + 1
@@ -1283,7 +1519,14 @@ def run_gates(
     report["hub_briefs_violations"] = hub_briefs_result
     report["crawl_policy_violations"] = crawl_policy_result
     report["hub_route_violations"] = hub_route_result
-    report["warnings"] = {"cta": cta_result.get("warnings", [])}
+    report["hub_draft_noindex_violations"] = hub_draft_noindex_result
+    report["blog_hub_link_violations"] = blog_hub_link_result
+    report["lastmod_threshold_violations"] = lastmod_threshold_result
+    report["ymyl_regex_violations"] = ymyl_regex_result
+    report["warnings"] = {
+        "cta": cta_result.get("warnings", []),
+        "hub_route": hub_route_result.get("warnings", []),
+    }
 
     content_violations = sum(len(v) for v in violations_by_file.values())
     total_violations = (
@@ -1301,6 +1544,10 @@ def run_gates(
         + int(hub_briefs_result["count"])
         + int(crawl_policy_result["count"])
         + int(hub_route_result["count"])
+        + int(hub_draft_noindex_result["count"])
+        + int(blog_hub_link_result["count"])
+        + int(lastmod_threshold_result["count"])
+        + int(ymyl_regex_result["count"])
     )
     report["content_violations"] = content_violations
     report["total_violations"] = total_violations

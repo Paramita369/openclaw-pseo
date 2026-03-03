@@ -1,5 +1,5 @@
 ---
-title: "BTC After NFP (2025-05-02): Historical T+1/T+7 Probability"
+title: "Historical Performance of BTC After NFP (2025-05-02)"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
 pubDate: "2026-03-03"
 event_type: "NFP"
@@ -66,6 +66,7 @@ probabilities:
       median: 1.07
       mean: 2.7
       sample: 12
+related_events: [{"slug": "btc-after-nfp-2026-02-06", "title": "BTC After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "btc-after-nfp-2026-01-02", "title": "BTC After NFP (2026-01-02): Historical T+1/T+7 Probability", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "btc-after-nfp-2025-12-05", "title": "BTC After NFP (2025-12-05): Historical T+1/T+7 Probability", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
 ---
 
 ## Event Snapshot

@@ -15,6 +15,7 @@ BTC_CPI:
     - "Wait for 1-hour candle close before deploying directional delta."
   reviewed_at: "2026-03-03"
   status: "approved"
+  indexing: "index"
 
 BTC_NFP:
   asset: "BTC"
@@ -28,6 +29,7 @@ BTC_NFP:
     - "Use stop placement outside event candle extremes."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 BTC_FOMC:
   asset: "BTC"
@@ -41,6 +43,7 @@ BTC_FOMC:
     - "Scale entries in multiple tranches, not one fill."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 ETH_CPI:
   asset: "ETH"
@@ -54,6 +57,7 @@ ETH_CPI:
     - "Reduce leverage when spread volatility widens."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 ETH_NFP:
   asset: "ETH"
@@ -67,6 +71,7 @@ ETH_NFP:
     - "Monitor ETH/BTC and TOTAL3 for breadth confirmation."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 ETH_FOMC:
   asset: "ETH"
@@ -80,6 +85,7 @@ ETH_FOMC:
     - "Anchor exits to predefined volatility bands."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 GOLD_CPI:
   asset: "GOLD"
@@ -93,6 +99,7 @@ GOLD_CPI:
     - "Set position size by ATR-based risk budget."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 GOLD_NFP:
   asset: "GOLD"
@@ -106,6 +113,7 @@ GOLD_NFP:
     - "Use staggered exits around key session levels."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 GOLD_FOMC:
   asset: "GOLD"
@@ -119,6 +127,7 @@ GOLD_FOMC:
     - "Use a hard invalidation level tied to yield reversal."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 QQQ_CPI:
   asset: "QQQ"
@@ -132,6 +141,7 @@ QQQ_CPI:
     - "Use staged entries around first-hour range."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 QQQ_NFP:
   asset: "QQQ"
@@ -145,6 +155,7 @@ QQQ_NFP:
     - "Avoid oversized 0DTE exposure in first 20 minutes."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 QQQ_FOMC:
   asset: "QQQ"
@@ -158,6 +169,7 @@ QQQ_FOMC:
     - "Size positions based on realized volatility percentile."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 SPY_CPI:
   asset: "SPY"
@@ -171,6 +183,7 @@ SPY_CPI:
     - "Use predefined stop distance from event range."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 SPY_NFP:
   asset: "SPY"
@@ -184,6 +197,7 @@ SPY_NFP:
     - "Scale out into intraday volatility spikes."
   reviewed_at: "2026-03-03"
   status: "draft"
+  indexing: "noindex"
 
 SPY_FOMC:
   asset: "SPY"
@@ -197,3 +211,4 @@ SPY_FOMC:
     - "Analyze the initial sector rotation (e.g., Tech vs. Utilities) for duration risk clues."
   reviewed_at: "2026-03-03"
   status: "approved"
+  indexing: "index"

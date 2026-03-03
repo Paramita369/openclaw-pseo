@@ -1,5 +1,5 @@
 ---
-title: "QQQ After FOMC (2025-01-29): Historical T+1/T+7 Probability"
+title: "Historical Performance of QQQ After FOMC (2025-01-29)"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
 pubDate: "2026-03-03"
 event_type: "FOMC"
@@ -22,7 +22,7 @@ quality_score: 80
 sample_size: 9
 freshness_days: 397
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T09:55:20+00:00"
+data_last_updated_at: "2026-03-03T14:52:49+00:00"
 event_direction: "flat"
 event_actual: 4.5
 event_previous: 4.5
@@ -66,6 +66,7 @@ probabilities:
       median: 1.16
       mean: 1.03
       sample: 9
+related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "QQQ After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.07, "median_t7_pct": 0.54, "sample_size": 0}, {"slug": "qqq-after-fomc-2026-01-28", "title": "QQQ After FOMC (2026-01-28): Historical T+1/T+7 Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "qqq-after-fomc-2025-12-10", "title": "QQQ After FOMC (2025-12-10): Historical T+1/T+7 Probability", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
 ---
 
 ## Event Snapshot

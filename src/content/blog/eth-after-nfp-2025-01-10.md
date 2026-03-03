@@ -1,5 +1,5 @@
 ---
-title: "ETH After NFP (2025-01-10): Historical T+1/T+7 Probability"
+title: "Historical Performance of ETH After NFP (2025-01-10)"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
 pubDate: "2026-03-03"
 event_type: "NFP"
@@ -22,7 +22,7 @@ quality_score: 60
 sample_size: 13
 freshness_days: 416
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T09:55:20+00:00"
+data_last_updated_at: "2026-03-03T14:52:49+00:00"
 event_direction: "down"
 event_actual: 158268.0
 event_previous: 158316.0
@@ -66,6 +66,7 @@ probabilities:
       median: 6.32
       mean: 6.32
       sample: 1
+related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "eth-after-nfp-2026-01-02", "title": "ETH After NFP (2026-01-02): Historical T+1/T+7 Probability", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "eth-after-nfp-2025-12-05", "title": "ETH After NFP (2025-12-05): Historical T+1/T+7 Probability", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
 ---
 
 ## Event Snapshot
