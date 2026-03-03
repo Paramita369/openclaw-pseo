@@ -18,6 +18,15 @@ Skip remote crawler contract check when needed:
 python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --skip-crawl-check
 ```
 
+Skip content accuracy contract only for emergency debugging (not daily standard):
+```bash
+python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --skip-accuracy-check
+```
+
+## Daily SOP / SKILL
+- Human SOP: `ops/openclaw_daily_sop.md`
+- OpenClaw Skill: `ops/skills/openclaw-daily-ops/SKILL.md`
+
 ## GitHub Actions Backup (Manual Only)
 - Workflow: `Daily QuantMacro Update`
 - Trigger: `Actions -> Daily QuantMacro Update -> Run workflow`
@@ -44,10 +53,11 @@ pip install -r requirements.txt
 6. Compute risk metrics
 7. Generate event pages + redirects + segmented sitemaps (core/assets/events/playbooks/blog)
 8. Run strict quality gates
-9. Run `astro build`
-10. Run crawler access contract check (`Googlebot` + `Google-Extended`)
-11. Generate KPI report
-12. Commit/push only whitelisted paths
+9. Run full content accuracy audit (`content_accuracy_check`, strict = full sweep)
+10. Run `astro build`
+11. Run crawler access contract check (`Googlebot` + `Google-Extended`)
+12. Generate KPI report
+13. Commit/push only whitelisted paths
 
 ## Git Whitelist
 - `src/content/blog/`
@@ -117,6 +127,15 @@ Strict failures include:
 - stale semantic mismatch (homepage should switch to `Latest Event Playbook` when data is old)
 - crawler policy mismatch (`robots.txt`/`vercel.json` blocks `Google-Extended` or sets global blocking `X-Robots-Tag`)
 - missing Hub route contract (`/playbooks/{asset}/{event}` + trust layer + sitemap coverage)
+
+## Accuracy Audit (strict full sweep)
+Run directly:
+```bash
+python3 scripts/ops/content_accuracy_check.py --project-root . --as-of-date 2026-03-03 --strict --full-sweep
+```
+
+Report output:
+- `logs/daily_ops/content_accuracy_<YYYY-MM-DD>.json`
 
 ## Notes
 - `run_daily_ops` is the primary operation path; GitHub Actions is manual backup only.

@@ -43,6 +43,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Fetch macro event outcomes")
     parser.add_argument("--project-root", default=".", help="Repository root")
     parser.add_argument("--db-path", default=None, help="Path to macro_events.db")
+    parser.add_argument("--source-db-path", default=None, help="Path to source macro_events.db for consistency sync")
     parser.add_argument("--as-of-date", default=date.today().isoformat(), help="Run date (YYYY-MM-DD)")
     parser.add_argument("--provider", default="fred", choices=["fred"], help="Outcome provider")
     parser.add_argument("--strict", action="store_true", help="Fail if any outcome is missing")
@@ -278,30 +279,82 @@ def upsert_outcomes(conn: sqlite3.Connection, outcomes: Sequence[OutcomeRow]) ->
                 row.status,
             ),
         )
-    conn.commit()
+
+
+def fetch_outcome_stats(conn: sqlite3.Connection) -> Dict[str, object]:
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(1), MAX(event_date) FROM event_outcomes")
+    row = cursor.fetchone() or (0, None)
+    cursor.execute(
+        """
+        SELECT status, COUNT(1)
+        FROM event_outcomes
+        GROUP BY status
+        ORDER BY status
+        """
+    )
+    status_counts = {str(status or "unknown"): int(count) for status, count in cursor.fetchall()}
+    return {
+        "row_count": int(row[0] or 0),
+        "max_event_date": str(row[1] or ""),
+        "status_counts": status_counts,
+    }
+
+
+def compare_stats(runtime_stats: Dict[str, object], source_stats: Dict[str, object]) -> List[str]:
+    violations: List[str] = []
+    if runtime_stats.get("row_count") != source_stats.get("row_count"):
+        violations.append(
+            f"row_count_mismatch:runtime={runtime_stats.get('row_count')} source={source_stats.get('row_count')}"
+        )
+    if str(runtime_stats.get("max_event_date") or "") != str(source_stats.get("max_event_date") or ""):
+        violations.append(
+            "max_event_date_mismatch:"
+            f"runtime={runtime_stats.get('max_event_date')} source={source_stats.get('max_event_date')}"
+        )
+    if runtime_stats.get("status_counts") != source_stats.get("status_counts"):
+        violations.append(
+            "status_counts_mismatch:"
+            f"runtime={runtime_stats.get('status_counts')} source={source_stats.get('status_counts')}"
+        )
+    return violations
 
 
 def main() -> None:
     args = parse_args()
     root = resolve_project_root(args.project_root)
-    db_path = Path(args.db_path).resolve() if args.db_path else root / "data" / "macro_events.db"
+    runtime_db_path = Path(args.db_path).resolve() if args.db_path else root / "data" / "macro_events.db"
+    source_db_path = Path(args.source_db_path).resolve() if args.source_db_path else runtime_db_path
 
     if args.provider != "fred":
         raise SystemExit(f"Unsupported provider: {args.provider}")
+    if not runtime_db_path.exists():
+        raise SystemExit(f"Runtime DB not found: {runtime_db_path}")
+    if not source_db_path.exists():
+        raise SystemExit(f"Source DB not found: {source_db_path}")
 
     fred_api_key = os.getenv("FRED_API_KEY", "").strip()
     as_of_cutoff = cutoff_date(args.as_of_date)
+    same_db = runtime_db_path == source_db_path
 
-    conn = sqlite3.connect(db_path)
+    runtime_conn = sqlite3.connect(runtime_db_path)
+    source_conn = runtime_conn if same_db else sqlite3.connect(source_db_path)
+    output_rows: List[OutcomeRow] = []
+    runtime_stats: Dict[str, object] = {"row_count": 0, "max_event_date": "", "status_counts": {}}
+    source_stats: Dict[str, object] = {"row_count": 0, "max_event_date": "", "status_counts": {}}
+    source_sync_status = "pending"
+    runtime_sync_status = "pending"
+    consistency_violations: List[str] = []
     try:
-        ensure_table(conn)
-        event_dates = fetch_event_dates(conn, as_of_cutoff)
+        ensure_table(runtime_conn)
+        if not same_db:
+            ensure_table(source_conn)
+        event_dates = fetch_event_dates(runtime_conn, as_of_cutoff)
 
         by_type_observations: Dict[str, List[Tuple[str, float]]] = {}
         for event_type, spec in FRED_SERIES.items():
             by_type_observations[event_type] = fetch_fred_series(spec["series_id"], fred_api_key)
 
-        output_rows: List[OutcomeRow] = []
         for event_type in sorted(ALLOWED_EVENT_TYPES):
             unit = FRED_SERIES[event_type]["unit"]
             observations = by_type_observations.get(event_type, [])
@@ -316,18 +369,64 @@ def main() -> None:
                     )
                 )
 
-        upsert_outcomes(conn, output_rows)
+        if same_db:
+            runtime_conn.execute("BEGIN")
+            try:
+                upsert_outcomes(runtime_conn, output_rows)
+                runtime_conn.commit()
+                runtime_sync_status = "ok"
+                source_sync_status = "same_db"
+            except Exception:
+                runtime_conn.rollback()
+                runtime_sync_status = "rollback"
+                source_sync_status = "rollback"
+                raise
+        else:
+            runtime_conn.execute("BEGIN")
+            source_conn.execute("BEGIN")
+            try:
+                upsert_outcomes(runtime_conn, output_rows)
+                upsert_outcomes(source_conn, output_rows)
+                runtime_conn.commit()
+                source_conn.commit()
+                runtime_sync_status = "ok"
+                source_sync_status = "ok"
+            except Exception:
+                runtime_conn.rollback()
+                source_conn.rollback()
+                runtime_sync_status = "rollback"
+                source_sync_status = "rollback"
+                raise
+
+        runtime_stats = fetch_outcome_stats(runtime_conn)
+        source_stats = runtime_stats if same_db else fetch_outcome_stats(source_conn)
+        consistency_violations = compare_stats(runtime_stats, source_stats)
     finally:
-        conn.close()
+        runtime_conn.close()
+        if not same_db:
+            source_conn.close()
 
     pending = [row for row in output_rows if row.status != "ok"]
-    print(
-        f"✅ Event outcomes updated: total={len(output_rows)} ok={len(output_rows) - len(pending)} pending={len(pending)} cutoff={as_of_cutoff}"
-    )
+    payload = {
+        "total_rows": len(output_rows),
+        "ok_rows": len(output_rows) - len(pending),
+        "pending_rows": len(pending),
+        "cutoff": as_of_cutoff,
+        "runtime_db_path": str(runtime_db_path),
+        "source_db_path": str(source_db_path),
+        "runtime_sync_status": runtime_sync_status,
+        "source_sync_status": source_sync_status,
+        "runtime_stats": runtime_stats,
+        "source_stats": source_stats,
+        "consistency_violations": consistency_violations,
+    }
+    print(json.dumps(payload, ensure_ascii=False))
 
     if args.strict and pending:
         preview = ", ".join(f"{row.event_type}:{row.event_date}" for row in pending[:5])
         raise SystemExit(f"Missing event outcomes for strict run: {preview}")
+    if args.strict and consistency_violations:
+        raise SystemExit(f"event_outcomes consistency check failed: {consistency_violations[:3]}")
 
 
 if __name__ == "__main__":

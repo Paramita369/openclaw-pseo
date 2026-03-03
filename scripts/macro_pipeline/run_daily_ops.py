@@ -12,7 +12,7 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Sequence
+from typing import Dict, List, Optional, Sequence
 
 from pipeline_utils import ensure_dir, resolve_project_root
 
@@ -58,6 +58,12 @@ class StepResult:
     stderr: str
 
 
+class StepExecutionError(RuntimeError):
+    def __init__(self, result: StepResult):
+        self.result = result
+        super().__init__(f"Step failed: {result.name} ({result.returncode})")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run daily pSEO operations")
     parser.add_argument("--project-root", default=".", help="Repository root")
@@ -70,6 +76,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--with-backfill", action="store_true", help="Run history backfill step")
     parser.add_argument("--skip-build", action="store_true", help="Skip astro build")
     parser.add_argument("--skip-crawl-check", action="store_true", help="Skip remote crawler accessibility check")
+    parser.add_argument("--skip-accuracy-check", action="store_true", help="Skip content accuracy contract check")
     parser.add_argument("--runtime-root", default=None, help="Override runtime output root for dry-run")
     return parser.parse_args()
 
@@ -97,7 +104,7 @@ def run_step(name: str, cmd: Sequence[str], cwd: Path, required: bool = True) ->
     )
 
     if proc.returncode != 0 and required:
-        raise RuntimeError(f"Step failed: {name} ({proc.returncode})")
+        raise StepExecutionError(result)
 
     return result
 
@@ -185,6 +192,44 @@ def validate_playbooks_sitemap(public_dir: Path) -> None:
         raise RuntimeError(f"Post-build gate failed: invalid sitemap-playbooks.xml ({exc})") from exc
 
 
+def classify_error_code(step_name: str) -> str:
+    mapping = {
+        "content_accuracy_check": "ACCURACY_MISMATCH",
+        "fetch_event_outcomes": "OUTCOMES_SYNC_FAILED",
+        "quality_gates": "QUALITY_GATES_FAILED",
+    }
+    return mapping.get(step_name, "PIPELINE_STEP_FAILED")
+
+
+def recommended_action(step_name: str) -> str:
+    mapping = {
+        "content_accuracy_check": (
+            "Inspect content_accuracy report mismatches, regenerate affected pages, and rerun strict dry-run."
+        ),
+        "fetch_event_outcomes": (
+            "Check source/runtime DB write consistency for event_outcomes and resolve transaction failure."
+        ),
+        "quality_gates": "Resolve strict quality gate violations before rerunning live ops.",
+    }
+    return mapping.get(step_name, "Inspect failing step stderr and rerun from strict dry-run.")
+
+
+def build_incident(
+    *,
+    step_name: str,
+    error_text: str,
+    evidence_candidates: Sequence[Optional[Path]],
+) -> Dict[str, object]:
+    evidence_paths = [str(path) for path in evidence_candidates if path and path.exists()]
+    return {
+        "failure_step": step_name,
+        "error_code": classify_error_code(step_name),
+        "evidence_paths": evidence_paths,
+        "recommended_action": recommended_action(step_name),
+        "error": error_text,
+    }
+
+
 def main() -> None:
     args = parse_args()
     root = resolve_project_root(args.project_root)
@@ -214,9 +259,13 @@ def main() -> None:
         "push": args.push,
         "steps": [],
         "status": "running",
+        "git": {"status": "not_started"},
     }
 
     steps: List[StepResult] = []
+    quality_report_path: Optional[Path] = None
+    crawl_report_path: Optional[Path] = None
+    accuracy_report_path: Optional[Path] = None
     try:
         source_db = root / "data" / "macro_events.db"
         if not source_db.exists():
@@ -236,6 +285,7 @@ def main() -> None:
             vercel_output = runtime_root / "vercel.json"
             quality_report_path = runtime_root / "logs" / f"quality_{args.as_of_date}.json"
             crawl_report_path = runtime_root / "logs" / f"crawl_access_{args.as_of_date}.json"
+            accuracy_report_path = runtime_root / "logs" / f"content_accuracy_{args.as_of_date}.json"
             if (root / "vercel.json").exists():
                 ensure_dir(vercel_output.parent)
                 shutil.copy2(root / "vercel.json", vercel_output)
@@ -253,6 +303,7 @@ def main() -> None:
             vercel_output = root / "vercel.json"
             quality_report_path = log_dir / f"quality_{args.as_of_date}.json"
             crawl_report_path = log_dir / f"crawl_access_{args.as_of_date}.json"
+            accuracy_report_path = log_dir / f"content_accuracy_{args.as_of_date}.json"
 
         if args.with_backfill:
             steps.append(
@@ -314,6 +365,8 @@ def main() -> None:
                     str(root),
                     "--db-path",
                     str(runtime_db),
+                    "--source-db-path",
+                    str(runtime_db if args.dry_run else source_db),
                     "--as-of-date",
                     args.as_of_date,
                     *(["--strict"] if args.strict else []),
@@ -419,6 +472,27 @@ def main() -> None:
             gate_cmd.append("--strict")
         steps.append(run_step("quality_gates", gate_cmd, cwd=root, required=True))
 
+        if not args.skip_accuracy_check:
+            accuracy_cmd = [
+                python,
+                "scripts/ops/content_accuracy_check.py",
+                "--project-root",
+                str(root),
+                "--as-of-date",
+                args.as_of_date,
+                "--db-path",
+                str(runtime_db),
+                "--csv-path",
+                str(targets_output),
+                "--content-dir",
+                str(content_output),
+                "--report",
+                str(accuracy_report_path),
+            ]
+            if args.strict:
+                accuracy_cmd.append("--strict")
+            steps.append(run_step("content_accuracy_check", accuracy_cmd, cwd=root, required=True))
+
         if not args.skip_build:
             steps.append(run_step("astro_build", ["npm", "run", "build"], cwd=root, required=True))
             validate_playbooks_sitemap(public_output)
@@ -483,10 +557,40 @@ def main() -> None:
         run_log["git"] = git_result
         run_log["status"] = "ok"
 
-    except Exception as exc:
+    except StepExecutionError as exc:
+        steps.append(exc.result)
+        incident = build_incident(
+            step_name=exc.result.name,
+            error_text=str(exc),
+            evidence_candidates=[quality_report_path, accuracy_report_path, crawl_report_path],
+        )
+        run_log["incident"] = incident
         run_log["steps"] = [step.__dict__ for step in steps]
         run_log["status"] = "failed"
         run_log["error"] = str(exc)
+        if exc.result.name == "content_accuracy_check":
+            run_log["git"] = {"status": "blocked_by_accuracy"}
+        else:
+            run_log["git"] = {"status": "blocked"}
+        evidence = ",".join(incident["evidence_paths"]) if incident["evidence_paths"] else "none"
+        print("PAUSE_CONTRACT_TRIGGERED")
+        print(f"STEP={incident['failure_step']}")
+        print(f"EVIDENCE={evidence}")
+    except Exception as exc:
+        incident = build_incident(
+            step_name="runtime_precheck",
+            error_text=str(exc),
+            evidence_candidates=[quality_report_path, accuracy_report_path, crawl_report_path],
+        )
+        run_log["incident"] = incident
+        run_log["steps"] = [step.__dict__ for step in steps]
+        run_log["status"] = "failed"
+        run_log["error"] = str(exc)
+        run_log["git"] = {"status": "blocked"}
+        evidence = ",".join(incident["evidence_paths"]) if incident["evidence_paths"] else "none"
+        print("PAUSE_CONTRACT_TRIGGERED")
+        print("STEP=runtime_precheck")
+        print(f"EVIDENCE={evidence}")
     finally:
         if "steps" not in run_log or not run_log["steps"]:
             run_log["steps"] = [step.__dict__ for step in steps]
