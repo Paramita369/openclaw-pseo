@@ -846,6 +846,9 @@ def generate_dynamic_sitemaps(
             "User-agent: *",
             "Allow: /",
             "",
+            # Keep /sitemap.xml as primary entry for Search Console compatibility,
+            # and keep /sitemap-index.xml as an explicit secondary index endpoint.
+            f"Sitemap: {domain}/sitemap.xml",
             f"Sitemap: {domain}/sitemap-index.xml",
             "",
         ]
