@@ -34,6 +34,9 @@ REQUIRED_FRONTMATTER_KEYS = [
     "sample_size",
     "freshness_days",
     "freshness_status",
+    "raw_signal_score",
+    "robust_score",
+    "penalties",
     "metrics",
     "probabilities",
     "event_direction",
@@ -41,6 +44,7 @@ REQUIRED_FRONTMATTER_KEYS = [
     "event_previous",
     "event_delta",
     "direction_basis",
+    "outcome_status",
 ]
 
 EXPECTED_CSV_COLUMNS = {
@@ -85,6 +89,15 @@ EVENT_FRESHNESS_THRESHOLDS = {
     "CPI": 45,
     "NFP": 45,
     "FOMC": 90,
+}
+
+EXPECTED_ROBUST_PENALTIES = {
+    "freshness_stale": 6.0,
+    "freshness_fresh": 0.0,
+    "confidence_low": 4.0,
+    "confidence_normal": 0.0,
+    "outcome_ok": 0.0,
+    "outcome_pending": 12.0,
 }
 
 
@@ -198,6 +211,14 @@ def is_finite_number(value: object) -> bool:
         return False
 
 
+def expected_sample_penalty(sample_size: float) -> float:
+    if sample_size < 5:
+        return 10.0
+    if sample_size < 10:
+        return 4.0
+    return 0.0
+
+
 def validate_probability_window(window: object, prefix: str) -> List[str]:
     if not isinstance(window, dict):
         return [f"missing_{prefix}_window"]
@@ -289,6 +310,10 @@ def scan_file(path: Path) -> List[str]:
     if direction_basis != "vs_previous":
         violations.append("invalid_direction_basis")
 
+    outcome_status = str(fm.get("outcome_status", "")).lower()
+    if outcome_status not in {"ok", "pending"}:
+        violations.append("invalid_outcome_status")
+
     for field in ["quality_score", "sample_size", "freshness_days", "event_actual", "event_previous", "event_delta"]:
         if field in fm and not is_finite_number(fm.get(field)):
             violations.append(f"non_numeric_{field}")
@@ -317,6 +342,70 @@ def scan_file(path: Path) -> List[str]:
             violations.append("confidence_level_should_be_low")
         if sample_size_num >= 5 and confidence_level != "normal":
             violations.append("confidence_level_should_be_normal")
+    else:
+        sample_size_num = -1.0
+
+    penalties = fm.get("penalties")
+    if not isinstance(penalties, dict):
+        violations.append("invalid_penalties_object")
+    else:
+        for field in ["sample", "freshness", "confidence", "outcome"]:
+            value = penalties.get(field)
+            if not is_finite_number(value):
+                violations.append(f"invalid_penalty_{field}")
+                continue
+            if float(value) < 0:
+                violations.append(f"negative_penalty_{field}")
+
+    raw_score = fm.get("raw_signal_score")
+    robust_score = fm.get("robust_score")
+    if not is_finite_number(raw_score):
+        violations.append("invalid_raw_signal_score")
+    if not is_finite_number(robust_score):
+        violations.append("invalid_robust_score")
+
+    if (
+        isinstance(penalties, dict)
+        and is_finite_number(raw_score)
+        and is_finite_number(robust_score)
+        and sample_size_num >= 0
+    ):
+        sample_penalty = float(penalties.get("sample", 0.0))
+        freshness_penalty = float(penalties.get("freshness", 0.0))
+        confidence_penalty = float(penalties.get("confidence", 0.0))
+        outcome_penalty = float(penalties.get("outcome", 0.0))
+
+        expected_sample = expected_sample_penalty(sample_size_num)
+        if abs(sample_penalty - expected_sample) > 0.01:
+            violations.append("penalty_sample_mismatch")
+
+        expected_freshness = (
+            EXPECTED_ROBUST_PENALTIES["freshness_stale"]
+            if freshness_state == "stale"
+            else EXPECTED_ROBUST_PENALTIES["freshness_fresh"]
+        )
+        if abs(freshness_penalty - expected_freshness) > 0.01:
+            violations.append("penalty_freshness_mismatch")
+
+        expected_confidence = (
+            EXPECTED_ROBUST_PENALTIES["confidence_low"]
+            if confidence_level == "low"
+            else EXPECTED_ROBUST_PENALTIES["confidence_normal"]
+        )
+        if abs(confidence_penalty - expected_confidence) > 0.01:
+            violations.append("penalty_confidence_mismatch")
+
+        expected_outcome = (
+            EXPECTED_ROBUST_PENALTIES["outcome_pending"]
+            if outcome_status == "pending"
+            else EXPECTED_ROBUST_PENALTIES["outcome_ok"]
+        )
+        if abs(outcome_penalty - expected_outcome) > 0.01:
+            violations.append("penalty_outcome_mismatch")
+
+        reconstructed = float(raw_score) - (sample_penalty + freshness_penalty + confidence_penalty + outcome_penalty)
+        if abs(reconstructed - float(robust_score)) > 0.01:
+            violations.append("robust_score_formula_mismatch")
 
     return sorted(set(violations))
 

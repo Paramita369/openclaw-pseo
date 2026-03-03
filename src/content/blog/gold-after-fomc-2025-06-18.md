@@ -10,15 +10,25 @@ asof_date: "2026-03-02"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
+raw_signal_score: 22.0
+robust_score: 12.0
+penalties:
+  sample: 4.0
+  freshness: 6.0
+  confidence: 0.0
+  outcome: 0.0
 confidence_level: "normal"
 quality_score: 60
 sample_size: 9
 freshness_days: 257
+freshness_status: "stale"
+data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
 event_direction: "flat"
 event_actual: 4.5
 event_previous: 4.5
 event_delta: 0.0
 direction_basis: "vs_previous"
+outcome_status: "ok"
 tags: ["gold", "fomc", "event-probability", "general"]
 metrics:
   sharpe_t7: 4.54

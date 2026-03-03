@@ -65,6 +65,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dry-run", action="store_true", help="Run without commit/push")
     parser.add_argument("--push", action="store_true", help="Commit and push if whitelist files changed")
     parser.add_argument("--max-pages", type=int, default=None, help="Max changed pages to regenerate")
+    parser.add_argument("--full", action="store_true", help="Force full content regeneration")
     parser.add_argument("--with-backfill", action="store_true", help="Run history backfill step")
     parser.add_argument("--skip-build", action="store_true", help="Skip astro build")
     parser.add_argument("--runtime-root", default=None, help="Override runtime output root for dry-run")
@@ -366,6 +367,8 @@ def main() -> None:
         ]
         if args.strict:
             build_cmd.append("--strict")
+        if args.full:
+            build_cmd.append("--full")
         if args.max_pages is not None:
             build_cmd.extend(["--max-pages", str(args.max_pages)])
 

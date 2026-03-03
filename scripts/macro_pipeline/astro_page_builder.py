@@ -70,6 +70,9 @@ CSV_EXTRA_COLUMNS = [
     "asof_date",
     "freshness_days",
     "signal",
+    "raw_signal_score",
+    "robust_score",
+    "confidence_level",
     "event_direction",
     "event_actual",
     "event_previous",
@@ -422,6 +425,34 @@ def signal_from_probabilities(t1_up: float, t7_up: float, median_t7: float) -> T
     return "Neutral", round(signal_score, 2)
 
 
+def robust_penalty_breakdown(
+    *,
+    sample_size: int,
+    freshness_status: str,
+    confidence_level: str,
+    outcome_status: str,
+) -> Tuple[Dict[str, float], float]:
+    if sample_size < 5:
+        sample_penalty = 10.0
+    elif sample_size < 10:
+        sample_penalty = 4.0
+    else:
+        sample_penalty = 0.0
+
+    freshness_penalty = 6.0 if str(freshness_status).lower() == "stale" else 0.0
+    confidence_penalty = 4.0 if str(confidence_level).lower() == "low" else 0.0
+    outcome_penalty = 12.0 if str(outcome_status).lower() != "ok" else 0.0
+
+    breakdown = {
+        "sample": sample_penalty,
+        "freshness": freshness_penalty,
+        "confidence": confidence_penalty,
+        "outcome": outcome_penalty,
+    }
+    total = round(sum(breakdown.values()), 2)
+    return breakdown, total
+
+
 def fetch_chart_data(asset: str, event_date: str) -> List[Dict[str, Any]]:
     try:
         import yfinance as yf
@@ -534,6 +565,9 @@ def build_markdown(
     intent: str,
     offer_key: str,
     signal: str,
+    raw_signal_score: float,
+    robust_score: float,
+    penalty_breakdown: Dict[str, float],
     confidence_level: str,
     quality: int,
     sample_size: int,
@@ -549,6 +583,7 @@ def build_markdown(
     event_previous: float,
     event_delta: float,
     direction_basis: str,
+    outcome_status: str,
 ) -> str:
     tags = [asset.lower(), event_type.lower(), "event-probability", intent.replace(" ", "-").lower()]
 
@@ -571,6 +606,13 @@ asof_date: "{asof_date}"
 source: "{source}"
 offer_key: "{offer_key}"
 signal: "{signal}"
+raw_signal_score: {raw_signal_score}
+robust_score: {robust_score}
+penalties:
+  sample: {penalty_breakdown['sample']}
+  freshness: {penalty_breakdown['freshness']}
+  confidence: {penalty_breakdown['confidence']}
+  outcome: {penalty_breakdown['outcome']}
 confidence_level: "{confidence_level}"
 quality_score: {quality}
 sample_size: {sample_size}
@@ -582,6 +624,7 @@ event_actual: {event_actual}
 event_previous: {event_previous}
 event_delta: {event_delta}
 direction_basis: "{direction_basis}"
+outcome_status: "{outcome_status}"
 tags: {json.dumps(tags)}
 metrics:
   sharpe_t7: {metrics['sharpe_t7']}
@@ -1026,8 +1069,15 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         },
     }
 
-    signal, signal_score = signal_from_probabilities(t1_window["up"], t7_window["up"], t7_window["median"])
+    signal, raw_signal_score = signal_from_probabilities(t1_window["up"], t7_window["up"], t7_window["median"])
     confidence_level = "normal" if probabilities["sample_size"] >= 5 else "low"
+    penalty_breakdown, total_penalty = robust_penalty_breakdown(
+        sample_size=probabilities["sample_size"],
+        freshness_status=freshness_status_value,
+        confidence_level=confidence_level,
+        outcome_status=outcome_status,
+    )
+    robust_score = round(raw_signal_score - total_penalty, 2)
 
     impact_t1 = raw_t1 if raw_t1 is not None else t1_window["mean"]
     impact_t7 = raw_t7 if raw_t7 is not None else t7_window["mean"]
@@ -1085,6 +1135,9 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         "metrics": metrics,
         "probabilities": probabilities,
         "signal": signal,
+        "raw_signal_score": raw_signal_score,
+        "robust_score": robust_score,
+        "penalty_breakdown": penalty_breakdown,
         "confidence_level": confidence_level,
         "quality": quality,
         "offer_key": offer_key,
@@ -1118,6 +1171,9 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
             intent=intent,
             offer_key=offer_key,
             signal=signal,
+            raw_signal_score=raw_signal_score,
+            robust_score=robust_score,
+            penalty_breakdown=penalty_breakdown,
             confidence_level=confidence_level,
             quality=quality,
             sample_size=probabilities["sample_size"],
@@ -1133,6 +1189,7 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
             event_previous=float(event_previous or 0.0),
             event_delta=float(event_delta or 0.0),
             direction_basis=direction_basis,
+            outcome_status=outcome_status,
         )
 
         ensure_dir(context.output_dir)
@@ -1159,7 +1216,10 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         "quality_score": quality,
         "offer_key": offer_key,
         "signal": signal,
-        "signal_score": signal_score,
+        "signal_score": raw_signal_score,
+        "raw_signal_score": raw_signal_score,
+        "robust_score": robust_score,
+        "penalty_breakdown": penalty_breakdown,
         "sample_size": probabilities["sample_size"],
         "asof_date": asof_date,
         "event_direction": event_direction,
@@ -1192,6 +1252,9 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
     row["asof_date"] = asof_date
     row["freshness_days"] = str(freshness_days)
     row["signal"] = signal
+    row["raw_signal_score"] = str(raw_signal_score)
+    row["robust_score"] = str(robust_score)
+    row["confidence_level"] = confidence_level
     row["event_direction"] = event_direction
     row["event_actual"] = str(event_actual if event_actual is not None else "")
     row["event_previous"] = str(event_previous if event_previous is not None else "")

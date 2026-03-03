@@ -4,12 +4,31 @@ import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog');
 
+const finiteOrNull = (value) => {
+  const num = Number(value);
+  return Number.isFinite(num) ? num : null;
+};
+
+const fallbackRawScore = (riseT1, riseT7, medianT7) => 0.5 * (riseT7 - 50) + 0.3 * (riseT1 - 50) + 0.2 * (Math.sign(medianT7) * 10);
+const fallbackSamplePenalty = (sample) => (sample < 5 ? 10 : sample < 10 ? 4 : 0);
+
 const normalizedRows = posts.map((post) => {
   const p = post.data.probabilities || {};
   const riseT7 = Number(p?.t7?.up ?? 0);
   const medianT7 = Number(p?.t7?.median ?? 0);
   const riseT1 = Number(p?.t1?.up ?? 0);
-  const signalScore = 0.5 * (riseT7 - 50) + 0.3 * (riseT1 - 50) + 0.2 * (Math.sign(medianT7) * 10);
+  const sample = Number(p?.sample_size ?? 0);
+  const confidence = String(post.data.confidence_level || (sample < 5 ? 'low' : 'normal')).toLowerCase();
+  const freshnessStatus = String(post.data.freshness_status || 'fresh').toLowerCase();
+  const penalties = post.data.penalties || {};
+  const samplePenalty = finiteOrNull(penalties.sample) ?? fallbackSamplePenalty(sample);
+  const freshnessPenalty = finiteOrNull(penalties.freshness) ?? (freshnessStatus === 'stale' ? 6 : 0);
+  const confidencePenalty = finiteOrNull(penalties.confidence) ?? (confidence === 'low' ? 4 : 0);
+  const outcomePenalty = finiteOrNull(penalties.outcome) ?? 0;
+  const totalPenalty = samplePenalty + freshnessPenalty + confidencePenalty + outcomePenalty;
+  const rawScore =
+    finiteOrNull(post.data.raw_signal_score) ?? Number(fallbackRawScore(riseT1, riseT7, medianT7).toFixed(2));
+  const robustScore = finiteOrNull(post.data.robust_score) ?? Number((rawScore - totalPenalty).toFixed(2));
   const eventDate = post.data.event_date || post.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '';
 
   return {
@@ -19,11 +38,13 @@ const normalizedRows = posts.map((post) => {
     eventDate,
     direction: (post.data.event_direction || '--').toUpperCase(),
     signal: post.data.signal || 'Neutral',
-    signalScore: Number(signalScore.toFixed(2)),
+    rawScore: Number(rawScore.toFixed(2)),
+    robustScore: Number(robustScore.toFixed(2)),
+    confidence,
     riseT1,
     riseT7,
     medianT7,
-    sample: Number(p?.sample_size ?? 0),
+    sample,
     asof: post.data.asof_date || '--',
   };
 });
@@ -46,11 +67,18 @@ for (const row of normalizedRows) {
   if (rowDate < existingDate) {
     continue;
   }
-  if (row.signalScore > existing.signalScore) {
+  if (row.robustScore > existing.robustScore) {
     latestByAssetEvent.set(key, row);
     continue;
   }
-  if (row.signalScore < existing.signalScore) {
+  if (row.robustScore < existing.robustScore) {
+    continue;
+  }
+  if (row.rawScore > existing.rawScore) {
+    latestByAssetEvent.set(key, row);
+    continue;
+  }
+  if (row.rawScore < existing.rawScore) {
     continue;
   }
   if (row.slug.localeCompare(existing.slug) < 0) {
@@ -59,7 +87,8 @@ for (const row of normalizedRows) {
 }
 
 const bestRows = [...latestByAssetEvent.values()].sort((a, b) => {
-  if (b.signalScore !== a.signalScore) return b.signalScore - a.signalScore;
+  if (b.robustScore !== a.robustScore) return b.robustScore - a.robustScore;
+  if (b.rawScore !== a.rawScore) return b.rawScore - a.rawScore;
   const dateOrder = String(b.eventDate || '').localeCompare(String(a.eventDate || ''));
   if (dateOrder !== 0) return dateOrder;
   return String(a.asset).localeCompare(String(b.asset));
@@ -70,14 +99,14 @@ const bestRows = [...latestByAssetEvent.values()].sort((a, b) => {
   <section class="py-12 hero-panel">
     <div class="max-w-7xl mx-auto px-4">
       <h1 class="text-4xl font-extrabold text-white">Event Playbook Leaderboard</h1>
-      <p class="text-blue-100 text-lg mt-3">Latest row per Asset × Event (CPI/NFP/FOMC), ranked by probability-derived signal score.</p>
+      <p class="text-blue-100 text-lg mt-3">Latest row per Asset × Event (CPI/NFP/FOMC), ranked by Robust Score with reliability penalties.</p>
     </div>
   </section>
 
   <section class="max-w-7xl mx-auto px-4 py-10">
     <div class="surface-card overflow-hidden">
       <div class="overflow-x-auto">
-        <table class="w-full min-w-[1080px] text-sm">
+        <table class="w-full min-w-[1220px] text-sm">
           <thead style="background:var(--surface-alt);color:var(--muted);">
             <tr>
               <th class="text-left px-4 py-3 font-bold">#</th>
@@ -86,7 +115,9 @@ const bestRows = [...latestByAssetEvent.values()].sort((a, b) => {
               <th class="text-left px-4 py-3 font-bold">Event Date</th>
               <th class="text-left px-4 py-3 font-bold">Outcome</th>
               <th class="text-left px-4 py-3 font-bold">Signal</th>
-              <th class="text-left px-4 py-3 font-bold">Signal Score</th>
+              <th class="text-left px-4 py-3 font-bold">Robust Score</th>
+              <th class="text-left px-4 py-3 font-bold">Raw Score</th>
+              <th class="text-left px-4 py-3 font-bold">Confidence</th>
               <th class="text-left px-4 py-3 font-bold">T+1 P(up)</th>
               <th class="text-left px-4 py-3 font-bold">T+7 P(up)</th>
               <th class="text-left px-4 py-3 font-bold">T+7 Median</th>
@@ -106,7 +137,15 @@ const bestRows = [...latestByAssetEvent.values()].sort((a, b) => {
                   <td class="px-4 py-3">{row.eventDate || '--'}</td>
                   <td class="px-4 py-3">{row.direction}</td>
                   <td class={`px-4 py-3 font-bold ${signalClass}`}>{row.signal}</td>
-                  <td class="px-4 py-3">{row.signalScore}</td>
+                  <td class="px-4 py-3 font-semibold">{row.robustScore}</td>
+                  <td class="px-4 py-3">{row.rawScore}</td>
+                  <td class="px-4 py-3">
+                    {row.confidence === 'low' || row.sample < 5 ? (
+                      <span class="badge-chip metric-down">Low confidence</span>
+                    ) : (
+                      <span class="badge-chip">Normal</span>
+                    )}
+                  </td>
                   <td class="px-4 py-3">{row.riseT1}%</td>
                   <td class="px-4 py-3">{row.riseT7}%</td>
                   <td class={`px-4 py-3 font-semibold ${row.medianT7 >= 0 ? 'metric-up' : 'metric-down'}`}>{row.medianT7}%</td>

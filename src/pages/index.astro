@@ -7,6 +7,11 @@ import offersConfig from '../data/offers.json';
 const posts = await getCollection('blog');
 const markets = dailySnapshot.markets || {};
 
+const finiteOrNull = (value) => {
+  const num = Number(value);
+  return Number.isFinite(num) ? num : null;
+};
+
 const parseIsoDate = (value) => {
   const text = String(value || '').slice(0, 10);
   if (!text) return null;
@@ -41,6 +46,17 @@ const playbookRows = preferredAssets
     const t1Median = p?.t1?.median;
     const t7Median = p?.t7?.median;
     const sampleSize = p?.sample_size ?? p?.t1?.sample ?? entry.data.sample_size ?? 0;
+    const confidence = String(entry.data.confidence_level || (Number(sampleSize) < 5 ? 'low' : 'normal')).toLowerCase();
+    const penalties = entry.data.penalties || {};
+    const samplePenalty = finiteOrNull(penalties.sample) ?? (Number(sampleSize) < 5 ? 10 : Number(sampleSize) < 10 ? 4 : 0);
+    const freshnessPenalty = finiteOrNull(penalties.freshness) ?? (entry.data.freshness_status === 'stale' ? 6 : 0);
+    const confidencePenalty = finiteOrNull(penalties.confidence) ?? (confidence === 'low' ? 4 : 0);
+    const outcomePenalty = finiteOrNull(penalties.outcome) ?? 0;
+    const fallbackRaw = 0.5 * ((Number(t7Up) || 0) - 50) + 0.3 * ((Number(t1Up) || 0) - 50) + 0.2 * (Math.sign(Number(t7Median) || 0) * 10);
+    const rawScore = finiteOrNull(entry.data.raw_signal_score) ?? Number(fallbackRaw.toFixed(2));
+    const robustScore =
+      finiteOrNull(entry.data.robust_score) ??
+      Number((rawScore - (samplePenalty + freshnessPenalty + confidencePenalty + outcomePenalty)).toFixed(2));
 
     const signal =
       entry.data.signal ||
@@ -65,6 +81,9 @@ const playbookRows = preferredAssets
       t7Down,
       t1Median,
       t7Median,
+      rawScore,
+      robustScore,
+      confidence,
     };
   })
   .filter(Boolean);
@@ -267,6 +286,17 @@ const steps = [
                   Event date: <strong style="color:var(--text);">{row.eventDate || '--'}</strong> · As-of:{' '}
                   <strong style="color:var(--text);">{row.asofDate || '--'}</strong>
                 </p>
+              </div>
+              <div class="flex flex-wrap items-center justify-between gap-2 mt-2 text-sm" style="color:var(--muted);">
+                <p>
+                  Robust score: <strong style="color:var(--text);">{row.robustScore}</strong> · Raw score:{' '}
+                  <strong style="color:var(--text);">{row.rawScore}</strong>
+                </p>
+                {row.confidence === 'low' || Number(row.sampleSize) < 5 ? (
+                  <span class="badge-chip metric-down">Low confidence</span>
+                ) : (
+                  <span class="badge-chip">Normal confidence</span>
+                )}
               </div>
 
               {offerSet?.primary && (

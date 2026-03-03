@@ -10,15 +10,25 @@ asof_date: "2026-03-02"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
+raw_signal_score: 6.45
+robust_score: 2.45
+penalties:
+  sample: 4.0
+  freshness: 0.0
+  confidence: 0.0
+  outcome: 0.0
 confidence_level: "normal"
 quality_score: 60
 sample_size: 9
 freshness_days: 82
+freshness_status: "fresh"
+data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
 event_direction: "flat"
 event_actual: 4.0
 event_previous: 4.0
 event_delta: 0.0
 direction_basis: "vs_previous"
+outcome_status: "ok"
 tags: ["btc", "fomc", "event-probability", "general"]
 metrics:
   sharpe_t7: 1.2

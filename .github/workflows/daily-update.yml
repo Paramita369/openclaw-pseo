@@ -1,46 +1,46 @@
 name: Daily QuantMacro Update
 
 on:
-  schedule:
-    # Run daily at 8:00 AM UTC (4:00 PM HKT)
-    - cron: '0 8 * * *'
   workflow_dispatch:
 
 jobs:
   update-and-deploy:
     runs-on: ubuntu-latest
-    
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+        with:
+          fetch-depth: 0
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-          
-      - name: Install dependencies
+          python-version: "3.12"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Python dependencies
         run: |
-          pip install pandas yfinance requests google-generativeai
-          
-      - name: Run historical data backfill
-        env:
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-        run: |
-          cd scripts/macro_pipeline
-          python history_backfill.py || echo "No new data"
-          
-      - name: Generate Astro pages
-        env:
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-        run: |
-          cd scripts/macro_pipeline
-          python astro_page_builder.py
-          
-      - name: Commit and push
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Configure git identity
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add -A
-          git diff-index --quiet HEAD || git commit -m "bot: daily data update $(date +%Y-%m-%d)"
-          git push
+
+      - name: Run OpenClaw backup pipeline
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: |
+          python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push

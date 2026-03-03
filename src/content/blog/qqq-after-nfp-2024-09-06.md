@@ -10,15 +10,25 @@ asof_date: "2026-03-02"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
+raw_signal_score: 0.46
+robust_score: -5.54
+penalties:
+  sample: 0.0
+  freshness: 6.0
+  confidence: 0.0
+  outcome: 0.0
 confidence_level: "normal"
 quality_score: 50
 sample_size: 13
 freshness_days: 542
+freshness_status: "stale"
+data_last_updated_at: "2026-03-03T09:55:20+00:00"
 event_direction: "up"
 event_actual: 157912.0
 event_previous: 157757.0
 event_delta: 155.0
 direction_basis: "vs_previous"
+outcome_status: "ok"
 tags: ["qqq", "nfp", "event-probability", "general"]
 metrics:
   sharpe_t7: 1.0

@@ -10,15 +10,25 @@ asof_date: "2026-03-02"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Bullish"
+raw_signal_score: 8.93
+robust_score: 2.93
+penalties:
+  sample: 0.0
+  freshness: 6.0
+  confidence: 0.0
+  outcome: 0.0
 confidence_level: "normal"
 quality_score: 60
 sample_size: 13
 freshness_days: 416
+freshness_status: "stale"
+data_last_updated_at: "2026-03-03T09:55:20+00:00"
 event_direction: "down"
 event_actual: 158268.0
 event_previous: 158316.0
 event_delta: -48.0
 direction_basis: "vs_previous"
+outcome_status: "ok"
 tags: ["eth", "nfp", "event-probability", "general"]
 metrics:
   sharpe_t7: 1.08
