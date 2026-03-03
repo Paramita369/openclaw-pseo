@@ -130,6 +130,42 @@ html[data-theme='dark'] .surface-card {
   background: var(--surface-alt);
 }
 
+.btn-secondary-muted {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  background: transparent;
+  color: color-mix(in srgb, var(--text) 68%, var(--muted) 32%);
+  font-weight: 600;
+  font-size: 0.84rem;
+  line-height: 1.15;
+  padding: 0.52rem 0.78rem;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.btn-secondary-muted:hover {
+  background: var(--surface-alt);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.stale-data-label {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--negative) 75%, transparent);
+  background: color-mix(in srgb, var(--negative) 15%, transparent);
+  color: var(--negative);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.1rem 0.5rem;
+  margin-right: 0.45rem;
+}
+
 .hero-panel {
   background: radial-gradient(140% 180% at 15% 0%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 48%),
     linear-gradient(126deg, var(--hero-start), var(--hero-end));

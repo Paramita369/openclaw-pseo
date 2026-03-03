@@ -67,6 +67,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-pages", type=int, default=None, help="Max changed pages to regenerate")
     parser.add_argument("--with-backfill", action="store_true", help="Run history backfill step")
     parser.add_argument("--skip-build", action="store_true", help="Skip astro build")
+    parser.add_argument("--runtime-root", default=None, help="Override runtime output root for dry-run")
     return parser.parse_args()
 
 
@@ -130,6 +131,14 @@ def is_ignored_runtime_change(path: str) -> bool:
     return any(path.startswith(prefix) for prefix in IGNORED_RUNTIME_PREFIXES)
 
 
+def assert_no_tracked_changes(root: Path, baseline: Sequence[str]) -> None:
+    baseline_set = {path for path in baseline if not is_ignored_runtime_change(path)}
+    changed = [path for path in list_changed_files(root) if not is_ignored_runtime_change(path)]
+    introduced = sorted(path for path in changed if path not in baseline_set)
+    if introduced:
+        raise RuntimeError(f"Dry-run produced tracked changes: {introduced}")
+
+
 def commit_and_push(root: Path, as_of_date: str, dry_run: bool) -> Dict[str, object]:
     all_changed = list_changed_files(root)
     ignored = [path for path in all_changed if is_ignored_runtime_change(path)]
@@ -163,16 +172,27 @@ def commit_and_push(root: Path, as_of_date: str, dry_run: bool) -> Dict[str, obj
 def main() -> None:
     args = parse_args()
     root = resolve_project_root(args.project_root)
+    if args.push and args.dry_run:
+        raise SystemExit("--push cannot be used together with --dry-run")
+    baseline_changes = list_changed_files(root) if args.dry_run else []
 
     python = sys.executable
     log_dir = root / "logs" / "daily_ops"
     ensure_dir(log_dir)
     log_path = log_dir / f"{args.as_of_date}.json"
+    runtime_root = (
+        Path(args.runtime_root).expanduser().resolve()
+        if args.runtime_root
+        else (log_dir / "runtime" / f"{args.as_of_date}_{utc_now().strftime('%H%M%S')}")
+    )
+    if args.dry_run:
+        ensure_dir(runtime_root)
 
     run_log: Dict[str, object] = {
         "date": args.as_of_date,
         "generated_at": utc_now().isoformat(),
         "project_root": str(root),
+        "runtime_root": str(runtime_root if args.dry_run else root),
         "strict": args.strict,
         "dry_run": args.dry_run,
         "push": args.push,
@@ -182,6 +202,39 @@ def main() -> None:
 
     steps: List[StepResult] = []
     try:
+        source_db = root / "data" / "macro_events.db"
+        if not source_db.exists():
+            raise RuntimeError(f"Missing source DB: {source_db}")
+
+        if args.dry_run:
+            runtime_db = runtime_root / "data" / "macro_events.runtime.db"
+            ensure_dir(runtime_db.parent)
+            shutil.copy2(source_db, runtime_db)
+            sync_db = runtime_db
+            snapshot_output = runtime_root / "src" / "daily_snapshot.json"
+            targets_output = runtime_root / "data" / "verified_targets.csv"
+            content_output = runtime_root / "src" / "content" / "blog"
+            manifest_output = runtime_root / "data" / "page_manifest.json"
+            public_output = runtime_root / "public"
+            slug_redirects_output = runtime_root / "data" / "slug_redirects.json"
+            vercel_output = runtime_root / "vercel.json"
+            quality_report_path = runtime_root / "logs" / f"quality_{args.as_of_date}.json"
+            if (root / "vercel.json").exists():
+                ensure_dir(vercel_output.parent)
+                shutil.copy2(root / "vercel.json", vercel_output)
+        else:
+            sync_db = source_db
+            runtime_db_dir = log_dir / "runtime"
+            ensure_dir(runtime_db_dir)
+            runtime_db = runtime_db_dir / "macro_events.runtime.db"
+            snapshot_output = root / "src" / "daily_snapshot.json"
+            targets_output = root / "data" / "verified_targets.csv"
+            content_output = root / "src" / "content" / "blog"
+            manifest_output = root / "data" / "page_manifest.json"
+            public_output = root / "public"
+            slug_redirects_output = root / "data" / "slug_redirects.json"
+            vercel_output = root / "vercel.json"
+            quality_report_path = log_dir / f"quality_{args.as_of_date}.json"
 
         if args.with_backfill:
             steps.append(
@@ -196,13 +249,19 @@ def main() -> None:
         steps.append(
             run_step(
                 "fetch_snapshot",
-                [python, "scripts/macro_pipeline/fetch_daily_snapshot.py", "--project-root", str(root)],
+                [
+                    python,
+                    "scripts/macro_pipeline/fetch_daily_snapshot.py",
+                    "--project-root",
+                    str(root),
+                    "--output-path",
+                    str(snapshot_output),
+                ],
                 cwd=root,
                 required=True,
             )
         )
 
-        source_db = root / "data" / "macro_events.db"
         steps.append(
             run_step(
                 "sync_event_calendar",
@@ -212,7 +271,7 @@ def main() -> None:
                     "--project-root",
                     str(root),
                     "--db-path",
-                    str(source_db),
+                    str(sync_db),
                     "--as-of-date",
                     args.as_of_date,
                     "--override-file",
@@ -224,13 +283,8 @@ def main() -> None:
             )
         )
 
-        runtime_db_dir = log_dir / "runtime"
-        ensure_dir(runtime_db_dir)
-        runtime_db = runtime_db_dir / "macro_events.runtime.db"
-        if source_db.exists():
+        if not args.dry_run:
             shutil.copy2(source_db, runtime_db)
-        else:
-            raise RuntimeError(f"Missing source DB: {source_db}")
 
         steps.append(
             run_step(
@@ -262,7 +316,7 @@ def main() -> None:
                     "--db-path",
                     str(runtime_db),
                     "--output",
-                    str(root / "data" / "verified_targets.csv"),
+                    str(targets_output),
                     "--as-of-date",
                     args.as_of_date,
                     *(["--strict"] if args.strict else []),
@@ -297,6 +351,18 @@ def main() -> None:
             args.as_of_date,
             "--db-path",
             str(runtime_db),
+            "--csv-path",
+            str(targets_output),
+            "--output-dir",
+            str(content_output),
+            "--manifest-path",
+            str(manifest_output),
+            "--public-dir",
+            str(public_output),
+            "--slug-redirects-path",
+            str(slug_redirects_output),
+            "--vercel-config-path",
+            str(vercel_output),
         ]
         if args.strict:
             build_cmd.append("--strict")
@@ -310,10 +376,24 @@ def main() -> None:
             "scripts/macro_pipeline/quality_gates.py",
             "--project-root",
             str(root),
+            "--content-dir",
+            str(content_output),
             "--report",
-            str(log_dir / f"quality_{args.as_of_date}.json"),
+            str(quality_report_path),
             "--as-of-date",
             args.as_of_date,
+            "--manifest-path",
+            str(manifest_output),
+            "--public-dir",
+            str(public_output),
+            "--slug-redirects-path",
+            str(slug_redirects_output),
+            "--vercel-config-path",
+            str(vercel_output),
+            "--csv-path",
+            str(targets_output),
+            "--db-path",
+            str(runtime_db),
         ]
         if args.strict:
             gate_cmd.append("--strict")
@@ -338,7 +418,10 @@ def main() -> None:
             )
         )
 
-        if args.push:
+        if args.dry_run:
+            assert_no_tracked_changes(root, baseline_changes)
+            git_result = {"status": "dry_run_clean", "runtime_root": str(runtime_root)}
+        elif args.push:
             git_result = commit_and_push(root=root, as_of_date=args.as_of_date, dry_run=args.dry_run)
         else:
             git_result = {"status": "push_disabled"}

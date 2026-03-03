@@ -75,11 +75,17 @@ const latestAsOfDate =
   (dailySnapshot.timestamp ? new Date(dailySnapshot.timestamp).toISOString().slice(0, 10) : '');
 const latestEventDt = parseIsoDate(latestEventDate);
 const latestAsOfDt = parseIsoDate(latestAsOfDate) || new Date();
+const latestRow = [...playbookRows]
+  .filter((row) => row.eventDate)
+  .sort((a, b) => String(b.eventDate).localeCompare(String(a.eventDate)))[0];
+const freshnessThresholds = { CPI: 45, NFP: 45, FOMC: 90 };
+const latestEventType = String(latestRow?.event || '').toUpperCase();
+const freshnessThreshold = freshnessThresholds[latestEventType] || 45;
 const freshnessAgeDays = latestEventDt
   ? Math.max(Math.floor((latestAsOfDt.getTime() - latestEventDt.getTime()) / (1000 * 60 * 60 * 24)), 0)
   : 0;
-const isStalePlaybook = Boolean(latestEventDt) && freshnessAgeDays > 14;
-const playbookHeading = isStalePlaybook ? 'Latest Event Playbook' : "Today's Event Playbook";
+const isStalePlaybook = Boolean(latestEventDt) && freshnessAgeDays > freshnessThreshold;
+const playbookHeading = isStalePlaybook ? 'Latest Event Playbook' : 'Current Event Playbook';
 const playbookSubline = isStalePlaybook
   ? `Last event: ${latestEventDate} (age ${freshnessAgeDays} days). Showing latest validated playbook.`
   : 'Probabilities are generated from historical CPI/NFP/FOMC event windows.';
@@ -203,7 +209,9 @@ const steps = [
           <h2 class="text-2xl font-bold">{playbookHeading}</h2>
           <p class="text-sm mt-1" style="color:var(--muted);">{playbookSubline}</p>
           {isStalePlaybook && (
-            <p class="text-xs mt-1 metric-down">Data freshness warning: showing latest available release set, not a same-day event.</p>
+            <p class="text-xs mt-1">
+              <span class="stale-data-label">Stale Data</span> showing latest available release set, not a same-day event.
+            </p>
           )}
         </div>
         <a class="btn-ghost focus-ring" href="/leaderboard">Open Full Playbook</a>
@@ -274,6 +282,7 @@ const steps = [
                       data-asset={row.asset}
                       data-offer-key={offerSet.primary.key}
                       data-cta-role="primary"
+                      data-cta-variant="prominent"
                       data-cta-position="playbook_card"
                       data-utm-campaign={offerSet.primary.utm_campaign || `affiliate_${offerSet.primary.key}`}
                       class="btn-primary text-sm focus-ring"
@@ -290,9 +299,10 @@ const steps = [
                         data-asset={row.asset}
                         data-offer-key={offer.key}
                         data-cta-role="secondary"
+                        data-cta-variant="muted"
                         data-cta-position="playbook_card"
                         data-utm-campaign={offer.utm_campaign || `affiliate_${offer.key}`}
-                        class="btn-ghost text-sm focus-ring"
+                        class="btn-secondary-muted focus-ring"
                       >
                         Open {offer.name}
                       </a>

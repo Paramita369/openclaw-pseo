@@ -33,6 +33,7 @@ REQUIRED_FRONTMATTER_KEYS = [
     "quality_score",
     "sample_size",
     "freshness_days",
+    "freshness_status",
     "metrics",
     "probabilities",
     "event_direction",
@@ -80,6 +81,12 @@ EMBEDDED_AFFILIATE_PATTERN = re.compile(
     flags=re.IGNORECASE,
 )
 
+EVENT_FRESHNESS_THRESHOLDS = {
+    "CPI": 45,
+    "NFP": 45,
+    "FOMC": 90,
+}
+
 
 def table_exists(conn: sqlite3.Connection, table_name: str) -> bool:
     cursor = conn.cursor()
@@ -94,6 +101,14 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run quality gates")
     parser.add_argument("--project-root", default=None, help="Repository root")
     parser.add_argument("--content-dir", default=None, help="Content directory")
+    parser.add_argument("--manifest-path", default=None, help="Manifest path override")
+    parser.add_argument("--public-dir", default=None, help="Public directory override")
+    parser.add_argument("--slug-redirects-path", default=None, help="slug_redirects.json override")
+    parser.add_argument("--vercel-config-path", default=None, help="vercel.json override")
+    parser.add_argument("--offers-path", default=None, help="offers.json override")
+    parser.add_argument("--csv-path", default=None, help="verified_targets.csv override")
+    parser.add_argument("--db-path", default=None, help="macro_events.db override")
+    parser.add_argument("--index-path", default=None, help="index.astro override")
     parser.add_argument("--strict", action="store_true", help="Fail on any violations")
     parser.add_argument("--report", default=None, help="Output report path")
     parser.add_argument("--as-of-date", default=date.today().isoformat(), help="Run date (YYYY-MM-DD)")
@@ -278,6 +293,10 @@ def scan_file(path: Path) -> List[str]:
         if field in fm and not is_finite_number(fm.get(field)):
             violations.append(f"non_numeric_{field}")
 
+    freshness_state = str(fm.get("freshness_status", "")).lower()
+    if freshness_state not in {"fresh", "stale"}:
+        violations.append("invalid_freshness_status")
+
     metrics = fm.get("metrics")
     if not isinstance(metrics, dict):
         violations.append("invalid_metrics_object")
@@ -302,11 +321,15 @@ def scan_file(path: Path) -> List[str]:
     return sorted(set(violations))
 
 
-def validate_redirects(root: Path) -> Dict[str, object]:
+def validate_redirects(
+    root: Path,
+    slug_redirects_path: Path | None = None,
+    vercel_path: Path | None = None,
+) -> Dict[str, object]:
     violations: List[str] = []
 
-    slug_redirects_path = root / "data" / "slug_redirects.json"
-    vercel_path = root / "vercel.json"
+    slug_redirects_path = slug_redirects_path or (root / "data" / "slug_redirects.json")
+    vercel_path = vercel_path or (root / "vercel.json")
 
     slug_redirects: Dict[str, str] = {}
     if slug_redirects_path.exists():
@@ -361,14 +384,19 @@ def validate_redirects(root: Path) -> Dict[str, object]:
     return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
 
 
-def validate_sitemap(root: Path) -> Dict[str, object]:
+def validate_sitemap(
+    root: Path,
+    public_dir: Path | None = None,
+    manifest_path: Path | None = None,
+) -> Dict[str, object]:
     violations: List[str] = []
+    public_dir = public_dir or (root / "public")
 
-    index_path = root / "public" / "sitemap-index.xml"
-    core_path = root / "public" / "sitemap-core.xml"
-    assets_path = root / "public" / "sitemap-assets.xml"
-    events_path = root / "public" / "sitemap-events.xml"
-    blog_paths = sorted((root / "public").glob("sitemap-blog-*.xml"))
+    index_path = public_dir / "sitemap-index.xml"
+    core_path = public_dir / "sitemap-core.xml"
+    assets_path = public_dir / "sitemap-assets.xml"
+    events_path = public_dir / "sitemap-events.xml"
+    blog_paths = sorted(public_dir.glob("sitemap-blog-*.xml"))
 
     if not index_path.exists():
         violations.append("missing_sitemap_index")
@@ -401,6 +429,21 @@ def validate_sitemap(root: Path) -> Dict[str, object]:
         core_content = core_path.read_text(encoding="utf-8")
         if "/events" not in core_content:
             violations.append("core_sitemap_missing_events_route")
+        expected_priorities = {
+            "/": "1.0",
+            "/leaderboard": "0.95",
+            "/events": "0.9",
+            "/blog": "0.85",
+        }
+        for route, priority in expected_priorities.items():
+            loc_pattern = (
+                r"<loc>https?://[^<]+/</loc>"
+                if route == "/"
+                else rf"<loc>[^<]*{re.escape(route)}</loc>"
+            )
+            pattern = rf"{loc_pattern}[\s\S]*?<priority>{re.escape(priority)}</priority>"
+            if not re.search(pattern, core_content):
+                violations.append(f"core_priority_mismatch_{route.strip('/').replace('/', '_') or 'home'}")
     if assets_path.exists() and "/tags/" not in assets_path.read_text(encoding="utf-8"):
         violations.append("assets_sitemap_missing_tags")
     if events_path.exists() and "/events/" not in events_path.read_text(encoding="utf-8"):
@@ -411,11 +454,11 @@ def validate_sitemap(root: Path) -> Dict[str, object]:
         content = blog_sitemap.read_text(encoding="utf-8")
         blog_lastmods.extend(re.findall(r"<lastmod>([^<]+)</lastmod>", content))
     if len(blog_lastmods) >= 50 and len(set(blog_lastmods)) == 1:
-        manifest_path = root / "data" / "page_manifest.json"
+        local_manifest_path = manifest_path or (root / "data" / "page_manifest.json")
         allow_uniform = False
-        if manifest_path.exists():
+        if local_manifest_path.exists():
             try:
-                payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+                payload = json.loads(local_manifest_path.read_text(encoding="utf-8"))
                 allow_uniform = bool(payload.get("allow_uniform_lastmod_once"))
             except Exception:
                 allow_uniform = False
@@ -435,11 +478,16 @@ def validate_filter_routes(root: Path) -> Dict[str, object]:
     return {"violations": violations, "count": len(violations)}
 
 
-def validate_target_matrix(root: Path, as_of_date: str) -> Dict[str, object]:
+def validate_target_matrix(
+    root: Path,
+    as_of_date: str,
+    csv_path: Path | None = None,
+    db_path: Path | None = None,
+) -> Dict[str, object]:
     violations: List[str] = []
 
-    csv_path = root / "data" / "verified_targets.csv"
-    db_path = root / "data" / "macro_events.db"
+    csv_path = csv_path or (root / "data" / "verified_targets.csv")
+    db_path = db_path or (root / "data" / "macro_events.db")
 
     if not csv_path.exists():
         return {"violations": ["missing_verified_targets_csv"], "count": 1}
@@ -555,9 +603,9 @@ def validate_target_matrix(root: Path, as_of_date: str) -> Dict[str, object]:
     }
 
 
-def validate_event_pool(root: Path, as_of_date: str) -> Dict[str, object]:
+def validate_event_pool(root: Path, as_of_date: str, db_path: Path | None = None) -> Dict[str, object]:
     violations: List[str] = []
-    db_path = root / "data" / "macro_events.db"
+    db_path = db_path or (root / "data" / "macro_events.db")
     if not db_path.exists():
         return {"violations": ["missing_macro_events_db"], "count": 1}
 
@@ -596,22 +644,23 @@ def validate_event_pool(root: Path, as_of_date: str) -> Dict[str, object]:
     return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
 
 
-def validate_cta_routes(root: Path) -> Dict[str, object]:
+def validate_cta_routes(root: Path, offers_path: Path | None = None) -> Dict[str, object]:
     violations: List[str] = []
-    offers_path = root / "src" / "data" / "offers.json"
+    warnings: List[str] = []
+    offers_path = offers_path or (root / "src" / "data" / "offers.json")
     if not offers_path.exists():
-        return {"violations": ["missing_offers_json"], "count": 1}
+        return {"violations": ["missing_offers_json"], "warnings": [], "count": 1}
 
     try:
         payload = json.loads(offers_path.read_text(encoding="utf-8"))
     except Exception:
-        return {"violations": ["invalid_offers_json"], "count": 1}
+        return {"violations": ["invalid_offers_json"], "warnings": [], "count": 1}
 
     primary_map = payload.get("primary_offer_keys", {}) or {}
     secondary_map = payload.get("secondary_offer_keys", {}) or {}
     offers = payload.get("offers", {}) or {}
 
-    for asset in ["QQQ", "SPY"]:
+    for asset in ["QQQ", "SPY", "NVDA"]:
         primary = str(primary_map.get(asset) or primary_map.get("DEFAULT") or "").lower()
         if primary != "ibkr":
             violations.append(f"invalid_primary_offer_{asset.lower()}")
@@ -623,38 +672,110 @@ def validate_cta_routes(root: Path) -> Dict[str, object]:
         if key not in offers:
             violations.append(f"missing_offer_definition_{key}")
 
-    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+    dynamic_cta = root / "src" / "components" / "DynamicCta.astro"
+    index_cta = root / "src" / "pages" / "index.astro"
+    for path in [dynamic_cta, index_cta]:
+        if not path.exists():
+            violations.append(f"missing_cta_file:{path}")
+            continue
+        source = path.read_text(encoding="utf-8")
+        if 'data-cta-role="secondary"' in source and "btn-secondary-muted" not in source:
+            violations.append(f"missing_secondary_muted_style:{path.name}")
+        if re.search(r'data-cta-role="secondary"[\s\S]{0,280}class="[^"]*btn-primary', source):
+            violations.append(f"secondary_uses_primary_class:{path.name}")
+
+    if "NVDA" in primary_map or "NVDA" in secondary_map:
+        index_source = index_cta.read_text(encoding="utf-8") if index_cta.exists() else ""
+        has_nvda_carrier = "NVDA" in index_source
+        if not has_nvda_carrier:
+            warnings.append("nvda_cta_configured_without_visible_carrier")
+
+    return {
+        "violations": sorted(set(violations)),
+        "warnings": sorted(set(warnings)),
+        "count": len(sorted(set(violations))),
+    }
 
 
-def validate_freshness_semantics(root: Path, as_of_date: str) -> Dict[str, object]:
+def validate_freshness_semantics(
+    root: Path,
+    as_of_date: str,
+    csv_path: Path | None = None,
+    index_path: Path | None = None,
+    content_dir: Path | None = None,
+) -> Dict[str, object]:
     violations: List[str] = []
-    csv_path = root / "data" / "verified_targets.csv"
-    index_path = root / "src" / "pages" / "index.astro"
+    csv_path = csv_path or (root / "data" / "verified_targets.csv")
+    index_path = index_path or (root / "src" / "pages" / "index.astro")
+    content_dir = content_dir or (root / "src" / "content" / "blog")
     if not csv_path.exists() or not index_path.exists():
         return {"violations": ["missing_freshness_inputs"], "count": 1}
 
     with csv_path.open("r", encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle)
-        dates = [str(row.get("date", "")).strip() for row in reader if str(row.get("date", "")).strip()]
-    if not dates:
+        rows = [
+            (str(row.get("date", "")).strip(), str(row.get("event_type", "")).strip().upper())
+            for row in reader
+            if str(row.get("date", "")).strip()
+        ]
+    if not rows:
         return {"violations": ["missing_target_dates"], "count": 1}
 
-    latest_date = max(dates)
+    latest_date = max(item[0] for item in rows)
+    latest_types = {event_type for dt, event_type in rows if dt == latest_date and event_type in EVENT_FRESHNESS_THRESHOLDS}
+    if not latest_types:
+        latest_types = {"CPI"}
+    threshold = min(EVENT_FRESHNESS_THRESHOLDS[event_type] for event_type in latest_types)
     as_of_cutoff = datetime.strptime(cutoff_date(as_of_date), "%Y-%m-%d").date()
     latest_dt = datetime.strptime(latest_date, "%Y-%m-%d").date()
     age_days = (as_of_cutoff - latest_dt).days
 
     source = index_path.read_text(encoding="utf-8")
-    if age_days > 14:
+    if "Today's Event Playbook" in source:
+        violations.append("freshness_forbidden_today_heading")
+    if "Current Event Playbook" not in source and "Latest Event Playbook" not in source:
+        violations.append("freshness_missing_supported_heading")
+
+    if age_days > threshold:
         if "Latest Event Playbook" not in source:
             violations.append("freshness_missing_latest_heading")
         if "Last event:" not in source:
             violations.append("freshness_missing_last_event_note")
+        if "Stale Data" not in source:
+            violations.append("freshness_missing_stale_badge")
+    else:
+        if "Current Event Playbook" not in source:
+            violations.append("freshness_missing_current_heading")
+
+    if content_dir.exists():
+        for md_file in content_dir.glob("*.md"):
+            frontmatter = extract_frontmatter(md_file.read_text(encoding="utf-8"))
+            event_type = str(frontmatter.get("event_type", "")).upper()
+            freshness_value = frontmatter.get("freshness_days")
+            freshness_state = str(frontmatter.get("freshness_status", "")).lower()
+            if event_type not in EVENT_FRESHNESS_THRESHOLDS or not is_finite_number(freshness_value):
+                continue
+            expected = "stale" if float(freshness_value) > EVENT_FRESHNESS_THRESHOLDS[event_type] else "fresh"
+            if freshness_state != expected:
+                violations.append("frontmatter_freshness_status_mismatch")
+                break
 
     return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
 
 
-def run_gates(root: Path, content_dir: Path, as_of_date: str) -> Dict[str, object]:
+def run_gates(
+    root: Path,
+    content_dir: Path,
+    as_of_date: str,
+    manifest_path: Path,
+    public_dir: Path,
+    slug_redirects_path: Path,
+    vercel_config_path: Path,
+    offers_path: Path,
+    csv_path: Path,
+    db_path: Path,
+    index_path: Path,
+) -> Dict[str, object]:
     files = sorted(content_dir.glob("*.md"))
 
     report: Dict[str, object] = {
@@ -673,13 +794,19 @@ def run_gates(root: Path, content_dir: Path, as_of_date: str) -> Dict[str, objec
         for issue in file_violations:
             report["summary"][issue] = report["summary"].get(issue, 0) + 1
 
-    redirect_result = validate_redirects(root)
-    sitemap_result = validate_sitemap(root)
+    redirect_result = validate_redirects(root, slug_redirects_path=slug_redirects_path, vercel_path=vercel_config_path)
+    sitemap_result = validate_sitemap(root, public_dir=public_dir, manifest_path=manifest_path)
     route_filter_result = validate_filter_routes(root)
-    matrix_result = validate_target_matrix(root, as_of_date)
-    event_pool_result = validate_event_pool(root, as_of_date)
-    cta_result = validate_cta_routes(root)
-    freshness_result = validate_freshness_semantics(root, as_of_date)
+    matrix_result = validate_target_matrix(root, as_of_date, csv_path=csv_path, db_path=db_path)
+    event_pool_result = validate_event_pool(root, as_of_date, db_path=db_path)
+    cta_result = validate_cta_routes(root, offers_path=offers_path)
+    freshness_result = validate_freshness_semantics(
+        root,
+        as_of_date,
+        csv_path=csv_path,
+        index_path=index_path,
+        content_dir=content_dir,
+    )
 
     for scope in [
         redirect_result,
@@ -701,6 +828,7 @@ def run_gates(root: Path, content_dir: Path, as_of_date: str) -> Dict[str, objec
     report["event_pool_violations"] = event_pool_result
     report["cta_violations"] = cta_result
     report["freshness_violations"] = freshness_result
+    report["warnings"] = {"cta": cta_result.get("warnings", [])}
 
     content_violations = sum(len(v) for v in violations_by_file.values())
     total_violations = (
@@ -723,9 +851,31 @@ def main() -> None:
     args = parse_args()
     root = resolve_project_root(args.project_root)
     content_dir = Path(args.content_dir).resolve() if args.content_dir else root / "src" / "content" / "blog"
+    manifest_path = Path(args.manifest_path).resolve() if args.manifest_path else root / "data" / "page_manifest.json"
+    public_dir = Path(args.public_dir).resolve() if args.public_dir else root / "public"
+    slug_redirects_path = (
+        Path(args.slug_redirects_path).resolve() if args.slug_redirects_path else root / "data" / "slug_redirects.json"
+    )
+    vercel_config_path = Path(args.vercel_config_path).resolve() if args.vercel_config_path else root / "vercel.json"
+    offers_path = Path(args.offers_path).resolve() if args.offers_path else root / "src" / "data" / "offers.json"
+    csv_path = Path(args.csv_path).resolve() if args.csv_path else root / "data" / "verified_targets.csv"
+    db_path = Path(args.db_path).resolve() if args.db_path else root / "data" / "macro_events.db"
+    index_path = Path(args.index_path).resolve() if args.index_path else root / "src" / "pages" / "index.astro"
     report_path = Path(args.report).resolve() if args.report else root / "logs" / "daily_ops" / "quality_gates.json"
 
-    result = run_gates(root, content_dir, args.as_of_date)
+    result = run_gates(
+        root=root,
+        content_dir=content_dir,
+        as_of_date=args.as_of_date,
+        manifest_path=manifest_path,
+        public_dir=public_dir,
+        slug_redirects_path=slug_redirects_path,
+        vercel_config_path=vercel_config_path,
+        offers_path=offers_path,
+        csv_path=csv_path,
+        db_path=db_path,
+        index_path=index_path,
+    )
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
 

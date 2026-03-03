@@ -33,7 +33,8 @@ ASSETS = {
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Fetch daily snapshot")
     parser.add_argument("--project-root", default=None, help="Repository root")
-    parser.add_argument("--output", default=None, help="Override output json path")
+    parser.add_argument("--output", default=None, help="Deprecated output json path (use --output-path)")
+    parser.add_argument("--output-path", default=None, help="Override output json path")
     return parser.parse_args()
 
 
@@ -73,7 +74,8 @@ def fetch_snapshot(previous: Dict[str, object] | None = None) -> Dict[str, objec
 def main() -> None:
     args = parse_args()
     root = resolve_project_root(args.project_root)
-    output = Path(args.output).resolve() if args.output else root / "src" / "daily_snapshot.json"
+    output_override = args.output_path or args.output
+    output = Path(output_override).resolve() if output_override else root / "src" / "daily_snapshot.json"
 
     previous = None
     if output.exists():

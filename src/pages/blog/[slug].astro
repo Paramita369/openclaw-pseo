@@ -70,6 +70,7 @@ const eventPrevious = entry.data.event_previous;
 const eventDelta = entry.data.event_delta;
 const conditionalSample = conditional?.sample_size ?? '--';
 const freshnessDays = entry.data.freshness_days;
+const freshnessStatus = String(entry.data.freshness_status || 'fresh').toLowerCase();
 ---
 
 <Layout title={displayTitle} description={entry.data.description} frontmatter={entry.data}>
@@ -102,6 +103,12 @@ const freshnessDays = entry.data.freshness_days;
             <p class="text-sm">Event date: <strong>{eventDate}</strong></p>
             <p class="text-sm">As-of (T-1): <strong>{asofDate}</strong></p>
             <p class="text-sm">Freshness age: <strong>{Number.isFinite(Number(freshnessDays)) ? `${Number(freshnessDays)} days` : '--'}</strong></p>
+            <p class="text-sm">
+              Freshness status:{' '}
+              <strong class={freshnessStatus === 'stale' ? 'metric-down' : 'metric-up'}>
+                {freshnessStatus === 'stale' ? 'Stale Data' : 'Fresh'}
+              </strong>
+            </p>
             <p class="text-sm">Sample size: <strong>{sampleSize}</strong></p>
           </div>
 
@@ -165,7 +172,14 @@ const freshnessDays = entry.data.freshness_days;
 
         {entry.data.chartData && entry.data.chartData.length > 0 && (
           <div class="mt-6">
-            <TradingChart data={entry.data.chartData} asset={entry.data.tags?.[0]} title={`${entry.data.tags?.[0]?.toUpperCase()} Price (Event Window)`} />
+            <TradingChart
+              data={entry.data.chartData}
+              asset={entry.data.tags?.[0]}
+              title={`${entry.data.tags?.[0]?.toUpperCase()} Price (Event Window)`}
+              eventDate={eventDate}
+              windowLabel="T-3 to T+7"
+              historicalNotice="Historical Event Window (T-3 to T+7), not live market data"
+            />
           </div>
         )}
 

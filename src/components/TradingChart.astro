@@ -1,26 +1,43 @@
 ---
-const { data, asset, title } = Astro.props;
+const {
+  data,
+  asset,
+  title,
+  eventDate = '',
+  windowLabel = 'T-3 to T+7',
+  historicalNotice = 'Historical Event Window (T-3 to T+7), not live market data',
+} = Astro.props;
 const chartId = `tv-chart-${asset}-${Math.random().toString(36).slice(2, 8)}`;
 const skeletonId = `${chartId}-skeleton`;
 const fallbackId = `${chartId}-fallback`;
+const markerHintId = `${chartId}-marker-hint`;
 ---
 
 <div class="rounded-xl border overflow-hidden mb-8" style="border-color:var(--border);background:var(--surface);">
   <div class="px-5 py-3 border-b flex justify-between items-center" style="border-color:var(--border);background:var(--surface-alt);">
-    <h4 class="text-sm font-bold">{title || `${asset} Price Action (T-3 to T+7)`}</h4>
-    <span class="text-xs" style="color:var(--muted);">Candlestick</span>
+    <h4 class="text-sm font-bold">{title || `${asset} Price Action (${windowLabel})`}</h4>
+    <span class="text-xs" style="color:var(--muted);">Candlestick · Historical</span>
+  </div>
+  <div class="px-5 py-2 border-b text-xs" style="border-color:var(--border);background:var(--surface);color:var(--muted);">
+    {historicalNotice}
+    <span id={markerHintId} class="ml-2"></span>
   </div>
   <div class="relative w-full h-[350px]">
     <div id={skeletonId} class="chart-skeleton absolute inset-0 animate-pulse"></div>
     <div id={fallbackId} class="hidden absolute inset-0 p-5 text-sm" style="color:var(--muted);">
       Chart data is temporarily unavailable for this event window.
     </div>
-    <div id={chartId} class="w-full h-[350px] opacity-0 transition-opacity duration-200" data-chart={JSON.stringify(data)}></div>
+    <div
+      id={chartId}
+      class="w-full h-[350px] opacity-0 transition-opacity duration-200"
+      data-chart={JSON.stringify(data)}
+      data-event-date={eventDate}
+    ></div>
   </div>
 </div>
 
-<script define:vars={{ chartId, skeletonId, fallbackId }}>
-  import { createChart } from 'lightweight-charts';
+<script define:vars={{ chartId, skeletonId, fallbackId, markerHintId }}>
+  import { createChart, createSeriesMarkers } from 'lightweight-charts';
 
   const getThemePalette = () => {
     const theme = document.documentElement.getAttribute('data-theme') || 'light';
@@ -44,6 +61,7 @@ const fallbackId = `${chartId}-fallback`;
     const el = document.getElementById(chartId);
     const skeleton = document.getElementById(skeletonId);
     const fallback = document.getElementById(fallbackId);
+    const markerHint = document.getElementById(markerHintId);
     const showFallback = () => {
       if (skeleton) skeleton.classList.add('hidden');
       if (fallback) fallback.classList.remove('hidden');
@@ -103,6 +121,22 @@ const fallbackId = `${chartId}-fallback`;
       });
 
       series.setData(chartData);
+      const eventDate = String(el.getAttribute('data-event-date') || '').slice(0, 10);
+      const hasMarker = Boolean(eventDate && chartData.some((point) => String(point.time) === eventDate));
+      if (hasMarker) {
+        createSeriesMarkers(series, [
+          {
+            time: eventDate,
+            position: 'belowBar',
+            color: '#f59e0b',
+            shape: 'circle',
+            text: 'T0 Event Trigger',
+          },
+        ]);
+        if (markerHint) markerHint.textContent = `· T0 Event Trigger: ${eventDate}`;
+      } else if (markerHint) {
+        markerHint.textContent = '· T0 marker unavailable for this window';
+      }
       chart.timeScale().fitContent();
       revealChart();
 

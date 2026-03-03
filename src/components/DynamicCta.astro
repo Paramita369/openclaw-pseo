@@ -50,6 +50,7 @@ const withUtm = (offer, role) => {
         data-asset={normalizedAsset}
         data-offer-key={primaryOffer.key}
         data-cta-role="primary"
+        data-cta-variant="prominent"
         data-cta-position="article_inline"
         data-utm-campaign={primaryOffer.utm_campaign || `affiliate_${primaryOffer.key}`}
         class="btn-primary focus-ring"
@@ -66,9 +67,10 @@ const withUtm = (offer, role) => {
           data-asset={normalizedAsset}
           data-offer-key={offer.key}
           data-cta-role="secondary"
+          data-cta-variant="muted"
           data-cta-position="article_inline"
           data-utm-campaign={offer.utm_campaign || `affiliate_${offer.key}`}
-          class="btn-ghost focus-ring"
+          class="btn-secondary-muted focus-ring"
         >
           Open {offer.name}
         </a>

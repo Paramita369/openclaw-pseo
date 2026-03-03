@@ -11,6 +11,7 @@
     "DOGE": "binance",
     "SPY": "ibkr",
     "QQQ": "ibkr",
+    "NVDA": "ibkr",
     "GOLD": "ibkr",
     "OIL": "ibkr",
     "DEFAULT": "ibkr"
@@ -18,6 +19,7 @@
   "secondary_offer_keys": {
     "SPY": ["futu"],
     "QQQ": ["futu"],
+    "NVDA": ["futu"],
     "GOLD": ["futu"],
     "OIL": ["futu"],
     "DEFAULT": []
@@ -29,6 +31,7 @@
     "DOGE": ["binance"],
     "SPY": ["ibkr", "futu"],
     "QQQ": ["ibkr", "futu"],
+    "NVDA": ["ibkr", "futu"],
     "GOLD": ["ibkr", "futu"],
     "OIL": ["ibkr", "futu"],
     "DEFAULT": ["ibkr"]

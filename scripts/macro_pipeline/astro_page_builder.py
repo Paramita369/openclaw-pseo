@@ -78,6 +78,12 @@ CSV_EXTRA_COLUMNS = [
     "outcome_status",
 ]
 
+EVENT_FRESHNESS_THRESHOLDS = {
+    "CPI": 45,
+    "NFP": 45,
+    "FOMC": 90,
+}
+
 
 @dataclass
 class BuildContext:
@@ -96,6 +102,8 @@ class BuildContext:
     max_pages: Optional[int]
     slug_redirects_path: Path
     vercel_config_path: Path
+    skip_vercel_sync: bool
+    build_timestamp: str
 
 
 def parse_args() -> argparse.Namespace:
@@ -104,6 +112,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--db-path", default=None, help="Path to macro_events.db")
     parser.add_argument("--csv-path", default=None, help="Path to verified_targets.csv")
     parser.add_argument("--output-dir", default=None, help="Path to src/content/blog")
+    parser.add_argument("--public-dir", default=None, help="Path to public output directory")
+    parser.add_argument("--slug-redirects-path", default=None, help="Path to slug_redirects.json")
+    parser.add_argument("--vercel-config-path", default=None, help="Path to vercel.json")
     parser.add_argument("--manifest-path", default=None, help="Path to page_manifest.json")
     parser.add_argument("--offers-config", default=None, help="Path to config/offers.yaml")
     parser.add_argument("--as-of-date", default=date.today().isoformat(), help="Pipeline run date (YYYY-MM-DD)")
@@ -111,6 +122,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--full", action="store_true", help="Ignore manifest and regenerate all pages")
     parser.add_argument("--strict", action="store_true", help="Enable strict mode for malformed input")
     parser.add_argument("--no-llm", action="store_true", help="Disable LLM analysis generation")
+    parser.add_argument("--skip-vercel-sync", action="store_true", help="Do not mutate vercel.json redirects")
     return parser.parse_args()
 
 
@@ -119,9 +131,17 @@ def build_context(args: argparse.Namespace) -> BuildContext:
     csv_path = Path(args.csv_path).resolve() if args.csv_path else root / "data" / "verified_targets.csv"
     db_path = Path(args.db_path).resolve() if args.db_path else root / "data" / "macro_events.db"
     output_dir = Path(args.output_dir).resolve() if args.output_dir else root / "src" / "content" / "blog"
-    public_dir = root / "public"
+    public_dir = Path(args.public_dir).resolve() if args.public_dir else root / "public"
     manifest_path = Path(args.manifest_path).resolve() if args.manifest_path else root / "data" / "page_manifest.json"
     offers_path = Path(args.offers_config).resolve() if args.offers_config else root / "config" / "offers.yaml"
+    slug_redirects_path = (
+        Path(args.slug_redirects_path).resolve()
+        if args.slug_redirects_path
+        else root / "data" / "slug_redirects.json"
+    )
+    vercel_config_path = (
+        Path(args.vercel_config_path).resolve() if args.vercel_config_path else root / "vercel.json"
+    )
 
     if not csv_path.exists():
         raise FileNotFoundError(f"CSV not found: {csv_path}")
@@ -147,8 +167,10 @@ def build_context(args: argparse.Namespace) -> BuildContext:
         strict=args.strict,
         full=args.full,
         max_pages=args.max_pages,
-        slug_redirects_path=root / "data" / "slug_redirects.json",
-        vercel_config_path=root / "vercel.json",
+        slug_redirects_path=slug_redirects_path,
+        vercel_config_path=vercel_config_path,
+        skip_vercel_sync=args.skip_vercel_sync,
+        build_timestamp=datetime.now(timezone.utc).isoformat(),
     )
 
 
@@ -270,6 +292,100 @@ def fetch_event_distribution(db_path: Path, ticker: str, event_type: str, asof_d
         "latest_event_date": latest,
         "by_date": by_date,
     }
+
+
+def freshness_threshold(event_type: str) -> int:
+    return int(EVENT_FRESHNESS_THRESHOLDS.get(event_type.upper(), 45))
+
+
+def freshness_status(event_type: str, age_days: int) -> str:
+    return "stale" if age_days > freshness_threshold(event_type) else "fresh"
+
+
+def normalize_db_timestamp(value: object) -> Optional[str]:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    parsed: Optional[datetime] = None
+    for fmt in ("%Y-%m-%dT%H:%M:%S.%f%z", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d %H:%M:%S"):
+        try:
+            parsed = datetime.strptime(text, fmt)
+            break
+        except ValueError:
+            continue
+    if parsed is None:
+        try:
+            parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        except Exception:
+            return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc).isoformat()
+
+
+def pick_max_timestamp(*values: object) -> Optional[str]:
+    candidates: List[datetime] = []
+    for value in values:
+        normalized = normalize_db_timestamp(value)
+        if not normalized:
+            continue
+        try:
+            candidates.append(datetime.fromisoformat(normalized))
+        except ValueError:
+            continue
+    if not candidates:
+        return None
+    return max(candidates).astimezone(timezone.utc).isoformat()
+
+
+def fetch_data_last_updated_at(db_path: Path, ticker: str, event_type: str, event_date: str) -> Optional[str]:
+    if not db_path.exists():
+        return None
+
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name='event_outcomes' LIMIT 1"
+        )
+        has_event_outcomes = bool(cursor.fetchone())
+        if has_event_outcomes:
+            cursor.execute(
+                f"""
+                SELECT
+                  MAX(a.updated_at) AS asset_updated_at,
+                  MAX(eo.updated_at) AS outcome_updated_at
+                FROM asset_impact a
+                JOIN macro_events m ON a.event_id = m.event_id
+                LEFT JOIN event_outcomes eo
+                  ON eo.event_type = ?
+                 AND eo.event_date = m.date
+                 AND eo.direction_basis = 'vs_previous'
+                WHERE a.ticker = ?
+                  AND m.date = ?
+                  AND {event_filter_sql(event_type)}
+                """,
+                (event_type.upper(), ticker.upper(), event_date),
+            )
+        else:
+            cursor.execute(
+                f"""
+                SELECT MAX(a.updated_at) AS asset_updated_at, NULL
+                FROM asset_impact a
+                JOIN macro_events m ON a.event_id = m.event_id
+                WHERE a.ticker = ?
+                  AND m.date = ?
+                  AND {event_filter_sql(event_type)}
+                """,
+                (ticker.upper(), event_date),
+            )
+        row = cursor.fetchone()
+    finally:
+        conn.close()
+
+    if not row:
+        return None
+    return pick_max_timestamp(row[0], row[1])
 
 
 def probability_window(values: List[float]) -> Dict[str, float]:
@@ -422,6 +538,8 @@ def build_markdown(
     quality: int,
     sample_size: int,
     freshness_days: int,
+    freshness_status_value: str,
+    data_last_updated_at: str,
     metrics: Dict[str, float],
     probabilities: Dict[str, Any],
     analysis: str,
@@ -457,6 +575,8 @@ confidence_level: "{confidence_level}"
 quality_score: {quality}
 sample_size: {sample_size}
 freshness_days: {freshness_days}
+freshness_status: "{freshness_status_value}"
+data_last_updated_at: "{data_last_updated_at}"
 event_direction: "{event_direction}"
 event_actual: {event_actual}
 event_previous: {event_previous}
@@ -585,13 +705,19 @@ def write_urlset(path: Path, entries: Sequence[Dict[str, str]]) -> None:
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
-def write_sitemap_index(path: Path, domain: str, files: Sequence[str], file_lastmods: Dict[str, str]) -> None:
+def write_sitemap_index(
+    path: Path,
+    domain: str,
+    files: Sequence[str],
+    file_lastmods: Dict[str, str],
+    fallback_lastmod: str,
+) -> None:
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
     for filename in files:
-        lastmod = file_lastmods.get(filename) or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        lastmod = file_lastmods.get(filename) or fallback_lastmod
         lines.extend(
             [
                 "  <sitemap>",
@@ -605,19 +731,31 @@ def write_sitemap_index(path: Path, domain: str, files: Sequence[str], file_last
     path.write_text(payload, encoding="utf-8")
 
 
-def generate_dynamic_sitemaps(public_dir: Path, output_dir: Path, domain: str, manifest: Dict[str, Any]) -> None:
+def generate_dynamic_sitemaps(
+    public_dir: Path,
+    output_dir: Path,
+    domain: str,
+    manifest: Dict[str, Any],
+    build_timestamp: str,
+) -> None:
     ensure_dir(public_dir)
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    today = (normalize_db_timestamp(build_timestamp) or datetime.now(timezone.utc).isoformat())[:10]
     slugs = sorted(path.stem for path in output_dir.glob("*.md"))
 
     pages_manifest = manifest.get("pages", {}) if isinstance(manifest.get("pages"), dict) else {}
 
     def slug_lastmod(slug: str) -> str:
         page = pages_manifest.get(slug) or {}
-        for key in ("last_content_change_at", "last_generated"):
-            value = str(page.get(key, ""))
-            if len(value) >= 10:
-                return value[:10]
+        value = (
+            str(page.get("sitemap_lastmod", "")).strip()
+            or str(page.get("last_content_change_at", "")).strip()
+            or str(page.get("data_last_updated_at", "")).strip()
+            or str(page.get("last_generated", "")).strip()
+            or build_timestamp
+        )
+        normalized = normalize_db_timestamp(value)
+        if normalized:
+            return normalized[:10]
         return today
 
     slug_lastmods: Dict[str, str] = {slug: slug_lastmod(slug) for slug in slugs}
@@ -647,9 +785,9 @@ def generate_dynamic_sitemaps(public_dir: Path, output_dir: Path, domain: str, m
 
     core_entries = [
         {"loc": f"{domain}/", "lastmod": home_lastmod, "changefreq": "daily", "priority": "1.0"},
-        {"loc": f"{domain}/blog", "lastmod": blog_root_lastmod, "changefreq": "daily", "priority": "0.9"},
-        {"loc": f"{domain}/leaderboard", "lastmod": blog_root_lastmod, "changefreq": "daily", "priority": "0.8"},
-        {"loc": f"{domain}/events", "lastmod": events_root_lastmod, "changefreq": "daily", "priority": "0.8"},
+        {"loc": f"{domain}/leaderboard", "lastmod": blog_root_lastmod, "changefreq": "daily", "priority": "0.95"},
+        {"loc": f"{domain}/events", "lastmod": events_root_lastmod, "changefreq": "daily", "priority": "0.9"},
+        {"loc": f"{domain}/blog", "lastmod": blog_root_lastmod, "changefreq": "daily", "priority": "0.85"},
     ]
     write_urlset(public_dir / "sitemap-core.xml", core_entries)
 
@@ -700,8 +838,8 @@ def generate_dynamic_sitemaps(public_dir: Path, output_dir: Path, domain: str, m
     file_lastmods["sitemap-events.xml"] = max([entry["lastmod"] for entry in event_entries], default=today)
 
     index_files = ["sitemap-core.xml", "sitemap-assets.xml", "sitemap-events.xml", *blog_files]
-    write_sitemap_index(public_dir / "sitemap-index.xml", domain, index_files, file_lastmods)
-    write_sitemap_index(public_dir / "sitemap.xml", domain, index_files, file_lastmods)
+    write_sitemap_index(public_dir / "sitemap-index.xml", domain, index_files, file_lastmods, today)
+    write_sitemap_index(public_dir / "sitemap.xml", domain, index_files, file_lastmods, today)
 
     robots = "\n".join(
         [
@@ -716,6 +854,7 @@ def generate_dynamic_sitemaps(public_dir: Path, output_dir: Path, domain: str, m
 
 
 def write_slug_redirects(path: Path, slug_redirects: Dict[str, str]) -> None:
+    ensure_dir(path.parent)
     redirects = [
         {
             "source": f"/blog/{source}",
@@ -735,6 +874,7 @@ def write_slug_redirects(path: Path, slug_redirects: Dict[str, str]) -> None:
 
 
 def sync_vercel_redirects(vercel_config_path: Path, slug_redirects: Dict[str, str]) -> None:
+    ensure_dir(vercel_config_path.parent)
     if vercel_config_path.exists():
         try:
             config = json.loads(vercel_config_path.read_text(encoding="utf-8"))
@@ -795,6 +935,7 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
     raw_freshness = parse_float(row.get("freshness_days"))
     if raw_freshness is not None:
         freshness_days = max(int(round(raw_freshness)), 0)
+    freshness_status_value = freshness_status(event_type, freshness_days)
 
     summary = fetch_event_distribution(
         db_path=context.db_path,
@@ -920,7 +1061,15 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
     llm_text = generate_llm_analysis(asset, event_type, event_direction, probabilities, context)
     analysis = llm_text or fallback_analysis(asset, event_type, event_direction, probabilities, signal)
 
+    previous = manifest.get("pages", {}).get(slug, {})
     chart_data = fetch_chart_data(asset, event_date)
+    data_last_updated_at = (
+        fetch_data_last_updated_at(context.db_path, asset, event_type, event_date)
+        or str(previous.get("data_last_updated_at", "")).strip()
+    )
+    if not data_last_updated_at:
+        data_last_updated_at = context.build_timestamp
+    normalized_data_last_updated_at = normalize_db_timestamp(data_last_updated_at) or context.build_timestamp
 
     fingerprint_payload = {
         "asset": asset,
@@ -943,10 +1092,11 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         "event_delta": event_delta,
         "direction_basis": direction_basis,
         "freshness_days": freshness_days,
+        "freshness_status": freshness_status_value,
+        "data_last_updated_at": normalized_data_last_updated_at,
     }
     fingerprint = row_fingerprint(fingerprint_payload)
 
-    previous = manifest.get("pages", {}).get(slug, {})
     target_file = context.output_dir / f"{slug}.md"
 
     need_generate = context.full or previous.get("hash") != fingerprint or (not target_file.exists())
@@ -969,6 +1119,8 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
             quality=quality,
             sample_size=probabilities["sample_size"],
             freshness_days=freshness_days,
+            freshness_status_value=freshness_status_value,
+            data_last_updated_at=normalized_data_last_updated_at,
             metrics=metrics,
             probabilities=probabilities,
             analysis=analysis,
@@ -986,12 +1138,10 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
     now_iso = datetime.now(timezone.utc).isoformat()
     previous_last_change = previous.get("last_content_change_at")
     if not previous_last_change:
-        seeded_event_date = str(previous.get("event_date", "")).strip()
-        if len(seeded_event_date) == 10:
-            previous_last_change = f"{seeded_event_date}T00:00:00+00:00"
-        else:
-            previous_last_change = previous.get("last_generated")
-    last_content_change_at = now_iso if need_generate else (str(previous_last_change) if previous_last_change else now_iso)
+        previous_last_change = previous.get("created_at") or previous.get("last_generated")
+    last_content_change_at = now_iso if need_generate else (str(previous_last_change) if previous_last_change else context.build_timestamp)
+    created_at = str(previous.get("created_at", "")).strip() or now_iso
+    sitemap_lastmod = pick_max_timestamp(last_content_change_at, normalized_data_last_updated_at) or context.build_timestamp
 
     manifest.setdefault("pages", {})[slug] = {
         "hash": fingerprint,
@@ -999,6 +1149,10 @@ def process_row(row: Dict[str, Any], context: BuildContext, manifest: Dict[str, 
         "event_date": event_date,
         "last_generated": now_iso,
         "last_content_change_at": last_content_change_at,
+        "data_last_updated_at": normalized_data_last_updated_at,
+        "sitemap_lastmod": sitemap_lastmod,
+        "freshness_status": freshness_status_value,
+        "created_at": created_at,
         "quality_score": quality,
         "offer_key": offer_key,
         "signal": signal,
@@ -1137,10 +1291,12 @@ def main() -> None:
         output_dir=context.output_dir,
         domain=f"https://{context.offers_config.get('default_domain', 'quantmacro.vercel.app')}",
         manifest=manifest,
+        build_timestamp=context.build_timestamp,
     )
 
     write_slug_redirects(context.slug_redirects_path, manifest.get("slug_redirects", {}))
-    sync_vercel_redirects(context.vercel_config_path, manifest.get("slug_redirects", {}))
+    if not context.skip_vercel_sync:
+        sync_vercel_redirects(context.vercel_config_path, manifest.get("slug_redirects", {}))
     save_manifest(context.manifest_path, manifest)
     write_targets_csv(context.csv_path, targets)
 
