@@ -4,51 +4,86 @@ import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog');
 
-const rows = posts
-  .map((post) => {
-    const p = post.data.probabilities || {};
-    const riseT7 = Number(p?.t7?.up ?? 0);
-    const medianT7 = Number(p?.t7?.median ?? 0);
-    const riseT1 = Number(p?.t1?.up ?? 0);
-    const signalScore = 0.5 * (riseT7 - 50) + 0.3 * (riseT1 - 50) + 0.2 * (Math.sign(medianT7) * 10);
+const normalizedRows = posts.map((post) => {
+  const p = post.data.probabilities || {};
+  const riseT7 = Number(p?.t7?.up ?? 0);
+  const medianT7 = Number(p?.t7?.median ?? 0);
+  const riseT1 = Number(p?.t1?.up ?? 0);
+  const signalScore = 0.5 * (riseT7 - 50) + 0.3 * (riseT1 - 50) + 0.2 * (Math.sign(medianT7) * 10);
+  const eventDate = post.data.event_date || post.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '';
 
-    return {
-      slug: post.slug,
-      asset: post.data.tags?.[0]?.toUpperCase() || 'UNKNOWN',
-      event: post.data.event_label || post.data.event_type,
-      direction: (post.data.event_direction || '--').toUpperCase(),
-      title: post.data.title,
-      signal: post.data.signal || 'Neutral',
-      signalScore: Number(signalScore.toFixed(2)),
-      riseT1,
-      riseT7,
-      medianT7,
-      sample: Number(p?.sample_size ?? 0),
-      asof: post.data.asof_date || '--',
-    };
-  })
-  .sort((a, b) => b.signalScore - a.signalScore);
+  return {
+    slug: post.slug,
+    asset: post.data.tags?.[0]?.toUpperCase() || 'UNKNOWN',
+    event: post.data.event_label || post.data.event_type || 'UNKNOWN',
+    eventDate,
+    direction: (post.data.event_direction || '--').toUpperCase(),
+    signal: post.data.signal || 'Neutral',
+    signalScore: Number(signalScore.toFixed(2)),
+    riseT1,
+    riseT7,
+    medianT7,
+    sample: Number(p?.sample_size ?? 0),
+    asof: post.data.asof_date || '--',
+  };
+});
 
-const bestRows = rows.slice(0, 30);
+const latestByAssetEvent = new Map();
+for (const row of normalizedRows) {
+  const key = `${row.asset}|${row.event}`;
+  const existing = latestByAssetEvent.get(key);
+  if (!existing) {
+    latestByAssetEvent.set(key, row);
+    continue;
+  }
+
+  const rowDate = row.eventDate || '0000-00-00';
+  const existingDate = existing.eventDate || '0000-00-00';
+  if (rowDate > existingDate) {
+    latestByAssetEvent.set(key, row);
+    continue;
+  }
+  if (rowDate < existingDate) {
+    continue;
+  }
+  if (row.signalScore > existing.signalScore) {
+    latestByAssetEvent.set(key, row);
+    continue;
+  }
+  if (row.signalScore < existing.signalScore) {
+    continue;
+  }
+  if (row.slug.localeCompare(existing.slug) < 0) {
+    latestByAssetEvent.set(key, row);
+  }
+}
+
+const bestRows = [...latestByAssetEvent.values()].sort((a, b) => {
+  if (b.signalScore !== a.signalScore) return b.signalScore - a.signalScore;
+  const dateOrder = String(b.eventDate || '').localeCompare(String(a.eventDate || ''));
+  if (dateOrder !== 0) return dateOrder;
+  return String(a.asset).localeCompare(String(b.asset));
+});
 ---
 
 <Layout title="Playbook Leaderboard" description="Ranked CPI/NFP/FOMC event playbooks by signal score and historical probabilities.">
   <section class="py-12 hero-panel">
     <div class="max-w-7xl mx-auto px-4">
       <h1 class="text-4xl font-extrabold text-white">Event Playbook Leaderboard</h1>
-      <p class="text-blue-100 text-lg mt-3">Ranked by probability-derived signal score (T+1/T+7 weighted).</p>
+      <p class="text-blue-100 text-lg mt-3">Latest row per Asset × Event (CPI/NFP/FOMC), ranked by probability-derived signal score.</p>
     </div>
   </section>
 
   <section class="max-w-7xl mx-auto px-4 py-10">
     <div class="surface-card overflow-hidden">
       <div class="overflow-x-auto">
-        <table class="w-full min-w-[980px] text-sm">
+        <table class="w-full min-w-[1080px] text-sm">
           <thead style="background:var(--surface-alt);color:var(--muted);">
             <tr>
               <th class="text-left px-4 py-3 font-bold">#</th>
               <th class="text-left px-4 py-3 font-bold">Asset</th>
               <th class="text-left px-4 py-3 font-bold">Event</th>
+              <th class="text-left px-4 py-3 font-bold">Event Date</th>
               <th class="text-left px-4 py-3 font-bold">Outcome</th>
               <th class="text-left px-4 py-3 font-bold">Signal</th>
               <th class="text-left px-4 py-3 font-bold">Signal Score</th>
@@ -68,6 +103,7 @@ const bestRows = rows.slice(0, 30);
                   <td class="px-4 py-3 font-bold">{idx + 1}</td>
                   <td class="px-4 py-3 font-semibold">{row.asset}</td>
                   <td class="px-4 py-3">{row.event}</td>
+                  <td class="px-4 py-3">{row.eventDate || '--'}</td>
                   <td class="px-4 py-3">{row.direction}</td>
                   <td class={`px-4 py-3 font-bold ${signalClass}`}>{row.signal}</td>
                   <td class="px-4 py-3">{row.signalScore}</td>

@@ -13,6 +13,18 @@ QuantMacro is a static-first pSEO system on Vercel focused on event-driven proba
 python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
 ```
 
+## GitHub Actions Backup (Manual Only)
+- Workflow: `Daily QuantMacro Update`
+- Trigger: `Actions -> Daily QuantMacro Update -> Run workflow`
+- Schedule: disabled (no daily cron)
+- Command executed by workflow:
+```bash
+python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
+```
+- Expected behavior:
+  - If whitelisted files changed, workflow commits and pushes.
+  - If no whitelisted change, workflow exits cleanly without push.
+
 ## Python Dependencies
 ```bash
 pip install -r requirements.txt
@@ -98,5 +110,5 @@ Strict failures include:
 - stale semantic mismatch (homepage should switch to `Latest Event Playbook` when data is old)
 
 ## Notes
-- `run_daily_ops` is the primary operation path; GitHub Actions is backup/manual.
+- `run_daily_ops` is the primary operation path; GitHub Actions is manual backup only.
 - Educational content only, not investment advice.
