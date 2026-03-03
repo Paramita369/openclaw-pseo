@@ -1,206 +1,232 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-
-// Load daily snapshot
 import dailySnapshot from '../daily_snapshot.json';
 import offersConfig from '../data/offers.json';
 
-// 1. Read all generated Markdown files
 const posts = await getCollection('blog');
-
-// 2. Group by asset (first tag)
-const assetGroups = {};
-posts.forEach(post => {
-  const tags = post.data.tags || [];
-  const asset = (tags[0] || 'Other').toUpperCase();
-  if (!assetGroups[asset]) {
-    assetGroups[asset] = [];
-  }
-  if (assetGroups[asset].length < 6) {
-    assetGroups[asset].push(post);
-  }
-});
-
-const assets = Object.keys(assetGroups).sort();
 const markets = dailySnapshot.markets || {};
 
-const homepageOfferKeys = ['binance', 'futu', 'ibkr'];
+const sortedPosts = [...posts].sort((a, b) => {
+  const ad = (a.data.event_date || a.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01');
+  const bd = (b.data.event_date || b.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01');
+  return bd.localeCompare(ad);
+});
+
+const preferredAssets = ['BTC', 'ETH', 'GOLD', 'QQQ', 'SPY'];
+const latestByAsset = {};
+for (const entry of sortedPosts) {
+  const asset = String(entry.data.tags?.[0] || '').toUpperCase();
+  if (!asset || latestByAsset[asset]) continue;
+  latestByAsset[asset] = entry;
+}
+
+const playbookRows = preferredAssets
+  .map((asset) => {
+    const entry = latestByAsset[asset];
+    if (!entry) return null;
+
+    const p = entry.data.probabilities || null;
+    const t1Up = p?.t1?.up;
+    const t1Down = p?.t1?.down;
+    const t7Up = p?.t7?.up;
+    const t7Down = p?.t7?.down;
+    const t1Median = p?.t1?.median;
+    const t7Median = p?.t7?.median;
+    const sampleSize = p?.sample_size ?? p?.t1?.sample ?? entry.data.sample_size ?? 0;
+
+    const signal = entry.data.signal || ((entry.data.metrics?.impact_t7_pct || 0) > 1 ? 'Bullish' : (entry.data.metrics?.impact_t7_pct || 0) < -1 ? 'Bearish' : 'Neutral');
+
+    return {
+      asset,
+      entry,
+      signal,
+      sampleSize,
+      event: entry.data.event_label || entry.data.event_type || 'CPI',
+      eventDate: entry.data.event_date || entry.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '',
+      asofDate: entry.data.asof_date || (dailySnapshot.timestamp ? new Date(dailySnapshot.timestamp).toISOString().slice(0, 10) : ''),
+      t1Up,
+      t1Down,
+      t7Up,
+      t7Down,
+      t1Median,
+      t7Median,
+    };
+  })
+  .filter(Boolean);
+
 const utmSource = offersConfig.utm?.source || 'quantmacro';
 const utmMedium = offersConfig.utm?.medium || 'affiliate';
-const homepageOffers = homepageOfferKeys
-  .map((key) => ({ key, ...offersConfig.offers[key] }))
-  .filter((offer) => offer?.url)
-  .map((offer) => {
-    const url = new URL(offer.url);
-    url.searchParams.set('utm_source', utmSource);
-    url.searchParams.set('utm_medium', utmMedium);
-    url.searchParams.set('utm_campaign', offer.utm_campaign || `affiliate_${offer.key}`);
-    url.searchParams.set('utm_content', 'homepage');
-    return { ...offer, trackedUrl: url.toString() };
-  });
+
+const offerByAsset = (asset) => {
+  const keys = offersConfig.asset_offer_keys?.[asset] || offersConfig.asset_offer_keys?.DEFAULT || [];
+  const key = keys[0] || 'ibkr';
+  const offer = offersConfig.offers?.[key];
+  if (!offer?.url) return null;
+
+  const url = new URL(offer.url);
+  url.searchParams.set('utm_source', utmSource);
+  url.searchParams.set('utm_medium', utmMedium);
+  url.searchParams.set('utm_campaign', offer.utm_campaign || `affiliate_${key}`);
+  url.searchParams.set('utm_content', `dashboard_${asset.toLowerCase()}`);
+
+  return { key, ...offer, trackedUrl: url.toString() };
+};
+
+const steps = [
+  {
+    title: 'Step 1 · Pick Asset',
+    body: 'Start with BTC, ETH, GOLD, QQQ, or SPY based on your market focus.',
+  },
+  {
+    title: 'Step 2 · Read Event Probabilities',
+    body: 'Use T+1 and T+7 up/down probabilities with sample size and median return.',
+  },
+  {
+    title: 'Step 3 · Execute via Platform',
+    body: 'Use the matched broker/exchange link with tracking and consistent UTM tags.',
+  },
+];
 ---
 
-<Layout title="QuantMacro Dashboard" description="Professional quantitative analysis for macro events">
-    <!-- Hero Section -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-dark-bg via-dark-surface to-dark-bg py-20">
-        <div class="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5"></div>
-        <div class="max-w-7xl mx-auto px-4 relative z-10">
-            <h1 class="text-5xl md:text-6xl font-bold text-white font-heading mb-4">
-                <span class="text-primary">Quant</span>Macro
-            </h1>
-            <p class="text-xl text-gray-300 max-w-2xl mb-8">
-                Professional quantitative analysis for macro events. 
-                Data-driven trading insights with historical backtesting.
-            </p>
-            <div class="flex gap-4">
-                <a href="/blog" class="bg-primary hover:bg-secondary text-dark-bg font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105">
-                    Explore Analysis
+<Layout title="QuantMacro Dashboard" description="Event-driven probabilities for CPI, NFP, and FOMC across major assets.">
+  <section class="hero-panel py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="max-w-3xl">
+        <p class="badge-chip mb-4" style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.25);color:#e5ecfb;">QuantMacro V2</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-white">
+          Event-Driven Return Probabilities You Can Act On in Seconds
+        </h1>
+        <div class="mt-6 space-y-2 text-blue-100 text-lg">
+          <p><strong>What:</strong> CPI / NFP / FOMC probability playbooks by asset.</p>
+          <p><strong>Why:</strong> Backtested on historical event windows with sample size transparency.</p>
+          <p><strong>How:</strong> Pick asset → Read odds → Open execution platform.</p>
+        </div>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="#playbook" class="btn-primary focus-ring" data-track-event="playbook_open" data-surface="hero">Open Today's Playbook</a>
+          <a href="/blog" class="btn-ghost focus-ring" style="border-color:rgba(255,255,255,.4);color:#f2f6ff;">Browse All Research</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-5">How It Works</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {steps.map((step) => (
+          <div class="surface-card p-5">
+            <h3 class="text-base font-bold mb-2">{step.title}</h3>
+            <p style="color:var(--muted);">{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-2">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="surface-card p-4 md:p-5">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <h2 class="text-xl font-bold">Market Snapshot</h2>
+          <span class="text-sm" style="color:var(--muted);">
+            {dailySnapshot.timestamp ? new Date(dailySnapshot.timestamp).toLocaleString() : 'No snapshot timestamp'}
+          </span>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+          {Object.entries(markets).map(([name, data]) => {
+            const positive = data.change >= 0;
+            return (
+              <div class="rounded-xl border p-3" style="border-color:var(--border);background:var(--surface-alt);">
+                <p class="text-xs font-semibold" style="color:var(--muted);">{name}</p>
+                <p class="text-lg font-bold mt-1">{typeof data.price === 'number' ? data.price.toLocaleString() : data.price}</p>
+                <p class={`text-sm font-semibold mt-1 ${positive ? 'metric-up' : 'metric-down'}`}>
+                  {positive ? '+' : ''}{data.change}%
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="playbook" class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex flex-wrap items-end justify-between gap-3 mb-4">
+        <div>
+          <h2 class="text-2xl font-bold">Today's Event Playbook</h2>
+          <p class="text-sm mt-1" style="color:var(--muted);">Probabilities are generated from historical CPI/NFP/FOMC event windows.</p>
+        </div>
+        <a class="btn-ghost focus-ring" href="/leaderboard">Open Full Playbook</a>
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        {playbookRows.map((row) => {
+          const offer = offerByAsset(row.asset);
+          const signalClass = row.signal === 'Bullish' ? 'metric-up' : row.signal === 'Bearish' ? 'metric-down' : 'metric-muted';
+          return (
+            <article class="surface-card p-5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <h3 class="text-xl font-bold">{row.asset}</h3>
+                  <span class="badge-chip">{row.event}</span>
+                  <span class={`text-sm font-bold ${signalClass}`}>{row.signal}</span>
+                </div>
+                <a
+                  href={`/blog/${row.entry.slug}`}
+                  class="btn-ghost text-sm focus-ring"
+                  data-track-event="playbook_open"
+                  data-asset={row.asset}
+                  data-event={row.event}
+                >
+                  Open Analysis
                 </a>
-                <a href="#markets" class="border border-dark-border text-white hover:bg-dark-surface py-3 px-6 rounded-lg transition-all">
-                    Live Markets
-                </a>
-            </div>
-        </div>
-    </section>
+              </div>
 
-    <!-- Live Market Data -->
-    <section id="markets" class="bg-dark-surface border-b border-dark-border py-6">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-lg font-bold text-white font-heading">
-                    <span class="text-primary">●</span> Live Market Data
-                </h2>
-                <span class="text-gray-400 text-sm">
-                    {dailySnapshot.timestamp ? new Date(dailySnapshot.timestamp).toLocaleString() : 'Loading...'}
-                </span>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-                {Object.entries(markets).map(([name, data]) => {
-                    const isPositive = data.change >= 0;
-                    return (
-                        <div class="bg-dark-bg border border-dark-border rounded-lg p-4 hover:border-primary/30 transition">
-                            <div class="text-gray-400 text-xs mb-1">{name}</div>
-                            <div class="text-xl font-bold text-white font-heading">
-                                ${typeof data.price === 'number' ? data.price.toLocaleString() : data.price}
-                            </div>
-                            <div class={`text-sm font-medium ${isPositive ? 'text-profit' : 'text-loss'}`}>
-                                {isPositive ? '↑' : '↓'} {data.change >= 0 ? '+' : ''}{data.change}%
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
-    </section>
+              <div class="grid grid-cols-2 gap-3 mt-4 text-sm">
+                <div class="rounded-xl border p-3" style="border-color:var(--border);background:var(--surface-alt);">
+                  <p class="font-bold mb-2">T+1</p>
+                  <p class="metric-up">P(up): {row.t1Up ?? '--'}%</p>
+                  <p class="metric-down">P(down): {row.t1Down ?? '--'}%</p>
+                  <p class="metric-muted">Median: {row.t1Median ?? '--'}%</p>
+                </div>
+                <div class="rounded-xl border p-3" style="border-color:var(--border);background:var(--surface-alt);">
+                  <p class="font-bold mb-2">T+7</p>
+                  <p class="metric-up">P(up): {row.t7Up ?? '--'}%</p>
+                  <p class="metric-down">P(down): {row.t7Down ?? '--'}%</p>
+                  <p class="metric-muted">Median: {row.t7Median ?? '--'}%</p>
+                </div>
+              </div>
 
-    <!-- Stats Bar -->
-    <section class="bg-dark-surface border-b border-dark-border py-6">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-primary font-heading">{posts.length}+</div>
-                    <div class="text-gray-400 text-sm">Analysis Articles</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-white font-heading">{assets.length}</div>
-                    <div class="text-gray-400 text-sm">Assets Tracked</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-profit font-heading">T+1</div>
-                    <div class="text-gray-400 text-sm">Win Rate Tracking</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-accent font-heading">24/7</div>
-                    <div class="text-gray-400 text-sm">Data Updates</div>
-                </div>
-            </div>
-        </div>
-    </section>
+              <div class="flex flex-wrap items-center justify-between gap-2 mt-4 text-sm" style="color:var(--muted);">
+                <p>Sample size: <strong style="color:var(--text);">{row.sampleSize || '--'}</strong></p>
+                <p>Event date: <strong style="color:var(--text);">{row.eventDate || '--'}</strong> · As-of: <strong style="color:var(--text);">{row.asofDate || '--'}</strong></p>
+              </div>
 
-    <!-- Assets Grid -->
-    <section id="assets" class="py-16 bg-dark-bg">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-white font-heading mb-8">
-                <span class="text-primary">Browse</span> by Asset
-            </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {assets.map(asset => {
-                    const colorClasses = {
-                        'BTC': 'from-orange-500 to-amber-600',
-                        'ETH': 'from-blue-500 to-indigo-600',
-                        'SOL': 'from-purple-500 to-pink-600',
-                        'GOLD': 'from-yellow-500 to-gold-600',
-                        'SPY': 'from-green-500 to-emerald-600',
-                        'DEFAULT': 'from-gray-500 to-slate-600'
-                    };
-                    const gradient = colorClasses[asset] || colorClasses['DEFAULT'];
-                    
-                    return (
-                        <a href={`/blog?asset=${asset.toLowerCase()}`} 
-                           class="group bg-dark-surface border border-dark-border rounded-xl overflow-hidden hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/10">
-                            <div class={`h-2 bg-gradient-to-r ${gradient}`}></div>
-                            <div class="p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <h3 class="text-xl font-bold text-white font-heading group-hover:text-primary transition">
-                                        {asset}
-                                    </h3>
-                                    <span class="bg-dark-bg text-gray-400 text-xs px-2 py-1 rounded">
-                                        {posts.filter(p => (p.data.tags?.[0] || '').toUpperCase() === asset).length} articles
-                                    </span>
-                                </div>
-                                <ul class="space-y-2">
-                                    {assetGroups[asset].slice(0, 3).map(post => (
-                                        <li class="text-gray-400 text-sm truncate hover:text-primary transition cursor-pointer">
-                                            {post.data.title}
-                                        </li>
-                                    ))}
-                                </ul>
-                                <div class="mt-4 text-primary text-sm font-medium group-hover:translate-x-1 transition flex items-center">
-                                    View all →
-                                </div>
-                            </div>
-                        </a>
-                    );
-                })}
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-16 bg-gradient-to-r from-primary/10 to-accent/10 border-t border-dark-border">
-        <div class="max-w-3xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold text-white font-heading mb-4">
-                Start Trading Today
-            </h2>
-            <p class="text-gray-300 mb-8">
-                Get exclusive referral bonuses on major trading platforms.
-            </p>
-            <div class="flex justify-center gap-4 flex-wrap">
-                {homepageOffers.map((offer) => (
-                    <a
-                        href={offer.trackedUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-affiliate-click="1"
-                        data-slug="homepage"
-                        data-asset="MIXED"
-                        data-offer-key={offer.key}
-                        data-cta-position="homepage_footer"
-                        data-utm-campaign={offer.utm_campaign || `affiliate_${offer.key}`}
-                        class={`font-bold py-3 px-6 rounded-lg transition-all ${
-                            offer.key === 'binance'
-                                ? 'bg-primary hover:bg-secondary text-dark-bg'
-                                : offer.key === 'ibkr'
-                                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
-                                    : 'bg-accent hover:bg-purple-600 text-white'
-                        }`}
-                    >
-                        {offer.name}
-                    </a>
-                ))}
-            </div>
-        </div>
-    </section>
+              {offer && (
+                <div class="mt-4 flex flex-wrap items-center justify-between gap-2">
+                  <p class="text-sm" style="color:var(--muted);">Execution platform for {row.asset}</p>
+                  <a
+                    href={offer.trackedUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-affiliate-click="1"
+                    data-slug="homepage"
+                    data-asset={row.asset}
+                    data-offer-key={offer.key}
+                    data-cta-position="playbook_card"
+                    data-utm-campaign={offer.utm_campaign || `affiliate_${offer.key}`}
+                    class="btn-primary text-sm focus-ring"
+                  >
+                    Open {offer.name}
+                  </a>
+                </div>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
 </Layout>

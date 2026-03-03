@@ -151,387 +151,387 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"blog": {
-"btc-after-macro-2024-01-30.md": {
-	id: "btc-after-macro-2024-01-30.md";
-  slug: "btc-after-macro-2024-01-30";
+"btc-after-cpi-2024-08-14.md": {
+	id: "btc-after-cpi-2024-08-14.md";
+  slug: "btc-after-cpi-2024-08-14";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"btc-after-macro-2024-04-05.md": {
-	id: "btc-after-macro-2024-04-05.md";
-  slug: "btc-after-macro-2024-04-05";
+"btc-after-fomc-2024-01-30.md": {
+	id: "btc-after-fomc-2024-01-30.md";
+  slug: "btc-after-fomc-2024-01-30";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"btc-after-macro-2024-04-30.md": {
-	id: "btc-after-macro-2024-04-30.md";
-  slug: "btc-after-macro-2024-04-30";
+"btc-after-fomc-2024-04-30.md": {
+	id: "btc-after-fomc-2024-04-30.md";
+  slug: "btc-after-fomc-2024-04-30";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"btc-after-macro-2024-05-03.md": {
-	id: "btc-after-macro-2024-05-03.md";
-  slug: "btc-after-macro-2024-05-03";
+"btc-after-nfp-2024-04-05.md": {
+	id: "btc-after-nfp-2024-04-05.md";
+  slug: "btc-after-nfp-2024-04-05";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"btc-after-macro-2024-08-14.md": {
-	id: "btc-after-macro-2024-08-14.md";
-  slug: "btc-after-macro-2024-08-14";
+"btc-after-nfp-2024-05-03.md": {
+	id: "btc-after-nfp-2024-05-03.md";
+  slug: "btc-after-nfp-2024-05-03";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"eth-after-macro-2024-01-30.md": {
-	id: "eth-after-macro-2024-01-30.md";
-  slug: "eth-after-macro-2024-01-30";
+"eth-after-cpi-2024-06-12.md": {
+	id: "eth-after-cpi-2024-06-12.md";
+  slug: "eth-after-cpi-2024-06-12";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"eth-after-macro-2024-04-05.md": {
-	id: "eth-after-macro-2024-04-05.md";
-  slug: "eth-after-macro-2024-04-05";
+"eth-after-cpi-2024-08-14.md": {
+	id: "eth-after-cpi-2024-08-14.md";
+  slug: "eth-after-cpi-2024-08-14";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"eth-after-macro-2024-04-30.md": {
-	id: "eth-after-macro-2024-04-30.md";
-  slug: "eth-after-macro-2024-04-30";
+"eth-after-cpi-2025-02-12.md": {
+	id: "eth-after-cpi-2025-02-12.md";
+  slug: "eth-after-cpi-2025-02-12";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"eth-after-macro-2024-06-11.md": {
-	id: "eth-after-macro-2024-06-11.md";
-  slug: "eth-after-macro-2024-06-11";
+"eth-after-fomc-2024-01-30.md": {
+	id: "eth-after-fomc-2024-01-30.md";
+  slug: "eth-after-fomc-2024-01-30";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"eth-after-macro-2024-06-12.md": {
-	id: "eth-after-macro-2024-06-12.md";
-  slug: "eth-after-macro-2024-06-12";
+"eth-after-fomc-2024-04-30.md": {
+	id: "eth-after-fomc-2024-04-30.md";
+  slug: "eth-after-fomc-2024-04-30";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"eth-after-macro-2024-08-14.md": {
-	id: "eth-after-macro-2024-08-14.md";
-  slug: "eth-after-macro-2024-08-14";
+"eth-after-fomc-2024-06-11.md": {
+	id: "eth-after-fomc-2024-06-11.md";
+  slug: "eth-after-fomc-2024-06-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"eth-after-macro-2025-02-12.md": {
-	id: "eth-after-macro-2025-02-12.md";
-  slug: "eth-after-macro-2025-02-12";
+"eth-after-nfp-2024-04-05.md": {
+	id: "eth-after-nfp-2024-04-05.md";
+  slug: "eth-after-nfp-2024-04-05";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-01-05.md": {
-	id: "gold-after-macro-2024-01-05.md";
-  slug: "gold-after-macro-2024-01-05";
+"gold-after-cpi-2024-02-20.md": {
+	id: "gold-after-cpi-2024-02-20.md";
+  slug: "gold-after-cpi-2024-02-20";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-01-30.md": {
-	id: "gold-after-macro-2024-01-30.md";
-  slug: "gold-after-macro-2024-01-30";
+"gold-after-cpi-2024-03-12.md": {
+	id: "gold-after-cpi-2024-03-12.md";
+  slug: "gold-after-cpi-2024-03-12";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-02-20.md": {
-	id: "gold-after-macro-2024-02-20.md";
-  slug: "gold-after-macro-2024-02-20";
+"gold-after-cpi-2024-05-15.md": {
+	id: "gold-after-cpi-2024-05-15.md";
+  slug: "gold-after-cpi-2024-05-15";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-03-01.md": {
-	id: "gold-after-macro-2024-03-01.md";
-  slug: "gold-after-macro-2024-03-01";
+"gold-after-cpi-2025-02-12.md": {
+	id: "gold-after-cpi-2025-02-12.md";
+  slug: "gold-after-cpi-2025-02-12";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-03-12.md": {
-	id: "gold-after-macro-2024-03-12.md";
-  slug: "gold-after-macro-2024-03-12";
+"gold-after-fomc-2024-01-30.md": {
+	id: "gold-after-fomc-2024-01-30.md";
+  slug: "gold-after-fomc-2024-01-30";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-04-05.md": {
-	id: "gold-after-macro-2024-04-05.md";
-  slug: "gold-after-macro-2024-04-05";
+"gold-after-fomc-2024-07-30.md": {
+	id: "gold-after-fomc-2024-07-30.md";
+  slug: "gold-after-fomc-2024-07-30";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-05-03.md": {
-	id: "gold-after-macro-2024-05-03.md";
-  slug: "gold-after-macro-2024-05-03";
+"gold-after-fomc-2024-11-06.md": {
+	id: "gold-after-fomc-2024-11-06.md";
+  slug: "gold-after-fomc-2024-11-06";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-05-15.md": {
-	id: "gold-after-macro-2024-05-15.md";
-  slug: "gold-after-macro-2024-05-15";
+"gold-after-nfp-2024-01-05.md": {
+	id: "gold-after-nfp-2024-01-05.md";
+  slug: "gold-after-nfp-2024-01-05";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-06-07.md": {
-	id: "gold-after-macro-2024-06-07.md";
-  slug: "gold-after-macro-2024-06-07";
+"gold-after-nfp-2024-03-01.md": {
+	id: "gold-after-nfp-2024-03-01.md";
+  slug: "gold-after-nfp-2024-03-01";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-07-30.md": {
-	id: "gold-after-macro-2024-07-30.md";
-  slug: "gold-after-macro-2024-07-30";
+"gold-after-nfp-2024-04-05.md": {
+	id: "gold-after-nfp-2024-04-05.md";
+  slug: "gold-after-nfp-2024-04-05";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-08-02.md": {
-	id: "gold-after-macro-2024-08-02.md";
-  slug: "gold-after-macro-2024-08-02";
+"gold-after-nfp-2024-05-03.md": {
+	id: "gold-after-nfp-2024-05-03.md";
+  slug: "gold-after-nfp-2024-05-03";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-09-06.md": {
-	id: "gold-after-macro-2024-09-06.md";
-  slug: "gold-after-macro-2024-09-06";
+"gold-after-nfp-2024-06-07.md": {
+	id: "gold-after-nfp-2024-06-07.md";
+  slug: "gold-after-nfp-2024-06-07";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-10-04.md": {
-	id: "gold-after-macro-2024-10-04.md";
-  slug: "gold-after-macro-2024-10-04";
+"gold-after-nfp-2024-08-02.md": {
+	id: "gold-after-nfp-2024-08-02.md";
+  slug: "gold-after-nfp-2024-08-02";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2024-11-06.md": {
-	id: "gold-after-macro-2024-11-06.md";
-  slug: "gold-after-macro-2024-11-06";
+"gold-after-nfp-2024-09-06.md": {
+	id: "gold-after-nfp-2024-09-06.md";
+  slug: "gold-after-nfp-2024-09-06";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2025-01-10.md": {
-	id: "gold-after-macro-2025-01-10.md";
-  slug: "gold-after-macro-2025-01-10";
+"gold-after-nfp-2024-10-04.md": {
+	id: "gold-after-nfp-2024-10-04.md";
+  slug: "gold-after-nfp-2024-10-04";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"gold-after-macro-2025-02-12.md": {
-	id: "gold-after-macro-2025-02-12.md";
-  slug: "gold-after-macro-2025-02-12";
+"gold-after-nfp-2025-01-10.md": {
+	id: "gold-after-nfp-2025-01-10.md";
+  slug: "gold-after-nfp-2025-01-10";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-01-30.md": {
-	id: "qqq-after-macro-2024-01-30.md";
-  slug: "qqq-after-macro-2024-01-30";
+"qqq-after-cpi-2024-04-10.md": {
+	id: "qqq-after-cpi-2024-04-10.md";
+  slug: "qqq-after-cpi-2024-04-10";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-02-02.md": {
-	id: "qqq-after-macro-2024-02-02.md";
-  slug: "qqq-after-macro-2024-02-02";
+"qqq-after-cpi-2024-05-15.md": {
+	id: "qqq-after-cpi-2024-05-15.md";
+  slug: "qqq-after-cpi-2024-05-15";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-04-10.md": {
-	id: "qqq-after-macro-2024-04-10.md";
-  slug: "qqq-after-macro-2024-04-10";
+"qqq-after-cpi-2024-09-11.md": {
+	id: "qqq-after-cpi-2024-09-11.md";
+  slug: "qqq-after-cpi-2024-09-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-05-15.md": {
-	id: "qqq-after-macro-2024-05-15.md";
-  slug: "qqq-after-macro-2024-05-15";
+"qqq-after-cpi-2024-10-10.md": {
+	id: "qqq-after-cpi-2024-10-10.md";
+  slug: "qqq-after-cpi-2024-10-10";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-07-30.md": {
-	id: "qqq-after-macro-2024-07-30.md";
-  slug: "qqq-after-macro-2024-07-30";
+"qqq-after-cpi-2024-11-14.md": {
+	id: "qqq-after-cpi-2024-11-14.md";
+  slug: "qqq-after-cpi-2024-11-14";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-08-02.md": {
-	id: "qqq-after-macro-2024-08-02.md";
-  slug: "qqq-after-macro-2024-08-02";
+"qqq-after-fomc-2024-01-30.md": {
+	id: "qqq-after-fomc-2024-01-30.md";
+  slug: "qqq-after-fomc-2024-01-30";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-09-11.md": {
-	id: "qqq-after-macro-2024-09-11.md";
-  slug: "qqq-after-macro-2024-09-11";
+"qqq-after-fomc-2024-07-30.md": {
+	id: "qqq-after-fomc-2024-07-30.md";
+  slug: "qqq-after-fomc-2024-07-30";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-10-04.md": {
-	id: "qqq-after-macro-2024-10-04.md";
-  slug: "qqq-after-macro-2024-10-04";
+"qqq-after-fomc-2024-12-17.md": {
+	id: "qqq-after-fomc-2024-12-17.md";
+  slug: "qqq-after-fomc-2024-12-17";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-10-10.md": {
-	id: "qqq-after-macro-2024-10-10.md";
-  slug: "qqq-after-macro-2024-10-10";
+"qqq-after-nfp-2024-02-02.md": {
+	id: "qqq-after-nfp-2024-02-02.md";
+  slug: "qqq-after-nfp-2024-02-02";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-11-14.md": {
-	id: "qqq-after-macro-2024-11-14.md";
-  slug: "qqq-after-macro-2024-11-14";
+"qqq-after-nfp-2024-08-02.md": {
+	id: "qqq-after-nfp-2024-08-02.md";
+  slug: "qqq-after-nfp-2024-08-02";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-12-06.md": {
-	id: "qqq-after-macro-2024-12-06.md";
-  slug: "qqq-after-macro-2024-12-06";
+"qqq-after-nfp-2024-10-04.md": {
+	id: "qqq-after-nfp-2024-10-04.md";
+  slug: "qqq-after-nfp-2024-10-04";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2024-12-17.md": {
-	id: "qqq-after-macro-2024-12-17.md";
-  slug: "qqq-after-macro-2024-12-17";
+"qqq-after-nfp-2024-12-06.md": {
+	id: "qqq-after-nfp-2024-12-06.md";
+  slug: "qqq-after-nfp-2024-12-06";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"qqq-after-macro-2025-01-10.md": {
-	id: "qqq-after-macro-2025-01-10.md";
-  slug: "qqq-after-macro-2025-01-10";
+"qqq-after-nfp-2025-01-10.md": {
+	id: "qqq-after-nfp-2025-01-10.md";
+  slug: "qqq-after-nfp-2025-01-10";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-01-05.md": {
-	id: "spy-after-macro-2024-01-05.md";
-  slug: "spy-after-macro-2024-01-05";
+"spy-after-cpi-2024-03-12.md": {
+	id: "spy-after-cpi-2024-03-12.md";
+  slug: "spy-after-cpi-2024-03-12";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-01-30.md": {
-	id: "spy-after-macro-2024-01-30.md";
-  slug: "spy-after-macro-2024-01-30";
+"spy-after-cpi-2024-05-15.md": {
+	id: "spy-after-cpi-2024-05-15.md";
+  slug: "spy-after-cpi-2024-05-15";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-02-02.md": {
-	id: "spy-after-macro-2024-02-02.md";
-  slug: "spy-after-macro-2024-02-02";
+"spy-after-cpi-2024-07-11.md": {
+	id: "spy-after-cpi-2024-07-11.md";
+  slug: "spy-after-cpi-2024-07-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-03-12.md": {
-	id: "spy-after-macro-2024-03-12.md";
-  slug: "spy-after-macro-2024-03-12";
+"spy-after-cpi-2024-11-14.md": {
+	id: "spy-after-cpi-2024-11-14.md";
+  slug: "spy-after-cpi-2024-11-14";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-03-19.md": {
-	id: "spy-after-macro-2024-03-19.md";
-  slug: "spy-after-macro-2024-03-19";
+"spy-after-fomc-2024-01-30.md": {
+	id: "spy-after-fomc-2024-01-30.md";
+  slug: "spy-after-fomc-2024-01-30";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-05-15.md": {
-	id: "spy-after-macro-2024-05-15.md";
-  slug: "spy-after-macro-2024-05-15";
+"spy-after-fomc-2024-03-19.md": {
+	id: "spy-after-fomc-2024-03-19.md";
+  slug: "spy-after-fomc-2024-03-19";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-07-05.md": {
-	id: "spy-after-macro-2024-07-05.md";
-  slug: "spy-after-macro-2024-07-05";
+"spy-after-fomc-2024-07-30.md": {
+	id: "spy-after-fomc-2024-07-30.md";
+  slug: "spy-after-fomc-2024-07-30";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-07-11.md": {
-	id: "spy-after-macro-2024-07-11.md";
-  slug: "spy-after-macro-2024-07-11";
+"spy-after-fomc-2024-12-17.md": {
+	id: "spy-after-fomc-2024-12-17.md";
+  slug: "spy-after-fomc-2024-12-17";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-07-30.md": {
-	id: "spy-after-macro-2024-07-30.md";
-  slug: "spy-after-macro-2024-07-30";
+"spy-after-fomc-2025-01-29.md": {
+	id: "spy-after-fomc-2025-01-29.md";
+  slug: "spy-after-fomc-2025-01-29";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-08-02.md": {
-	id: "spy-after-macro-2024-08-02.md";
-  slug: "spy-after-macro-2024-08-02";
+"spy-after-nfp-2024-01-05.md": {
+	id: "spy-after-nfp-2024-01-05.md";
+  slug: "spy-after-nfp-2024-01-05";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-10-04.md": {
-	id: "spy-after-macro-2024-10-04.md";
-  slug: "spy-after-macro-2024-10-04";
+"spy-after-nfp-2024-02-02.md": {
+	id: "spy-after-nfp-2024-02-02.md";
+  slug: "spy-after-nfp-2024-02-02";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-11-14.md": {
-	id: "spy-after-macro-2024-11-14.md";
-  slug: "spy-after-macro-2024-11-14";
+"spy-after-nfp-2024-07-05.md": {
+	id: "spy-after-nfp-2024-07-05.md";
+  slug: "spy-after-nfp-2024-07-05";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2024-12-17.md": {
-	id: "spy-after-macro-2024-12-17.md";
-  slug: "spy-after-macro-2024-12-17";
+"spy-after-nfp-2024-08-02.md": {
+	id: "spy-after-nfp-2024-08-02.md";
+  slug: "spy-after-nfp-2024-08-02";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"spy-after-macro-2025-01-29.md": {
-	id: "spy-after-macro-2025-01-29.md";
-  slug: "spy-after-macro-2025-01-29";
+"spy-after-nfp-2024-10-04.md": {
+	id: "spy-after-nfp-2024-10-04.md";
+  slug: "spy-after-nfp-2024-10-04";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

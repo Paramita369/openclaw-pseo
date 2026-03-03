@@ -9,5 +9,282 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/blog/btc-after-macro-2024-01-30",
+      "destination": "/blog/btc-after-fomc-2024-01-30",
+      "permanent": true
+    },
+    {
+      "source": "/blog/btc-after-macro-2024-04-05",
+      "destination": "/blog/btc-after-nfp-2024-04-05",
+      "permanent": true
+    },
+    {
+      "source": "/blog/btc-after-macro-2024-04-30",
+      "destination": "/blog/btc-after-fomc-2024-04-30",
+      "permanent": true
+    },
+    {
+      "source": "/blog/btc-after-macro-2024-05-03",
+      "destination": "/blog/btc-after-nfp-2024-05-03",
+      "permanent": true
+    },
+    {
+      "source": "/blog/btc-after-macro-2024-08-14",
+      "destination": "/blog/btc-after-cpi-2024-08-14",
+      "permanent": true
+    },
+    {
+      "source": "/blog/eth-after-macro-2024-01-30",
+      "destination": "/blog/eth-after-fomc-2024-01-30",
+      "permanent": true
+    },
+    {
+      "source": "/blog/eth-after-macro-2024-04-05",
+      "destination": "/blog/eth-after-nfp-2024-04-05",
+      "permanent": true
+    },
+    {
+      "source": "/blog/eth-after-macro-2024-04-30",
+      "destination": "/blog/eth-after-fomc-2024-04-30",
+      "permanent": true
+    },
+    {
+      "source": "/blog/eth-after-macro-2024-06-11",
+      "destination": "/blog/eth-after-fomc-2024-06-11",
+      "permanent": true
+    },
+    {
+      "source": "/blog/eth-after-macro-2024-06-12",
+      "destination": "/blog/eth-after-cpi-2024-06-12",
+      "permanent": true
+    },
+    {
+      "source": "/blog/eth-after-macro-2024-08-14",
+      "destination": "/blog/eth-after-cpi-2024-08-14",
+      "permanent": true
+    },
+    {
+      "source": "/blog/eth-after-macro-2025-02-12",
+      "destination": "/blog/eth-after-cpi-2025-02-12",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-01-05",
+      "destination": "/blog/gold-after-nfp-2024-01-05",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-01-30",
+      "destination": "/blog/gold-after-fomc-2024-01-30",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-02-20",
+      "destination": "/blog/gold-after-cpi-2024-02-20",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-03-01",
+      "destination": "/blog/gold-after-nfp-2024-03-01",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-03-12",
+      "destination": "/blog/gold-after-cpi-2024-03-12",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-04-05",
+      "destination": "/blog/gold-after-nfp-2024-04-05",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-05-03",
+      "destination": "/blog/gold-after-nfp-2024-05-03",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-05-15",
+      "destination": "/blog/gold-after-cpi-2024-05-15",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-06-07",
+      "destination": "/blog/gold-after-nfp-2024-06-07",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-07-30",
+      "destination": "/blog/gold-after-fomc-2024-07-30",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-08-02",
+      "destination": "/blog/gold-after-nfp-2024-08-02",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-09-06",
+      "destination": "/blog/gold-after-nfp-2024-09-06",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-10-04",
+      "destination": "/blog/gold-after-nfp-2024-10-04",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2024-11-06",
+      "destination": "/blog/gold-after-fomc-2024-11-06",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2025-01-10",
+      "destination": "/blog/gold-after-nfp-2025-01-10",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gold-after-macro-2025-02-12",
+      "destination": "/blog/gold-after-cpi-2025-02-12",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-01-30",
+      "destination": "/blog/qqq-after-fomc-2024-01-30",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-02-02",
+      "destination": "/blog/qqq-after-nfp-2024-02-02",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-04-10",
+      "destination": "/blog/qqq-after-cpi-2024-04-10",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-05-15",
+      "destination": "/blog/qqq-after-cpi-2024-05-15",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-07-30",
+      "destination": "/blog/qqq-after-fomc-2024-07-30",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-08-02",
+      "destination": "/blog/qqq-after-nfp-2024-08-02",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-09-11",
+      "destination": "/blog/qqq-after-cpi-2024-09-11",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-10-04",
+      "destination": "/blog/qqq-after-nfp-2024-10-04",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-10-10",
+      "destination": "/blog/qqq-after-cpi-2024-10-10",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-11-14",
+      "destination": "/blog/qqq-after-cpi-2024-11-14",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-12-06",
+      "destination": "/blog/qqq-after-nfp-2024-12-06",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2024-12-17",
+      "destination": "/blog/qqq-after-fomc-2024-12-17",
+      "permanent": true
+    },
+    {
+      "source": "/blog/qqq-after-macro-2025-01-10",
+      "destination": "/blog/qqq-after-nfp-2025-01-10",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-01-05",
+      "destination": "/blog/spy-after-nfp-2024-01-05",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-01-30",
+      "destination": "/blog/spy-after-fomc-2024-01-30",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-02-02",
+      "destination": "/blog/spy-after-nfp-2024-02-02",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-03-12",
+      "destination": "/blog/spy-after-cpi-2024-03-12",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-03-19",
+      "destination": "/blog/spy-after-fomc-2024-03-19",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-05-15",
+      "destination": "/blog/spy-after-cpi-2024-05-15",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-07-05",
+      "destination": "/blog/spy-after-nfp-2024-07-05",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-07-11",
+      "destination": "/blog/spy-after-cpi-2024-07-11",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-07-30",
+      "destination": "/blog/spy-after-fomc-2024-07-30",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-08-02",
+      "destination": "/blog/spy-after-nfp-2024-08-02",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-10-04",
+      "destination": "/blog/spy-after-nfp-2024-10-04",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-11-14",
+      "destination": "/blog/spy-after-cpi-2024-11-14",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2024-12-17",
+      "destination": "/blog/spy-after-fomc-2024-12-17",
+      "permanent": true
+    },
+    {
+      "source": "/blog/spy-after-macro-2025-01-29",
+      "destination": "/blog/spy-after-fomc-2025-01-29",
+      "permanent": true
+    }
   ]
 }

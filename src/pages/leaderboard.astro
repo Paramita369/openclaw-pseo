@@ -2,148 +2,88 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-// Get all blog posts
 const posts = await getCollection('blog');
 
-// Extract metrics from all posts and sort
-const leaderboardData = posts
-  .filter(post => post.data.metrics)
-  .map(post => ({
-    title: post.data.title.replace(/Historical Correlation of |Price Impact after |Performance after |Historical /gi, ''),
-    asset: post.data.tags?.[0] || 'Unknown',
-    slug: post.slug,
-    sharpe: Number(post.data.metrics?.sharpe_t7) || 0,
-    mdd: post.data.metrics?.mdd_t7 || 0,
-    volatility: post.data.metrics?.volatility || 0,
-  }))
-  .filter(item => item.sharpe !== 0) // Remove zero Sharpe
-  .sort((a, b) => b.sharpe - a.sharpe); // Sort by Sharpe (highest first)
+const rows = posts
+  .map((post) => {
+    const p = post.data.probabilities || {};
+    const riseT7 = Number(p?.t7?.up ?? 0);
+    const medianT7 = Number(p?.t7?.median ?? 0);
+    const riseT1 = Number(p?.t1?.up ?? 0);
+    const signalScore = 0.5 * (riseT7 - 50) + 0.3 * (riseT1 - 50) + 0.2 * (Math.sign(medianT7) * 10);
 
-// Group by asset
-const assetGroups = {};
-leaderboardData.forEach(item => {
-  if (!assetGroups[item.asset]) {
-    assetGroups[item.asset] = [];
-  }
-  assetGroups[item.asset].push(item);
-});
+    return {
+      slug: post.slug,
+      asset: post.data.tags?.[0]?.toUpperCase() || 'UNKNOWN',
+      event: post.data.event_label || post.data.event_type,
+      title: post.data.title,
+      signal: post.data.signal || 'Neutral',
+      signalScore: Number(signalScore.toFixed(2)),
+      riseT1,
+      riseT7,
+      medianT7,
+      sample: Number(p?.sample_size ?? 0),
+      asof: post.data.asof_date || '--',
+    };
+  })
+  .sort((a, b) => b.signalScore - a.signalScore);
 
-// Calculate asset averages
-const assetStats = Object.entries(assetGroups).map(([asset, items]) => {
-  const avgSharpe = items.reduce((sum, i) => sum + i.sharpe, 0) / items.length;
-  const avgMdd = items.reduce((sum, i) => sum + i.mdd, 0) / items.length;
-  const avgVol = items.reduce((sum, i) => sum + i.volatility, 0) / items.length;
-  return {
-    asset,
-    count: items.length,
-    avgSharpe: Math.round(avgSharpe * 100) / 100,
-    avgMdd: Math.round(avgMdd * 100) / 100,
-    latestDate: items[0]?.slug?.split('-').slice(-1)[0] || 'N/A',
-    avgVol: Math.round(avgVol * 100) / 100,
-  };
-}).sort((a, b) => b.avgSharpe - a.avgSharpe); // Sort by avg Sharpe (highest first)
+const bestRows = rows.slice(0, 30);
 ---
 
-<Layout title="Alpha Screener | QuantMacro" description="Top quantitative trading strategies ranked by risk-adjusted returns">
-  <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-16">
-    <div class="max-w-6xl mx-auto px-4 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">
-        <span class="text-yellow-400">α</span> Alpha Screener
-      </h1>
-      <p class="text-xl text-indigo-100">
-        Top quantitative strategies ranked by Sharpe Ratio
-      </p>
+<Layout title="Playbook Leaderboard" description="Ranked CPI/NFP/FOMC event playbooks by signal score and historical probabilities.">
+  <section class="py-12 hero-panel">
+    <div class="max-w-7xl mx-auto px-4">
+      <h1 class="text-4xl font-extrabold text-white">Event Playbook Leaderboard</h1>
+      <p class="text-blue-100 text-lg mt-3">Ranked by probability-derived signal score (T+1/T+7 weighted).</p>
     </div>
   </section>
 
-  <!-- Asset Summary Table -->
-  <section class="max-w-6xl mx-auto px-4 py-12">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">Asset Performance Summary</h2>
-    
-    <div class="overflow-x-auto">
-      <table class="w-full bg-white rounded-xl shadow-sm border border-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-3 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Date</th>
-            <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Strategies</th>
-            <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Avg Sharpe</th>
-            <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Avg MDD</th>
-            <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Latest Date</th>
-            <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Avg Volatility</th>
-            <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Action</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-          {assetStats.map((stat, idx) => (
-            <tr class="hover:bg-gray-50 transition">
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <span class={`text-lg font-bold mr-2 ${
-                    stat.asset === 'BTC' ? 'text-orange-500' :
-                    stat.asset === 'ETH' ? 'text-blue-500' :
-                    stat.asset === 'GOLD' ? 'text-yellow-600' :
-                    stat.asset === 'SPY' ? 'text-green-600' :
-                    'text-gray-700'
-                  }`}>{stat.asset}</span>
-                  {idx < 3 && <span class="text-xs bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded-full font-bold">TOP {idx + 1}</span>}
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-gray-600">{stat.count}</td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class={`font-bold ${stat.avgSharpe > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {stat.avgSharpe > 0 ? '↑' : '↓'} {Math.abs(stat.avgSharpe)}
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-red-600 font-medium">{stat.avgMdd}%</td>
-              <td class="px-6 py-4 whitespace-nowrap text-gray-600">{stat.latestDate}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-gray-600">{stat.avgVol && stat.avgVol !== 0 ? stat.avgVol + '%' : '-'}</td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <a href={`/tags/${stat.asset.toLowerCase()}`} class="text-indigo-600 hover:text-indigo-800 font-medium text-sm">
-                  View All →
-                </a>
-              </td>
+  <section class="max-w-7xl mx-auto px-4 py-10">
+    <div class="surface-card overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[980px] text-sm">
+          <thead style="background:var(--surface-alt);color:var(--muted);">
+            <tr>
+              <th class="text-left px-4 py-3 font-bold">#</th>
+              <th class="text-left px-4 py-3 font-bold">Asset</th>
+              <th class="text-left px-4 py-3 font-bold">Event</th>
+              <th class="text-left px-4 py-3 font-bold">Signal</th>
+              <th class="text-left px-4 py-3 font-bold">Signal Score</th>
+              <th class="text-left px-4 py-3 font-bold">T+1 P(up)</th>
+              <th class="text-left px-4 py-3 font-bold">T+7 P(up)</th>
+              <th class="text-left px-4 py-3 font-bold">T+7 Median</th>
+              <th class="text-left px-4 py-3 font-bold">Sample</th>
+              <th class="text-left px-4 py-3 font-bold">As-of</th>
+              <th class="text-left px-4 py-3 font-bold">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Top Strategies List -->
-  <section class="max-w-6xl mx-auto px-4 py-8 pb-16">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">Top Strategies</h2>
-    
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {leaderboardData.slice(0, 12).map((item, idx) => (
-        <a href={`/blog/${item.slug}`} class="block bg-white rounded-xl shadow-sm hover:shadow-lg transition border border-gray-200 overflow-hidden group">
-          <div class="p-5">
-            <div class="flex items-center justify-between mb-3">
-              <span class={`text-xs font-bold px-2 py-1 rounded ${
-                item.asset === 'BTC' ? 'bg-orange-100 text-orange-700' :
-                item.asset === 'ETH' ? 'bg-blue-100 text-blue-700' :
-                item.asset === 'GOLD' ? 'bg-yellow-100 text-yellow-700' :
-                'bg-gray-100 text-gray-700'
-              }`}>{item.asset}</span>
-              <span class="text-xs text-gray-500">#{idx + 1}</span>
-            </div>
-            <h3 class="text-sm font-semibold text-gray-900 line-clamp-2 group-hover:text-indigo-600 transition">
-              {item.title}
-            </h3>
-            <div class="mt-3 flex items-center justify-between text-xs">
-              <span class={`font-bold ${item.sharpe > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                Sharpe: {item.sharpe}
-              </span>
-              <span class="text-gray-500">MDD: {item.mdd}%</span>
-            </div>
-          </div>
-        </a>
-      ))}
-    </div>
-    
-    <div class="text-center mt-8">
-      <a href="/blog" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg transition-all">
-        View All {leaderboardData.length} Strategies →
-      </a>
+          </thead>
+          <tbody>
+            {bestRows.map((row, idx) => {
+              const signalClass = row.signal === 'Bullish' ? 'metric-up' : row.signal === 'Bearish' ? 'metric-down' : 'metric-muted';
+              return (
+                <tr class="border-t" style="border-color:var(--border);">
+                  <td class="px-4 py-3 font-bold">{idx + 1}</td>
+                  <td class="px-4 py-3 font-semibold">{row.asset}</td>
+                  <td class="px-4 py-3">{row.event}</td>
+                  <td class={`px-4 py-3 font-bold ${signalClass}`}>{row.signal}</td>
+                  <td class="px-4 py-3">{row.signalScore}</td>
+                  <td class="px-4 py-3">{row.riseT1}%</td>
+                  <td class="px-4 py-3">{row.riseT7}%</td>
+                  <td class={`px-4 py-3 font-semibold ${row.medianT7 >= 0 ? 'metric-up' : 'metric-down'}`}>{row.medianT7}%</td>
+                  <td class="px-4 py-3">{row.sample}</td>
+                  <td class="px-4 py-3">{row.asof}</td>
+                  <td class="px-4 py-3">
+                    <a href={`/blog/${row.slug}`} class="btn-ghost text-xs" data-track-event="playbook_open" data-asset={row.asset} data-event={row.event}>
+                      Open
+                    </a>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 </Layout>

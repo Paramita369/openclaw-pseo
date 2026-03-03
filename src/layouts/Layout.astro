@@ -1,74 +1,89 @@
 ---
 import Analytics from '@vercel/analytics/astro';
+import '../styles/global.css';
 
 const { title, description, frontmatter } = Astro.props;
 
-const metaDesc = description || "Quantitative backtesting data for cross-asset volatility post-macro events. Data driven trading insights.";
-const siteUrl = "https://quantmacro.vercel.app";
+const metaDesc =
+  description ||
+  'Event-driven return probabilities across BTC, ETH, GOLD, QQQ, and SPY from historical CPI, NFP, and FOMC datasets.';
+const siteUrl = 'https://quantmacro.vercel.app';
 const currentUrl = Astro.url.href;
-const ga4MeasurementId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID || "";
+const ga4MeasurementId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID || '';
 
-// Dynamic JSON-LD for articles
 let schema = null;
 if (frontmatter) {
   schema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": title,
-    "description": metaDesc,
-    "author": {
-      "@type": "Organization",
-      "name": "QuantMacro",
-      "url": siteUrl
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description: metaDesc,
+    author: {
+      '@type': 'Organization',
+      name: 'QuantMacro',
+      url: siteUrl,
     },
-    "publisher": {
-      "@type": "Organization",
-      "name": "QuantMacro",
-      "logo": {
-        "@type": "ImageObject",
-        "url": siteUrl + "/favicon.svg"
-      }
+    publisher: {
+      '@type': 'Organization',
+      name: 'QuantMacro',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/favicon.svg`,
+      },
     },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": currentUrl
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': currentUrl,
     },
-    "datePublished": frontmatter.pubDate || new Date().toISOString().split('T')[0]
+    datePublished: frontmatter.pubDate || new Date().toISOString().split('T')[0],
   };
 } else {
-  // Website schema for homepage
   schema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "QuantMacro",
-    "description": metaDesc,
-    "url": siteUrl,
-    "publisher": {
-      "@type": "Organization",
-      "name": "QuantMacro"
-    }
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'QuantMacro',
+    description: metaDesc,
+    url: siteUrl,
+    publisher: {
+      '@type': 'Organization',
+      name: 'QuantMacro',
+    },
   };
 }
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="kvvXjMnBnI-4oWLa66hB0XZP3q4t6go7Y37eaSm9g3Y" />
-    <title>{title} | QuantMacro Analytics</title>
-    <meta name="description" content={metaDesc}>
-    <link rel="canonical" href={currentUrl}>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    
-    <!-- Google Fonts: Poppins + Open Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- JSON-LD Structured Data -->
+    <title>{title} | QuantMacro</title>
+    <meta name="description" content={metaDesc} />
+    <link rel="canonical" href={currentUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem('qm_theme');
+          const theme = stored === 'dark' || stored === 'light' ? stored : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
     {ga4MeasurementId && (
       <>
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`}></script>
@@ -81,48 +96,104 @@ if (frontmatter) {
         </script>
       </>
     )}
-</head>
+  </head>
 
-<body class="bg-dark-bg text-dark-text font-body antialiased">
-    <header class="bg-dark-surface border-b border-dark-border">
-        <nav class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold text-primary font-heading">QuantMacro</a>
-            <div class="space-x-6">
-                <a href="/" class="text-gray-300 hover:text-primary transition font-medium">Home</a>
-                <a href="/leaderboard" class="text-gray-300 hover:text-primary transition font-medium">α Alpha</a>
-                <a href="/blog" class="text-gray-300 hover:text-primary transition font-medium">Analysis</a>
-            </div>
+  <body>
+    <div class="app-shell">
+      <header class="sticky top-0 z-40 border-b" style="background:var(--surface); border-color:var(--border);">
+        <nav class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+          <a href="/" class="text-2xl font-extrabold tracking-tight" style="color:var(--primary);">QuantMacro</a>
+
+          <div class="hidden md:flex items-center gap-2 text-sm font-semibold">
+            <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/">Dashboard</a>
+            <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/leaderboard">Playbook</a>
+            <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/blog">Research</a>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button
+              id="theme-toggle"
+              type="button"
+              class="btn-ghost text-sm focus-ring"
+              data-track-event="theme_switch"
+              aria-label="Toggle theme"
+            >
+              <span id="theme-icon">Mode</span>
+              <span id="theme-label">Dark</span>
+            </button>
+            <a class="btn-primary text-sm focus-ring" href="/blog">Open Signals</a>
+          </div>
         </nav>
-    </header>
+      </header>
 
-    <slot />
+      <main class="content-shell">
+        <slot />
+      </main>
 
-    <footer class="bg-dark-surface border-t border-dark-border py-8 mt-16">
-        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
-            <p>&copy; 2026 QuantMacro Analytics. Data-driven trading insights.</p>
-            <p class="text-sm mt-2">Data updated daily. Trading involves risk.</p>
+      <footer class="border-t mt-16" style="background:var(--surface); border-color:var(--border);">
+        <div class="max-w-7xl mx-auto px-4 py-8 text-sm flex flex-col md:flex-row gap-3 md:items-center md:justify-between" style="color:var(--muted);">
+          <p>© 2026 QuantMacro. Event-driven probability research for educational use only.</p>
+          <p>Data cut-off: T-1 close. Not investment advice.</p>
         </div>
-    </footer>
+      </footer>
+    </div>
 
     <Analytics />
+
     <script is:inline>
-      if (!window.__quantmacroAffiliateTracker) {
-        window.__quantmacroAffiliateTracker = true;
-        document.addEventListener('click', (event) => {
-          const target = event.target && event.target.closest && event.target.closest('a[data-affiliate-click=\"1\"]');
-          if (!target) return;
-          const payload = {
-            slug: target.dataset.slug || '',
-            asset: target.dataset.asset || '',
-            offer_key: target.dataset.offerKey || '',
-            cta_position: target.dataset.ctaPosition || '',
-            utm_campaign: target.dataset.utmCampaign || '',
-          };
+      (() => {
+        const root = document.documentElement;
+        const toggle = document.getElementById('theme-toggle');
+        const icon = document.getElementById('theme-icon');
+        const label = document.getElementById('theme-label');
+
+        const paint = (theme) => {
+          if (theme === 'dark') {
+            if (icon) icon.textContent = 'Mode';
+            if (label) label.textContent = 'Light';
+          } else {
+            if (icon) icon.textContent = 'Mode';
+            if (label) label.textContent = 'Dark';
+          }
+        };
+
+        const current = root.getAttribute('data-theme') || 'light';
+        paint(current);
+
+        toggle?.addEventListener('click', () => {
+          const before = root.getAttribute('data-theme') || 'light';
+          const next = before === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          localStorage.setItem('qm_theme', next);
+          paint(next);
+          window.dispatchEvent(new CustomEvent('theme-change', { detail: { theme: next } }));
           if (window.gtag) {
-            window.gtag('event', 'affiliate_click', payload);
+            window.gtag('event', 'theme_switch', { theme: next });
           }
         });
-      }
+
+        document.addEventListener('click', (event) => {
+          const affiliate = event.target && event.target.closest && event.target.closest('a[data-affiliate-click="1"]');
+          if (affiliate && window.gtag) {
+            window.gtag('event', 'affiliate_click', {
+              slug: affiliate.dataset.slug || '',
+              asset: affiliate.dataset.asset || '',
+              offer_key: affiliate.dataset.offerKey || '',
+              cta_position: affiliate.dataset.ctaPosition || '',
+              utm_campaign: affiliate.dataset.utmCampaign || '',
+            });
+          }
+
+          const tracked = event.target && event.target.closest && event.target.closest('[data-track-event]');
+          if (!tracked || !window.gtag) return;
+          const payload = {};
+          Object.entries(tracked.dataset || {}).forEach(([key, value]) => {
+            if (key === 'trackEvent') return;
+            payload[key] = value;
+          });
+          window.gtag('event', tracked.dataset.trackEvent, payload);
+        });
+      })();
     </script>
-</body>
+  </body>
 </html>

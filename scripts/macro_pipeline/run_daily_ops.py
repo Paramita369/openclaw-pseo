@@ -20,6 +20,8 @@ WHITELIST_PATHS = {
     "public/sitemap.xml",
     "src/daily_snapshot.json",
     "data/page_manifest.json",
+    "data/slug_redirects.json",
+    "vercel.json",
 }
 WHITELIST_PREFIXES = (
     "src/content/blog/",
@@ -139,7 +141,20 @@ def commit_and_push(root: Path, as_of_date: str, dry_run: bool) -> Dict[str, obj
     if dry_run:
         return {"status": "dry_run", "changed": changed, "ignored_runtime_changes": ignored}
 
-    subprocess.run(["git", "add", "src/content/blog", "public/sitemap.xml", "src/daily_snapshot.json", "data/page_manifest.json"], cwd=str(root), check=True)
+    subprocess.run(
+        [
+            "git",
+            "add",
+            "src/content/blog",
+            "public/sitemap.xml",
+            "src/daily_snapshot.json",
+            "data/page_manifest.json",
+            "data/slug_redirects.json",
+            "vercel.json",
+        ],
+        cwd=str(root),
+        check=True,
+    )
     staged_check = subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=str(root))
     if staged_check.returncode == 0:
         return {"status": "nothing_staged", "changed": changed, "ignored_runtime_changes": ignored}

@@ -1,7 +1,7 @@
 # QuantMacro Daily Operations Prompt (OpenClaw)
 
 ## Mission
-Run the local daily pSEO pipeline in fail-fast mode. Do not manually edit content files during this run.
+Run the local event-driven pSEO pipeline in fail-fast mode. Do not manually edit generated pages during this run.
 
 ## Command
 ```bash
@@ -9,9 +9,9 @@ python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
 ```
 
 ## Pipeline Contract
-1. Fetch/update data
-2. Compute risk metrics (on runtime DB copy)
-3. Build changed targets and generate pages
+1. Fetch/update snapshot data
+2. Compute risk metrics on runtime DB copy
+3. Build event pages (`CPI/NFP/FOMC`) and slug redirects
 4. Generate sitemap
 5. Run quality gates
 6. Run astro build
@@ -21,15 +21,18 @@ python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
 ## Fail-Fast Rules
 - Stop immediately when a required step fails.
 - Write error details to `logs/daily_ops/YYYY-MM-DD.json`.
-- Do not push when any required step fails.
+- Never push if any required step fails.
 
 ## Git Whitelist
 - `src/content/blog/`
 - `public/sitemap.xml`
 - `src/daily_snapshot.json`
 - `data/page_manifest.json`
+- `data/slug_redirects.json`
+- `vercel.json`
 
 ## Notes
-- The system is educational content only and should avoid trading advice language.
-- Keep output deterministic and avoid generating `nan%` values.
-- Runtime artifacts (`node_modules`, `.astro`, `dist`, local DB runtime noise) must not block whitelist push.
+- Content is educational and must avoid investment advice language.
+- Event type is restricted to `CPI`, `NFP`, `FOMC`.
+- Keep outputs deterministic and avoid `nan` values.
+- Runtime noise (`node_modules`, `.astro`, `dist`, local DB runtime artifacts) must not block whitelist push.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate pSEO target matrix compatible with the strict CSV contract."""
+"""Generate pSEO target matrix compatible with the v2 CSV contract."""
 
 from __future__ import annotations
 
@@ -9,11 +9,11 @@ import itertools
 from pathlib import Path
 from typing import Iterable, List
 
-from pipeline_utils import ensure_dir, normalize_event_type, resolve_project_root
+from pipeline_utils import ALLOWED_EVENT_TYPES, ensure_dir, normalize_event_type, resolve_project_root
 
 ASSETS = ["BTC", "ETH", "GOLD", "SPY", "QQQ", "SOL"]
 INTENTS = ["analysis", "historical-performance", "volatility", "correlation"]
-EVENT_TYPES = ["CPI", "NFP", "FOMC"]
+EVENT_TYPES = sorted(ALLOWED_EVENT_TYPES)
 
 
 def parse_args() -> argparse.Namespace:
@@ -33,9 +33,9 @@ def slugify(parts: Iterable[str]) -> str:
 def generate_rows(assets: List[str], intents: List[str], events: List[str]) -> List[dict]:
     rows: List[dict] = []
     for asset, intent, event_type in itertools.product(assets, intents, events):
-        normalized_event = normalize_event_type(event_type, "")
-        slug = slugify([asset, "after", normalized_event, intent])
-        title = f"Historical {intent.replace('-', ' ').title()} of {asset} After {normalized_event} Events"
+        normalized_event = normalize_event_type(event_type, "") or event_type
+        slug = slugify([asset, "after", normalized_event, "template"])
+        title = f"{asset} After {normalized_event}: Historical T+1/T+7 Probability"
         rows.append(
             {
                 "asset": asset,
@@ -50,6 +50,17 @@ def generate_rows(assets: List[str], intents: List[str], events: List[str]) -> L
                 "mdd_t7": "",
                 "intent": intent,
                 "source": "keyword_generator",
+                "event_label": normalized_event,
+                "event_slug": normalized_event.lower(),
+                "rise_prob_t1": "",
+                "fall_prob_t1": "",
+                "rise_prob_t7": "",
+                "fall_prob_t7": "",
+                "median_t1_pct": "",
+                "median_t7_pct": "",
+                "sample_size": "",
+                "asof_date": "",
+                "signal": "",
             }
         )
     return rows
@@ -80,6 +91,17 @@ def main() -> None:
         "mdd_t7",
         "intent",
         "source",
+        "event_label",
+        "event_slug",
+        "rise_prob_t1",
+        "fall_prob_t1",
+        "rise_prob_t7",
+        "fall_prob_t7",
+        "median_t1_pct",
+        "median_t7_pct",
+        "sample_size",
+        "asof_date",
+        "signal",
     ]
 
     with output.open("w", encoding="utf-8", newline="") as handle:

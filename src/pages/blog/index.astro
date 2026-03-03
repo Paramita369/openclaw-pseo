@@ -4,70 +4,99 @@ import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog');
 
-// Get all unique assets
-const allAssets = {};
-posts.forEach(post => {
-  const asset = (post.data.tags?.[0] || 'other').toLowerCase();
-  allAssets[asset] = (allAssets[asset] || 0) + 1;
+const sortedPosts = [...posts].sort((a, b) => {
+  const ad = a.data.event_date || a.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
+  const bd = b.data.event_date || b.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '1900-01-01';
+  return bd.localeCompare(ad);
 });
-const assetList = Object.keys(allAssets).sort();
 
-// Get asset from URL
+const assetCounts = {};
+for (const post of sortedPosts) {
+  const asset = (post.data.tags?.[0] || 'other').toLowerCase();
+  assetCounts[asset] = (assetCounts[asset] || 0) + 1;
+}
+const assets = Object.keys(assetCounts).sort();
+
 const url = new URL(Astro.request.url);
-const assetParam = url.searchParams.get('asset')?.toLowerCase();
+const assetParam = url.searchParams.get('asset')?.toLowerCase() || '';
 
-// Filter posts by asset if parameter exists
-const filteredPosts = assetParam 
-  ? posts.filter(post => post.data.tags?.[0]?.toLowerCase() === assetParam)
-  : posts;
+const filtered = assetParam
+  ? sortedPosts.filter((post) => (post.data.tags?.[0] || '').toLowerCase() === assetParam)
+  : sortedPosts;
 ---
 
-<Layout title={assetParam ? assetParam.toUpperCase() + " Analysis" : "All Analysis"}>
-  <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-16">
-    <div class="max-w-6xl mx-auto px-4 text-center">
-      <h1 class="text-4xl font-bold mb-4">
-        {assetParam ? assetParam.toUpperCase() : 'All'} Analysis
+<Layout title={assetParam ? `${assetParam.toUpperCase()} Event Research` : 'All Event Research'} description="QuantMacro archive for CPI/NFP/FOMC event-driven probability pages.">
+  <section class="py-12 hero-panel">
+    <div class="max-w-6xl mx-auto px-4">
+      <h1 class="text-4xl font-extrabold text-white">
+        {assetParam ? `${assetParam.toUpperCase()} Event Research` : 'All Event Research'}
       </h1>
-      <p class="text-xl text-indigo-100">
-        {filteredPosts.length} quantitative analysis articles
+      <p class="text-blue-100 mt-3 text-lg">
+        {filtered.length} pages · event-driven probabilities across CPI, NFP, and FOMC.
       </p>
     </div>
   </section>
-  
-  <div class="bg-white shadow-sm border-b">
-    <div class="max-w-6xl mx-auto px-4 py-4 overflow-x-auto">
-      <div class="flex gap-2">
-        <a href="/blog" class={`px-4 py-2 rounded-full text-sm font-medium transition ${!assetParam ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
-          All
+
+  <section class="py-6 border-b" style="border-color:var(--border);background:var(--surface);">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex flex-wrap gap-2">
+        <a
+          href="/blog"
+          class={`badge-chip ${assetParam ? '' : 'font-extrabold'}`}
+          data-track-event="filter_apply"
+          data-filter="all"
+        >
+          All ({sortedPosts.length})
         </a>
-        {assetList.map(asset => (
-          <a href={`/tags/${asset}`} class={`px-4 py-2 rounded-full text-sm font-medium transition ${assetParam === asset ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
-            {asset.toUpperCase()}
+        {assets.map((asset) => (
+          <a
+            href={`/blog?asset=${asset}`}
+            class={`badge-chip ${assetParam === asset ? 'font-extrabold' : ''}`}
+            data-track-event="filter_apply"
+            data-filter={asset}
+          >
+            {asset.toUpperCase()} ({assetCounts[asset]})
           </a>
         ))}
       </div>
     </div>
-  </div>
-  
-  <section class="max-w-6xl mx-auto px-4 py-12">
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {filteredPosts.map(post => (
-        <a href={`/blog/${post.slug}`} class="block bg-white rounded-xl shadow-sm hover:shadow-lg transition border border-gray-200 overflow-hidden">
-          <div class="p-6">
-            <div class="flex gap-2 mb-3">
-              {post.data.tags?.slice(0, 2).map(tag => (
-                <span class="bg-indigo-50 text-indigo-700 px-2 py-1 rounded text-xs font-medium">{tag}</span>
-              ))}
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+      {filtered.map((post) => {
+        const signal = post.data.signal || 'Neutral';
+        const signalClass = signal === 'Bullish' ? 'metric-up' : signal === 'Bearish' ? 'metric-down' : 'metric-muted';
+        const probs = post.data.probabilities;
+
+        return (
+          <a href={`/blog/${post.slug}`} class="surface-card p-5 flex flex-col gap-3 hover:translate-y-[-2px] transition-transform">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="badge-chip">{post.data.tags?.[0]?.toUpperCase()}</span>
+              <span class="badge-chip">{post.data.event_label || post.data.event_type}</span>
+              <span class={`text-xs font-bold ${signalClass}`}>{signal}</span>
             </div>
-            <h2 class="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{post.data.title}</h2>
-            <p class="text-gray-600 text-sm line-clamp-2 mb-4">{post.data.description}</p>
-            <div class="flex items-center justify-between text-sm text-gray-500">
-              <span>{post.data.pubDate}</span>
-              <span class="text-indigo-600 font-medium">Read more →</span>
+
+            <h2 class="text-lg font-bold leading-snug">{post.data.title}</h2>
+            <p class="text-sm" style="color:var(--muted);">{post.data.description}</p>
+
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="rounded-lg border p-2" style="border-color:var(--border);background:var(--surface-alt);">
+                <p class="font-bold">T+1 P(up)</p>
+                <p class="metric-up">{probs?.t1?.up ?? '--'}%</p>
+              </div>
+              <div class="rounded-lg border p-2" style="border-color:var(--border);background:var(--surface-alt);">
+                <p class="font-bold">T+7 P(up)</p>
+                <p class="metric-up">{probs?.t7?.up ?? '--'}%</p>
+              </div>
             </div>
-          </div>
-        </a>
-      ))}
+
+            <div class="mt-auto text-xs" style="color:var(--muted);">
+              Event date: {post.data.event_date || '--'} · As-of: {post.data.asof_date || '--'}
+            </div>
+          </a>
+        );
+      })}
     </div>
   </section>
 </Layout>

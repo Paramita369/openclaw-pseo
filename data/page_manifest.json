@@ -1,445 +1,944 @@
 {
-  "version": 1,
+  "version": 2,
   "pages": {
-    "eth-after-macro-2025-02-12": {
-      "hash": "6f9159590c08fd28c30d91beac6a2e04659feace1dee25b759a4fa98329cf0e7",
+    "eth-after-cpi-2025-02-12": {
+      "hash": "a41567d59c46f68ce8683fbb44bcdced7874fcb628e2fc234b57487379060fcf",
       "source_event": "CPI",
       "event_date": "2025-02-12",
-      "last_generated": "2026-03-03T01:08:26.183518+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:09.230924+00:00",
+      "quality_score": 90,
+      "offer_key": "binance",
+      "signal": "Neutral",
+      "signal_score": -5.57,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2025-02-12": {
-      "hash": "f7f79f03d0ecc46c9057c1676e167f04adbfe6ad0b815d22c63c2c4bcfaf4235",
+    "gold-after-cpi-2025-02-12": {
+      "hash": "2bd2abfea85434f56e7b7d2f36eb0596056512dea4b1749dc72734e801b4dcdf",
       "source_event": "CPI",
       "event_date": "2025-02-12",
-      "last_generated": "2026-03-03T01:08:26.377580+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:09.463378+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 15.46,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2025-01-29": {
-      "hash": "56ff789df44f27843a707756b55a5fdf83ac77f103a851b75a7249643f310907",
+    "spy-after-fomc-2025-01-29": {
+      "hash": "5dca2080a25fa22656ae94b4e2d8eba89ffa48b53d3413622d2ef66ddc95479c",
       "source_event": "FOMC",
       "event_date": "2025-01-29",
-      "last_generated": "2026-03-03T01:08:26.588250+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:09.709953+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 17.56,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2025-01-10": {
-      "hash": "40bd47bca798c258c38a682e2678b84779293b1c4260c935c56ffc0c32f58604",
+    "gold-after-nfp-2025-01-10": {
+      "hash": "afa56bee2cc6dd7631dbbcc00bfae07f4e22577a5babd740aa586239a1ba1c1f",
       "source_event": "NFP",
       "event_date": "2025-01-10",
-      "last_generated": "2026-03-03T01:08:26.776407+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:09.915959+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 4.31,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2025-01-10": {
-      "hash": "c71ccd954e004e8c468c27b61ef4d5070f38dbd015883f18a8b815f6c35f5eea",
+    "qqq-after-nfp-2025-01-10": {
+      "hash": "184e4e38c66675a35255e28790350913240bcc2dd80da734d3e70c3c096adb73",
       "source_event": "NFP",
       "event_date": "2025-01-10",
-      "last_generated": "2026-03-03T01:08:27.014350+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:10.123139+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 0.46,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-12-17": {
-      "hash": "d81563c83989b51ae5f075c00f4f58a339796114e385b3128692f287136e3bbf",
+    "qqq-after-fomc-2024-12-17": {
+      "hash": "c3af13082c4b8da026f9a23f3e04ef9f8a4f23657d2b0346ecbf38a2e7f49340",
       "source_event": "FOMC",
       "event_date": "2024-12-17",
-      "last_generated": "2026-03-03T01:08:27.239117+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:10.347258+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 17.56,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-12-17": {
-      "hash": "89c9ce42c9ce86dd3bfb17363b2e6dcba231a0fac9ab7d003fecd7ab2d4a7304",
+    "spy-after-fomc-2024-12-17": {
+      "hash": "6d6206e2ec10a2655381c140e22925daf95420966cfb21f160ad215b46a85c8a",
       "source_event": "FOMC",
       "event_date": "2024-12-17",
-      "last_generated": "2026-03-03T01:08:27.476342+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:10.588638+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 17.56,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-12-06": {
-      "hash": "dc8e8f6610c1b6396d6bd10a4f1b4c651e8e189fd64f7c66fdcc5c8515385b16",
+    "qqq-after-nfp-2024-12-06": {
+      "hash": "3988b685503f15251827884e7b3345ff2279e6101493749130fba6efd859862f",
       "source_event": "NFP",
       "event_date": "2024-12-06",
-      "last_generated": "2026-03-03T01:08:27.989935+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:10.803072+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 0.46,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-11-14": {
-      "hash": "74672bb5bbf3f7d4017ac745c1a2e90237750e6044bb08921bfdef993ee0d186",
+    "qqq-after-cpi-2024-11-14": {
+      "hash": "280f04182b09b6145ba9e4d49d868e4e9d613c7610805e738992c7260e0e8f12",
       "source_event": "CPI",
       "event_date": "2024-11-14",
-      "last_generated": "2026-03-03T01:08:28.205583+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:11.020315+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 6.07,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-11-14": {
-      "hash": "bc1715788eedaeca9e3046da8c866c48ca2064f3eefa95720f77cceb7d97e55b",
+    "spy-after-cpi-2024-11-14": {
+      "hash": "78950456586c24ee9fb533157a6418ac0d01cd28c2977453058ac4cbf9e17b01",
       "source_event": "CPI",
       "event_date": "2024-11-14",
-      "last_generated": "2026-03-03T01:08:28.436319+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:11.485314+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 19.75,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-11-06": {
-      "hash": "f1e2b846bbc047cb7522be15d51d39d4b6a08dbbaca1ad377ce61a7082e6dd60",
+    "gold-after-fomc-2024-11-06": {
+      "hash": "a9332beff5a60d06d2bed26a1f70469c3dab2207364d9c29ece44c183236e537",
       "source_event": "FOMC",
       "event_date": "2024-11-06",
-      "last_generated": "2026-03-03T01:08:28.613020+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:11.678297+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 22.0,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-10-10": {
-      "hash": "c1c36b75bacdc4105f4ef8197d5fae81c3917a23472aa35922057bb3281df694",
+    "qqq-after-cpi-2024-10-10": {
+      "hash": "c9f81d98997822736a791d65756ee77a30795886caeb698dff34f1cef9cbe2f5",
       "source_event": "CPI",
       "event_date": "2024-10-10",
-      "last_generated": "2026-03-03T01:08:28.822272+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:11.900225+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 6.07,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-10-04": {
-      "hash": "93311e8f7f90ba6aee809538e0219d74042ac718c9657c6ff96609eef0c72735",
+    "gold-after-nfp-2024-10-04": {
+      "hash": "4e03450aac2f7189a8e320f776886cab83a3e0d143a27b939c8411ade246f22c",
       "source_event": "NFP",
       "event_date": "2024-10-04",
-      "last_generated": "2026-03-03T01:08:29.018709+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:12.118390+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 4.31,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-10-04": {
-      "hash": "e8713ad24f7cb28817846c061e15258548a3a7690ab86baad24f3eff2699e885",
+    "qqq-after-nfp-2024-10-04": {
+      "hash": "aead68edcb2bbdd5abcc63710518a61040b2f6fa64b1f98f4091b9add97b893d",
       "source_event": "NFP",
       "event_date": "2024-10-04",
-      "last_generated": "2026-03-03T01:08:29.237607+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:12.340290+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 0.46,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-10-04": {
-      "hash": "7c659fec491bb39d2f8cd20524c0463dd2093c44a35f49d159c557dc640e3c29",
+    "spy-after-nfp-2024-10-04": {
+      "hash": "120351170a2cd79e1d9cbd02cfa311dd8201d0f5edd1d41dacbbe53f2e8f4544",
       "source_event": "NFP",
       "event_date": "2024-10-04",
-      "last_generated": "2026-03-03T01:08:29.468738+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:12.583931+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 0.46,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-09-11": {
-      "hash": "690510420da12a08bc3c5556884b5014285303917a75bdfb7d19d00ce79b1aae",
+    "qqq-after-cpi-2024-09-11": {
+      "hash": "a95de31817a91cb27966f99ba585978f22a8cbd18966d28b05f1b63bde6e56dc",
       "source_event": "CPI",
       "event_date": "2024-09-11",
-      "last_generated": "2026-03-03T01:08:29.686267+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:12.821095+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 6.07,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-09-06": {
-      "hash": "8cfcd04d300cb5387af97dd73aa033597f2c927e7eb7ebc6a4d0ae7ab93e775d",
+    "gold-after-nfp-2024-09-06": {
+      "hash": "c8d34b50c5781a393825132c0cc72de91414bac1c91faa308549e9a54aa10bfa",
       "source_event": "NFP",
       "event_date": "2024-09-06",
-      "last_generated": "2026-03-03T01:08:29.854947+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:13.016349+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 4.31,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "btc-after-macro-2024-08-14": {
-      "hash": "b5d855e4b95f74e1d51096eb94b9844c6d185543105cf3e2f4ee49094d7b3c2b",
+    "btc-after-cpi-2024-08-14": {
+      "hash": "37978754ed3837941e2d69d6fd89da33faf94935fc1ec3ecbc83e6b88f6b47f8",
       "source_event": "CPI",
       "event_date": "2024-08-14",
-      "last_generated": "2026-03-03T01:08:30.059330+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:13.213856+00:00",
+      "quality_score": 90,
+      "offer_key": "binance",
+      "signal": "Neutral",
+      "signal_score": 3.43,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "eth-after-macro-2024-08-14": {
-      "hash": "e9eda5d015b4eba693b105d3c430937bb61dd76685d1ec2d50674bbc62517cd3",
+    "eth-after-cpi-2024-08-14": {
+      "hash": "7df0ea89cd4f2b3e96a8d7b741cfb3dcde0d8616e09e5255fab5e90188db4825",
       "source_event": "CPI",
       "event_date": "2024-08-14",
-      "last_generated": "2026-03-03T01:08:30.265639+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:13.398676+00:00",
+      "quality_score": 90,
+      "offer_key": "binance",
+      "signal": "Neutral",
+      "signal_score": -5.57,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-08-02": {
-      "hash": "02bdd05dcf1415509b774257e57a78f3716cd23ab723f523454ab869a81fb7be",
+    "gold-after-nfp-2024-08-02": {
+      "hash": "4a1625c12c20c60909a8fe7dd8ae01fdea7c9881d9078b013a1653601b97021e",
       "source_event": "NFP",
       "event_date": "2024-08-02",
-      "last_generated": "2026-03-03T01:08:30.453751+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:13.585710+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 4.31,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-08-02": {
-      "hash": "2ec1ff2acd1f7e2c5529f8db3c329eebb4f804fd723249a0e9755a5057f9858a",
+    "qqq-after-nfp-2024-08-02": {
+      "hash": "3da68f16c13b610267023c0cb5557bbea829a40ba271c14d11cebbe487d2844c",
       "source_event": "NFP",
       "event_date": "2024-08-02",
-      "last_generated": "2026-03-03T01:08:30.647193+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:13.808440+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 0.46,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-08-02": {
-      "hash": "5f7d100761b020d427916d207865a41b7880da495b1449e127aba01d6683ae0a",
+    "spy-after-nfp-2024-08-02": {
+      "hash": "f5affde26d0b882e163b6f9e0277c2c1a0a621ce9caa2de7234cea4ae4ca4839",
       "source_event": "NFP",
       "event_date": "2024-08-02",
-      "last_generated": "2026-03-03T01:08:30.852840+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:14.027726+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 0.46,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-07-30": {
-      "hash": "fc4274061aed0ba620b3fb792c9ac2ba087c4b5875d2001ebaf9ef6a71911d1a",
+    "gold-after-fomc-2024-07-30": {
+      "hash": "7530ff8e11e80db4ac2ad92341463ce0f1df1262cad4332216ad5d16605d409e",
       "source_event": "FOMC",
       "event_date": "2024-07-30",
-      "last_generated": "2026-03-03T01:08:31.063767+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:14.220445+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 22.0,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-07-30": {
-      "hash": "8346d6aecfbbe1c90d5cc25ccb362a2feddc112bec0412c0dfef85996a18f221",
+    "qqq-after-fomc-2024-07-30": {
+      "hash": "bc4dde055c23fbcbcd842d583a9b244cedcb51da6bffb27801953a8e2138836b",
       "source_event": "FOMC",
       "event_date": "2024-07-30",
-      "last_generated": "2026-03-03T01:08:31.274555+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:14.436523+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 17.56,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-07-30": {
-      "hash": "806e055042d01d850da88fd091fa256c79782ca90a2711045f9384c6c79d8363",
+    "spy-after-fomc-2024-07-30": {
+      "hash": "17543879a23f30a6f5607047535967772a6bca616550a6d1fb40ea674596f03d",
       "source_event": "FOMC",
       "event_date": "2024-07-30",
-      "last_generated": "2026-03-03T01:08:31.495213+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:14.670610+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 17.56,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-07-11": {
-      "hash": "854e0813fd1c2dcbf41815ba70fde7ec10e50ff50f54dcac4fd395b3dbb132f4",
+    "spy-after-cpi-2024-07-11": {
+      "hash": "8460983729ad772f465d274b7e53c67f7cd1c454bd7bc680c5bd1444e47af702",
       "source_event": "CPI",
       "event_date": "2024-07-11",
-      "last_generated": "2026-03-03T01:08:31.884994+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:14.922586+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 19.75,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-07-05": {
-      "hash": "48376803ac174364e04316dbafcc0c124a25df1d717479d142cb760e030fe066",
+    "spy-after-nfp-2024-07-05": {
+      "hash": "bb33158aac2090538a23d70e131c012850f0c5a24fa9eb10cbf560ff7016bfd2",
       "source_event": "NFP",
       "event_date": "2024-07-05",
-      "last_generated": "2026-03-03T01:08:32.102507+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:15.140539+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 0.46,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "eth-after-macro-2024-06-12": {
-      "hash": "7db77f9b9c02def76655e1aaf95f7f884fe70124b17b112814c647d2b1a6dd00",
+    "eth-after-cpi-2024-06-12": {
+      "hash": "8eb752acdc33ac0f4067356a4970c535934f3df520828bace19fcfd57cd7ea37",
       "source_event": "CPI",
       "event_date": "2024-06-12",
-      "last_generated": "2026-03-03T01:08:32.305919+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:15.313458+00:00",
+      "quality_score": 90,
+      "offer_key": "binance",
+      "signal": "Neutral",
+      "signal_score": -5.57,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "eth-after-macro-2024-06-11": {
-      "hash": "47678987591334664962877f7ad380abbde34b0901b5190f6ae4fa3347b29fd6",
+    "eth-after-fomc-2024-06-11": {
+      "hash": "0d035a10f5dc623e976f36a1837fcdefd90c7ce60c337ddd06ba5256c8014bc2",
       "source_event": "FOMC",
       "event_date": "2024-06-11",
-      "last_generated": "2026-03-03T01:08:32.508326+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:15.501011+00:00",
+      "quality_score": 80,
+      "offer_key": "binance",
+      "signal": "Neutral",
+      "signal_score": -3.11,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-06-07": {
-      "hash": "9bc3bcaf452cb24d7f493be9a616f50227109d00a614e98c068adeec381f9e62",
+    "gold-after-nfp-2024-06-07": {
+      "hash": "a8ebffa4b230c990562273a14154a2a320f2524e4f79f6e6ab0a83ba0ed88814",
       "source_event": "NFP",
       "event_date": "2024-06-07",
-      "last_generated": "2026-03-03T01:08:32.693208+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:15.696454+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 4.31,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-05-15": {
-      "hash": "38e993a1d047a103c97df843b98caacab34bb733ab0f9c79e2afe452c1eab6b6",
+    "gold-after-cpi-2024-05-15": {
+      "hash": "6010849d89b77cb4641a97ce21be8e8c0ededc1c5622009a18ca77e07651c8b5",
       "source_event": "CPI",
       "event_date": "2024-05-15",
-      "last_generated": "2026-03-03T01:08:32.874205+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:16.091881+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 15.46,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-05-15": {
-      "hash": "bfe4c762ecfd17ec8f5349beac2ea6c701e2a56bc3104865a9a61f3c1bffeba3",
+    "qqq-after-cpi-2024-05-15": {
+      "hash": "4fcad1e6995d6881cba76b97a6aa930e3afb8e8e5e919d01a2c7c6182a5e5cbf",
       "source_event": "CPI",
       "event_date": "2024-05-15",
-      "last_generated": "2026-03-03T01:08:33.085847+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:16.298825+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 6.07,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-05-15": {
-      "hash": "ee5ab64896b48aa2a4951b191812e883edbabe26785c57a1f9d876ab243eb132",
+    "spy-after-cpi-2024-05-15": {
+      "hash": "88635ad3e1f565aad7eb7d7d9102d0866ad25d13a75a12c81c1ce826b3b1ee5f",
       "source_event": "CPI",
       "event_date": "2024-05-15",
-      "last_generated": "2026-03-03T01:08:33.303471+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:16.705514+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 19.75,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "btc-after-macro-2024-05-03": {
-      "hash": "0c9d32a76fe13be076bc2496d07634673f86343866b8e42a972d863fea088aee",
+    "btc-after-nfp-2024-05-03": {
+      "hash": "b63dd445741713e934dddc1af3a7eb17dcedd10d8735d104d2024d1eb6fe1a88",
       "source_event": "NFP",
       "event_date": "2024-05-03",
-      "last_generated": "2026-03-03T01:08:33.498320+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:16.896037+00:00",
+      "quality_score": 90,
+      "offer_key": "binance",
+      "signal": "Neutral",
+      "signal_score": 4.31,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-05-03": {
-      "hash": "720402753c5826026b16c4e0ff3a858e52eaddb8b2891cfecf353d3db1c30a60",
+    "gold-after-nfp-2024-05-03": {
+      "hash": "cecd5ad2d2bc0d5761e685c95801ade6ba449948f32ff777fab4f266989e4f69",
       "source_event": "NFP",
       "event_date": "2024-05-03",
-      "last_generated": "2026-03-03T01:08:33.705651+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:17.117819+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 4.31,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "btc-after-macro-2024-04-30": {
-      "hash": "97c32a735142a3cae8df37adeeab40f099162e9589d8606de9051b0d11ae7666",
+    "btc-after-fomc-2024-04-30": {
+      "hash": "5d5486113e378b5634e0bf71c9468a8831b25c5f27f1a88021ec1d9cc32d0640",
       "source_event": "FOMC",
       "event_date": "2024-04-30",
-      "last_generated": "2026-03-03T01:08:33.905909+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:17.294470+00:00",
+      "quality_score": 80,
+      "offer_key": "binance",
+      "signal": "Neutral",
+      "signal_score": 6.45,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "eth-after-macro-2024-04-30": {
-      "hash": "43c499f50864d1824db8ae53a561bb4efd721e5091c287d42bfef71bf1908450",
+    "eth-after-fomc-2024-04-30": {
+      "hash": "5437424160681dea2f910d39a97cf1df71271729eec99e64fea53f1e23f01271",
       "source_event": "FOMC",
       "event_date": "2024-04-30",
-      "last_generated": "2026-03-03T01:08:34.098413+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:17.500482+00:00",
+      "quality_score": 80,
+      "offer_key": "binance",
+      "signal": "Neutral",
+      "signal_score": -3.11,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-04-10": {
-      "hash": "d80d41ce538626c5d2c119002e4bd0d9c48e1d6ae1838ab8308de6054cdfb297",
+    "qqq-after-cpi-2024-04-10": {
+      "hash": "05861cbb5f9c2c96fe2b0ce59a93e1dc3275260c91bc01c2b9aa61a87227bd10",
       "source_event": "CPI",
       "event_date": "2024-04-10",
-      "last_generated": "2026-03-03T01:08:34.334143+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:17.732472+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 6.07,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "btc-after-macro-2024-04-05": {
-      "hash": "01a9163060c1f83f42b03f17239b1a70e1c7d6224d493ce5bd62601d1ba84ce3",
+    "btc-after-nfp-2024-04-05": {
+      "hash": "6e7a233b7d70f53342e78e58151874ce863cfeaa7d3ef74815bc6b92848393ac",
       "source_event": "NFP",
       "event_date": "2024-04-05",
-      "last_generated": "2026-03-03T01:08:34.540098+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:17.928736+00:00",
+      "quality_score": 90,
+      "offer_key": "binance",
+      "signal": "Neutral",
+      "signal_score": 4.31,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "eth-after-macro-2024-04-05": {
-      "hash": "0315869c3934d453e07dbb6386747c42098ff11c9cb176f406774441bcb02b20",
+    "eth-after-nfp-2024-04-05": {
+      "hash": "dfc0c30282c6606bea829f82372ef2a9771075f361b79c76587a5659906da157",
       "source_event": "NFP",
       "event_date": "2024-04-05",
-      "last_generated": "2026-03-03T01:08:34.747755+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:18.120841+00:00",
+      "quality_score": 90,
+      "offer_key": "binance",
+      "signal": "Bullish",
+      "signal_score": 8.93,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-04-05": {
-      "hash": "5e56f0ec20829f474f6384f396d45936ca48b229a76a2496c89a204987e9f064",
+    "gold-after-nfp-2024-04-05": {
+      "hash": "a40a35c3d86f7277bbfd58823e9b96c377c3139c3b94f85afc869da7335bf248",
       "source_event": "NFP",
       "event_date": "2024-04-05",
-      "last_generated": "2026-03-03T01:08:34.950598+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:18.312255+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 4.31,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-03-19": {
-      "hash": "f941c465559db08f1f9cd465ee34ba7c90fe0d6d238220057713dbeef358df22",
+    "spy-after-fomc-2024-03-19": {
+      "hash": "4f37a69eb3637acf0ffdd0b60d0697c3876ecf5a3958441e3f730712bee0cb44",
       "source_event": "FOMC",
       "event_date": "2024-03-19",
-      "last_generated": "2026-03-03T01:08:35.183949+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:18.548031+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 17.56,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-03-12": {
-      "hash": "e35d42a25d3ee5adfae46f4e6becdf331f4b225c298660bd435bb16c244366cf",
+    "gold-after-cpi-2024-03-12": {
+      "hash": "d6557d2407ffbd1629c9360249e7a8576ade141c239e2421e792c52168cc1b95",
       "source_event": "CPI",
       "event_date": "2024-03-12",
-      "last_generated": "2026-03-03T01:08:35.381004+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:18.749079+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 15.46,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-03-12": {
-      "hash": "7313b583952f6ea7cee9768515abfe4b4e3bcfa408bb1e447e26902ad7f048d3",
+    "spy-after-cpi-2024-03-12": {
+      "hash": "bfdafd2bf0930f40f7ab8545d6e81766033b17f5c4b040cfb9045e4f1baa852f",
       "source_event": "CPI",
       "event_date": "2024-03-12",
-      "last_generated": "2026-03-03T01:08:35.608890+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:18.985284+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 19.75,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-03-01": {
-      "hash": "97a81cc47a59c5df90e9a605a2e068bca4b199d31bcfc90615929475f53b0da1",
+    "gold-after-nfp-2024-03-01": {
+      "hash": "e66e1d7de2d69dc3ff8926933891605083ce3a48696fd516882de475c13447a0",
       "source_event": "NFP",
       "event_date": "2024-03-01",
-      "last_generated": "2026-03-03T01:08:35.777586+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:19.184595+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 4.31,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-02-20": {
-      "hash": "f5ec519760e921dd721d6373d655764ff55c6f14597570bf40951c2c9e6c82e7",
+    "gold-after-cpi-2024-02-20": {
+      "hash": "d95867a82cef43f9d5f6118879e58802e21090ff1937bae25c80bdbeac98c590",
       "source_event": "CPI",
       "event_date": "2024-02-20",
-      "last_generated": "2026-03-03T01:08:35.976396+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:19.388302+00:00",
+      "quality_score": 90,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 15.46,
+      "sample_size": 14,
+      "asof_date": "2025-02-12",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-02-02": {
-      "hash": "5cf56340655326da21a5459cac9bb2608e4436fc1f0a5ccb352907e175a15e66",
+    "qqq-after-nfp-2024-02-02": {
+      "hash": "d58d0f20531ea56387bd309d2e33c49e4ab20d18920800f5cf3468cdf271ff49",
       "source_event": "NFP",
       "event_date": "2024-02-02",
-      "last_generated": "2026-03-03T01:08:36.207823+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:19.782028+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 0.46,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-02-02": {
-      "hash": "1d76f38b96138555f296a3a08075ebc516360e677323a1917fcacda8e969a5a1",
+    "spy-after-nfp-2024-02-02": {
+      "hash": "f2aa58faa5387400389cd78db7cece80cb376e1f251ea0f2090595fb51eb7f78",
       "source_event": "NFP",
       "event_date": "2024-02-02",
-      "last_generated": "2026-03-03T01:08:36.428375+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:20.026014+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 0.46,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "btc-after-macro-2024-01-30": {
-      "hash": "2eb70cc0dc0bca042ec34bd3887a983af9bc32163cf5e1343b37ed8533b02f2f",
+    "btc-after-fomc-2024-01-30": {
+      "hash": "dd50ccf5d393e27d815038781a540cde5bb3f65762bd0d3964107f24749a1900",
       "source_event": "FOMC",
       "event_date": "2024-01-30",
-      "last_generated": "2026-03-03T01:08:36.626614+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:20.219421+00:00",
+      "quality_score": 80,
+      "offer_key": "binance",
+      "signal": "Neutral",
+      "signal_score": 6.45,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "eth-after-macro-2024-01-30": {
-      "hash": "c60e0cc3cc9ca496642a680e41246234f2f3a85b77f90ef045b84f5cc06ff3c8",
+    "eth-after-fomc-2024-01-30": {
+      "hash": "8f5f3f02dc0265ea7c9c935a574df234f613e1028c08d6901eb288cf457bd5cd",
       "source_event": "FOMC",
       "event_date": "2024-01-30",
-      "last_generated": "2026-03-03T01:08:36.821366+00:00",
-      "quality_score": 75,
-      "offer_key": "binance"
+      "last_generated": "2026-03-03T02:42:20.399546+00:00",
+      "quality_score": 80,
+      "offer_key": "binance",
+      "signal": "Neutral",
+      "signal_score": -3.11,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-01-30": {
-      "hash": "5e2501dab7e1b5e81a6c984b39d402e718365e2d968625d286857196dd966c25",
+    "gold-after-fomc-2024-01-30": {
+      "hash": "04c388beab988ed52ee8be6570c8a644029beecffbc9752c9b06d1c6df2d679a",
       "source_event": "FOMC",
       "event_date": "2024-01-30",
-      "last_generated": "2026-03-03T01:08:37.022002+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:20.577417+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 22.0,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "qqq-after-macro-2024-01-30": {
-      "hash": "d42c57755c9c1a473be86699f81186d507237918cfe711d8b5ffd0864fbc944d",
+    "qqq-after-fomc-2024-01-30": {
+      "hash": "4dc412ca0c6f66f27d9af6d7441574e43ee13a4fa0ac9cc1f7df725686df53ab",
       "source_event": "FOMC",
       "event_date": "2024-01-30",
-      "last_generated": "2026-03-03T01:08:37.259817+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:20.790312+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 17.56,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-01-30": {
-      "hash": "72cd30a2cdc169d4a038ac160910a2f3e4a1a7f00c4f9b2d165da5ecc208f8ca",
+    "spy-after-fomc-2024-01-30": {
+      "hash": "7791c4689ecbc05d10b2ff8a802ec9d524c83f7d3d7b57b9dcf0099d6a9edcf0",
       "source_event": "FOMC",
       "event_date": "2024-01-30",
-      "last_generated": "2026-03-03T01:08:37.501710+00:00",
-      "quality_score": 75,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:21.009646+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Bullish",
+      "signal_score": 17.56,
+      "sample_size": 9,
+      "asof_date": "2025-01-29",
+      "legacy_slugs": []
     },
-    "gold-after-macro-2024-01-05": {
-      "hash": "dffd81c2af871bc7ac8e009028c9ec418f9fb36591478f2aff88a5bc56e088ce",
+    "gold-after-nfp-2024-01-05": {
+      "hash": "aff7c5cc50032a85828388df97fe34118148c68f4ba726eac48e291ff1dbd679",
       "source_event": "NFP",
       "event_date": "2024-01-05",
-      "last_generated": "2026-03-03T01:08:37.695716+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:21.183360+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 4.31,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     },
-    "spy-after-macro-2024-01-05": {
-      "hash": "fb981be34c404f07b9262a8643dffba0db7a1926ab4135fd91400c390ea7b402",
+    "spy-after-nfp-2024-01-05": {
+      "hash": "1d82b10c5f8b928acd2e086caec5ba716ceee2ec358cd902ff50942d5f09198f",
       "source_event": "NFP",
       "event_date": "2024-01-05",
-      "last_generated": "2026-03-03T01:08:37.934070+00:00",
-      "quality_score": 60,
-      "offer_key": "ibkr"
+      "last_generated": "2026-03-03T02:42:21.414894+00:00",
+      "quality_score": 80,
+      "offer_key": "ibkr",
+      "signal": "Neutral",
+      "signal_score": 0.46,
+      "sample_size": 13,
+      "asof_date": "2025-01-10",
+      "legacy_slugs": []
     }
+  },
+  "slug_redirects": {
+    "eth-after-macro-2025-02-12": "eth-after-cpi-2025-02-12",
+    "gold-after-macro-2025-02-12": "gold-after-cpi-2025-02-12",
+    "spy-after-macro-2025-01-29": "spy-after-fomc-2025-01-29",
+    "gold-after-macro-2025-01-10": "gold-after-nfp-2025-01-10",
+    "qqq-after-macro-2025-01-10": "qqq-after-nfp-2025-01-10",
+    "qqq-after-macro-2024-12-17": "qqq-after-fomc-2024-12-17",
+    "spy-after-macro-2024-12-17": "spy-after-fomc-2024-12-17",
+    "qqq-after-macro-2024-12-06": "qqq-after-nfp-2024-12-06",
+    "qqq-after-macro-2024-11-14": "qqq-after-cpi-2024-11-14",
+    "spy-after-macro-2024-11-14": "spy-after-cpi-2024-11-14",
+    "gold-after-macro-2024-11-06": "gold-after-fomc-2024-11-06",
+    "qqq-after-macro-2024-10-10": "qqq-after-cpi-2024-10-10",
+    "gold-after-macro-2024-10-04": "gold-after-nfp-2024-10-04",
+    "qqq-after-macro-2024-10-04": "qqq-after-nfp-2024-10-04",
+    "spy-after-macro-2024-10-04": "spy-after-nfp-2024-10-04",
+    "qqq-after-macro-2024-09-11": "qqq-after-cpi-2024-09-11",
+    "gold-after-macro-2024-09-06": "gold-after-nfp-2024-09-06",
+    "btc-after-macro-2024-08-14": "btc-after-cpi-2024-08-14",
+    "eth-after-macro-2024-08-14": "eth-after-cpi-2024-08-14",
+    "gold-after-macro-2024-08-02": "gold-after-nfp-2024-08-02",
+    "qqq-after-macro-2024-08-02": "qqq-after-nfp-2024-08-02",
+    "spy-after-macro-2024-08-02": "spy-after-nfp-2024-08-02",
+    "gold-after-macro-2024-07-30": "gold-after-fomc-2024-07-30",
+    "qqq-after-macro-2024-07-30": "qqq-after-fomc-2024-07-30",
+    "spy-after-macro-2024-07-30": "spy-after-fomc-2024-07-30",
+    "spy-after-macro-2024-07-11": "spy-after-cpi-2024-07-11",
+    "spy-after-macro-2024-07-05": "spy-after-nfp-2024-07-05",
+    "eth-after-macro-2024-06-12": "eth-after-cpi-2024-06-12",
+    "eth-after-macro-2024-06-11": "eth-after-fomc-2024-06-11",
+    "gold-after-macro-2024-06-07": "gold-after-nfp-2024-06-07",
+    "gold-after-macro-2024-05-15": "gold-after-cpi-2024-05-15",
+    "qqq-after-macro-2024-05-15": "qqq-after-cpi-2024-05-15",
+    "spy-after-macro-2024-05-15": "spy-after-cpi-2024-05-15",
+    "btc-after-macro-2024-05-03": "btc-after-nfp-2024-05-03",
+    "gold-after-macro-2024-05-03": "gold-after-nfp-2024-05-03",
+    "btc-after-macro-2024-04-30": "btc-after-fomc-2024-04-30",
+    "eth-after-macro-2024-04-30": "eth-after-fomc-2024-04-30",
+    "qqq-after-macro-2024-04-10": "qqq-after-cpi-2024-04-10",
+    "btc-after-macro-2024-04-05": "btc-after-nfp-2024-04-05",
+    "eth-after-macro-2024-04-05": "eth-after-nfp-2024-04-05",
+    "gold-after-macro-2024-04-05": "gold-after-nfp-2024-04-05",
+    "spy-after-macro-2024-03-19": "spy-after-fomc-2024-03-19",
+    "gold-after-macro-2024-03-12": "gold-after-cpi-2024-03-12",
+    "spy-after-macro-2024-03-12": "spy-after-cpi-2024-03-12",
+    "gold-after-macro-2024-03-01": "gold-after-nfp-2024-03-01",
+    "gold-after-macro-2024-02-20": "gold-after-cpi-2024-02-20",
+    "qqq-after-macro-2024-02-02": "qqq-after-nfp-2024-02-02",
+    "spy-after-macro-2024-02-02": "spy-after-nfp-2024-02-02",
+    "btc-after-macro-2024-01-30": "btc-after-fomc-2024-01-30",
+    "eth-after-macro-2024-01-30": "eth-after-fomc-2024-01-30",
+    "gold-after-macro-2024-01-30": "gold-after-fomc-2024-01-30",
+    "qqq-after-macro-2024-01-30": "qqq-after-fomc-2024-01-30",
+    "spy-after-macro-2024-01-30": "spy-after-fomc-2024-01-30",
+    "gold-after-macro-2024-01-05": "gold-after-nfp-2024-01-05",
+    "spy-after-macro-2024-01-05": "spy-after-nfp-2024-01-05"
+  },
+  "legacy_slugs": {
+    "eth-after-cpi-2025-02-12": [
+      "eth-after-macro-2025-02-12"
+    ],
+    "gold-after-cpi-2025-02-12": [
+      "gold-after-macro-2025-02-12"
+    ],
+    "spy-after-fomc-2025-01-29": [
+      "spy-after-macro-2025-01-29"
+    ],
+    "gold-after-nfp-2025-01-10": [
+      "gold-after-macro-2025-01-10"
+    ],
+    "qqq-after-nfp-2025-01-10": [
+      "qqq-after-macro-2025-01-10"
+    ],
+    "qqq-after-fomc-2024-12-17": [
+      "qqq-after-macro-2024-12-17"
+    ],
+    "spy-after-fomc-2024-12-17": [
+      "spy-after-macro-2024-12-17"
+    ],
+    "qqq-after-nfp-2024-12-06": [
+      "qqq-after-macro-2024-12-06"
+    ],
+    "qqq-after-cpi-2024-11-14": [
+      "qqq-after-macro-2024-11-14"
+    ],
+    "spy-after-cpi-2024-11-14": [
+      "spy-after-macro-2024-11-14"
+    ],
+    "gold-after-fomc-2024-11-06": [
+      "gold-after-macro-2024-11-06"
+    ],
+    "qqq-after-cpi-2024-10-10": [
+      "qqq-after-macro-2024-10-10"
+    ],
+    "gold-after-nfp-2024-10-04": [
+      "gold-after-macro-2024-10-04"
+    ],
+    "qqq-after-nfp-2024-10-04": [
+      "qqq-after-macro-2024-10-04"
+    ],
+    "spy-after-nfp-2024-10-04": [
+      "spy-after-macro-2024-10-04"
+    ],
+    "qqq-after-cpi-2024-09-11": [
+      "qqq-after-macro-2024-09-11"
+    ],
+    "gold-after-nfp-2024-09-06": [
+      "gold-after-macro-2024-09-06"
+    ],
+    "btc-after-cpi-2024-08-14": [
+      "btc-after-macro-2024-08-14"
+    ],
+    "eth-after-cpi-2024-08-14": [
+      "eth-after-macro-2024-08-14"
+    ],
+    "gold-after-nfp-2024-08-02": [
+      "gold-after-macro-2024-08-02"
+    ],
+    "qqq-after-nfp-2024-08-02": [
+      "qqq-after-macro-2024-08-02"
+    ],
+    "spy-after-nfp-2024-08-02": [
+      "spy-after-macro-2024-08-02"
+    ],
+    "gold-after-fomc-2024-07-30": [
+      "gold-after-macro-2024-07-30"
+    ],
+    "qqq-after-fomc-2024-07-30": [
+      "qqq-after-macro-2024-07-30"
+    ],
+    "spy-after-fomc-2024-07-30": [
+      "spy-after-macro-2024-07-30"
+    ],
+    "spy-after-cpi-2024-07-11": [
+      "spy-after-macro-2024-07-11"
+    ],
+    "spy-after-nfp-2024-07-05": [
+      "spy-after-macro-2024-07-05"
+    ],
+    "eth-after-cpi-2024-06-12": [
+      "eth-after-macro-2024-06-12"
+    ],
+    "eth-after-fomc-2024-06-11": [
+      "eth-after-macro-2024-06-11"
+    ],
+    "gold-after-nfp-2024-06-07": [
+      "gold-after-macro-2024-06-07"
+    ],
+    "gold-after-cpi-2024-05-15": [
+      "gold-after-macro-2024-05-15"
+    ],
+    "qqq-after-cpi-2024-05-15": [
+      "qqq-after-macro-2024-05-15"
+    ],
+    "spy-after-cpi-2024-05-15": [
+      "spy-after-macro-2024-05-15"
+    ],
+    "btc-after-nfp-2024-05-03": [
+      "btc-after-macro-2024-05-03"
+    ],
+    "gold-after-nfp-2024-05-03": [
+      "gold-after-macro-2024-05-03"
+    ],
+    "btc-after-fomc-2024-04-30": [
+      "btc-after-macro-2024-04-30"
+    ],
+    "eth-after-fomc-2024-04-30": [
+      "eth-after-macro-2024-04-30"
+    ],
+    "qqq-after-cpi-2024-04-10": [
+      "qqq-after-macro-2024-04-10"
+    ],
+    "btc-after-nfp-2024-04-05": [
+      "btc-after-macro-2024-04-05"
+    ],
+    "eth-after-nfp-2024-04-05": [
+      "eth-after-macro-2024-04-05"
+    ],
+    "gold-after-nfp-2024-04-05": [
+      "gold-after-macro-2024-04-05"
+    ],
+    "spy-after-fomc-2024-03-19": [
+      "spy-after-macro-2024-03-19"
+    ],
+    "gold-after-cpi-2024-03-12": [
+      "gold-after-macro-2024-03-12"
+    ],
+    "spy-after-cpi-2024-03-12": [
+      "spy-after-macro-2024-03-12"
+    ],
+    "gold-after-nfp-2024-03-01": [
+      "gold-after-macro-2024-03-01"
+    ],
+    "gold-after-cpi-2024-02-20": [
+      "gold-after-macro-2024-02-20"
+    ],
+    "qqq-after-nfp-2024-02-02": [
+      "qqq-after-macro-2024-02-02"
+    ],
+    "spy-after-nfp-2024-02-02": [
+      "spy-after-macro-2024-02-02"
+    ],
+    "btc-after-fomc-2024-01-30": [
+      "btc-after-macro-2024-01-30"
+    ],
+    "eth-after-fomc-2024-01-30": [
+      "eth-after-macro-2024-01-30"
+    ],
+    "gold-after-fomc-2024-01-30": [
+      "gold-after-macro-2024-01-30"
+    ],
+    "qqq-after-fomc-2024-01-30": [
+      "qqq-after-macro-2024-01-30"
+    ],
+    "spy-after-fomc-2024-01-30": [
+      "spy-after-macro-2024-01-30"
+    ],
+    "gold-after-nfp-2024-01-05": [
+      "gold-after-macro-2024-01-05"
+    ],
+    "spy-after-nfp-2024-01-05": [
+      "spy-after-macro-2024-01-05"
+    ]
   }
 }
