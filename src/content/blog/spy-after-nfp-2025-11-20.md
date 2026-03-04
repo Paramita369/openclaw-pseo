@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of SPY After NFP (2025-11-20)"
+title: "SPY NFP Reaction (2025-11-20): T+1/T+7 Up Probability"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 1
+title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 34
 freshness_days: 103
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/spy/nfp"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "up"
 event_actual: 158449.0
 event_previous: 158408.0
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["spy", "nfp", "event-probability", "general"]
 metrics:
-  sharpe_t7: 1.27
+  sharpe_t7: 10.0
   mdd_t7: 0.0
-  volatility: 3.73
+  volatility: 7.81
   impact_t1_pct: 1.0
   impact_t7_pct: 4.73
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 0.11
       mean: 0.83
       sample: 30
-related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "SPY After NFP (2024-07-05): Historical T+1/T+7 Probability", "event_date": "2024-07-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.02, "median_t7_pct": 0.96, "sample_size": 0}, {"slug": "spy-after-nfp-2024-01-05", "title": "SPY After NFP (2024-01-05): Historical T+1/T+7 Probability", "event_date": "2024-01-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.04, "median_t7_pct": 1.87, "sample_size": 0}, {"slug": "spy-after-nfp-2024-10-04", "title": "SPY After NFP (2024-10-04): Historical T+1/T+7 Probability", "event_date": "2024-10-04", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.43, "median_t7_pct": 1.15, "sample_size": 0}]
+related_events: [{"slug": "spy-after-nfp-2026-01-02", "title": "SPY After NFP (2026-01-02): Historical T+1/T+7 Probability", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.6, "sample_size": 0}, {"slug": "spy-after-nfp-2025-09-05", "title": "SPY After NFP (2025-09-05): Historical T+1/T+7 Probability", "event_date": "2025-09-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.57, "sample_size": 0}, {"slug": "spy-after-nfp-2025-08-01", "title": "SPY After NFP (2025-08-01): Historical T+1/T+7 Probability", "event_date": "2025-08-01", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.49, "sample_size": 0}]
 chartData: [{"time": "2025-11-17", "open": 667.73, "high": 671.73, "low": 660.22, "close": 663.71}, {"time": "2025-11-18", "open": 660.15, "high": 663.16, "low": 653.93, "close": 658.14}, {"time": "2025-11-19", "open": 658.83, "high": 665.37, "low": 656.81, "close": 660.68}, {"time": "2025-11-20", "open": 670.93, "high": 673.57, "low": 649.97, "close": 650.61}, {"time": "2025-11-21", "open": 653.12, "high": 662.59, "low": 648.93, "close": 657.09}, {"time": "2025-11-24", "open": 660.74, "high": 668.09, "low": 659.64, "close": 666.76}, {"time": "2025-11-25", "open": 666.66, "high": 674.22, "low": 662.52, "close": 673.03}, {"time": "2025-11-26", "open": 675.63, "high": 679.69, "low": 674.73, "close": 677.68}]
 ---
 

@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of SPY After CPI (2026-02-13)"
+title: "SPY After CPI (2026-02-13): Up/Down Odds and Median Returns"
 description: "Historical probability profile for SPY around CPI events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 5
+title_template_key: "cpi_5"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 39
 freshness_days: 18
 freshness_status: "fresh"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "A"
+is_recent_90d: true
+canonical_target: "self"
+canonical_url: "https://quantmacro.vercel.app/blog/spy-after-cpi-2026-02-13"
+robots_directive: "index,follow"
+in_blog_sitemap: true
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "up"
 event_actual: 326.588
 event_previous: 326.031
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["spy", "cpi", "event-probability", "general"]
 metrics:
-  sharpe_t7: 1.16
+  sharpe_t7: 10.0
   mdd_t7: 0.0
-  volatility: 0.97
+  volatility: 6.69
   impact_t1_pct: 0.16
   impact_t7_pct: 1.13
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 0.51
       mean: 0.21
       sample: 38
-related_events: [{"slug": "spy-after-cpi-2024-03-12", "title": "SPY After CPI (2024-03-12): Historical T+1/T+7 Probability", "event_date": "2024-03-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 3.94, "median_t7_pct": 0.1, "sample_size": 0}, {"slug": "spy-after-cpi-2024-11-14", "title": "SPY After CPI (2024-11-14): Historical T+1/T+7 Probability", "event_date": "2024-11-14", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.43, "median_t7_pct": 0.05, "sample_size": 0}, {"slug": "spy-after-cpi-2024-05-15", "title": "SPY After CPI (2024-05-15): Historical T+1/T+7 Probability", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.37, "median_t7_pct": 0.01, "sample_size": 0}]
+related_events: [{"slug": "spy-after-cpi-2026-02-12", "title": "SPY After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 0.47, "sample_size": 0}, {"slug": "spy-after-cpi-2025-12-18", "title": "SPY After CPI (2025-12-18): Historical T+1/T+7 Probability", "event_date": "2025-12-18", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.35, "sample_size": 0}, {"slug": "spy-after-cpi-2025-10-12", "title": "SPY After CPI (2025-10-12): Historical T+1/T+7 Probability", "event_date": "2025-10-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.8, "sample_size": 0}]
 chartData: [{"time": "2026-02-10", "open": 694.95, "high": 696.54, "low": 691.66, "close": 692.12}, {"time": "2026-02-11", "open": 696.39, "high": 697.14, "low": 689.18, "close": 691.96}, {"time": "2026-02-12", "open": 694.24, "high": 695.35, "low": 680.37, "close": 681.27}, {"time": "2026-02-13", "open": 681.69, "high": 686.28, "low": 677.52, "close": 681.75}, {"time": "2026-02-17", "open": 680.14, "high": 684.94, "low": 675.78, "close": 682.85}, {"time": "2026-02-18", "open": 684.02, "high": 689.15, "low": 682.83, "close": 686.29}, {"time": "2026-02-19", "open": 683.84, "high": 686.18, "low": 681.55, "close": 684.48}, {"time": "2026-02-20", "open": 682.32, "high": 690.06, "low": 681.73, "close": 689.43}]
 ---
 

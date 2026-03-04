@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of ETH After CPI (2025-09-11)"
+title: "ETH Reaction to US CPI (2025-09-11): Quant Probability Breakdown"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 2
+title_template_key: "cpi_2"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 39
 freshness_days: 173
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/eth/cpi"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "up"
 event_actual: 324.245
 event_previous: 323.291
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["eth", "cpi", "event-probability", "general"]
 metrics:
-  sharpe_t7: 1.03
-  mdd_t7: 0.0
-  volatility: 2.81
+  sharpe_t7: 5.68
+  mdd_t7: -2.66
+  volatility: 64.85
   impact_t1_pct: 5.69
   impact_t7_pct: 2.88
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: -1.52
       mean: 0.24
       sample: 38
-related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH After CPI (2024-06-12): Historical T+1/T+7 Probability", "event_date": "2024-06-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.22, "median_t7_pct": -0.01, "sample_size": 0}, {"slug": "eth-after-cpi-2026-02-13", "title": "ETH After CPI (2026-02-13): Historical T+1/T+7 Probability", "event_date": "2026-02-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -3.88, "sample_size": 0}, {"slug": "eth-after-cpi-2026-02-12", "title": "ETH After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.06, "sample_size": 0}]
+related_events: [{"slug": "eth-after-cpi-2025-07-15", "title": "ETH After CPI (2025-07-15): Historical T+1/T+7 Probability", "event_date": "2025-07-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 19.4, "sample_size": 0}, {"slug": "eth-after-cpi-2025-07-12", "title": "ETH After CPI (2025-07-12): Historical T+1/T+7 Probability", "event_date": "2025-07-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 22.17, "sample_size": 0}, {"slug": "eth-after-cpi-2025-04-10", "title": "ETH After CPI (2025-04-10): Historical T+1/T+7 Probability", "event_date": "2025-04-10", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 3.94, "sample_size": 0}]
 chartData: [{"time": "2025-09-08", "open": 4305.38, "high": 4381.27, "low": 4279.97, "close": 4308.07}, {"time": "2025-09-09", "open": 4308.28, "high": 4381.23, "low": 4277.85, "close": 4309.04}, {"time": "2025-09-10", "open": 4309.09, "high": 4450.42, "low": 4286.06, "close": 4349.15}, {"time": "2025-09-11", "open": 4349.2, "high": 4471.7, "low": 4339.72, "close": 4461.23}, {"time": "2025-09-12", "open": 4461.48, "high": 4734.27, "low": 4453.28, "close": 4715.25}, {"time": "2025-09-13", "open": 4714.7, "high": 4763.36, "low": 4609.13, "close": 4668.18}, {"time": "2025-09-14", "open": 4668.17, "high": 4690.64, "low": 4581.85, "close": 4609.6}, {"time": "2025-09-15", "open": 4609.72, "high": 4670.53, "low": 4469.86, "close": 4526.82}, {"time": "2025-09-16", "open": 4526.08, "high": 4537.6, "low": 4428.33, "close": 4503.56}, {"time": "2025-09-17", "open": 4503.64, "high": 4617.23, "low": 4429.64, "close": 4592.73}, {"time": "2025-09-18", "open": 4592.44, "high": 4643.97, "low": 4556.27, "close": 4589.92}]
 ---
 

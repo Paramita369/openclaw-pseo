@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of BTC After CPI (2025-07-15)"
+title: "US CPI (2025-07-15) and BTC: Event-Driven Return Odds"
 description: "Historical probability profile for BTC around CPI events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 3
+title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 39
 freshness_days: 231
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/btc/cpi"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "up"
 event_actual: 322.169
 event_previous: 321.435
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["btc", "cpi", "event-probability", "general"]
 metrics:
-  sharpe_t7: 1.76
-  mdd_t7: 0.0
-  volatility: 1.07
+  sharpe_t7: 10.0
+  mdd_t7: -0.62
+  volatility: 18.18
   impact_t1_pct: 0.82
   impact_t7_pct: 1.88
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 1.26
       mean: 0.58
       sample: 38
-related_events: [{"slug": "btc-after-cpi-2024-08-14", "title": "BTC After CPI (2024-08-14): Historical T+1/T+7 Probability", "event_date": "2024-08-14", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.86, "median_t7_pct": 4.15, "sample_size": 0}, {"slug": "btc-after-cpi-2026-02-13", "title": "BTC After CPI (2026-02-13): Historical T+1/T+7 Probability", "event_date": "2026-02-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -1.24, "sample_size": 0}, {"slug": "btc-after-cpi-2026-02-12", "title": "BTC After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.11, "sample_size": 0}]
+related_events: [{"slug": "btc-after-cpi-2025-09-11", "title": "BTC After CPI (2025-09-11): Historical T+1/T+7 Probability", "event_date": "2025-09-11", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.41, "sample_size": 0}, {"slug": "btc-after-cpi-2025-05-12", "title": "BTC After CPI (2025-05-12): Historical T+1/T+7 Probability", "event_date": "2025-05-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.72, "sample_size": 0}, {"slug": "btc-after-cpi-2025-04-10", "title": "BTC After CPI (2025-04-10): Historical T+1/T+7 Probability", "event_date": "2025-04-10", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 6.62, "sample_size": 0}]
 chartData: [{"time": "2025-07-12", "open": 117530.71, "high": 118219.9, "low": 116977.02, "close": 117435.23}, {"time": "2025-07-13", "open": 117432.2, "high": 119449.57, "low": 117265.44, "close": 119116.12}, {"time": "2025-07-14", "open": 119115.79, "high": 123091.61, "low": 118959.2, "close": 119849.7}, {"time": "2025-07-15", "open": 119853.85, "high": 119935.56, "low": 115765.69, "close": 117777.19}, {"time": "2025-07-16", "open": 117777.19, "high": 120065.52, "low": 117064.82, "close": 118738.51}, {"time": "2025-07-17", "open": 118738.51, "high": 120999.61, "low": 117508.22, "close": 119289.84}, {"time": "2025-07-18", "open": 119284.11, "high": 120851.91, "low": 116925.98, "close": 118003.23}, {"time": "2025-07-19", "open": 117998.12, "high": 118541.4, "low": 117388.41, "close": 117939.98}, {"time": "2025-07-20", "open": 117944.11, "high": 118865.03, "low": 116550.13, "close": 117300.79}, {"time": "2025-07-21", "open": 117306.47, "high": 119671.56, "low": 116584.4, "close": 117439.54}, {"time": "2025-07-22", "open": 117426.5, "high": 120269.97, "low": 116233.23, "close": 119995.41}]
 ---
 

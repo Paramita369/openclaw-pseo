@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of GOLD After NFP (2025-07-03)"
+title: "2025-07-03 Nonfarm Payrolls: GOLD Historical Win Rate"
 description: "Historical probability profile for GOLD around NFP events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 2
+title_template_key: "nfp_2"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 34
 freshness_days: 243
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/gold/nfp"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "up"
 event_actual: 158542.0
 event_previous: 158478.0
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["gold", "nfp", "event-probability", "general"]
 metrics:
-  sharpe_t7: -0.95
-  mdd_t7: -0.43
-  volatility: 0.45
+  sharpe_t7: -10.0
+  mdd_t7: -0.45
+  volatility: 3.4
   impact_t1_pct: 0.03
   impact_t7_pct: -0.43
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 1.1
       mean: 1.49
       sample: 30
-related_events: [{"slug": "gold-after-nfp-2024-03-01", "title": "GOLD After NFP (2024-03-01): Historical T+1/T+7 Probability", "event_date": "2024-03-01", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.57, "median_t7_pct": 4.39, "sample_size": 0}, {"slug": "gold-after-nfp-2024-04-05", "title": "GOLD After NFP (2024-04-05): Historical T+1/T+7 Probability", "event_date": "2024-04-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 4.16, "median_t7_pct": 1.31, "sample_size": 0}, {"slug": "gold-after-nfp-2024-09-06", "title": "GOLD After NFP (2024-09-06): Historical T+1/T+7 Probability", "event_date": "2024-09-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 1.09, "median_t7_pct": 3.52, "sample_size": 0}]
+related_events: [{"slug": "gold-after-nfp-2026-01-02", "title": "GOLD After NFP (2026-01-02): Historical T+1/T+7 Probability", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 4.08, "sample_size": 0}, {"slug": "gold-after-nfp-2025-12-16", "title": "GOLD After NFP (2025-12-16): Historical T+1/T+7 Probability", "event_date": "2025-12-16", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 4.14, "sample_size": 0}, {"slug": "gold-after-nfp-2025-11-20", "title": "GOLD After NFP (2025-11-20): Historical T+1/T+7 Probability", "event_date": "2025-11-20", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 3.99, "sample_size": 0}]
 chartData: [{"time": "2025-06-30", "open": 3265.9, "high": 3306.9, "low": 3262.0, "close": 3294.4}, {"time": "2025-07-01", "open": 3310.1, "high": 3354.1, "low": 3310.1, "close": 3336.7}, {"time": "2025-07-02", "open": 3329.0, "high": 3357.5, "low": 3329.0, "close": 3348.0}, {"time": "2025-07-03", "open": 3362.0, "high": 3362.0, "low": 3322.3, "close": 3331.6}, {"time": "2025-07-04", "open": 3342.0, "high": 3342.0, "low": 3332.5, "close": 3332.5}, {"time": "2025-07-07", "open": 3305.5, "high": 3333.3, "low": 3299.2, "close": 3332.2}, {"time": "2025-07-08", "open": 3330.4, "high": 3334.5, "low": 3287.6, "close": 3307.0}, {"time": "2025-07-09", "open": 3289.4, "high": 3314.0, "low": 3282.0, "close": 3311.6}, {"time": "2025-07-10", "open": 3323.6, "high": 3330.5, "low": 3311.6, "close": 3317.4}]
 ---
 

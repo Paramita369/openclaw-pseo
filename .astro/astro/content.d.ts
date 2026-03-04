@@ -151,9 +151,30 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"blog": {
+"btc-after-cpi-2024-01-11.md": {
+	id: "btc-after-cpi-2024-01-11.md";
+  slug: "btc-after-cpi-2024-01-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-cpi-2024-01-15.md": {
 	id: "btc-after-cpi-2024-01-15.md";
   slug: "btc-after-cpi-2024-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-02-09.md": {
+	id: "btc-after-cpi-2024-02-09.md";
+  slug: "btc-after-cpi-2024-02-09";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2024-02-13.md": {
+	id: "btc-after-cpi-2024-02-13.md";
+  slug: "btc-after-cpi-2024-02-13";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -221,6 +242,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-cpi-2024-11-13.md": {
+	id: "btc-after-cpi-2024-11-13.md";
+  slug: "btc-after-cpi-2024-11-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-cpi-2024-11-14.md": {
 	id: "btc-after-cpi-2024-11-14.md";
   slug: "btc-after-cpi-2024-11-14";
@@ -256,6 +284,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-cpi-2025-04-10.md": {
+	id: "btc-after-cpi-2025-04-10.md";
+  slug: "btc-after-cpi-2025-04-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-cpi-2025-04-12.md": {
 	id: "btc-after-cpi-2025-04-12.md";
   slug: "btc-after-cpi-2025-04-12";
@@ -266,6 +301,20 @@ declare module 'astro:content' {
 "btc-after-cpi-2025-05-12.md": {
 	id: "btc-after-cpi-2025-05-12.md";
   slug: "btc-after-cpi-2025-05-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2025-05-13.md": {
+	id: "btc-after-cpi-2025-05-13.md";
+  slug: "btc-after-cpi-2025-05-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2025-06-11.md": {
+	id: "btc-after-cpi-2025-06-11.md";
+  slug: "btc-after-cpi-2025-06-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -284,9 +333,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-cpi-2025-07-15.md": {
+	id: "btc-after-cpi-2025-07-15.md";
+  slug: "btc-after-cpi-2025-07-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-cpi-2025-08-12.md": {
 	id: "btc-after-cpi-2025-08-12.md";
   slug: "btc-after-cpi-2025-08-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2025-09-11.md": {
+	id: "btc-after-cpi-2025-09-11.md";
+  slug: "btc-after-cpi-2025-09-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -305,6 +368,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-cpi-2025-10-24.md": {
+	id: "btc-after-cpi-2025-10-24.md";
+  slug: "btc-after-cpi-2025-10-24";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-cpi-2025-11-12.md": {
 	id: "btc-after-cpi-2025-11-12.md";
   slug: "btc-after-cpi-2025-11-12";
@@ -319,6 +389,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-cpi-2025-12-18.md": {
+	id: "btc-after-cpi-2025-12-18.md";
+  slug: "btc-after-cpi-2025-12-18";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-cpi-2026-01-12.md": {
 	id: "btc-after-cpi-2026-01-12.md";
   slug: "btc-after-cpi-2026-01-12";
@@ -326,9 +403,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-cpi-2026-01-13.md": {
+	id: "btc-after-cpi-2026-01-13.md";
+  slug: "btc-after-cpi-2026-01-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-cpi-2026-02-12.md": {
 	id: "btc-after-cpi-2026-02-12.md";
   slug: "btc-after-cpi-2026-02-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-cpi-2026-02-13.md": {
+	id: "btc-after-cpi-2026-02-13.md";
+  slug: "btc-after-cpi-2026-02-13";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -375,6 +466,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-fomc-2024-09-19.md": {
+	id: "btc-after-fomc-2024-09-19.md";
+  slug: "btc-after-fomc-2024-09-19";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-fomc-2024-11-06.md": {
 	id: "btc-after-fomc-2024-11-06.md";
   slug: "btc-after-fomc-2024-11-06";
@@ -382,9 +480,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-fomc-2024-11-08.md": {
+	id: "btc-after-fomc-2024-11-08.md";
+  slug: "btc-after-fomc-2024-11-08";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-fomc-2024-12-17.md": {
 	id: "btc-after-fomc-2024-12-17.md";
   slug: "btc-after-fomc-2024-12-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-fomc-2024-12-19.md": {
+	id: "btc-after-fomc-2024-12-19.md";
+  slug: "btc-after-fomc-2024-12-19";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -431,6 +543,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-fomc-2025-09-18.md": {
+	id: "btc-after-fomc-2025-09-18.md";
+  slug: "btc-after-fomc-2025-09-18";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-fomc-2025-10-29.md": {
 	id: "btc-after-fomc-2025-10-29.md";
   slug: "btc-after-fomc-2025-10-29";
@@ -438,9 +557,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-fomc-2025-10-30.md": {
+	id: "btc-after-fomc-2025-10-30.md";
+  slug: "btc-after-fomc-2025-10-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-fomc-2025-12-10.md": {
 	id: "btc-after-fomc-2025-12-10.md";
   slug: "btc-after-fomc-2025-12-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-fomc-2025-12-11.md": {
+	id: "btc-after-fomc-2025-12-11.md";
+  slug: "btc-after-fomc-2025-12-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -459,6 +592,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-nfp-2024-01-10.md": {
+	id: "btc-after-nfp-2024-01-10.md";
+  slug: "btc-after-nfp-2024-01-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-nfp-2024-02-02.md": {
 	id: "btc-after-nfp-2024-02-02.md";
   slug: "btc-after-nfp-2024-02-02";
@@ -469,6 +609,13 @@ declare module 'astro:content' {
 "btc-after-nfp-2024-03-01.md": {
 	id: "btc-after-nfp-2024-03-01.md";
   slug: "btc-after-nfp-2024-03-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2024-03-08.md": {
+	id: "btc-after-nfp-2024-03-08.md";
+  slug: "btc-after-nfp-2024-03-08";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -504,6 +651,13 @@ declare module 'astro:content' {
 "btc-after-nfp-2024-08-02.md": {
 	id: "btc-after-nfp-2024-08-02.md";
   slug: "btc-after-nfp-2024-08-02";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2024-08-21.md": {
+	id: "btc-after-nfp-2024-08-21.md";
+  slug: "btc-after-nfp-2024-08-21";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -578,6 +732,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-nfp-2025-07-03.md": {
+	id: "btc-after-nfp-2025-07-03.md";
+  slug: "btc-after-nfp-2025-07-03";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-nfp-2025-07-04.md": {
 	id: "btc-after-nfp-2025-07-04.md";
   slug: "btc-after-nfp-2025-07-04";
@@ -613,9 +774,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-nfp-2025-11-20.md": {
+	id: "btc-after-nfp-2025-11-20.md";
+  slug: "btc-after-nfp-2025-11-20";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-nfp-2025-12-05.md": {
 	id: "btc-after-nfp-2025-12-05.md";
   slug: "btc-after-nfp-2025-12-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"btc-after-nfp-2025-12-16.md": {
+	id: "btc-after-nfp-2025-12-16.md";
+  slug: "btc-after-nfp-2025-12-16";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -627,6 +802,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-nfp-2026-01-09.md": {
+	id: "btc-after-nfp-2026-01-09.md";
+  slug: "btc-after-nfp-2026-01-09";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "btc-after-nfp-2026-02-06.md": {
 	id: "btc-after-nfp-2026-02-06.md";
   slug: "btc-after-nfp-2026-02-06";
@@ -634,9 +816,37 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"btc-after-nfp-2026-02-11.md": {
+	id: "btc-after-nfp-2026-02-11.md";
+  slug: "btc-after-nfp-2026-02-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-01-11.md": {
+	id: "eth-after-cpi-2024-01-11.md";
+  slug: "eth-after-cpi-2024-01-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-cpi-2024-01-15.md": {
 	id: "eth-after-cpi-2024-01-15.md";
   slug: "eth-after-cpi-2024-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-02-09.md": {
+	id: "eth-after-cpi-2024-02-09.md";
+  slug: "eth-after-cpi-2024-02-09";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2024-02-13.md": {
+	id: "eth-after-cpi-2024-02-13.md";
+  slug: "eth-after-cpi-2024-02-13";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -704,6 +914,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-cpi-2024-11-13.md": {
+	id: "eth-after-cpi-2024-11-13.md";
+  slug: "eth-after-cpi-2024-11-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-cpi-2024-11-14.md": {
 	id: "eth-after-cpi-2024-11-14.md";
   slug: "eth-after-cpi-2024-11-14";
@@ -739,6 +956,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-cpi-2025-04-10.md": {
+	id: "eth-after-cpi-2025-04-10.md";
+  slug: "eth-after-cpi-2025-04-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-cpi-2025-04-12.md": {
 	id: "eth-after-cpi-2025-04-12.md";
   slug: "eth-after-cpi-2025-04-12";
@@ -749,6 +973,20 @@ declare module 'astro:content' {
 "eth-after-cpi-2025-05-12.md": {
 	id: "eth-after-cpi-2025-05-12.md";
   slug: "eth-after-cpi-2025-05-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2025-05-13.md": {
+	id: "eth-after-cpi-2025-05-13.md";
+  slug: "eth-after-cpi-2025-05-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2025-06-11.md": {
+	id: "eth-after-cpi-2025-06-11.md";
+  slug: "eth-after-cpi-2025-06-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -767,9 +1005,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-cpi-2025-07-15.md": {
+	id: "eth-after-cpi-2025-07-15.md";
+  slug: "eth-after-cpi-2025-07-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-cpi-2025-08-12.md": {
 	id: "eth-after-cpi-2025-08-12.md";
   slug: "eth-after-cpi-2025-08-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2025-09-11.md": {
+	id: "eth-after-cpi-2025-09-11.md";
+  slug: "eth-after-cpi-2025-09-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -788,6 +1040,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-cpi-2025-10-24.md": {
+	id: "eth-after-cpi-2025-10-24.md";
+  slug: "eth-after-cpi-2025-10-24";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-cpi-2025-11-12.md": {
 	id: "eth-after-cpi-2025-11-12.md";
   slug: "eth-after-cpi-2025-11-12";
@@ -802,6 +1061,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-cpi-2025-12-18.md": {
+	id: "eth-after-cpi-2025-12-18.md";
+  slug: "eth-after-cpi-2025-12-18";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-cpi-2026-01-12.md": {
 	id: "eth-after-cpi-2026-01-12.md";
   slug: "eth-after-cpi-2026-01-12";
@@ -809,9 +1075,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-cpi-2026-01-13.md": {
+	id: "eth-after-cpi-2026-01-13.md";
+  slug: "eth-after-cpi-2026-01-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-cpi-2026-02-12.md": {
 	id: "eth-after-cpi-2026-02-12.md";
   slug: "eth-after-cpi-2026-02-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-cpi-2026-02-13.md": {
+	id: "eth-after-cpi-2026-02-13.md";
+  slug: "eth-after-cpi-2026-02-13";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -858,6 +1138,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-fomc-2024-09-19.md": {
+	id: "eth-after-fomc-2024-09-19.md";
+  slug: "eth-after-fomc-2024-09-19";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-fomc-2024-11-06.md": {
 	id: "eth-after-fomc-2024-11-06.md";
   slug: "eth-after-fomc-2024-11-06";
@@ -865,9 +1152,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-fomc-2024-11-08.md": {
+	id: "eth-after-fomc-2024-11-08.md";
+  slug: "eth-after-fomc-2024-11-08";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-fomc-2024-12-17.md": {
 	id: "eth-after-fomc-2024-12-17.md";
   slug: "eth-after-fomc-2024-12-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-fomc-2024-12-19.md": {
+	id: "eth-after-fomc-2024-12-19.md";
+  slug: "eth-after-fomc-2024-12-19";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -914,6 +1215,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-fomc-2025-09-18.md": {
+	id: "eth-after-fomc-2025-09-18.md";
+  slug: "eth-after-fomc-2025-09-18";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-fomc-2025-10-29.md": {
 	id: "eth-after-fomc-2025-10-29.md";
   slug: "eth-after-fomc-2025-10-29";
@@ -921,9 +1229,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-fomc-2025-10-30.md": {
+	id: "eth-after-fomc-2025-10-30.md";
+  slug: "eth-after-fomc-2025-10-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-fomc-2025-12-10.md": {
 	id: "eth-after-fomc-2025-12-10.md";
   slug: "eth-after-fomc-2025-12-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-fomc-2025-12-11.md": {
+	id: "eth-after-fomc-2025-12-11.md";
+  slug: "eth-after-fomc-2025-12-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -942,6 +1264,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-nfp-2024-01-10.md": {
+	id: "eth-after-nfp-2024-01-10.md";
+  slug: "eth-after-nfp-2024-01-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-nfp-2024-02-02.md": {
 	id: "eth-after-nfp-2024-02-02.md";
   slug: "eth-after-nfp-2024-02-02";
@@ -952,6 +1281,13 @@ declare module 'astro:content' {
 "eth-after-nfp-2024-03-01.md": {
 	id: "eth-after-nfp-2024-03-01.md";
   slug: "eth-after-nfp-2024-03-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-03-08.md": {
+	id: "eth-after-nfp-2024-03-08.md";
+  slug: "eth-after-nfp-2024-03-08";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -987,6 +1323,13 @@ declare module 'astro:content' {
 "eth-after-nfp-2024-08-02.md": {
 	id: "eth-after-nfp-2024-08-02.md";
   slug: "eth-after-nfp-2024-08-02";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2024-08-21.md": {
+	id: "eth-after-nfp-2024-08-21.md";
+  slug: "eth-after-nfp-2024-08-21";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1061,6 +1404,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-nfp-2025-07-03.md": {
+	id: "eth-after-nfp-2025-07-03.md";
+  slug: "eth-after-nfp-2025-07-03";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-nfp-2025-07-04.md": {
 	id: "eth-after-nfp-2025-07-04.md";
   slug: "eth-after-nfp-2025-07-04";
@@ -1096,9 +1446,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-nfp-2025-11-20.md": {
+	id: "eth-after-nfp-2025-11-20.md";
+  slug: "eth-after-nfp-2025-11-20";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-nfp-2025-12-05.md": {
 	id: "eth-after-nfp-2025-12-05.md";
   slug: "eth-after-nfp-2025-12-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"eth-after-nfp-2025-12-16.md": {
+	id: "eth-after-nfp-2025-12-16.md";
+  slug: "eth-after-nfp-2025-12-16";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1110,6 +1474,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-nfp-2026-01-09.md": {
+	id: "eth-after-nfp-2026-01-09.md";
+  slug: "eth-after-nfp-2026-01-09";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "eth-after-nfp-2026-02-06.md": {
 	id: "eth-after-nfp-2026-02-06.md";
   slug: "eth-after-nfp-2026-02-06";
@@ -1117,9 +1488,37 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"eth-after-nfp-2026-02-11.md": {
+	id: "eth-after-nfp-2026-02-11.md";
+  slug: "eth-after-nfp-2026-02-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2024-01-11.md": {
+	id: "gold-after-cpi-2024-01-11.md";
+  slug: "gold-after-cpi-2024-01-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-cpi-2024-01-15.md": {
 	id: "gold-after-cpi-2024-01-15.md";
   slug: "gold-after-cpi-2024-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2024-02-09.md": {
+	id: "gold-after-cpi-2024-02-09.md";
+  slug: "gold-after-cpi-2024-02-09";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2024-02-13.md": {
+	id: "gold-after-cpi-2024-02-13.md";
+  slug: "gold-after-cpi-2024-02-13";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1187,6 +1586,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-cpi-2024-11-13.md": {
+	id: "gold-after-cpi-2024-11-13.md";
+  slug: "gold-after-cpi-2024-11-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-cpi-2024-11-14.md": {
 	id: "gold-after-cpi-2024-11-14.md";
   slug: "gold-after-cpi-2024-11-14";
@@ -1222,6 +1628,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-cpi-2025-04-10.md": {
+	id: "gold-after-cpi-2025-04-10.md";
+  slug: "gold-after-cpi-2025-04-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-cpi-2025-04-12.md": {
 	id: "gold-after-cpi-2025-04-12.md";
   slug: "gold-after-cpi-2025-04-12";
@@ -1232,6 +1645,20 @@ declare module 'astro:content' {
 "gold-after-cpi-2025-05-12.md": {
 	id: "gold-after-cpi-2025-05-12.md";
   slug: "gold-after-cpi-2025-05-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2025-05-13.md": {
+	id: "gold-after-cpi-2025-05-13.md";
+  slug: "gold-after-cpi-2025-05-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2025-06-11.md": {
+	id: "gold-after-cpi-2025-06-11.md";
+  slug: "gold-after-cpi-2025-06-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1250,9 +1677,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-cpi-2025-07-15.md": {
+	id: "gold-after-cpi-2025-07-15.md";
+  slug: "gold-after-cpi-2025-07-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-cpi-2025-08-12.md": {
 	id: "gold-after-cpi-2025-08-12.md";
   slug: "gold-after-cpi-2025-08-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2025-09-11.md": {
+	id: "gold-after-cpi-2025-09-11.md";
+  slug: "gold-after-cpi-2025-09-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1271,6 +1712,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-cpi-2025-10-24.md": {
+	id: "gold-after-cpi-2025-10-24.md";
+  slug: "gold-after-cpi-2025-10-24";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-cpi-2025-11-12.md": {
 	id: "gold-after-cpi-2025-11-12.md";
   slug: "gold-after-cpi-2025-11-12";
@@ -1285,6 +1733,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-cpi-2025-12-18.md": {
+	id: "gold-after-cpi-2025-12-18.md";
+  slug: "gold-after-cpi-2025-12-18";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-cpi-2026-01-12.md": {
 	id: "gold-after-cpi-2026-01-12.md";
   slug: "gold-after-cpi-2026-01-12";
@@ -1292,9 +1747,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-cpi-2026-01-13.md": {
+	id: "gold-after-cpi-2026-01-13.md";
+  slug: "gold-after-cpi-2026-01-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-cpi-2026-02-12.md": {
 	id: "gold-after-cpi-2026-02-12.md";
   slug: "gold-after-cpi-2026-02-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-cpi-2026-02-13.md": {
+	id: "gold-after-cpi-2026-02-13.md";
+  slug: "gold-after-cpi-2026-02-13";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1341,6 +1810,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-fomc-2024-09-19.md": {
+	id: "gold-after-fomc-2024-09-19.md";
+  slug: "gold-after-fomc-2024-09-19";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-fomc-2024-11-06.md": {
 	id: "gold-after-fomc-2024-11-06.md";
   slug: "gold-after-fomc-2024-11-06";
@@ -1348,9 +1824,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-fomc-2024-11-08.md": {
+	id: "gold-after-fomc-2024-11-08.md";
+  slug: "gold-after-fomc-2024-11-08";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-fomc-2024-12-17.md": {
 	id: "gold-after-fomc-2024-12-17.md";
   slug: "gold-after-fomc-2024-12-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-fomc-2024-12-19.md": {
+	id: "gold-after-fomc-2024-12-19.md";
+  slug: "gold-after-fomc-2024-12-19";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1397,6 +1887,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-fomc-2025-09-18.md": {
+	id: "gold-after-fomc-2025-09-18.md";
+  slug: "gold-after-fomc-2025-09-18";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-fomc-2025-10-29.md": {
 	id: "gold-after-fomc-2025-10-29.md";
   slug: "gold-after-fomc-2025-10-29";
@@ -1404,9 +1901,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-fomc-2025-10-30.md": {
+	id: "gold-after-fomc-2025-10-30.md";
+  slug: "gold-after-fomc-2025-10-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-fomc-2025-12-10.md": {
 	id: "gold-after-fomc-2025-12-10.md";
   slug: "gold-after-fomc-2025-12-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-fomc-2025-12-11.md": {
+	id: "gold-after-fomc-2025-12-11.md";
+  slug: "gold-after-fomc-2025-12-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1425,6 +1936,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-nfp-2024-01-10.md": {
+	id: "gold-after-nfp-2024-01-10.md";
+  slug: "gold-after-nfp-2024-01-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-nfp-2024-02-02.md": {
 	id: "gold-after-nfp-2024-02-02.md";
   slug: "gold-after-nfp-2024-02-02";
@@ -1435,6 +1953,13 @@ declare module 'astro:content' {
 "gold-after-nfp-2024-03-01.md": {
 	id: "gold-after-nfp-2024-03-01.md";
   slug: "gold-after-nfp-2024-03-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-nfp-2024-03-08.md": {
+	id: "gold-after-nfp-2024-03-08.md";
+  slug: "gold-after-nfp-2024-03-08";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1470,6 +1995,13 @@ declare module 'astro:content' {
 "gold-after-nfp-2024-08-02.md": {
 	id: "gold-after-nfp-2024-08-02.md";
   slug: "gold-after-nfp-2024-08-02";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-nfp-2024-08-21.md": {
+	id: "gold-after-nfp-2024-08-21.md";
+  slug: "gold-after-nfp-2024-08-21";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1544,6 +2076,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-nfp-2025-07-03.md": {
+	id: "gold-after-nfp-2025-07-03.md";
+  slug: "gold-after-nfp-2025-07-03";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-nfp-2025-07-04.md": {
 	id: "gold-after-nfp-2025-07-04.md";
   slug: "gold-after-nfp-2025-07-04";
@@ -1579,9 +2118,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-nfp-2025-11-20.md": {
+	id: "gold-after-nfp-2025-11-20.md";
+  slug: "gold-after-nfp-2025-11-20";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-nfp-2025-12-05.md": {
 	id: "gold-after-nfp-2025-12-05.md";
   slug: "gold-after-nfp-2025-12-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"gold-after-nfp-2025-12-16.md": {
+	id: "gold-after-nfp-2025-12-16.md";
+  slug: "gold-after-nfp-2025-12-16";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1593,6 +2146,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-nfp-2026-01-09.md": {
+	id: "gold-after-nfp-2026-01-09.md";
+  slug: "gold-after-nfp-2026-01-09";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "gold-after-nfp-2026-02-06.md": {
 	id: "gold-after-nfp-2026-02-06.md";
   slug: "gold-after-nfp-2026-02-06";
@@ -1600,9 +2160,37 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"gold-after-nfp-2026-02-11.md": {
+	id: "gold-after-nfp-2026-02-11.md";
+  slug: "gold-after-nfp-2026-02-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2024-01-11.md": {
+	id: "qqq-after-cpi-2024-01-11.md";
+  slug: "qqq-after-cpi-2024-01-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-cpi-2024-01-15.md": {
 	id: "qqq-after-cpi-2024-01-15.md";
   slug: "qqq-after-cpi-2024-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2024-02-09.md": {
+	id: "qqq-after-cpi-2024-02-09.md";
+  slug: "qqq-after-cpi-2024-02-09";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2024-02-13.md": {
+	id: "qqq-after-cpi-2024-02-13.md";
+  slug: "qqq-after-cpi-2024-02-13";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1670,6 +2258,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-cpi-2024-11-13.md": {
+	id: "qqq-after-cpi-2024-11-13.md";
+  slug: "qqq-after-cpi-2024-11-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-cpi-2024-11-14.md": {
 	id: "qqq-after-cpi-2024-11-14.md";
   slug: "qqq-after-cpi-2024-11-14";
@@ -1705,6 +2300,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-cpi-2025-04-10.md": {
+	id: "qqq-after-cpi-2025-04-10.md";
+  slug: "qqq-after-cpi-2025-04-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-cpi-2025-04-12.md": {
 	id: "qqq-after-cpi-2025-04-12.md";
   slug: "qqq-after-cpi-2025-04-12";
@@ -1715,6 +2317,20 @@ declare module 'astro:content' {
 "qqq-after-cpi-2025-05-12.md": {
 	id: "qqq-after-cpi-2025-05-12.md";
   slug: "qqq-after-cpi-2025-05-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2025-05-13.md": {
+	id: "qqq-after-cpi-2025-05-13.md";
+  slug: "qqq-after-cpi-2025-05-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2025-06-11.md": {
+	id: "qqq-after-cpi-2025-06-11.md";
+  slug: "qqq-after-cpi-2025-06-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1733,9 +2349,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-cpi-2025-07-15.md": {
+	id: "qqq-after-cpi-2025-07-15.md";
+  slug: "qqq-after-cpi-2025-07-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-cpi-2025-08-12.md": {
 	id: "qqq-after-cpi-2025-08-12.md";
   slug: "qqq-after-cpi-2025-08-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2025-09-11.md": {
+	id: "qqq-after-cpi-2025-09-11.md";
+  slug: "qqq-after-cpi-2025-09-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1754,6 +2384,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-cpi-2025-10-24.md": {
+	id: "qqq-after-cpi-2025-10-24.md";
+  slug: "qqq-after-cpi-2025-10-24";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-cpi-2025-11-12.md": {
 	id: "qqq-after-cpi-2025-11-12.md";
   slug: "qqq-after-cpi-2025-11-12";
@@ -1768,6 +2405,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-cpi-2025-12-18.md": {
+	id: "qqq-after-cpi-2025-12-18.md";
+  slug: "qqq-after-cpi-2025-12-18";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-cpi-2026-01-12.md": {
 	id: "qqq-after-cpi-2026-01-12.md";
   slug: "qqq-after-cpi-2026-01-12";
@@ -1775,9 +2419,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-cpi-2026-01-13.md": {
+	id: "qqq-after-cpi-2026-01-13.md";
+  slug: "qqq-after-cpi-2026-01-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-cpi-2026-02-12.md": {
 	id: "qqq-after-cpi-2026-02-12.md";
   slug: "qqq-after-cpi-2026-02-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-cpi-2026-02-13.md": {
+	id: "qqq-after-cpi-2026-02-13.md";
+  slug: "qqq-after-cpi-2026-02-13";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1824,6 +2482,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-fomc-2024-09-19.md": {
+	id: "qqq-after-fomc-2024-09-19.md";
+  slug: "qqq-after-fomc-2024-09-19";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-fomc-2024-11-06.md": {
 	id: "qqq-after-fomc-2024-11-06.md";
   slug: "qqq-after-fomc-2024-11-06";
@@ -1831,9 +2496,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-fomc-2024-11-08.md": {
+	id: "qqq-after-fomc-2024-11-08.md";
+  slug: "qqq-after-fomc-2024-11-08";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-fomc-2024-12-17.md": {
 	id: "qqq-after-fomc-2024-12-17.md";
   slug: "qqq-after-fomc-2024-12-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-fomc-2024-12-19.md": {
+	id: "qqq-after-fomc-2024-12-19.md";
+  slug: "qqq-after-fomc-2024-12-19";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1880,6 +2559,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-fomc-2025-09-18.md": {
+	id: "qqq-after-fomc-2025-09-18.md";
+  slug: "qqq-after-fomc-2025-09-18";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-fomc-2025-10-29.md": {
 	id: "qqq-after-fomc-2025-10-29.md";
   slug: "qqq-after-fomc-2025-10-29";
@@ -1887,9 +2573,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-fomc-2025-10-30.md": {
+	id: "qqq-after-fomc-2025-10-30.md";
+  slug: "qqq-after-fomc-2025-10-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-fomc-2025-12-10.md": {
 	id: "qqq-after-fomc-2025-12-10.md";
   slug: "qqq-after-fomc-2025-12-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-fomc-2025-12-11.md": {
+	id: "qqq-after-fomc-2025-12-11.md";
+  slug: "qqq-after-fomc-2025-12-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1908,6 +2608,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-nfp-2024-01-10.md": {
+	id: "qqq-after-nfp-2024-01-10.md";
+  slug: "qqq-after-nfp-2024-01-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-nfp-2024-02-02.md": {
 	id: "qqq-after-nfp-2024-02-02.md";
   slug: "qqq-after-nfp-2024-02-02";
@@ -1918,6 +2625,13 @@ declare module 'astro:content' {
 "qqq-after-nfp-2024-03-01.md": {
 	id: "qqq-after-nfp-2024-03-01.md";
   slug: "qqq-after-nfp-2024-03-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-nfp-2024-03-08.md": {
+	id: "qqq-after-nfp-2024-03-08.md";
+  slug: "qqq-after-nfp-2024-03-08";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -1953,6 +2667,13 @@ declare module 'astro:content' {
 "qqq-after-nfp-2024-08-02.md": {
 	id: "qqq-after-nfp-2024-08-02.md";
   slug: "qqq-after-nfp-2024-08-02";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-nfp-2024-08-21.md": {
+	id: "qqq-after-nfp-2024-08-21.md";
+  slug: "qqq-after-nfp-2024-08-21";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -2027,6 +2748,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-nfp-2025-07-03.md": {
+	id: "qqq-after-nfp-2025-07-03.md";
+  slug: "qqq-after-nfp-2025-07-03";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-nfp-2025-07-04.md": {
 	id: "qqq-after-nfp-2025-07-04.md";
   slug: "qqq-after-nfp-2025-07-04";
@@ -2062,9 +2790,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-nfp-2025-11-20.md": {
+	id: "qqq-after-nfp-2025-11-20.md";
+  slug: "qqq-after-nfp-2025-11-20";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-nfp-2025-12-05.md": {
 	id: "qqq-after-nfp-2025-12-05.md";
   slug: "qqq-after-nfp-2025-12-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qqq-after-nfp-2025-12-16.md": {
+	id: "qqq-after-nfp-2025-12-16.md";
+  slug: "qqq-after-nfp-2025-12-16";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -2076,6 +2818,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-nfp-2026-01-09.md": {
+	id: "qqq-after-nfp-2026-01-09.md";
+  slug: "qqq-after-nfp-2026-01-09";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qqq-after-nfp-2026-02-06.md": {
 	id: "qqq-after-nfp-2026-02-06.md";
   slug: "qqq-after-nfp-2026-02-06";
@@ -2083,9 +2832,37 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qqq-after-nfp-2026-02-11.md": {
+	id: "qqq-after-nfp-2026-02-11.md";
+  slug: "qqq-after-nfp-2026-02-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2024-01-11.md": {
+	id: "spy-after-cpi-2024-01-11.md";
+  slug: "spy-after-cpi-2024-01-11";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-cpi-2024-01-15.md": {
 	id: "spy-after-cpi-2024-01-15.md";
   slug: "spy-after-cpi-2024-01-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2024-02-09.md": {
+	id: "spy-after-cpi-2024-02-09.md";
+  slug: "spy-after-cpi-2024-02-09";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2024-02-13.md": {
+	id: "spy-after-cpi-2024-02-13.md";
+  slug: "spy-after-cpi-2024-02-13";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -2153,6 +2930,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-cpi-2024-11-13.md": {
+	id: "spy-after-cpi-2024-11-13.md";
+  slug: "spy-after-cpi-2024-11-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-cpi-2024-11-14.md": {
 	id: "spy-after-cpi-2024-11-14.md";
   slug: "spy-after-cpi-2024-11-14";
@@ -2188,6 +2972,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-cpi-2025-04-10.md": {
+	id: "spy-after-cpi-2025-04-10.md";
+  slug: "spy-after-cpi-2025-04-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-cpi-2025-04-12.md": {
 	id: "spy-after-cpi-2025-04-12.md";
   slug: "spy-after-cpi-2025-04-12";
@@ -2198,6 +2989,20 @@ declare module 'astro:content' {
 "spy-after-cpi-2025-05-12.md": {
 	id: "spy-after-cpi-2025-05-12.md";
   slug: "spy-after-cpi-2025-05-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2025-05-13.md": {
+	id: "spy-after-cpi-2025-05-13.md";
+  slug: "spy-after-cpi-2025-05-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2025-06-11.md": {
+	id: "spy-after-cpi-2025-06-11.md";
+  slug: "spy-after-cpi-2025-06-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -2216,9 +3021,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-cpi-2025-07-15.md": {
+	id: "spy-after-cpi-2025-07-15.md";
+  slug: "spy-after-cpi-2025-07-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-cpi-2025-08-12.md": {
 	id: "spy-after-cpi-2025-08-12.md";
   slug: "spy-after-cpi-2025-08-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2025-09-11.md": {
+	id: "spy-after-cpi-2025-09-11.md";
+  slug: "spy-after-cpi-2025-09-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -2237,6 +3056,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-cpi-2025-10-24.md": {
+	id: "spy-after-cpi-2025-10-24.md";
+  slug: "spy-after-cpi-2025-10-24";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-cpi-2025-11-12.md": {
 	id: "spy-after-cpi-2025-11-12.md";
   slug: "spy-after-cpi-2025-11-12";
@@ -2251,6 +3077,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-cpi-2025-12-18.md": {
+	id: "spy-after-cpi-2025-12-18.md";
+  slug: "spy-after-cpi-2025-12-18";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-cpi-2026-01-12.md": {
 	id: "spy-after-cpi-2026-01-12.md";
   slug: "spy-after-cpi-2026-01-12";
@@ -2258,9 +3091,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-cpi-2026-01-13.md": {
+	id: "spy-after-cpi-2026-01-13.md";
+  slug: "spy-after-cpi-2026-01-13";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-cpi-2026-02-12.md": {
 	id: "spy-after-cpi-2026-02-12.md";
   slug: "spy-after-cpi-2026-02-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-cpi-2026-02-13.md": {
+	id: "spy-after-cpi-2026-02-13.md";
+  slug: "spy-after-cpi-2026-02-13";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -2307,6 +3154,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-fomc-2024-09-19.md": {
+	id: "spy-after-fomc-2024-09-19.md";
+  slug: "spy-after-fomc-2024-09-19";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-fomc-2024-11-06.md": {
 	id: "spy-after-fomc-2024-11-06.md";
   slug: "spy-after-fomc-2024-11-06";
@@ -2314,9 +3168,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-fomc-2024-11-08.md": {
+	id: "spy-after-fomc-2024-11-08.md";
+  slug: "spy-after-fomc-2024-11-08";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-fomc-2024-12-17.md": {
 	id: "spy-after-fomc-2024-12-17.md";
   slug: "spy-after-fomc-2024-12-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-fomc-2024-12-19.md": {
+	id: "spy-after-fomc-2024-12-19.md";
+  slug: "spy-after-fomc-2024-12-19";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -2363,6 +3231,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-fomc-2025-09-18.md": {
+	id: "spy-after-fomc-2025-09-18.md";
+  slug: "spy-after-fomc-2025-09-18";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-fomc-2025-10-29.md": {
 	id: "spy-after-fomc-2025-10-29.md";
   slug: "spy-after-fomc-2025-10-29";
@@ -2370,9 +3245,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-fomc-2025-10-30.md": {
+	id: "spy-after-fomc-2025-10-30.md";
+  slug: "spy-after-fomc-2025-10-30";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-fomc-2025-12-10.md": {
 	id: "spy-after-fomc-2025-12-10.md";
   slug: "spy-after-fomc-2025-12-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-fomc-2025-12-11.md": {
+	id: "spy-after-fomc-2025-12-11.md";
+  slug: "spy-after-fomc-2025-12-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -2391,6 +3280,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-nfp-2024-01-10.md": {
+	id: "spy-after-nfp-2024-01-10.md";
+  slug: "spy-after-nfp-2024-01-10";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-nfp-2024-02-02.md": {
 	id: "spy-after-nfp-2024-02-02.md";
   slug: "spy-after-nfp-2024-02-02";
@@ -2401,6 +3297,13 @@ declare module 'astro:content' {
 "spy-after-nfp-2024-03-01.md": {
 	id: "spy-after-nfp-2024-03-01.md";
   slug: "spy-after-nfp-2024-03-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-nfp-2024-03-08.md": {
+	id: "spy-after-nfp-2024-03-08.md";
+  slug: "spy-after-nfp-2024-03-08";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -2436,6 +3339,13 @@ declare module 'astro:content' {
 "spy-after-nfp-2024-08-02.md": {
 	id: "spy-after-nfp-2024-08-02.md";
   slug: "spy-after-nfp-2024-08-02";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-nfp-2024-08-21.md": {
+	id: "spy-after-nfp-2024-08-21.md";
+  slug: "spy-after-nfp-2024-08-21";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -2510,6 +3420,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-nfp-2025-07-03.md": {
+	id: "spy-after-nfp-2025-07-03.md";
+  slug: "spy-after-nfp-2025-07-03";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-nfp-2025-07-04.md": {
 	id: "spy-after-nfp-2025-07-04.md";
   slug: "spy-after-nfp-2025-07-04";
@@ -2545,9 +3462,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-nfp-2025-11-20.md": {
+	id: "spy-after-nfp-2025-11-20.md";
+  slug: "spy-after-nfp-2025-11-20";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-nfp-2025-12-05.md": {
 	id: "spy-after-nfp-2025-12-05.md";
   slug: "spy-after-nfp-2025-12-05";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-nfp-2025-12-16.md": {
+	id: "spy-after-nfp-2025-12-16.md";
+  slug: "spy-after-nfp-2025-12-16";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -2559,9 +3490,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"spy-after-nfp-2026-01-09.md": {
+	id: "spy-after-nfp-2026-01-09.md";
+  slug: "spy-after-nfp-2026-01-09";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "spy-after-nfp-2026-02-06.md": {
 	id: "spy-after-nfp-2026-02-06.md";
   slug: "spy-after-nfp-2026-02-06";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"spy-after-nfp-2026-02-11.md": {
+	id: "spy-after-nfp-2026-02-11.md";
+  slug: "spy-after-nfp-2026-02-11";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

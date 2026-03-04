@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of QQQ After NFP (2026-01-09)"
+title: "2026-01-09 Nonfarm Payrolls: QQQ Historical Win Rate"
 description: "Historical probability profile for QQQ around NFP events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 2
+title_template_key: "nfp_2"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 34
 freshness_days: 53
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: true
+canonical_target: "self"
+canonical_url: "https://quantmacro.vercel.app/blog/qqq-after-nfp-2026-01-09"
+robots_directive: "index,follow"
+in_blog_sitemap: true
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "up"
 event_actual: 158627.0
 event_previous: 158497.0
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["qqq", "nfp", "event-probability", "general"]
 metrics:
-  sharpe_t7: -0.92
-  mdd_t7: -0.86
-  volatility: 0.94
+  sharpe_t7: -9.78
+  mdd_t7: -0.94
+  volatility: 7.38
   impact_t1_pct: 0.08
   impact_t7_pct: -0.86
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 0.12
       mean: 1.05
       sample: 30
-related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "QQQ After NFP (2025-01-10): Historical T+1/T+7 Probability", "event_date": "2025-01-10", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.64, "median_t7_pct": 2.87, "sample_size": 0}, {"slug": "qqq-after-nfp-2024-12-06", "title": "QQQ After NFP (2024-12-06): Historical T+1/T+7 Probability", "event_date": "2024-12-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.77, "median_t7_pct": 0.77, "sample_size": 0}, {"slug": "qqq-after-nfp-2024-08-02", "title": "QQQ After NFP (2024-08-02): Historical T+1/T+7 Probability", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.35, "median_t7_pct": 0.37, "sample_size": 0}]
+related_events: [{"slug": "qqq-after-nfp-2026-01-02", "title": "QQQ After NFP (2026-01-02): Historical T+1/T+7 Probability", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.21, "sample_size": 0}, {"slug": "qqq-after-nfp-2025-11-20", "title": "QQQ After NFP (2025-11-20): Historical T+1/T+7 Probability", "event_date": "2025-11-20", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 5.73, "sample_size": 0}, {"slug": "qqq-after-nfp-2025-09-05", "title": "QQQ After NFP (2025-09-05): Historical T+1/T+7 Probability", "event_date": "2025-09-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.84, "sample_size": 0}]
 chartData: [{"time": "2026-01-06", "open": 619.23, "high": 624.02, "low": 618.54, "close": 623.42}, {"time": "2026-01-07", "open": 623.04, "high": 627.94, "low": 622.56, "close": 624.02}, {"time": "2026-01-08", "open": 623.03, "high": 623.42, "low": 617.8, "close": 620.47}, {"time": "2026-01-09", "open": 621.41, "high": 627.89, "low": 619.06, "close": 626.65}, {"time": "2026-01-12", "open": 622.31, "high": 628.85, "low": 622.26, "close": 627.17}, {"time": "2026-01-13", "open": 627.27, "high": 629.47, "low": 623.7, "close": 626.24}, {"time": "2026-01-14", "open": 622.24, "high": 623.45, "low": 614.56, "close": 619.55}, {"time": "2026-01-15", "open": 626.6, "high": 630.0, "low": 620.75, "close": 621.78}, {"time": "2026-01-16", "open": 625.5, "high": 626.08, "low": 618.88, "close": 621.26}]
 ---
 

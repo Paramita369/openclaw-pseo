@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of SPY After FOMC (2025-10-30)"
+title: "Fed Decision (2025-10-30) and SPY: Event-Driven Odds"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 2
+title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 80
+quality_score: 90
 sample_size: 23
 freshness_days: 124
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/spy/fomc"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "down"
 event_actual: 4.0
 event_previous: 4.25
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["spy", "fomc", "event-probability", "general"]
 metrics:
-  sharpe_t7: -0.81
-  mdd_t7: -1.4
-  volatility: 1.73
+  sharpe_t7: -7.2
+  mdd_t7: -1.91
+  volatility: 16.22
   impact_t1_pct: 0.33
   impact_t7_pct: -1.4
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: -0.88
       mean: -0.37
       sample: 6
-related_events: [{"slug": "spy-after-fomc-2025-01-29", "title": "SPY After FOMC (2025-01-29): Historical T+1/T+7 Probability", "event_date": "2025-01-29", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 9.47, "median_t7_pct": 0.4, "sample_size": 0}, {"slug": "spy-after-fomc-2024-03-19", "title": "SPY After FOMC (2024-03-19): Historical T+1/T+7 Probability", "event_date": "2024-03-19", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 7.7, "median_t7_pct": 0.6, "sample_size": 0}, {"slug": "spy-after-fomc-2024-01-30", "title": "SPY After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.69, "median_t7_pct": 0.63, "sample_size": 0}]
+related_events: [{"slug": "spy-after-fomc-2025-06-18", "title": "SPY After FOMC (2025-06-18): Historical T+1/T+7 Probability", "event_date": "2025-06-18", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.92, "sample_size": 0}, {"slug": "spy-after-fomc-2025-05-07", "title": "SPY After FOMC (2025-05-07): Historical T+1/T+7 Probability", "event_date": "2025-05-07", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 4.71, "sample_size": 0}, {"slug": "spy-after-fomc-2024-12-19", "title": "SPY After FOMC (2024-12-19): Historical T+1/T+7 Probability", "event_date": "2024-12-19", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.95, "sample_size": 0}]
 chartData: [{"time": "2025-10-27", "open": 680.72, "high": 683.52, "low": 680.11, "close": 683.22}, {"time": "2025-10-28", "open": 685.03, "high": 686.88, "low": 682.81, "close": 685.04}, {"time": "2025-10-29", "open": 686.69, "high": 687.67, "low": 680.86, "close": 685.36}, {"time": "2025-10-30", "open": 681.89, "high": 683.92, "low": 677.83, "close": 677.83}, {"time": "2025-10-31", "open": 683.02, "high": 683.06, "low": 677.24, "close": 680.05}, {"time": "2025-11-03", "open": 683.65, "high": 683.78, "low": 677.94, "close": 681.33}, {"time": "2025-11-04", "open": 674.12, "high": 677.96, "low": 672.59, "close": 673.25}, {"time": "2025-11-05", "open": 672.99, "high": 678.85, "low": 672.18, "close": 675.58}, {"time": "2025-11-06", "open": 674.48, "high": 675.38, "low": 666.75, "close": 668.34}]
 ---
 

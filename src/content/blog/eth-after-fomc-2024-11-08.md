@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of ETH After FOMC (2024-11-08)"
+title: "ETH Post-FOMC Reaction (2024-11-08): Quant Backtest Snapshot"
 description: "Historical probability profile for ETH around FOMC events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 4
+title_template_key: "fomc_4"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 80
+quality_score: 90
 sample_size: 23
 freshness_days: 480
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/eth/fomc"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "down"
 event_actual: 4.75
 event_previous: 5.0
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["eth", "fomc", "event-probability", "general"]
 metrics:
-  sharpe_t7: 5.0
-  mdd_t7: 0.0
-  volatility: 0.95
+  sharpe_t7: 4.92
+  mdd_t7: -8.05
+  volatility: 134.22
   impact_t1_pct: 5.7
   impact_t7_pct: 4.75
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: -7.6
       mean: -5.39
       sample: 6
-related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 3.74, "median_t7_pct": 1.18, "sample_size": 0}, {"slug": "eth-after-fomc-2026-01-28", "title": "ETH After FOMC (2026-01-28): Historical T+1/T+7 Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -28.71, "sample_size": 0}, {"slug": "eth-after-fomc-2025-12-11", "title": "ETH After FOMC (2025-12-11): Historical T+1/T+7 Probability", "event_date": "2025-12-11", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -12.67, "sample_size": 0}]
+related_events: [{"slug": "eth-after-fomc-2025-05-07", "title": "ETH After FOMC (2025-05-07): Historical T+1/T+7 Probability", "event_date": "2025-05-07", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 44.07, "sample_size": 0}, {"slug": "eth-after-fomc-2024-11-06", "title": "ETH After FOMC (2024-11-06): Historical T+1/T+7 Probability", "event_date": "2024-11-06", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 17.2, "sample_size": 0}, {"slug": "eth-after-fomc-2024-09-19", "title": "ETH After FOMC (2024-09-19): Historical T+1/T+7 Probability", "event_date": "2024-09-19", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 6.79, "sample_size": 0}]
 chartData: [{"time": "2024-11-05", "open": 2397.04, "high": 2478.62, "low": 2380.6, "close": 2422.65}, {"time": "2024-11-06", "open": 2422.54, "high": 2743.96, "low": 2421.81, "close": 2724.17}, {"time": "2024-11-07", "open": 2724.01, "high": 2918.74, "low": 2701.59, "close": 2895.59}, {"time": "2024-11-08", "open": 2895.6, "high": 2983.74, "low": 2889.48, "close": 2962.3}, {"time": "2024-11-09", "open": 2962.79, "high": 3156.37, "low": 2957.18, "close": 3131.14}, {"time": "2024-11-10", "open": 3130.73, "high": 3249.91, "low": 3073.25, "close": 3191.33}, {"time": "2024-11-11", "open": 3191.66, "high": 3389.53, "low": 3109.77, "close": 3374.81}, {"time": "2024-11-12", "open": 3375.15, "high": 3444.15, "low": 3211.2, "close": 3246.26}, {"time": "2024-11-13", "open": 3244.54, "high": 3337.88, "low": 3121.67, "close": 3192.6}, {"time": "2024-11-14", "open": 3192.52, "high": 3240.27, "low": 3032.97, "close": 3058.95}, {"time": "2024-11-15", "open": 3059.53, "high": 3130.7, "low": 3016.14, "close": 3103.04}]
 ---
 

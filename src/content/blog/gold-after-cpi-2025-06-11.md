@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of GOLD After CPI (2025-06-11)"
+title: "GOLD CPI Win Rate (2025-06-11): Historical T+1/T+7 Probability"
 description: "Historical probability profile for GOLD around CPI events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 1
+title_template_key: "cpi_1"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 39
 freshness_days: 265
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/gold/cpi"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "up"
 event_actual: 321.435
 event_previous: 320.62
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["gold", "cpi", "event-probability", "general"]
 metrics:
-  sharpe_t7: 7.64
-  mdd_t7: 0.0
-  volatility: 0.27
+  sharpe_t7: 10.0
+  mdd_t7: -0.19
+  volatility: 13.14
   impact_t1_pct: 1.79
   impact_t7_pct: 2.06
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 1.4
       mean: 1.49
       sample: 38
-related_events: [{"slug": "gold-after-cpi-2025-02-12", "title": "GOLD After CPI (2025-02-12): Historical T+1/T+7 Probability", "event_date": "2025-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 7.09, "median_t7_pct": 0.36, "sample_size": 0}, {"slug": "gold-after-cpi-2024-02-20", "title": "GOLD After CPI (2024-02-20): Historical T+1/T+7 Probability", "event_date": "2024-02-20", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 6.12, "median_t7_pct": 0.32, "sample_size": 0}, {"slug": "gold-after-cpi-2024-05-15", "title": "GOLD After CPI (2024-05-15): Historical T+1/T+7 Probability", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.47, "median_t7_pct": 0.02, "sample_size": 0}]
+related_events: [{"slug": "gold-after-cpi-2026-01-13", "title": "GOLD After CPI (2026-01-13): Historical T+1/T+7 Probability", "event_date": "2026-01-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 3.71, "sample_size": 0}, {"slug": "gold-after-cpi-2026-01-12", "title": "GOLD After CPI (2026-01-12): Historical T+1/T+7 Probability", "event_date": "2026-01-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 3.37, "sample_size": 0}, {"slug": "gold-after-cpi-2025-12-18", "title": "GOLD After CPI (2025-12-18): Historical T+1/T+7 Probability", "event_date": "2025-12-18", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 4.37, "sample_size": 0}]
 chartData: [{"time": "2025-06-09", "open": 3315.6, "high": 3334.6, "low": 3290.0, "close": 3332.1}, {"time": "2025-06-10", "open": 3302.0, "high": 3344.3, "low": 3302.0, "close": 3320.9}, {"time": "2025-06-11", "open": 3328.0, "high": 3356.0, "low": 3321.3, "close": 3321.3}, {"time": "2025-06-12", "open": 3363.0, "high": 3395.9, "low": 3353.4, "close": 3380.9}, {"time": "2025-06-13", "open": 3407.3, "high": 3444.0, "low": 3407.3, "close": 3431.2}, {"time": "2025-06-16", "open": 3442.0, "high": 3442.0, "low": 3385.4, "close": 3396.4}, {"time": "2025-06-17", "open": 3398.3, "high": 3398.3, "low": 3376.1, "close": 3386.6}, {"time": "2025-06-18", "open": 3385.3, "high": 3391.9, "low": 3365.1, "close": 3389.8}]
 ---
 

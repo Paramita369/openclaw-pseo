@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of BTC After NFP (2025-11-20)"
+title: "NFP Print (2025-11-20) vs BTC: Quantified Directional Odds"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 4
+title_template_key: "nfp_4"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 34
 freshness_days: 103
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/btc/nfp"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "up"
 event_actual: 158449.0
 event_previous: 158408.0
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["btc", "nfp", "event-probability", "general"]
 metrics:
-  sharpe_t7: 0.75
+  sharpe_t7: 10.0
   mdd_t7: -1.78
-  volatility: 7.15
+  volatility: 54.21
   impact_t1_pct: -1.78
   impact_t7_pct: 5.37
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 0.81
       mean: 1.51
       sample: 30
-related_events: [{"slug": "btc-after-nfp-2026-02-11", "title": "BTC After NFP (2026-02-11): Historical T+1/T+7 Probability", "event_date": "2026-02-11", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.85, "sample_size": 0}, {"slug": "btc-after-nfp-2026-02-06", "title": "BTC After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -2.41, "sample_size": 0}, {"slug": "btc-after-nfp-2026-01-09", "title": "BTC After NFP (2026-01-09): Historical T+1/T+7 Probability", "event_date": "2026-01-09", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 5.54, "sample_size": 0}]
+related_events: [{"slug": "btc-after-nfp-2026-01-09", "title": "BTC After NFP (2026-01-09): Historical T+1/T+7 Probability", "event_date": "2026-01-09", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 5.54, "sample_size": 0}, {"slug": "btc-after-nfp-2025-09-05", "title": "BTC After NFP (2025-09-05): Historical T+1/T+7 Probability", "event_date": "2025-09-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 4.93, "sample_size": 0}, {"slug": "btc-after-nfp-2025-08-01", "title": "BTC After NFP (2025-08-01): Historical T+1/T+7 Probability", "event_date": "2025-08-01", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.97, "sample_size": 0}]
 chartData: [{"time": "2025-11-17", "open": 94180.88, "high": 95928.37, "low": 91214.76, "close": 92093.88}, {"time": "2025-11-18", "open": 92094.53, "high": 93745.08, "low": 89300.46, "close": 92948.88}, {"time": "2025-11-19", "open": 92946.16, "high": 92946.16, "low": 88526.83, "close": 91465.99}, {"time": "2025-11-20", "open": 91459.35, "high": 93025.07, "low": 86040.8, "close": 86631.9}, {"time": "2025-11-21", "open": 86528.77, "high": 87380.8, "low": 80659.81, "close": 85090.69}, {"time": "2025-11-22", "open": 85098.56, "high": 85503.01, "low": 83490.9, "close": 84648.36}, {"time": "2025-11-23", "open": 84648.61, "high": 88038.47, "low": 84641.77, "close": 86805.01}, {"time": "2025-11-24", "open": 86798.77, "high": 89206.34, "low": 85272.2, "close": 88270.56}, {"time": "2025-11-25", "open": 88269.96, "high": 88457.34, "low": 86131.43, "close": 87341.89}, {"time": "2025-11-26", "open": 87345.59, "high": 90581.16, "low": 86316.9, "close": 90518.37}, {"time": "2025-11-27", "open": 90517.77, "high": 91897.58, "low": 90089.52, "close": 91285.38}]
 ---
 

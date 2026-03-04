@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of GOLD After FOMC (2024-12-19)"
+title: "GOLD After FOMC (2024-12-19): Historical Signal & Probability"
 description: "Historical probability profile for GOLD around FOMC events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 1
+title_template_key: "fomc_1"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 80
+quality_score: 90
 sample_size: 23
 freshness_days: 439
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/gold/fomc"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "down"
 event_actual: 4.5
 event_previous: 4.75
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["gold", "fomc", "event-probability", "general"]
 metrics:
-  sharpe_t7: 4.61
-  mdd_t7: 0.0
-  volatility: 0.39
+  sharpe_t7: 10.0
+  mdd_t7: -0.62
+  volatility: 13.97
   impact_t1_pct: 1.41
   impact_t7_pct: 1.8
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 1.53
       mean: 0.62
       sample: 6
-related_events: [{"slug": "gold-after-fomc-2024-01-30", "title": "GOLD After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 1.61, "median_t7_pct": 0.15, "sample_size": 0}, {"slug": "gold-after-fomc-2026-01-28", "title": "GOLD After FOMC (2026-01-28): Historical T+1/T+7 Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -7.19, "sample_size": 0}, {"slug": "gold-after-fomc-2025-12-11", "title": "GOLD After FOMC (2025-12-11): Historical T+1/T+7 Probability", "event_date": "2025-12-11", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.26, "sample_size": 0}]
+related_events: [{"slug": "gold-after-fomc-2025-12-11", "title": "GOLD After FOMC (2025-12-11): Historical T+1/T+7 Probability", "event_date": "2025-12-11", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.26, "sample_size": 0}, {"slug": "gold-after-fomc-2025-12-10", "title": "GOLD After FOMC (2025-12-10): Historical T+1/T+7 Probability", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 3.6, "sample_size": 0}, {"slug": "gold-after-fomc-2025-09-18", "title": "GOLD After FOMC (2025-09-18): Historical T+1/T+7 Probability", "event_date": "2025-09-18", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.56, "sample_size": 0}]
 chartData: [{"time": "2024-12-16", "open": 2658.3, "high": 2663.3, "low": 2651.0, "close": 2651.4}, {"time": "2024-12-17", "open": 2651.8, "high": 2652.3, "low": 2632.5, "close": 2644.4}, {"time": "2024-12-18", "open": 2644.3, "high": 2647.1, "low": 2590.2, "close": 2636.5}, {"time": "2024-12-19", "open": 2582.1, "high": 2610.3, "low": 2582.1, "close": 2592.2}, {"time": "2024-12-20", "open": 2605.3, "high": 2631.6, "low": 2604.9, "close": 2628.7}, {"time": "2024-12-23", "open": 2620.0, "high": 2627.7, "low": 2611.1, "close": 2612.3}, {"time": "2024-12-24", "open": 2613.0, "high": 2620.0, "low": 2609.5, "close": 2620.0}, {"time": "2024-12-26", "open": 2628.5, "high": 2638.8, "low": 2627.9, "close": 2638.8}]
 ---
 

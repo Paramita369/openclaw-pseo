@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of QQQ After CPI (2025-09-11)"
+title: "QQQ CPI Win Rate (2025-09-11): Historical T+1/T+7 Probability"
 description: "Historical probability profile for QQQ around CPI events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 1
+title_template_key: "cpi_1"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 39
 freshness_days: 173
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/cpi"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "up"
 event_actual: 324.245
 event_previous: 323.291
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["qqq", "cpi", "event-probability", "general"]
 metrics:
-  sharpe_t7: 1.3
+  sharpe_t7: 10.0
   mdd_t7: 0.0
-  volatility: 1.48
+  volatility: 2.69
   impact_t1_pct: 0.44
   impact_t7_pct: 1.92
 probabilities:
@@ -66,8 +74,8 @@ probabilities:
       median: 0.58
       mean: 0.2
       sample: 38
-related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "QQQ After CPI (2024-05-15): Historical T+1/T+7 Probability", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.6, "median_t7_pct": 0.62, "sample_size": 0}, {"slug": "qqq-after-cpi-2024-09-11", "title": "QQQ After CPI (2024-09-11): Historical T+1/T+7 Probability", "event_date": "2024-09-11", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 7.08, "median_t7_pct": 0.6, "sample_size": 0}, {"slug": "qqq-after-cpi-2026-02-13", "title": "QQQ After CPI (2026-02-13): Historical T+1/T+7 Probability", "event_date": "2026-02-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.14, "sample_size": 0}]
-chartData: [{"time": "2025-09-08", "open": 576.96, "high": 579.42, "low": 576.36, "close": 577.46}, {"time": "2025-09-09", "open": 578.25, "high": 579.52, "low": 575.63, "close": 579.09}, {"time": "2025-09-10", "open": 582.31, "high": 582.34, "low": 577.14, "close": 579.28}, {"time": "2025-09-11", "open": 581.82, "high": 583.45, "low": 580.2, "close": 582.65}, {"time": "2025-09-12", "open": 583.61, "high": 586.42, "low": 582.67, "close": 585.23}, {"time": "2025-09-15", "open": 587.0, "high": 590.34, "low": 586.85, "close": 590.23}, {"time": "2025-09-16", "open": 591.16, "high": 591.41, "low": 589.05, "close": 589.74}, {"time": "2025-09-17", "open": 589.66, "high": 590.3, "low": 582.94, "close": 588.56}, {"time": "2025-09-18", "open": 593.46, "high": 596.68, "low": 591.51, "close": 593.87}]
+related_events: [{"slug": "qqq-after-cpi-2026-02-12", "title": "QQQ After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 0.47, "sample_size": 0}, {"slug": "qqq-after-cpi-2025-12-18", "title": "QQQ After CPI (2025-12-18): Historical T+1/T+7 Probability", "event_date": "2025-12-18", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.56, "sample_size": 0}, {"slug": "qqq-after-cpi-2025-10-24", "title": "QQQ After CPI (2025-10-24): Historical T+1/T+7 Probability", "event_date": "2025-10-24", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.94, "sample_size": 0}]
+chartData: [{"time": "2025-09-08", "open": 576.96, "high": 579.42, "low": 576.36, "close": 577.46}, {"time": "2025-09-09", "open": 578.25, "high": 579.52, "low": 575.63, "close": 579.09}, {"time": "2025-09-10", "open": 582.31, "high": 582.34, "low": 577.14, "close": 579.28}, {"time": "2025-09-11", "open": 581.81, "high": 583.45, "low": 580.2, "close": 582.65}, {"time": "2025-09-12", "open": 583.61, "high": 586.42, "low": 582.67, "close": 585.23}, {"time": "2025-09-15", "open": 587.0, "high": 590.34, "low": 586.85, "close": 590.23}, {"time": "2025-09-16", "open": 591.16, "high": 591.41, "low": 589.05, "close": 589.74}, {"time": "2025-09-17", "open": 589.66, "high": 590.3, "low": 582.94, "close": 588.56}, {"time": "2025-09-18", "open": 593.46, "high": 596.68, "low": 591.51, "close": 593.87}]
 ---
 
 ## Event Snapshot

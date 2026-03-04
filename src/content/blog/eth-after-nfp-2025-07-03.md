@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of ETH After NFP (2025-07-03)"
+title: "ETH NFP Reaction (2025-07-03): T+1/T+7 Up Probability"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 1
+title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
@@ -18,11 +20,17 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 34
 freshness_days: 243
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/eth/nfp"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "up"
 event_actual: 158542.0
 event_previous: 158478.0
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["eth", "nfp", "event-probability", "general"]
 metrics:
-  sharpe_t7: 0.81
+  sharpe_t7: 10.0
   mdd_t7: -3.18
-  volatility: 17.23
+  volatility: 144.42
   impact_t1_pct: -3.18
   impact_t7_pct: 14.04
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 0.79
       mean: 2.65
       sample: 30
-related_events: [{"slug": "eth-after-nfp-2026-02-11", "title": "ETH After NFP (2026-02-11): Historical T+1/T+7 Probability", "event_date": "2026-02-11", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.69, "sample_size": 0}, {"slug": "eth-after-nfp-2026-02-06", "title": "ETH After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.72, "sample_size": 0}, {"slug": "eth-after-nfp-2026-01-09", "title": "ETH After NFP (2026-01-09): Historical T+1/T+7 Probability", "event_date": "2026-01-09", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 6.89, "sample_size": 0}]
+related_events: [{"slug": "eth-after-nfp-2026-01-09", "title": "ETH After NFP (2026-01-09): Historical T+1/T+7 Probability", "event_date": "2026-01-09", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 6.89, "sample_size": 0}, {"slug": "eth-after-nfp-2025-11-20", "title": "ETH After NFP (2025-11-20): Historical T+1/T+7 Probability", "event_date": "2025-11-20", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 6.45, "sample_size": 0}, {"slug": "eth-after-nfp-2025-09-05", "title": "ETH After NFP (2025-09-05): Historical T+1/T+7 Probability", "event_date": "2025-09-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 9.48, "sample_size": 0}]
 chartData: [{"time": "2025-06-30", "open": 2500.61, "high": 2521.72, "low": 2438.05, "close": 2486.46}, {"time": "2025-07-01", "open": 2486.43, "high": 2500.59, "low": 2389.82, "close": 2405.79}, {"time": "2025-07-02", "open": 2405.86, "high": 2616.78, "low": 2378.39, "close": 2571.34}, {"time": "2025-07-03", "open": 2570.8, "high": 2635.19, "low": 2558.58, "close": 2591.01}, {"time": "2025-07-04", "open": 2590.85, "high": 2601.12, "low": 2475.75, "close": 2508.52}, {"time": "2025-07-05", "open": 2508.1, "high": 2529.84, "low": 2489.0, "close": 2517.28}, {"time": "2025-07-06", "open": 2517.28, "high": 2603.06, "low": 2505.37, "close": 2571.24}, {"time": "2025-07-07", "open": 2571.4, "high": 2589.32, "low": 2517.9, "close": 2543.01}, {"time": "2025-07-08", "open": 2542.97, "high": 2626.66, "low": 2525.44, "close": 2615.51}, {"time": "2025-07-09", "open": 2615.51, "high": 2794.52, "low": 2591.95, "close": 2770.78}, {"time": "2025-07-10", "open": 2770.74, "high": 2995.15, "low": 2757.27, "close": 2954.85}]
 ---
 

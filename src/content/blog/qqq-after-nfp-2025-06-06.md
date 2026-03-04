@@ -12,25 +12,25 @@ asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
-raw_signal_score: 0.46
-robust_score: -5.54
+raw_signal_score: 4.14
+robust_score: -1.86
 penalties:
   sample: 0.0
   freshness: 6.0
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 40
-sample_size: 13
+quality_score: 70
+sample_size: 34
 freshness_days: 270
 freshness_status: "stale"
-index_tier: "C"
+index_tier: "B"
 is_recent_90d: false
-canonical_target: "none"
-canonical_url: ""
-robots_directive: "noindex,follow"
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/nfp"
+robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
+data_last_updated_at: "2026-03-04T11:37:55+00:00"
 event_direction: "down"
 event_actual: 158478.0
 event_previous: 158498.0
@@ -39,42 +39,43 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["qqq", "nfp", "event-probability", "general"]
 metrics:
-  sharpe_t7: 1.0
-  mdd_t7: 0.0
-  volatility: 1.89
-  impact_t1_pct: 0.0
-  impact_t7_pct: 1.89
+  sharpe_t7: -7.94
+  mdd_t7: -0.7
+  volatility: 5.9
+  impact_t1_pct: 0.15
+  impact_t7_pct: -0.56
 probabilities:
-  sample_size: 13
+  sample_size: 34
   t1:
-    up: 0.0
-    down: 100.0
-    median: 0.0
-    mean: 0.0
-    sample: 0
+    up: 57.14
+    down: 42.86
+    median: 0.15
+    mean: -0.12
+    sample: 21
   t7:
-    up: 76.92
-    down: 23.08
-    median: 1.51
-    mean: 1.89
-    sample: 13
+    up: 50.0
+    down: 50.0
+    median: 0.12
+    mean: 1.03
+    sample: 34
   conditional:
     basis: "event_direction"
     direction: "down"
-    sample_size: 0
+    sample_size: 3
     t1:
-      up: 0.0
-      down: 100.0
-      median: 0.0
-      mean: 0.0
-      sample: 0
-    t7:
       up: 100.0
       down: 0.0
-      median: 2.87
-      mean: 2.87
-      sample: 1
-related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "2025-01-10 Nonfarm Payrolls: QQQ Historical Win Rate", "event_date": "2025-01-10", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.64, "median_t7_pct": 1.51, "sample_size": 13}, {"slug": "qqq-after-nfp-2024-12-06", "title": "QQQ After NFP (2024-12-06): Event Probability and Median Return", "event_date": "2024-12-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.77, "median_t7_pct": 1.51, "sample_size": 13}, {"slug": "qqq-after-nfp-2024-08-02", "title": "QQQ After NFP (2024-08-02): Event Probability and Median Return", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.35, "median_t7_pct": 1.51, "sample_size": 13}]
+      median: 0.75
+      mean: 0.91
+      sample: 3
+    t7:
+      up: 50.0
+      down: 50.0
+      median: 1.16
+      mean: 0.94
+      sample: 4
+related_events: [{"slug": "qqq-after-nfp-2026-01-02", "title": "QQQ After NFP (2026-01-02): Historical T+1/T+7 Probability", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.21, "sample_size": 0}, {"slug": "qqq-after-nfp-2025-11-20", "title": "QQQ After NFP (2025-11-20): Historical T+1/T+7 Probability", "event_date": "2025-11-20", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 5.73, "sample_size": 0}, {"slug": "qqq-after-nfp-2025-09-05", "title": "QQQ After NFP (2025-09-05): Historical T+1/T+7 Probability", "event_date": "2025-09-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.84, "sample_size": 0}]
+chartData: [{"time": "2025-06-03", "open": 521.69, "high": 526.86, "low": 520.83, "close": 525.42}, {"time": "2025-06-04", "open": 526.13, "high": 527.95, "low": 524.1, "close": 526.89}, {"time": "2025-06-05", "open": 528.29, "high": 531.15, "low": 520.8, "close": 522.92}, {"time": "2025-06-06", "open": 528.11, "high": 529.91, "low": 526.33, "close": 528.03}, {"time": "2025-06-09", "open": 528.25, "high": 530.45, "low": 527.13, "close": 528.81}, {"time": "2025-06-10", "open": 529.28, "high": 532.99, "low": 527.01, "close": 532.31}, {"time": "2025-06-11", "open": 533.71, "high": 534.87, "low": 528.22, "close": 530.51}, {"time": "2025-06-12", "open": 529.2, "high": 532.74, "low": 528.95, "close": 531.76}, {"time": "2025-06-13", "open": 525.8, "high": 529.98, "low": 523.86, "close": 525.08}]
 ---
 
 ## Event Snapshot
@@ -84,7 +85,7 @@ related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "2025-01-10 Nonfa
 - Event date: **2025-06-06**
 - As-of date (T-1): **2026-03-03**
 - Freshness age: **270 days**
-- Sample size (all-history): **13**
+- Sample size (all-history): **34**
 
 ## Event Outcome
 
@@ -95,25 +96,25 @@ related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "2025-01-10 Nonfa
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 0.0% | 100.0% | 0.0% | 0.0% | 0 |
-| T+7 | 76.92% | 23.08% | 1.51% | 1.89% | 13 |
+| T+1 | 57.14% | 42.86% | 0.15% | -0.12% | 21 |
+| T+7 | 50.0% | 50.0% | 0.12% | 1.03% | 34 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 0.0% | 100.0% | 0.0% | 0.0% | 0 |
-| T+7 | 100.0% | 0.0% | 2.87% | 2.87% | 1 |
+| T+1 | 100.0% | 0.0% | 0.75% | 0.91% | 3 |
+| T+7 | 50.0% | 50.0% | 1.16% | 0.94% | 4 |
 
 ## Historical Distribution Summary
 
-When NFP was **DOWN**, QQQ T+1 up probability was **0.0%** (n=0).
+When NFP was **DOWN**, QQQ T+1 up probability was **100.0%** (n=3).
 
-When NFP was **DOWN**, QQQ T+7 up probability was **100.0%** (n=1).
+When NFP was **DOWN**, QQQ T+7 up probability was **50.0%** (n=4).
 
-Same-direction T+7 median return: **2.87%**.
+Same-direction T+7 median return: **1.16%**.
 
-For QQQ, historical NFP windows show all-history T+1 up probability of 0.0% and T+7 up probability of 76.92%. When NFP printed Down versus previous, T+1 up probability was 0.0% and T+7 up probability was 100.0% across 0 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+For QQQ, historical NFP windows show all-history T+1 up probability of 57.14% and T+7 up probability of 50.0%. When NFP printed Down versus previous, T+1 up probability was 100.0% and T+7 up probability was 50.0% across 3 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 
