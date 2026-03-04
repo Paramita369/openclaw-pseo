@@ -1,28 +1,28 @@
 ---
 title: "Historical Performance of BTC After NFP (2025-11-07)"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-11-07"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
-raw_signal_score: 4.31
-robust_score: -1.69
+raw_signal_score: 0.23
+robust_score: -5.77
 penalties:
   sample: 0.0
   freshness: 6.0
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 70
-sample_size: 13
-freshness_days: 115
+quality_score: 90
+sample_size: 34
+freshness_days: 116
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 158449.0
 event_previous: 158408.0
@@ -31,42 +31,43 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["btc", "nfp", "event-probability", "general"]
 metrics:
-  sharpe_t7: 1.08
-  mdd_t7: 0.0
-  volatility: 3.04
-  impact_t1_pct: 0.25
-  impact_t7_pct: 3.29
+  sharpe_t7: -1.14
+  mdd_t7: -8.68
+  volatility: 7.63
+  impact_t1_pct: -1.05
+  impact_t7_pct: -8.68
 probabilities:
-  sample_size: 13
+  sample_size: 34
   t1:
-    up: 38.46
-    down: 61.54
-    median: -0.05
-    mean: 0.25
-    sample: 13
+    up: 29.41
+    down: 70.59
+    median: -0.33
+    mean: -0.26
+    sample: 34
   t7:
-    up: 61.54
-    down: 38.46
-    median: 1.54
-    mean: 3.29
-    sample: 13
+    up: 58.82
+    down: 41.18
+    median: 1.0
+    mean: 1.55
+    sample: 34
   conditional:
     basis: "event_direction"
     direction: "up"
-    sample_size: 12
+    sample_size: 30
     t1:
-      up: 41.67
-      down: 58.33
-      median: -0.03
-      mean: 0.28
-      sample: 12
+      up: 26.67
+      down: 73.33
+      median: -0.39
+      mean: -0.31
+      sample: 30
     t7:
-      up: 58.33
-      down: 41.67
-      median: 1.07
-      mean: 2.7
-      sample: 12
-related_events: [{"slug": "btc-after-nfp-2026-02-06", "title": "BTC After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "btc-after-nfp-2026-01-02", "title": "BTC After NFP (2026-01-02): Historical T+1/T+7 Probability", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "btc-after-nfp-2025-12-05", "title": "BTC After NFP (2025-12-05): Historical T+1/T+7 Probability", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+      up: 56.67
+      down: 43.33
+      median: 0.81
+      mean: 1.51
+      sample: 30
+related_events: [{"slug": "btc-after-nfp-2026-02-11", "title": "BTC After NFP (2026-02-11): Historical T+1/T+7 Probability", "event_date": "2026-02-11", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.85, "sample_size": 0}, {"slug": "btc-after-nfp-2026-02-06", "title": "BTC After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -2.41, "sample_size": 0}, {"slug": "btc-after-nfp-2026-01-09", "title": "BTC After NFP (2026-01-09): Historical T+1/T+7 Probability", "event_date": "2026-01-09", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 5.54, "sample_size": 0}]
+chartData: [{"time": "2025-11-04", "open": 106541.42, "high": 107264.88, "low": 98962.06, "close": 101590.52}, {"time": "2025-11-05", "open": 101579.23, "high": 104534.7, "low": 98989.91, "close": 103891.84}, {"time": "2025-11-06", "open": 103893.66, "high": 104147.3, "low": 100336.87, "close": 101301.29}, {"time": "2025-11-07", "open": 101286.24, "high": 104052.91, "low": 99257.05, "close": 103372.41}, {"time": "2025-11-08", "open": 103371.7, "high": 103373.56, "low": 101458.04, "close": 102282.12}, {"time": "2025-11-09", "open": 102278.98, "high": 105418.37, "low": 101468.88, "close": 104719.64}, {"time": "2025-11-10", "open": 104723.77, "high": 106564.7, "low": 104350.65, "close": 105996.59}, {"time": "2025-11-11", "open": 105996.86, "high": 107428.26, "low": 102457.33, "close": 102997.47}, {"time": "2025-11-12", "open": 103011.44, "high": 105297.23, "low": 100836.62, "close": 101663.19}, {"time": "2025-11-13", "open": 101674.15, "high": 104005.49, "low": 97988.72, "close": 99697.49}, {"time": "2025-11-14", "open": 99694.7, "high": 99804.43, "low": 94000.73, "close": 94397.79}]
 ---
 
 ## Event Snapshot
@@ -74,9 +75,9 @@ related_events: [{"slug": "btc-after-nfp-2026-02-06", "title": "BTC After NFP (2
 - Event: **NFP**
 - Asset: **BTC**
 - Event date: **2025-11-07**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **115 days**
-- Sample size (all-history): **13**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **116 days**
+- Sample size (all-history): **34**
 
 ## Event Outcome
 
@@ -87,25 +88,25 @@ related_events: [{"slug": "btc-after-nfp-2026-02-06", "title": "BTC After NFP (2
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 38.46% | 61.54% | -0.05% | 0.25% | 13 |
-| T+7 | 61.54% | 38.46% | 1.54% | 3.29% | 13 |
+| T+1 | 29.41% | 70.59% | -0.33% | -0.26% | 34 |
+| T+7 | 58.82% | 41.18% | 1.0% | 1.55% | 34 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 41.67% | 58.33% | -0.03% | 0.28% | 12 |
-| T+7 | 58.33% | 41.67% | 1.07% | 2.7% | 12 |
+| T+1 | 26.67% | 73.33% | -0.39% | -0.31% | 30 |
+| T+7 | 56.67% | 43.33% | 0.81% | 1.51% | 30 |
 
 ## Historical Distribution Summary
 
-When NFP was **UP**, BTC T+1 up probability was **41.67%** (n=12).
+When NFP was **UP**, BTC T+1 up probability was **26.67%** (n=30).
 
-When NFP was **UP**, BTC T+7 up probability was **58.33%** (n=12).
+When NFP was **UP**, BTC T+7 up probability was **56.67%** (n=30).
 
-Same-direction T+7 median return: **1.07%**.
+Same-direction T+7 median return: **0.81%**.
 
-For BTC, historical NFP windows show all-history T+1 up probability of 38.46% and T+7 up probability of 61.54%. When NFP printed Up versus previous, T+1 up probability was 41.67% and T+7 up probability was 58.33% across 12 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+For BTC, historical NFP windows show all-history T+1 up probability of 29.41% and T+7 up probability of 58.82%. When NFP printed Up versus previous, T+1 up probability was 26.67% and T+7 up probability was 56.67% across 30 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

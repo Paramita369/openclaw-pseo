@@ -1,28 +1,28 @@
 ---
 title: "Historical Performance of SPY After NFP (2024-01-05)"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-01-05"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
-raw_signal_score: 0.46
-robust_score: -5.54
+raw_signal_score: 4.23
+robust_score: -1.77
 penalties:
   sample: 0.0
   freshness: 6.0
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 50
-sample_size: 13
-freshness_days: 787
+quality_score: 80
+sample_size: 34
+freshness_days: 788
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T14:52:49+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 157032.0
 event_previous: 156857.0
@@ -33,40 +33,41 @@ tags: ["spy", "nfp", "event-probability", "general"]
 metrics:
   sharpe_t7: 6.04
   mdd_t7: -1.33
-  volatility: 1.87
-  impact_t1_pct: 0.0
+  volatility: 1.97
+  impact_t1_pct: -0.1
   impact_t7_pct: 1.87
 probabilities:
-  sample_size: 13
+  sample_size: 34
   t1:
-    up: 0.0
-    down: 100.0
-    median: 0.0
-    mean: 0.0
-    sample: 0
+    up: 47.62
+    down: 52.38
+    median: -0.04
+    mean: -0.1
+    sample: 21
   t7:
-    up: 76.92
-    down: 23.08
-    median: 1.39
-    mean: 1.41
-    sample: 13
+    up: 55.88
+    down: 44.12
+    median: 0.11
+    mean: 0.81
+    sample: 34
   conditional:
     basis: "event_direction"
     direction: "up"
-    sample_size: 0
+    sample_size: 18
     t1:
-      up: 0.0
-      down: 100.0
-      median: 0.0
-      mean: 0.0
-      sample: 0
+      up: 38.89
+      down: 61.11
+      median: -0.13
+      mean: -0.22
+      sample: 18
     t7:
-      up: 75.0
-      down: 25.0
-      median: 1.27
-      mean: 1.28
-      sample: 12
+      up: 56.67
+      down: 43.33
+      median: 0.11
+      mean: 0.83
+      sample: 30
 related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "SPY After NFP (2024-07-05): Historical T+1/T+7 Probability", "event_date": "2024-07-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.02, "median_t7_pct": 0.96, "sample_size": 0}, {"slug": "spy-after-nfp-2024-10-04", "title": "SPY After NFP (2024-10-04): Historical T+1/T+7 Probability", "event_date": "2024-10-04", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.43, "median_t7_pct": 1.15, "sample_size": 0}, {"slug": "spy-after-nfp-2024-08-02", "title": "SPY After NFP (2024-08-02): Historical T+1/T+7 Probability", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 2.25, "median_t7_pct": 0.02, "sample_size": 0}]
+chartData: [{"time": "2024-01-02", "open": 460.77, "high": 462.24, "low": 459.14, "close": 461.25}, {"time": "2024-01-03", "open": 459.08, "high": 459.82, "low": 456.88, "close": 457.48}, {"time": "2024-01-04", "open": 457.0, "high": 459.6, "low": 455.78, "close": 456.01}, {"time": "2024-01-05", "open": 456.21, "high": 459.09, "low": 455.18, "close": 456.63}, {"time": "2024-01-08", "open": 457.13, "high": 463.3, "low": 457.0, "close": 463.15}, {"time": "2024-01-09", "open": 460.49, "high": 463.47, "low": 459.98, "close": 462.45}, {"time": "2024-01-10", "open": 462.72, "high": 465.93, "low": 462.44, "close": 465.06}, {"time": "2024-01-11", "open": 466.07, "high": 466.59, "low": 460.87, "close": 464.86}, {"time": "2024-01-12", "open": 466.31, "high": 467.05, "low": 463.77, "close": 465.18}]
 ---
 
 ## Event Snapshot
@@ -74,9 +75,9 @@ related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "SPY After NFP (2
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2024-01-05**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **787 days**
-- Sample size (all-history): **13**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **788 days**
+- Sample size (all-history): **34**
 
 ## Event Outcome
 
@@ -87,25 +88,25 @@ related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "SPY After NFP (2
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 0.0% | 100.0% | 0.0% | 0.0% | 0 |
-| T+7 | 76.92% | 23.08% | 1.39% | 1.41% | 13 |
+| T+1 | 47.62% | 52.38% | -0.04% | -0.1% | 21 |
+| T+7 | 55.88% | 44.12% | 0.11% | 0.81% | 34 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 0.0% | 100.0% | 0.0% | 0.0% | 0 |
-| T+7 | 75.0% | 25.0% | 1.27% | 1.28% | 12 |
+| T+1 | 38.89% | 61.11% | -0.13% | -0.22% | 18 |
+| T+7 | 56.67% | 43.33% | 0.11% | 0.83% | 30 |
 
 ## Historical Distribution Summary
 
-When NFP was **UP**, SPY T+1 up probability was **0.0%** (n=0).
+When NFP was **UP**, SPY T+1 up probability was **38.89%** (n=18).
 
-When NFP was **UP**, SPY T+7 up probability was **75.0%** (n=12).
+When NFP was **UP**, SPY T+7 up probability was **56.67%** (n=30).
 
-Same-direction T+7 median return: **1.27%**.
+Same-direction T+7 median return: **0.11%**.
 
-For SPY, historical NFP windows show all-history T+1 up probability of 0.0% and T+7 up probability of 76.92%. When NFP printed Up versus previous, T+1 up probability was 0.0% and T+7 up probability was 75.0% across 0 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+For SPY, historical NFP windows show all-history T+1 up probability of 47.62% and T+7 up probability of 55.88%. When NFP printed Up versus previous, T+1 up probability was 38.89% and T+7 up probability was 56.67% across 18 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

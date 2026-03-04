@@ -1,28 +1,28 @@
 ---
 title: "Historical Performance of ETH After FOMC (2024-01-30)"
 description: "Historical probability profile for ETH around FOMC events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2024-01-30"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "binance"
-signal: "Neutral"
-raw_signal_score: -3.11
-robust_score: -13.11
+signal: "Bearish"
+raw_signal_score: -13.74
+robust_score: -19.74
 penalties:
-  sample: 4.0
+  sample: 0.0
   freshness: 6.0
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 80
-sample_size: 9
-freshness_days: 762
+quality_score: 90
+sample_size: 23
+freshness_days: 763
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T14:52:49+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "flat"
 event_actual: 5.5
 event_previous: 5.5
@@ -37,36 +37,37 @@ metrics:
   impact_t1_pct: -2.64
   impact_t7_pct: 1.18
 probabilities:
-  sample_size: 9
+  sample_size: 23
   t1:
-    up: 55.56
-    down: 44.44
-    median: 1.2
-    mean: 1.38
-    sample: 9
+    up: 43.48
+    down: 56.52
+    median: -0.1
+    mean: 0.91
+    sample: 23
   t7:
-    up: 44.44
-    down: 55.56
-    median: -0.19
-    mean: -0.1
-    sample: 9
+    up: 30.43
+    down: 69.57
+    median: -3.26
+    mean: -2.8
+    sample: 23
   conditional:
     basis: "event_direction"
     direction: "flat"
-    sample_size: 9
+    sample_size: 17
     t1:
-      up: 55.56
-      down: 44.44
-      median: 1.2
-      mean: 1.38
-      sample: 9
+      up: 35.29
+      down: 64.71
+      median: -1.41
+      mean: 0.94
+      sample: 17
     t7:
-      up: 44.44
-      down: 55.56
-      median: -0.19
-      mean: -0.1
-      sample: 9
-related_events: [{"slug": "eth-after-fomc-2026-01-28", "title": "ETH After FOMC (2026-01-28): Historical T+1/T+7 Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "eth-after-fomc-2025-12-10", "title": "ETH After FOMC (2025-12-10): Historical T+1/T+7 Probability", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "eth-after-fomc-2025-10-29", "title": "ETH After FOMC (2025-10-29): Historical T+1/T+7 Probability", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+      up: 29.41
+      down: 70.59
+      median: -3.26
+      mean: -1.88
+      sample: 17
+related_events: [{"slug": "eth-after-fomc-2026-01-28", "title": "ETH After FOMC (2026-01-28): Historical T+1/T+7 Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -28.71, "sample_size": 0}, {"slug": "eth-after-fomc-2025-12-11", "title": "ETH After FOMC (2025-12-11): Historical T+1/T+7 Probability", "event_date": "2025-12-11", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -12.67, "sample_size": 0}, {"slug": "eth-after-fomc-2025-12-10", "title": "ETH After FOMC (2025-12-10): Historical T+1/T+7 Probability", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -14.86, "sample_size": 0}]
+chartData: [{"time": "2024-01-27", "open": 2267.32, "high": 2282.54, "low": 2252.39, "close": 2267.89}, {"time": "2024-01-28", "open": 2268.19, "high": 2306.9, "low": 2242.68, "close": 2257.21}, {"time": "2024-01-29", "open": 2257.0, "high": 2320.03, "low": 2237.71, "close": 2317.06}, {"time": "2024-01-30", "open": 2317.44, "high": 2388.87, "low": 2298.28, "close": 2344.49}, {"time": "2024-01-31", "open": 2343.56, "high": 2349.61, "low": 2264.44, "close": 2282.54}, {"time": "2024-02-01", "open": 2282.18, "high": 2309.84, "low": 2243.57, "close": 2303.82}, {"time": "2024-02-02", "open": 2303.71, "high": 2323.05, "low": 2282.23, "close": 2308.04}, {"time": "2024-02-03", "open": 2307.98, "high": 2327.35, "low": 2293.54, "close": 2296.04}, {"time": "2024-02-04", "open": 2296.12, "high": 2309.01, "low": 2272.3, "close": 2289.55}, {"time": "2024-02-05", "open": 2289.21, "high": 2334.68, "low": 2270.07, "close": 2298.89}, {"time": "2024-02-06", "open": 2298.96, "high": 2389.83, "low": 2296.79, "close": 2372.2}]
 ---
 
 ## Event Snapshot
@@ -74,9 +75,9 @@ related_events: [{"slug": "eth-after-fomc-2026-01-28", "title": "ETH After FOMC 
 - Event: **FOMC**
 - Asset: **ETH**
 - Event date: **2024-01-30**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **762 days**
-- Sample size (all-history): **9**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **763 days**
+- Sample size (all-history): **23**
 
 ## Event Outcome
 
@@ -87,25 +88,25 @@ related_events: [{"slug": "eth-after-fomc-2026-01-28", "title": "ETH After FOMC 
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 55.56% | 44.44% | 1.2% | 1.38% | 9 |
-| T+7 | 44.44% | 55.56% | -0.19% | -0.1% | 9 |
+| T+1 | 43.48% | 56.52% | -0.1% | 0.91% | 23 |
+| T+7 | 30.43% | 69.57% | -3.26% | -2.8% | 23 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 55.56% | 44.44% | 1.2% | 1.38% | 9 |
-| T+7 | 44.44% | 55.56% | -0.19% | -0.1% | 9 |
+| T+1 | 35.29% | 64.71% | -1.41% | 0.94% | 17 |
+| T+7 | 29.41% | 70.59% | -3.26% | -1.88% | 17 |
 
 ## Historical Distribution Summary
 
-When FOMC was **FLAT**, ETH T+1 up probability was **55.56%** (n=9).
+When FOMC was **FLAT**, ETH T+1 up probability was **35.29%** (n=17).
 
-When FOMC was **FLAT**, ETH T+7 up probability was **44.44%** (n=9).
+When FOMC was **FLAT**, ETH T+7 up probability was **29.41%** (n=17).
 
-Same-direction T+7 median return: **-0.19%**.
+Same-direction T+7 median return: **-3.26%**.
 
-For ETH, historical FOMC windows show all-history T+1 up probability of 55.56% and T+7 up probability of 44.44%. When FOMC printed Flat versus previous, T+1 up probability was 55.56% and T+7 up probability was 44.44% across 9 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+For ETH, historical FOMC windows show all-history T+1 up probability of 43.48% and T+7 up probability of 30.43%. When FOMC printed Flat versus previous, T+1 up probability was 35.29% and T+7 up probability was 29.41% across 17 matched cases. Current classification is Bearish; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

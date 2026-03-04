@@ -1,17 +1,17 @@
 ---
 title: "Historical Performance of ETH After NFP (2024-10-04)"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-10-04"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "binance"
-signal: "Bullish"
-raw_signal_score: 8.93
-robust_score: 2.93
+signal: "Neutral"
+raw_signal_score: 4.94
+robust_score: -1.06
 penalties:
   sample: 0.0
   freshness: 6.0
@@ -19,10 +19,10 @@ penalties:
   outcome: 0.0
 confidence_level: "normal"
 quality_score: 90
-sample_size: 13
-freshness_days: 514
+sample_size: 34
+freshness_days: 515
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T14:52:49+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 157945.0
 event_previous: 157912.0
@@ -37,36 +37,37 @@ metrics:
   impact_t1_pct: 0.03
   impact_t7_pct: 0.9
 probabilities:
-  sample_size: 13
+  sample_size: 34
   t1:
-    up: 53.85
-    down: 46.15
-    median: 0.03
-    mean: 0.11
-    sample: 13
+    up: 50.0
+    down: 50.0
+    median: 0.0
+    mean: -0.15
+    sample: 34
   t7:
-    up: 61.54
-    down: 38.46
-    median: 5.12
-    mean: 3.32
-    sample: 13
+    up: 55.88
+    down: 44.12
+    median: 1.44
+    mean: 2.65
+    sample: 34
   conditional:
     basis: "event_direction"
     direction: "up"
-    sample_size: 12
+    sample_size: 30
     t1:
       up: 50.0
       down: 50.0
-      median: -0.03
-      mean: 0.09
-      sample: 12
+      median: 0.0
+      mean: -0.14
+      sample: 30
     t7:
-      up: 58.33
-      down: 41.67
-      median: 3.01
-      mean: 3.07
-      sample: 12
-related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "eth-after-nfp-2026-01-02", "title": "ETH After NFP (2026-01-02): Historical T+1/T+7 Probability", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "eth-after-nfp-2025-12-05", "title": "ETH After NFP (2025-12-05): Historical T+1/T+7 Probability", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+      up: 53.33
+      down: 46.67
+      median: 0.79
+      mean: 2.65
+      sample: 30
+related_events: [{"slug": "eth-after-nfp-2026-02-11", "title": "ETH After NFP (2026-02-11): Historical T+1/T+7 Probability", "event_date": "2026-02-11", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.69, "sample_size": 0}, {"slug": "eth-after-nfp-2026-02-06", "title": "ETH After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.72, "sample_size": 0}, {"slug": "eth-after-nfp-2026-01-09", "title": "ETH After NFP (2026-01-09): Historical T+1/T+7 Probability", "event_date": "2026-01-09", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 6.89, "sample_size": 0}]
+chartData: [{"time": "2024-10-01", "open": 2603.26, "high": 2657.62, "low": 2415.08, "close": 2448.92}, {"time": "2024-10-02", "open": 2448.88, "high": 2498.12, "low": 2354.54, "close": 2365.23}, {"time": "2024-10-03", "open": 2365.21, "high": 2402.86, "low": 2311.03, "close": 2349.79}, {"time": "2024-10-04", "open": 2349.73, "high": 2440.24, "low": 2339.87, "close": 2414.79}, {"time": "2024-10-05", "open": 2414.85, "high": 2427.52, "low": 2390.84, "close": 2415.63}, {"time": "2024-10-06", "open": 2415.53, "high": 2456.63, "low": 2407.1, "close": 2439.96}, {"time": "2024-10-07", "open": 2439.94, "high": 2520.41, "low": 2405.13, "close": 2421.8}, {"time": "2024-10-08", "open": 2421.98, "high": 2464.13, "low": 2400.51, "close": 2439.84}, {"time": "2024-10-09", "open": 2439.84, "high": 2470.91, "low": 2350.95, "close": 2368.28}, {"time": "2024-10-10", "open": 2368.27, "high": 2417.29, "low": 2329.78, "close": 2383.86}, {"time": "2024-10-11", "open": 2383.94, "high": 2470.4, "low": 2380.5, "close": 2436.51}]
 ---
 
 ## Event Snapshot
@@ -74,9 +75,9 @@ related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH After NFP (2
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2024-10-04**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **514 days**
-- Sample size (all-history): **13**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **515 days**
+- Sample size (all-history): **34**
 
 ## Event Outcome
 
@@ -87,25 +88,25 @@ related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH After NFP (2
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 53.85% | 46.15% | 0.03% | 0.11% | 13 |
-| T+7 | 61.54% | 38.46% | 5.12% | 3.32% | 13 |
+| T+1 | 50.0% | 50.0% | 0.0% | -0.15% | 34 |
+| T+7 | 55.88% | 44.12% | 1.44% | 2.65% | 34 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 50.0% | 50.0% | -0.03% | 0.09% | 12 |
-| T+7 | 58.33% | 41.67% | 3.01% | 3.07% | 12 |
+| T+1 | 50.0% | 50.0% | 0.0% | -0.14% | 30 |
+| T+7 | 53.33% | 46.67% | 0.79% | 2.65% | 30 |
 
 ## Historical Distribution Summary
 
-When NFP was **UP**, ETH T+1 up probability was **50.0%** (n=12).
+When NFP was **UP**, ETH T+1 up probability was **50.0%** (n=30).
 
-When NFP was **UP**, ETH T+7 up probability was **58.33%** (n=12).
+When NFP was **UP**, ETH T+7 up probability was **53.33%** (n=30).
 
-Same-direction T+7 median return: **3.01%**.
+Same-direction T+7 median return: **0.79%**.
 
-For ETH, historical NFP windows show all-history T+1 up probability of 53.85% and T+7 up probability of 61.54%. When NFP printed Up versus previous, T+1 up probability was 50.0% and T+7 up probability was 58.33% across 12 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
+For ETH, historical NFP windows show all-history T+1 up probability of 50.0% and T+7 up probability of 55.88%. When NFP printed Up versus previous, T+1 up probability was 50.0% and T+7 up probability was 53.33% across 30 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

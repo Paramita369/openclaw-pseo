@@ -1,17 +1,17 @@
 ---
 title: "Historical Performance of GOLD After CPI (2025-02-12)"
 description: "Historical probability profile for GOLD around CPI events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-02-12"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
-raw_signal_score: 15.46
-robust_score: 9.46
+raw_signal_score: 18.4
+robust_score: 12.4
 penalties:
   sample: 0.0
   freshness: 6.0
@@ -19,10 +19,10 @@ penalties:
   outcome: 0.0
 confidence_level: "normal"
 quality_score: 90
-sample_size: 14
-freshness_days: 383
+sample_size: 39
+freshness_days: 384
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T14:52:49+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 319.679
 event_previous: 318.961
@@ -37,36 +37,37 @@ metrics:
   impact_t1_pct: 0.58
   impact_t7_pct: 0.36
 probabilities:
-  sample_size: 14
+  sample_size: 39
   t1:
-    up: 50.0
-    down: 50.0
-    median: 0.27
-    mean: 0.22
-    sample: 14
+    up: 56.41
+    down: 43.59
+    median: 0.34
+    mean: 0.3
+    sample: 39
   t7:
-    up: 76.92
-    down: 23.08
-    median: 1.52
-    mean: 1.07
-    sample: 13
+    up: 78.95
+    down: 21.05
+    median: 1.4
+    mean: 1.49
+    sample: 38
   conditional:
     basis: "event_direction"
     direction: "up"
-    sample_size: 13
+    sample_size: 38
     t1:
-      up: 53.85
-      down: 46.15
-      median: 0.56
-      mean: 0.36
-      sample: 13
+      up: 57.89
+      down: 42.11
+      median: 0.42
+      mean: 0.35
+      sample: 38
     t7:
-      up: 76.92
-      down: 23.08
-      median: 1.52
-      mean: 1.07
-      sample: 13
-related_events: [{"slug": "gold-after-cpi-2024-02-20", "title": "GOLD After CPI (2024-02-20): Historical T+1/T+7 Probability", "event_date": "2024-02-20", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 6.12, "median_t7_pct": 0.32, "sample_size": 0}, {"slug": "gold-after-cpi-2024-05-15", "title": "GOLD After CPI (2024-05-15): Historical T+1/T+7 Probability", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.47, "median_t7_pct": 0.02, "sample_size": 0}, {"slug": "gold-after-cpi-2026-02-12", "title": "GOLD After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+      up: 78.95
+      down: 21.05
+      median: 1.4
+      mean: 1.49
+      sample: 38
+related_events: [{"slug": "gold-after-cpi-2024-02-20", "title": "GOLD After CPI (2024-02-20): Historical T+1/T+7 Probability", "event_date": "2024-02-20", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 6.12, "median_t7_pct": 0.32, "sample_size": 0}, {"slug": "gold-after-cpi-2024-05-15", "title": "GOLD After CPI (2024-05-15): Historical T+1/T+7 Probability", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.47, "median_t7_pct": 0.02, "sample_size": 0}, {"slug": "gold-after-cpi-2026-02-13", "title": "GOLD After CPI (2026-02-13): Historical T+1/T+7 Probability", "event_date": "2026-02-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.74, "sample_size": 0}]
+chartData: [{"time": "2025-02-10", "open": 2864.2, "high": 2916.1, "low": 2863.8, "close": 2914.3}, {"time": "2025-02-11", "open": 2925.5, "high": 2945.4, "low": 2890.0, "close": 2912.5}, {"time": "2025-02-12", "open": 2902.0, "high": 2912.3, "low": 2868.6, "close": 2909.0}, {"time": "2025-02-13", "open": 2911.3, "high": 2937.7, "low": 2910.6, "close": 2925.9}, {"time": "2025-02-14", "open": 2937.3, "high": 2944.4, "low": 2874.8, "close": 2883.6}, {"time": "2025-02-18", "open": 2879.2, "high": 2936.4, "low": 2873.8, "close": 2931.6}, {"time": "2025-02-19", "open": 2938.7, "high": 2946.0, "low": 2917.1, "close": 2919.4}]
 ---
 
 ## Event Snapshot
@@ -74,9 +75,9 @@ related_events: [{"slug": "gold-after-cpi-2024-02-20", "title": "GOLD After CPI 
 - Event: **CPI**
 - Asset: **GOLD**
 - Event date: **2025-02-12**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **383 days**
-- Sample size (all-history): **14**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **384 days**
+- Sample size (all-history): **39**
 
 ## Event Outcome
 
@@ -87,25 +88,25 @@ related_events: [{"slug": "gold-after-cpi-2024-02-20", "title": "GOLD After CPI 
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 50.0% | 50.0% | 0.27% | 0.22% | 14 |
-| T+7 | 76.92% | 23.08% | 1.52% | 1.07% | 13 |
+| T+1 | 56.41% | 43.59% | 0.34% | 0.3% | 39 |
+| T+7 | 78.95% | 21.05% | 1.4% | 1.49% | 38 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 53.85% | 46.15% | 0.56% | 0.36% | 13 |
-| T+7 | 76.92% | 23.08% | 1.52% | 1.07% | 13 |
+| T+1 | 57.89% | 42.11% | 0.42% | 0.35% | 38 |
+| T+7 | 78.95% | 21.05% | 1.4% | 1.49% | 38 |
 
 ## Historical Distribution Summary
 
-When CPI was **UP**, GOLD T+1 up probability was **53.85%** (n=13).
+When CPI was **UP**, GOLD T+1 up probability was **57.89%** (n=38).
 
-When CPI was **UP**, GOLD T+7 up probability was **76.92%** (n=13).
+When CPI was **UP**, GOLD T+7 up probability was **78.95%** (n=38).
 
-Same-direction T+7 median return: **1.52%**.
+Same-direction T+7 median return: **1.4%**.
 
-For GOLD, historical CPI windows show all-history T+1 up probability of 50.0% and T+7 up probability of 76.92%. When CPI printed Up versus previous, T+1 up probability was 53.85% and T+7 up probability was 76.92% across 13 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
+For GOLD, historical CPI windows show all-history T+1 up probability of 56.41% and T+7 up probability of 78.95%. When CPI printed Up versus previous, T+1 up probability was 57.89% and T+7 up probability was 78.95% across 38 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

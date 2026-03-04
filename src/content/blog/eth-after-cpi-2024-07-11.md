@@ -1,17 +1,17 @@
 ---
 title: "Historical Performance of ETH After CPI (2024-07-11)"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-07-11"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
-raw_signal_score: -5.57
-robust_score: -11.57
+raw_signal_score: -2.51
+robust_score: -8.51
 penalties:
   sample: 0.0
   freshness: 6.0
@@ -19,10 +19,10 @@ penalties:
   outcome: 0.0
 confidence_level: "normal"
 quality_score: 90
-sample_size: 14
-freshness_days: 599
+sample_size: 39
+freshness_days: 600
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T14:52:49+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 313.569
 event_previous: 313.044
@@ -37,36 +37,37 @@ metrics:
   impact_t1_pct: 1.09
   impact_t7_pct: 10.51
 probabilities:
-  sample_size: 14
+  sample_size: 39
   t1:
-    up: 50.0
-    down: 50.0
-    median: -0.22
-    mean: -0.52
-    sample: 14
+    up: 58.97
+    down: 41.03
+    median: 0.94
+    mean: 0.55
+    sample: 39
   t7:
-    up: 42.86
-    down: 57.14
-    median: -0.39
-    mean: 0.26
-    sample: 14
+    up: 43.59
+    down: 56.41
+    median: -1.18
+    mean: 0.23
+    sample: 39
   conditional:
     basis: "event_direction"
     direction: "up"
-    sample_size: 13
+    sample_size: 38
     t1:
-      up: 53.85
-      down: 46.15
-      median: 0.66
-      mean: -0.36
-      sample: 13
+      up: 60.53
+      down: 39.47
+      median: 0.96
+      mean: 0.64
+      sample: 38
     t7:
-      up: 46.15
-      down: 53.85
-      median: -0.77
-      mean: 0.28
-      sample: 13
-related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH After CPI (2024-06-12): Historical T+1/T+7 Probability", "event_date": "2024-06-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.22, "median_t7_pct": -0.01, "sample_size": 0}, {"slug": "eth-after-cpi-2026-02-12", "title": "ETH After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "eth-after-cpi-2026-01-12", "title": "ETH After CPI (2026-01-12): Historical T+1/T+7 Probability", "event_date": "2026-01-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+      up: 44.74
+      down: 55.26
+      median: -1.52
+      mean: 0.24
+      sample: 38
+related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH After CPI (2024-06-12): Historical T+1/T+7 Probability", "event_date": "2024-06-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.22, "median_t7_pct": -0.01, "sample_size": 0}, {"slug": "eth-after-cpi-2026-02-13", "title": "ETH After CPI (2026-02-13): Historical T+1/T+7 Probability", "event_date": "2026-02-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -3.88, "sample_size": 0}, {"slug": "eth-after-cpi-2026-02-12", "title": "ETH After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.06, "sample_size": 0}]
+chartData: [{"time": "2024-07-08", "open": 2929.86, "high": 3090.66, "low": 2826.48, "close": 3018.73}, {"time": "2024-07-09", "open": 3018.8, "high": 3105.8, "low": 3005.52, "close": 3064.03}, {"time": "2024-07-10", "open": 3066.14, "high": 3148.41, "low": 3026.61, "close": 3102.22}, {"time": "2024-07-11", "open": 3101.34, "high": 3208.94, "low": 3057.22, "close": 3100.33}, {"time": "2024-07-12", "open": 3099.99, "high": 3154.6, "low": 3048.51, "close": 3134.16}, {"time": "2024-07-13", "open": 3134.55, "high": 3199.99, "low": 3115.08, "close": 3177.2}, {"time": "2024-07-14", "open": 3176.74, "high": 3266.49, "low": 3166.43, "close": 3244.08}, {"time": "2024-07-15", "open": 3246.13, "high": 3494.1, "low": 3235.78, "close": 3489.55}, {"time": "2024-07-16", "open": 3486.14, "high": 3498.22, "low": 3351.78, "close": 3443.51}, {"time": "2024-07-17", "open": 3446.74, "high": 3516.1, "low": 3379.1, "close": 3388.75}, {"time": "2024-07-18", "open": 3388.03, "high": 3488.72, "low": 3374.99, "close": 3426.26}]
 ---
 
 ## Event Snapshot
@@ -74,9 +75,9 @@ related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH After CPI (2
 - Event: **CPI**
 - Asset: **ETH**
 - Event date: **2024-07-11**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **599 days**
-- Sample size (all-history): **14**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **600 days**
+- Sample size (all-history): **39**
 
 ## Event Outcome
 
@@ -87,25 +88,25 @@ related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH After CPI (2
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 50.0% | 50.0% | -0.22% | -0.52% | 14 |
-| T+7 | 42.86% | 57.14% | -0.39% | 0.26% | 14 |
+| T+1 | 58.97% | 41.03% | 0.94% | 0.55% | 39 |
+| T+7 | 43.59% | 56.41% | -1.18% | 0.23% | 39 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 53.85% | 46.15% | 0.66% | -0.36% | 13 |
-| T+7 | 46.15% | 53.85% | -0.77% | 0.28% | 13 |
+| T+1 | 60.53% | 39.47% | 0.96% | 0.64% | 38 |
+| T+7 | 44.74% | 55.26% | -1.52% | 0.24% | 38 |
 
 ## Historical Distribution Summary
 
-When CPI was **UP**, ETH T+1 up probability was **53.85%** (n=13).
+When CPI was **UP**, ETH T+1 up probability was **60.53%** (n=38).
 
-When CPI was **UP**, ETH T+7 up probability was **46.15%** (n=13).
+When CPI was **UP**, ETH T+7 up probability was **44.74%** (n=38).
 
-Same-direction T+7 median return: **-0.77%**.
+Same-direction T+7 median return: **-1.52%**.
 
-For ETH, historical CPI windows show all-history T+1 up probability of 50.0% and T+7 up probability of 42.86%. When CPI printed Up versus previous, T+1 up probability was 53.85% and T+7 up probability was 46.15% across 13 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+For ETH, historical CPI windows show all-history T+1 up probability of 58.97% and T+7 up probability of 43.59%. When CPI printed Up versus previous, T+1 up probability was 60.53% and T+7 up probability was 44.74% across 38 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

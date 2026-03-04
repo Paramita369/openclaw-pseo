@@ -1,0 +1,113 @@
+---
+title: "Historical Performance of BTC After CPI (2025-05-13)"
+description: "Historical probability profile for BTC around CPI events (T+1/T+7)."
+pubDate: "2026-03-04"
+event_type: "CPI"
+event_label: "CPI"
+event_slug: "cpi"
+event_date: "2025-05-13"
+asof_date: "2026-03-03"
+source: "verified_targets.csv"
+offer_key: "binance"
+signal: "Neutral"
+raw_signal_score: 6.62
+robust_score: 0.62
+penalties:
+  sample: 0.0
+  freshness: 6.0
+  confidence: 0.0
+  outcome: 0.0
+confidence_level: "normal"
+quality_score: 90
+sample_size: 39
+freshness_days: 294
+freshness_status: "stale"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
+event_direction: "up"
+event_actual: 320.62
+event_previous: 320.302
+event_delta: 0.318
+direction_basis: "vs_previous"
+outcome_status: "ok"
+tags: ["btc", "cpi", "event-probability", "general"]
+metrics:
+  sharpe_t7: 0.81
+  mdd_t7: -0.61
+  volatility: 3.12
+  impact_t1_pct: -0.61
+  impact_t7_pct: 2.52
+probabilities:
+  sample_size: 39
+  t1:
+    up: 58.97
+    down: 41.03
+    median: 0.51
+    mean: 0.37
+    sample: 39
+  t7:
+    up: 53.85
+    down: 46.15
+    median: 1.11
+    mean: 0.44
+    sample: 39
+  conditional:
+    basis: "event_direction"
+    direction: "up"
+    sample_size: 38
+    t1:
+      up: 60.53
+      down: 39.47
+      median: 0.53
+      mean: 0.44
+      sample: 38
+    t7:
+      up: 55.26
+      down: 44.74
+      median: 1.26
+      mean: 0.58
+      sample: 38
+related_events: [{"slug": "btc-after-cpi-2024-08-14", "title": "BTC After CPI (2024-08-14): Historical T+1/T+7 Probability", "event_date": "2024-08-14", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.86, "median_t7_pct": 4.15, "sample_size": 0}, {"slug": "btc-after-cpi-2026-02-13", "title": "BTC After CPI (2026-02-13): Historical T+1/T+7 Probability", "event_date": "2026-02-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -1.24, "sample_size": 0}, {"slug": "btc-after-cpi-2026-02-12", "title": "BTC After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.11, "sample_size": 0}]
+chartData: [{"time": "2025-05-10", "open": 102973.71, "high": 104961.77, "low": 102830.48, "close": 104696.33}, {"time": "2025-05-11", "open": 104701.07, "high": 104937.99, "low": 103364.74, "close": 104106.36}, {"time": "2025-05-12", "open": 104106.96, "high": 105747.45, "low": 100814.41, "close": 102812.95}, {"time": "2025-05-13", "open": 102812.49, "high": 104997.42, "low": 101515.09, "close": 104169.81}, {"time": "2025-05-14", "open": 104167.33, "high": 104303.56, "low": 102618.3, "close": 103539.41}, {"time": "2025-05-15", "open": 103538.83, "high": 104153.62, "low": 101440.81, "close": 103744.64}, {"time": "2025-05-16", "open": 103735.66, "high": 104533.48, "low": 103137.48, "close": 103489.29}, {"time": "2025-05-17", "open": 103489.29, "high": 103716.95, "low": 102659.18, "close": 103191.09}, {"time": "2025-05-18", "open": 103186.95, "high": 106597.17, "low": 103142.6, "close": 106446.01}, {"time": "2025-05-19", "open": 106430.53, "high": 107068.72, "low": 102112.69, "close": 105606.18}, {"time": "2025-05-20", "open": 105605.41, "high": 107307.12, "low": 104206.52, "close": 106791.09}]
+---
+
+## Event Snapshot
+
+- Event: **CPI**
+- Asset: **BTC**
+- Event date: **2025-05-13**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **294 days**
+- Sample size (all-history): **39**
+
+## Event Outcome
+
+- CPI Outcome: **UP** (Actual 320.62, Previous 320.302, Delta +0.3180)
+- Direction basis: **vs_previous**
+
+## Probability Table (All-history)
+
+| Window | P(up) | P(down) | Median return | Mean return | Sample |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| T+1 | 58.97% | 41.03% | 0.51% | 0.37% | 39 |
+| T+7 | 53.85% | 46.15% | 1.11% | 0.44% | 39 |
+
+## Probability Table (Same-direction)
+
+| Window | P(up) | P(down) | Median return | Mean return | Sample |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| T+1 | 60.53% | 39.47% | 0.53% | 0.44% | 38 |
+| T+7 | 55.26% | 44.74% | 1.26% | 0.58% | 38 |
+
+## Historical Distribution Summary
+
+When CPI was **UP**, BTC T+1 up probability was **60.53%** (n=38).
+
+When CPI was **UP**, BTC T+7 up probability was **55.26%** (n=38).
+
+Same-direction T+7 median return: **1.26%**.
+
+For BTC, historical CPI windows show all-history T+1 up probability of 58.97% and T+7 up probability of 53.85%. When CPI printed Up versus previous, T+1 up probability was 60.53% and T+7 up probability was 55.26% across 38 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+
+## Methodology
+
+This page aggregates historical windows for the same event type (CPI) and deduplicates by event date. It reports both all-history probabilities and same-direction probabilities based on event outcome direction (vs previous) for educational use only.

@@ -1,17 +1,17 @@
 ---
 title: "Historical Performance of QQQ After CPI (2024-12-11)"
 description: "Historical probability profile for QQQ around CPI events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-12-11"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "ibkr"
-signal: "Neutral"
-raw_signal_score: 6.07
-robust_score: 0.07
+signal: "Bullish"
+raw_signal_score: 8.09
+robust_score: 2.09
 penalties:
   sample: 0.0
   freshness: 6.0
@@ -19,10 +19,10 @@ penalties:
   outcome: 0.0
 confidence_level: "normal"
 quality_score: 90
-sample_size: 14
-freshness_days: 446
+sample_size: 39
+freshness_days: 447
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T14:52:49+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 317.604
 event_previous: 316.528
@@ -37,36 +37,37 @@ metrics:
   impact_t1_pct: -0.65
   impact_t7_pct: -2.54
 probabilities:
-  sample_size: 14
+  sample_size: 39
   t1:
-    up: 57.14
-    down: 42.86
-    median: 0.35
-    mean: 0.28
-    sample: 14
+    up: 61.54
+    down: 38.46
+    median: 0.21
+    mean: 0.23
+    sample: 39
   t7:
-    up: 53.85
-    down: 46.15
-    median: 0.6
-    mean: 0.54
-    sample: 13
+    up: 55.26
+    down: 44.74
+    median: 0.58
+    mean: 0.2
+    sample: 38
   conditional:
     basis: "event_direction"
     direction: "up"
-    sample_size: 13
+    sample_size: 38
     t1:
-      up: 53.85
-      down: 46.15
-      median: 0.16
-      mean: 0.26
-      sample: 13
+      up: 60.53
+      down: 39.47
+      median: 0.19
+      mean: 0.23
+      sample: 38
     t7:
-      up: 53.85
-      down: 46.15
-      median: 0.6
-      mean: 0.54
-      sample: 13
-related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "QQQ After CPI (2024-05-15): Historical T+1/T+7 Probability", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.6, "median_t7_pct": 0.62, "sample_size": 0}, {"slug": "qqq-after-cpi-2024-09-11", "title": "QQQ After CPI (2024-09-11): Historical T+1/T+7 Probability", "event_date": "2024-09-11", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 7.08, "median_t7_pct": 0.6, "sample_size": 0}, {"slug": "qqq-after-cpi-2026-02-12", "title": "QQQ After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+      up: 55.26
+      down: 44.74
+      median: 0.58
+      mean: 0.2
+      sample: 38
+related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "QQQ After CPI (2024-05-15): Historical T+1/T+7 Probability", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.6, "median_t7_pct": 0.62, "sample_size": 0}, {"slug": "qqq-after-cpi-2024-09-11", "title": "QQQ After CPI (2024-09-11): Historical T+1/T+7 Probability", "event_date": "2024-09-11", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 7.08, "median_t7_pct": 0.6, "sample_size": 0}, {"slug": "qqq-after-cpi-2026-02-13", "title": "QQQ After CPI (2026-02-13): Historical T+1/T+7 Probability", "event_date": "2026-02-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.14, "sample_size": 0}]
+chartData: [{"time": "2024-12-09", "open": 522.06, "high": 522.85, "low": 517.75, "close": 518.91}, {"time": "2024-12-10", "open": 520.14, "high": 521.89, "low": 515.71, "close": 517.14}, {"time": "2024-12-11", "open": 521.51, "high": 527.08, "low": 521.1, "close": 526.4}, {"time": "2024-12-12", "open": 524.17, "high": 525.44, "low": 522.52, "close": 523.0}, {"time": "2024-12-13", "open": 526.93, "high": 529.63, "low": 523.79, "close": 527.0}, {"time": "2024-12-16", "open": 529.54, "high": 535.57, "low": 529.46, "close": 534.59}, {"time": "2024-12-17", "open": 532.79, "high": 533.91, "low": 530.58, "close": 532.24}, {"time": "2024-12-18", "open": 531.59, "high": 533.31, "low": 511.59, "close": 513.04}]
 ---
 
 ## Event Snapshot
@@ -74,9 +75,9 @@ related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "QQQ After CPI (2
 - Event: **CPI**
 - Asset: **QQQ**
 - Event date: **2024-12-11**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **446 days**
-- Sample size (all-history): **14**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **447 days**
+- Sample size (all-history): **39**
 
 ## Event Outcome
 
@@ -87,25 +88,25 @@ related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "QQQ After CPI (2
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 57.14% | 42.86% | 0.35% | 0.28% | 14 |
-| T+7 | 53.85% | 46.15% | 0.6% | 0.54% | 13 |
+| T+1 | 61.54% | 38.46% | 0.21% | 0.23% | 39 |
+| T+7 | 55.26% | 44.74% | 0.58% | 0.2% | 38 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 53.85% | 46.15% | 0.16% | 0.26% | 13 |
-| T+7 | 53.85% | 46.15% | 0.6% | 0.54% | 13 |
+| T+1 | 60.53% | 39.47% | 0.19% | 0.23% | 38 |
+| T+7 | 55.26% | 44.74% | 0.58% | 0.2% | 38 |
 
 ## Historical Distribution Summary
 
-When CPI was **UP**, QQQ T+1 up probability was **53.85%** (n=13).
+When CPI was **UP**, QQQ T+1 up probability was **60.53%** (n=38).
 
-When CPI was **UP**, QQQ T+7 up probability was **53.85%** (n=13).
+When CPI was **UP**, QQQ T+7 up probability was **55.26%** (n=38).
 
-Same-direction T+7 median return: **0.6%**.
+Same-direction T+7 median return: **0.58%**.
 
-For QQQ, historical CPI windows show all-history T+1 up probability of 57.14% and T+7 up probability of 53.85%. When CPI printed Up versus previous, T+1 up probability was 53.85% and T+7 up probability was 53.85% across 13 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+For QQQ, historical CPI windows show all-history T+1 up probability of 61.54% and T+7 up probability of 55.26%. When CPI printed Up versus previous, T+1 up probability was 60.53% and T+7 up probability was 55.26% across 38 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

@@ -1,28 +1,28 @@
 ---
 title: "Historical Performance of SPY After FOMC (2025-06-18)"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-06-18"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "ibkr"
-signal: "Bullish"
-raw_signal_score: 17.56
-robust_score: 7.56
+signal: "Neutral"
+raw_signal_score: 5.91
+robust_score: -0.09
 penalties:
-  sample: 4.0
+  sample: 0.0
   freshness: 6.0
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 60
-sample_size: 9
-freshness_days: 257
+quality_score: 90
+sample_size: 23
+freshness_days: 258
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "flat"
 event_actual: 4.5
 event_previous: 4.5
@@ -31,42 +31,43 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["spy", "fomc", "event-probability", "general"]
 metrics:
-  sharpe_t7: 0.91
-  mdd_t7: -0.06
-  volatility: 0.7
-  impact_t1_pct: -0.06
-  impact_t7_pct: 0.64
+  sharpe_t7: 0.89
+  mdd_t7: -0.23
+  volatility: 2.16
+  impact_t1_pct: -0.23
+  impact_t7_pct: 1.92
 probabilities:
-  sample_size: 9
+  sample_size: 23
   t1:
-    up: 55.56
-    down: 44.44
-    median: 0.54
-    mean: -0.06
-    sample: 9
+    up: 52.17
+    down: 47.83
+    median: 0.1
+    mean: -0.02
+    sample: 23
   t7:
-    up: 77.78
-    down: 22.22
-    median: 0.63
-    mean: 0.64
-    sample: 9
+    up: 56.52
+    down: 43.48
+    median: 0.54
+    mean: 0.26
+    sample: 23
   conditional:
     basis: "event_direction"
     direction: "flat"
-    sample_size: 9
+    sample_size: 17
     t1:
-      up: 55.56
-      down: 44.44
-      median: 0.54
-      mean: -0.06
-      sample: 9
+      up: 47.06
+      down: 52.94
+      median: -0.2
+      mean: -0.08
+      sample: 17
     t7:
-      up: 77.78
-      down: 22.22
-      median: 0.63
-      mean: 0.64
-      sample: 9
+      up: 64.71
+      down: 35.29
+      median: 0.57
+      mean: 0.48
+      sample: 17
 related_events: [{"slug": "spy-after-fomc-2025-01-29", "title": "SPY After FOMC (2025-01-29): Historical T+1/T+7 Probability", "event_date": "2025-01-29", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 9.47, "median_t7_pct": 0.4, "sample_size": 0}, {"slug": "spy-after-fomc-2024-03-19", "title": "SPY After FOMC (2024-03-19): Historical T+1/T+7 Probability", "event_date": "2024-03-19", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 7.7, "median_t7_pct": 0.6, "sample_size": 0}, {"slug": "spy-after-fomc-2024-01-30", "title": "SPY After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.69, "median_t7_pct": 0.63, "sample_size": 0}]
+chartData: [{"time": "2025-06-16", "open": 595.22, "high": 599.23, "low": 595.04, "close": 597.48}, {"time": "2025-06-17", "open": 595.03, "high": 596.55, "low": 591.61, "close": 592.37}, {"time": "2025-06-18", "open": 593.27, "high": 596.03, "low": 591.32, "close": 592.28}, {"time": "2025-06-20", "open": 594.97, "high": 596.04, "low": 589.48, "close": 590.89}, {"time": "2025-06-23", "open": 591.65, "high": 597.12, "low": 588.51, "close": 596.73}, {"time": "2025-06-24", "open": 600.88, "high": 604.38, "low": 599.97, "close": 603.32}, {"time": "2025-06-25", "open": 604.44, "high": 605.14, "low": 602.09, "close": 603.66}]
 ---
 
 ## Event Snapshot
@@ -74,9 +75,9 @@ related_events: [{"slug": "spy-after-fomc-2025-01-29", "title": "SPY After FOMC 
 - Event: **FOMC**
 - Asset: **SPY**
 - Event date: **2025-06-18**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **257 days**
-- Sample size (all-history): **9**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **258 days**
+- Sample size (all-history): **23**
 
 ## Event Outcome
 
@@ -87,25 +88,25 @@ related_events: [{"slug": "spy-after-fomc-2025-01-29", "title": "SPY After FOMC 
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 55.56% | 44.44% | 0.54% | -0.06% | 9 |
-| T+7 | 77.78% | 22.22% | 0.63% | 0.64% | 9 |
+| T+1 | 52.17% | 47.83% | 0.1% | -0.02% | 23 |
+| T+7 | 56.52% | 43.48% | 0.54% | 0.26% | 23 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 55.56% | 44.44% | 0.54% | -0.06% | 9 |
-| T+7 | 77.78% | 22.22% | 0.63% | 0.64% | 9 |
+| T+1 | 47.06% | 52.94% | -0.2% | -0.08% | 17 |
+| T+7 | 64.71% | 35.29% | 0.57% | 0.48% | 17 |
 
 ## Historical Distribution Summary
 
-When FOMC was **FLAT**, SPY T+1 up probability was **55.56%** (n=9).
+When FOMC was **FLAT**, SPY T+1 up probability was **47.06%** (n=17).
 
-When FOMC was **FLAT**, SPY T+7 up probability was **77.78%** (n=9).
+When FOMC was **FLAT**, SPY T+7 up probability was **64.71%** (n=17).
 
-Same-direction T+7 median return: **0.63%**.
+Same-direction T+7 median return: **0.57%**.
 
-For SPY, historical FOMC windows show all-history T+1 up probability of 55.56% and T+7 up probability of 77.78%. When FOMC printed Flat versus previous, T+1 up probability was 55.56% and T+7 up probability was 77.78% across 9 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
+For SPY, historical FOMC windows show all-history T+1 up probability of 52.17% and T+7 up probability of 56.52%. When FOMC printed Flat versus previous, T+1 up probability was 47.06% and T+7 up probability was 64.71% across 17 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

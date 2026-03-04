@@ -1,28 +1,28 @@
 ---
 title: "Historical Performance of BTC After FOMC (2025-09-17)"
 description: "Historical probability profile for BTC around FOMC events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-09-17"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
-raw_signal_score: 6.45
-robust_score: -3.55
+raw_signal_score: -4.61
+robust_score: -10.61
 penalties:
-  sample: 4.0
+  sample: 0.0
   freshness: 6.0
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 60
-sample_size: 9
-freshness_days: 166
+quality_score: 90
+sample_size: 23
+freshness_days: 167
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "flat"
 event_actual: 4.5
 event_previous: 4.5
@@ -31,42 +31,43 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["btc", "fomc", "event-probability", "general"]
 metrics:
-  sharpe_t7: 1.2
-  mdd_t7: 0.0
-  volatility: 0.93
-  impact_t1_pct: 0.19
-  impact_t7_pct: 1.12
+  sharpe_t7: -0.82
+  mdd_t7: -2.7
+  volatility: 3.27
+  impact_t1_pct: 0.57
+  impact_t7_pct: -2.7
 probabilities:
-  sample_size: 9
+  sample_size: 23
   t1:
-    up: 55.56
-    down: 44.44
-    median: 0.35
-    mean: 0.19
-    sample: 9
+    up: 52.17
+    down: 47.83
+    median: 0.27
+    mean: -0.18
+    sample: 23
   t7:
-    up: 55.56
-    down: 44.44
-    median: 0.31
-    mean: 1.12
-    sample: 9
+    up: 43.48
+    down: 56.52
+    median: -2.38
+    mean: -0.7
+    sample: 23
   conditional:
     basis: "event_direction"
     direction: "flat"
-    sample_size: 9
+    sample_size: 17
     t1:
-      up: 55.56
-      down: 44.44
-      median: 0.35
-      mean: 0.19
-      sample: 9
+      up: 47.06
+      down: 52.94
+      median: -0.19
+      mean: -0.15
+      sample: 17
     t7:
-      up: 55.56
-      down: 44.44
-      median: 0.31
-      mean: 1.12
-      sample: 9
-related_events: [{"slug": "btc-after-fomc-2024-04-30", "title": "BTC After FOMC (2024-04-30): Historical T+1/T+7 Probability", "event_date": "2024-04-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 5.37, "median_t7_pct": 2.8, "sample_size": 0}, {"slug": "btc-after-fomc-2024-01-30", "title": "BTC After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.97, "median_t7_pct": 0.31, "sample_size": 0}, {"slug": "btc-after-fomc-2026-01-28", "title": "BTC After FOMC (2026-01-28): Historical T+1/T+7 Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+      up: 47.06
+      down: 52.94
+      median: -2.38
+      mean: -0.94
+      sample: 17
+related_events: [{"slug": "btc-after-fomc-2024-04-30", "title": "BTC After FOMC (2024-04-30): Historical T+1/T+7 Probability", "event_date": "2024-04-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 5.37, "median_t7_pct": 2.8, "sample_size": 0}, {"slug": "btc-after-fomc-2024-01-30", "title": "BTC After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.97, "median_t7_pct": 0.31, "sample_size": 0}, {"slug": "btc-after-fomc-2026-01-28", "title": "BTC After FOMC (2026-01-28): Historical T+1/T+7 Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -18.13, "sample_size": 0}]
+chartData: [{"time": "2025-09-14", "open": 115950.29, "high": 116181.5, "low": 115222.4, "close": 115407.66}, {"time": "2025-09-15", "open": 115399.63, "high": 116747.88, "low": 114461.06, "close": 115444.88}, {"time": "2025-09-16", "open": 115423.76, "high": 117005.27, "low": 114813.09, "close": 116843.19}, {"time": "2025-09-17", "open": 116840.51, "high": 117328.61, "low": 114794.98, "close": 116468.51}, {"time": "2025-09-18", "open": 116461.27, "high": 117911.79, "low": 116188.8, "close": 117137.2}, {"time": "2025-09-19", "open": 117137.67, "high": 117479.76, "low": 115141.82, "close": 115688.86}, {"time": "2025-09-20", "open": 115691.12, "high": 116191.15, "low": 115473.52, "close": 115721.96}, {"time": "2025-09-21", "open": 115730.23, "high": 115901.09, "low": 115252.58, "close": 115306.09}, {"time": "2025-09-22", "open": 115309.22, "high": 115431.31, "low": 112037.65, "close": 112748.51}, {"time": "2025-09-23", "open": 112757.48, "high": 113351.91, "low": 111535.57, "close": 112014.5}, {"time": "2025-09-24", "open": 112007.66, "high": 113986.27, "low": 111229.64, "close": 113328.63}]
 ---
 
 ## Event Snapshot
@@ -74,9 +75,9 @@ related_events: [{"slug": "btc-after-fomc-2024-04-30", "title": "BTC After FOMC 
 - Event: **FOMC**
 - Asset: **BTC**
 - Event date: **2025-09-17**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **166 days**
-- Sample size (all-history): **9**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **167 days**
+- Sample size (all-history): **23**
 
 ## Event Outcome
 
@@ -87,25 +88,25 @@ related_events: [{"slug": "btc-after-fomc-2024-04-30", "title": "BTC After FOMC 
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 55.56% | 44.44% | 0.35% | 0.19% | 9 |
-| T+7 | 55.56% | 44.44% | 0.31% | 1.12% | 9 |
+| T+1 | 52.17% | 47.83% | 0.27% | -0.18% | 23 |
+| T+7 | 43.48% | 56.52% | -2.38% | -0.7% | 23 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 55.56% | 44.44% | 0.35% | 0.19% | 9 |
-| T+7 | 55.56% | 44.44% | 0.31% | 1.12% | 9 |
+| T+1 | 47.06% | 52.94% | -0.19% | -0.15% | 17 |
+| T+7 | 47.06% | 52.94% | -2.38% | -0.94% | 17 |
 
 ## Historical Distribution Summary
 
-When FOMC was **FLAT**, BTC T+1 up probability was **55.56%** (n=9).
+When FOMC was **FLAT**, BTC T+1 up probability was **47.06%** (n=17).
 
-When FOMC was **FLAT**, BTC T+7 up probability was **55.56%** (n=9).
+When FOMC was **FLAT**, BTC T+7 up probability was **47.06%** (n=17).
 
-Same-direction T+7 median return: **0.31%**.
+Same-direction T+7 median return: **-2.38%**.
 
-For BTC, historical FOMC windows show all-history T+1 up probability of 55.56% and T+7 up probability of 55.56%. When FOMC printed Flat versus previous, T+1 up probability was 55.56% and T+7 up probability was 55.56% across 9 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+For BTC, historical FOMC windows show all-history T+1 up probability of 52.17% and T+7 up probability of 43.48%. When FOMC printed Flat versus previous, T+1 up probability was 47.06% and T+7 up probability was 47.06% across 17 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 
