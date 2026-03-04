@@ -8,13 +8,20 @@ import csv
 import json
 import os
 import sqlite3
-import urllib.parse
-import urllib.request
 from bisect import bisect_right
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
+
+try:
+    import requests
+    from requests.adapters import HTTPAdapter
+    from urllib3.util.retry import Retry
+except Exception:  # pragma: no cover
+    requests = None  # type: ignore
+    HTTPAdapter = None  # type: ignore
+    Retry = None  # type: ignore
 
 from pipeline_utils import ALLOWED_EVENT_TYPES, cutoff_date, event_filter_sql, parse_float, resolve_project_root
 
@@ -119,10 +126,32 @@ def fetch_event_dates(conn: sqlite3.Connection, as_of_cutoff: str) -> Dict[str, 
     return grouped
 
 
+def get_fred_session():
+    if requests is None:
+        return None
+    session = requests.Session()
+    if Retry is not None and HTTPAdapter is not None:
+        retries = Retry(
+            total=3,
+            connect=3,
+            read=3,
+            backoff_factor=1,
+            status_forcelist=[429, 500, 502, 503, 504],
+            allowed_methods={"GET"},
+            raise_on_status=False,
+        )
+        session.mount("https://", HTTPAdapter(max_retries=retries))
+    return session
+
+
 def fetch_fred_series_csv(series_id: str) -> List[Tuple[str, float]]:
     url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
-    with urllib.request.urlopen(url, timeout=30) as response:
-        raw = response.read().decode("utf-8")
+    session = get_fred_session()
+    if session is None:
+        return []
+    response = session.get(url, timeout=30)
+    response.raise_for_status()
+    raw = response.text
 
     rows: List[Tuple[str, float]] = []
     reader = csv.DictReader(raw.splitlines())
@@ -135,7 +164,11 @@ def fetch_fred_series_csv(series_id: str) -> List[Tuple[str, float]]:
     return rows
 
 
-def fetch_fred_series(series_id: str, api_key: str) -> List[Tuple[str, float]]:
+def fetch_fred_series(series_id: str, api_key: str) -> Tuple[List[Tuple[str, float]], str]:
+    session = get_fred_session()
+    if session is None:
+        return [], "error"
+
     params = {
         "series_id": series_id,
         "file_type": "json",
@@ -145,31 +178,32 @@ def fetch_fred_series(series_id: str, api_key: str) -> List[Tuple[str, float]]:
     if api_key:
         params["api_key"] = api_key
 
-    payload = None
-    if api_key:
-        query = urllib.parse.urlencode(params)
-        url = f"https://api.stlouisfed.org/fred/series/observations?{query}"
-        with urllib.request.urlopen(url, timeout=30) as response:
-            payload = json.loads(response.read().decode("utf-8"))
-    else:
+    payload: Dict[str, object] = {}
+    try:
+        response = session.get("https://api.stlouisfed.org/fred/series/observations", params=params, timeout=30)
+        response.raise_for_status()
+        parsed = response.json()
+        if isinstance(parsed, dict):
+            payload = parsed
+    except Exception:
         try:
-            query = urllib.parse.urlencode(params)
-            url = f"https://api.stlouisfed.org/fred/series/observations?{query}"
-            with urllib.request.urlopen(url, timeout=30) as response:
-                payload = json.loads(response.read().decode("utf-8"))
+            return fetch_fred_series_csv(series_id), "csv"
         except Exception:
-            return fetch_fred_series_csv(series_id)
+            return [], "error"
 
     rows: List[Tuple[str, float]] = []
-    for item in (payload or {}).get("observations", []):
+    for item in payload.get("observations", []):
         observation_date = str(item.get("date", "")).strip()
         value = parse_float(item.get("value"))
         if not observation_date or value is None:
             continue
         rows.append((observation_date, float(value)))
     if not rows:
-        return fetch_fred_series_csv(series_id)
-    return rows
+        try:
+            return fetch_fred_series_csv(series_id), "csv"
+        except Exception:
+            return [], "error"
+    return rows, "api"
 
 
 def compute_outcome(
@@ -320,6 +354,57 @@ def compare_stats(runtime_stats: Dict[str, object], source_stats: Dict[str, obje
     return violations
 
 
+def load_existing_outcomes(conn: sqlite3.Connection) -> Dict[Tuple[str, str], OutcomeRow]:
+    if not table_exists(conn, "event_outcomes"):
+        return {}
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        SELECT
+          event_type,
+          event_date,
+          actual_value,
+          previous_value,
+          delta_value,
+          direction,
+          direction_basis,
+          unit,
+          provider,
+          status
+        FROM event_outcomes
+        WHERE direction_basis = 'vs_previous'
+        """
+    )
+    rows = cursor.fetchall()
+    mapping: Dict[Tuple[str, str], OutcomeRow] = {}
+    for (
+        event_type,
+        event_date,
+        actual_value,
+        previous_value,
+        delta_value,
+        direction,
+        direction_basis,
+        unit,
+        provider,
+        status,
+    ) in rows:
+        key = (str(event_type or "").upper(), str(event_date or ""))
+        mapping[key] = OutcomeRow(
+            event_type=str(event_type or "").upper(),
+            event_date=str(event_date or ""),
+            actual_value=parse_float(actual_value),
+            previous_value=parse_float(previous_value),
+            delta_value=parse_float(delta_value),
+            direction=str(direction or "unknown").lower(),
+            direction_basis=str(direction_basis or "vs_previous"),
+            unit=str(unit or ""),
+            provider=str(provider or "fred"),
+            status=str(status or "pending").lower(),
+        )
+    return mapping
+
+
 def main() -> None:
     args = parse_args()
     root = resolve_project_root(args.project_root)
@@ -345,29 +430,41 @@ def main() -> None:
     source_sync_status = "pending"
     runtime_sync_status = "pending"
     consistency_violations: List[str] = []
+    fallback_reused_rows = 0
+    fetch_statuses: Dict[str, str] = {}
     try:
         ensure_table(runtime_conn)
         if not same_db:
             ensure_table(source_conn)
         event_dates = fetch_event_dates(runtime_conn, as_of_cutoff)
+        existing_outcomes = load_existing_outcomes(runtime_conn)
 
         by_type_observations: Dict[str, List[Tuple[str, float]]] = {}
         for event_type, spec in FRED_SERIES.items():
-            by_type_observations[event_type] = fetch_fred_series(spec["series_id"], fred_api_key)
+            observations, fetch_status = fetch_fred_series(spec["series_id"], fred_api_key)
+            by_type_observations[event_type] = observations
+            fetch_statuses[event_type] = fetch_status
 
         for event_type in sorted(ALLOWED_EVENT_TYPES):
             unit = FRED_SERIES[event_type]["unit"]
             observations = by_type_observations.get(event_type, [])
+            fetch_status = fetch_statuses.get(event_type, "error")
             for event_date in event_dates.get(event_type, []):
-                output_rows.append(
-                    compute_outcome(
-                        event_type=event_type,
-                        event_date=event_date,
-                        observations=observations,
-                        unit=unit,
-                        provider="fred",
-                    )
+                if fetch_status == "error":
+                    existing = existing_outcomes.get((event_type, event_date))
+                    if existing is not None:
+                        output_rows.append(existing)
+                        fallback_reused_rows += 1
+                        continue
+
+                computed = compute_outcome(
+                    event_type=event_type,
+                    event_date=event_date,
+                    observations=observations,
+                    unit=unit,
+                    provider="fred",
                 )
+                output_rows.append(computed)
 
         if same_db:
             runtime_conn.execute("BEGIN")
@@ -419,6 +516,8 @@ def main() -> None:
         "runtime_stats": runtime_stats,
         "source_stats": source_stats,
         "consistency_violations": consistency_violations,
+        "fetch_statuses": fetch_statuses,
+        "fallback_reused_rows": fallback_reused_rows,
     }
     print(json.dumps(payload, ensure_ascii=False))
 

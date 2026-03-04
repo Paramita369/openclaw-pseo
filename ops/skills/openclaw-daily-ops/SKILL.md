@@ -1,4 +1,4 @@
-# OpenClaw Daily Ops Skill (QuantMacro V2.6R)
+# OpenClaw Daily Ops Skill (QuantMacro V2.7R)
 
 ## Skill Intent
 Execute daily QuantMacro operations in fail-fast mode with evidence-first reporting.
@@ -37,6 +37,10 @@ python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --as-of-date <a
 - Confirm:
   - quality violations `0`
   - accuracy mismatches `0`
+  - snapshot freshness contract passed
+  - conditional sample contract passed
+  - title diversity contract passed
+  - calendar fetch resilience contract passed
   - crawl check `0` violations
   - sitemap entrypoint remains healthy
 

@@ -280,16 +280,25 @@ def validate_page(
 
     if csv_row is None:
         add_mismatch(mismatches, slug, "missing_csv_row", "No row found in verified_targets.csv")
+        csv_conditional_size = None
     else:
         csv_event_type = str(csv_row.get("event_type") or "").strip().upper()
         csv_date = str(csv_row.get("date") or "").strip()
         csv_slug = str(csv_row.get("url_slug") or "").strip()
+        csv_conditional_size = parse_float(csv_row.get("conditional_sample_size"))
         if csv_slug != slug:
             add_mismatch(mismatches, slug, "csv_slug_mismatch", f"csv={csv_slug} page={slug}")
         if csv_event_type != event_type:
             add_mismatch(mismatches, slug, "csv_event_type_mismatch", f"csv={csv_event_type} fm={event_type}")
         if csv_date != event_date:
             add_mismatch(mismatches, slug, "csv_event_date_mismatch", f"csv={csv_date} fm={event_date}")
+        if csv_conditional_size is None:
+            add_mismatch(
+                mismatches,
+                slug,
+                "csv_conditional_sample_invalid",
+                f"conditional_sample_size={csv_row.get('conditional_sample_size')}",
+            )
 
     probabilities = frontmatter.get("probabilities")
     if not isinstance(probabilities, dict):
@@ -345,6 +354,23 @@ def validate_page(
             )
 
     event_direction = str(frontmatter.get("event_direction") or "").strip().lower()
+    conditional_block = probabilities.get("conditional")
+    fm_conditional_size = (
+        parse_float(conditional_block.get("sample_size"))
+        if isinstance(conditional_block, dict)
+        else None
+    )
+    if fm_conditional_size is None:
+        add_mismatch(mismatches, slug, "frontmatter_conditional_sample_invalid", "probabilities.conditional.sample_size")
+    if csv_conditional_size is not None and fm_conditional_size is not None:
+        if abs(float(csv_conditional_size) - float(fm_conditional_size)) > 0.01:
+            add_mismatch(
+                mismatches,
+                slug,
+                "csv_frontmatter_conditional_sample_mismatch",
+                f"csv={csv_conditional_size} fm={fm_conditional_size}",
+            )
+
     if has_outcomes and event_direction in {"up", "down", "flat"}:
         conditional_t1_values = [
             float(row.impact_t1_pct)
@@ -358,7 +384,7 @@ def validate_page(
         ]
         conditional_expected_t1 = probability_window(conditional_t1_values)
         conditional_expected_t7 = probability_window(conditional_t7_values)
-        conditional = probabilities.get("conditional")
+        conditional = conditional_block
         if isinstance(conditional, dict):
             for metric_key in ("up", "down", "median"):
                 actual_c_t1 = (
@@ -381,6 +407,23 @@ def validate_page(
                         f"db_conditional_t7_{metric_key}_mismatch",
                         f"expected={conditional_expected_t7[metric_key]} actual={actual_c_t7}",
                     )
+            expected_conditional_size = float(
+                min(conditional_expected_t1["sample"], conditional_expected_t7["sample"])
+            )
+            if fm_conditional_size is not None and abs(float(fm_conditional_size) - expected_conditional_size) > 0.01:
+                add_mismatch(
+                    mismatches,
+                    slug,
+                    "db_conditional_sample_size_mismatch",
+                    f"expected={expected_conditional_size} actual={fm_conditional_size}",
+                )
+            if csv_conditional_size is not None and abs(float(csv_conditional_size) - expected_conditional_size) > 0.01:
+                add_mismatch(
+                    mismatches,
+                    slug,
+                    "db_csv_conditional_sample_size_mismatch",
+                    f"expected={expected_conditional_size} csv={csv_conditional_size}",
+                )
 
     try:
         asof_dt = datetime.strptime(asof_date, "%Y-%m-%d").date()

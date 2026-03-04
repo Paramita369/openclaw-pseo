@@ -81,6 +81,7 @@ Required base columns:
 
 V2 extension columns:
 - `event_label,event_slug,rise_prob_t1,fall_prob_t1,rise_prob_t7,fall_prob_t7,median_t1_pct,median_t7_pct,sample_size,asof_date,freshness_days,signal`
+- `conditional_sample_size,title_variant_id,title_template_key`
 - `event_direction,event_actual,event_previous,event_delta,direction_basis,outcome_status`
 
 ### Frontmatter Contract
@@ -88,9 +89,19 @@ Required fields include:
 - `event_type,event_label,event_slug,event_date,asof_date`
 - `event_direction,event_actual,event_previous,event_delta,direction_basis`
 - `signal,confidence_level,sample_size`
+- `title_variant_id,title_template_key`
 - `freshness_days`
 - `metrics` numeric block
 - `probabilities` block (`t1`, `t7`, `conditional`, `sample_size`)
+
+### Snapshot Contract (`src/daily_snapshot.json`)
+Per-asset required fields:
+- `asset_type` (`crypto|us_session`)
+- `as_of_date`
+- `as_of_ts`
+- `freshness_status` (`fresh|stale|fallback|calendar_unknown`)
+- `data_age_hours`
+- `source`
 
 ### Redirect Outputs
 - `data/slug_redirects.json` (legacy slug -> new event slug)
@@ -127,6 +138,10 @@ Strict failures include:
 - stale semantic mismatch (homepage should switch to `Latest Event Playbook` when data is old)
 - crawler policy mismatch (`robots.txt`/`vercel.json` blocks `Google-Extended` or sets global blocking `X-Robots-Tag`)
 - missing Hub route contract (`/playbooks/{asset}/{event}` + trust layer + sitemap coverage)
+- snapshot freshness contract failure (schema/status/UI as-of mismatch)
+- conditional sample contract failure (CSV/frontmatter mismatch or all-zero anomaly)
+- title diversity contract failure (per-event template spread + LCS similarity)
+- calendar fetch resilience contract failure (retry/backoff/evidence markers missing)
 
 ## Accuracy Audit (strict full sweep)
 Run directly:

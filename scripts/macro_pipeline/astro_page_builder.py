@@ -72,11 +72,14 @@ CSV_EXTRA_COLUMNS = [
     "median_t1_pct",
     "median_t7_pct",
     "sample_size",
+    "conditional_sample_size",
     "asof_date",
     "freshness_days",
     "signal",
     "raw_signal_score",
     "robust_score",
+    "title_variant_id",
+    "title_template_key",
     "confidence_level",
     "event_direction",
     "event_actual",
@@ -99,6 +102,29 @@ HUB_MIN_CHANGED_LEN = 80
 HUB_MIN_RISK_LEN = 80
 HUB_MIN_CHECKLIST_ITEMS = 3
 HUB_MIN_CHECKLIST_ITEM_LEN = 12
+TITLE_TEMPLATE_POOLS: Dict[str, List[str]] = {
+    "CPI": [
+        "{ASSET} CPI Win Rate ({DATE}): Historical T+1/T+7 Probability",
+        "{ASSET} Reaction to US CPI ({DATE}): Quant Probability Breakdown",
+        "US CPI ({DATE}) and {ASSET}: Event-Driven Return Odds",
+        "{DATE} CPI Release: {ASSET} Directional Probability Snapshot",
+        "{ASSET} After CPI ({DATE}): Up/Down Odds and Median Returns",
+    ],
+    "NFP": [
+        "{ASSET} NFP Reaction ({DATE}): T+1/T+7 Up Probability",
+        "{DATE} Nonfarm Payrolls: {ASSET} Historical Win Rate",
+        "{ASSET} After NFP ({DATE}): Event Probability and Median Return",
+        "NFP Print ({DATE}) vs {ASSET}: Quantified Directional Odds",
+        "{ASSET} Post-NFP Setup ({DATE}): Historical Probability Lens",
+    ],
+    "FOMC": [
+        "{ASSET} After FOMC ({DATE}): Historical Signal & Probability",
+        "Fed Decision ({DATE}) and {ASSET}: Event-Driven Odds",
+        "{DATE} FOMC Meeting: {ASSET} T+1/T+7 Probability Profile",
+        "{ASSET} Post-FOMC Reaction ({DATE}): Quant Backtest Snapshot",
+        "FOMC Outcome ({DATE}) for {ASSET}: Up/Down Probability View",
+    ],
+}
 
 
 @dataclass
@@ -473,6 +499,22 @@ def parse_int(value: object, fallback: int = 0) -> int:
     return int(round(number))
 
 
+def deterministic_title(
+    *,
+    slug: str,
+    asset: str,
+    event_type: str,
+    event_date: str,
+) -> Tuple[str, int, str]:
+    templates = TITLE_TEMPLATE_POOLS.get(event_type, ["Historical Performance of {ASSET} After {EVENT} ({DATE})"])
+    payload = {"slug": slug, "event_type": event_type}
+    digest = stable_hash(payload)
+    variant_index = int(digest[:8], 16) % max(len(templates), 1)
+    template = templates[variant_index]
+    title = template.format(ASSET=asset, EVENT=event_type, DATE=event_date)
+    return title, variant_index + 1, f"{event_type.lower()}_{variant_index + 1}"
+
+
 def sort_date_rank(value: str) -> int:
     text = str(value or "").strip()
     if re.match(r"^\d{4}-\d{2}-\d{2}$", text):
@@ -710,6 +752,8 @@ def build_markdown(
     signal: str,
     raw_signal_score: float,
     robust_score: float,
+    title_variant_id: int,
+    title_template_key: str,
     penalty_breakdown: Dict[str, float],
     confidence_level: str,
     quality: int,
@@ -742,6 +786,8 @@ def build_markdown(
 title: "{title}"
 description: "Historical probability profile for {asset} around {event_type} events (T+1/T+7)."
 pubDate: "{publish_date}"
+title_variant_id: {title_variant_id}
+title_template_key: "{title_template_key}"
 event_type: "{event_type}"
 event_label: "{event_label}"
 event_slug: "{event_slug}"
@@ -1506,7 +1552,12 @@ def process_row(
     quality = quality_score(raw_t1, raw_t7, raw_vol, probabilities["conditional"]["sample_size"])
     offer_key = to_offer_key(asset, context.offers_config)
 
-    title = f"Historical Performance of {asset} After {event_type} ({event_date})"
+    title, title_variant_id, title_template_key = deterministic_title(
+        slug=slug,
+        asset=asset,
+        event_type=event_type,
+        event_date=event_date,
+    )
     event_label = event_type
     event_slug = event_type.lower()
     asof_date = asof_cutoff
@@ -1539,6 +1590,8 @@ def process_row(
         "signal": signal,
         "raw_signal_score": raw_signal_score,
         "robust_score": robust_score,
+        "title_variant_id": title_variant_id,
+        "title_template_key": title_template_key,
         "penalty_breakdown": penalty_breakdown,
         "confidence_level": confidence_level,
         "quality": quality,
@@ -1575,6 +1628,8 @@ def process_row(
             signal=signal,
             raw_signal_score=raw_signal_score,
             robust_score=robust_score,
+            title_variant_id=title_variant_id,
+            title_template_key=title_template_key,
             penalty_breakdown=penalty_breakdown,
             confidence_level=confidence_level,
             quality=quality,
@@ -1637,6 +1692,8 @@ def process_row(
         "signal_score": raw_signal_score,
         "raw_signal_score": raw_signal_score,
         "robust_score": robust_score,
+        "title_variant_id": title_variant_id,
+        "title_template_key": title_template_key,
         "penalty_breakdown": penalty_breakdown,
         "sample_size": probabilities["sample_size"],
         "related_count": len(related_events),
@@ -1668,11 +1725,14 @@ def process_row(
     row["median_t1_pct"] = str(t1_window["median"])
     row["median_t7_pct"] = str(t7_window["median"])
     row["sample_size"] = str(probabilities["sample_size"])
+    row["conditional_sample_size"] = str(probabilities["conditional"]["sample_size"])
     row["asof_date"] = asof_date
     row["freshness_days"] = str(freshness_days)
     row["signal"] = signal
     row["raw_signal_score"] = str(raw_signal_score)
     row["robust_score"] = str(robust_score)
+    row["title_variant_id"] = str(title_variant_id)
+    row["title_template_key"] = title_template_key
     row["confidence_level"] = confidence_level
     row["event_direction"] = event_direction
     row["event_actual"] = str(event_actual if event_actual is not None else "")

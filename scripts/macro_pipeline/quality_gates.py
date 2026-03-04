@@ -21,6 +21,8 @@ except Exception:  # pragma: no cover
     yaml = None
 
 REQUIRED_FRONTMATTER_KEYS = [
+    "title_variant_id",
+    "title_template_key",
     "event_type",
     "event_label",
     "event_slug",
@@ -69,9 +71,14 @@ EXPECTED_CSV_COLUMNS = {
     "median_t1_pct",
     "median_t7_pct",
     "sample_size",
+    "conditional_sample_size",
     "asof_date",
     "freshness_days",
     "signal",
+    "raw_signal_score",
+    "robust_score",
+    "title_variant_id",
+    "title_template_key",
     "event_direction",
     "event_actual",
     "event_previous",
@@ -161,6 +168,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--csv-path", default=None, help="verified_targets.csv override")
     parser.add_argument("--db-path", default=None, help="macro_events.db override")
     parser.add_argument("--index-path", default=None, help="index.astro override")
+    parser.add_argument("--snapshot-path", default=None, help="daily_snapshot.json override")
     parser.add_argument("--strict", action="store_true", help="Fail on any violations")
     parser.add_argument("--report", default=None, help="Output report path")
     parser.add_argument("--as-of-date", default=date.today().isoformat(), help="Run date (YYYY-MM-DD)")
@@ -248,6 +256,16 @@ def is_finite_number(value: object) -> bool:
         return math.isfinite(number)
     except Exception:
         return False
+
+
+def to_float(value: object) -> float | None:
+    try:
+        number = float(value)
+        if not math.isfinite(number):
+            return None
+        return number
+    except Exception:
+        return None
 
 
 def expected_sample_penalty(sample_size: float) -> float:
@@ -917,6 +935,268 @@ def validate_freshness_semantics(
             if freshness_state != expected:
                 violations.append("frontmatter_freshness_status_mismatch")
                 break
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_snapshot_freshness_contract(
+    root: Path,
+    snapshot_path: Path | None = None,
+    index_path: Path | None = None,
+) -> Dict[str, object]:
+    violations: List[str] = []
+    snapshot_path = snapshot_path or (root / "src" / "daily_snapshot.json")
+    index_path = index_path or (root / "src" / "pages" / "index.astro")
+    allowed_statuses = {"fresh", "stale", "fallback", "calendar_unknown"}
+    allowed_asset_types = {"crypto", "us_session"}
+
+    if not snapshot_path.exists():
+        return {"violations": ["missing_daily_snapshot_json"], "count": 1}
+
+    try:
+        payload = json.loads(snapshot_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {"violations": ["invalid_daily_snapshot_json"], "count": 1}
+
+    if not isinstance(payload, dict):
+        return {"violations": ["daily_snapshot_not_object"], "count": 1}
+    if not re.match(r"^\d{4}-\d{2}-\d{2}T", str(payload.get("timestamp", ""))):
+        violations.append("daily_snapshot_missing_timestamp")
+
+    markets = payload.get("markets")
+    if not isinstance(markets, dict) or not markets:
+        violations.append("daily_snapshot_missing_markets")
+        return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+    has_crypto = False
+    has_us_session = False
+    for asset, item in markets.items():
+        if not isinstance(item, dict):
+            violations.append(f"snapshot_market_not_object:{asset}")
+            continue
+
+        asset_type = str(item.get("asset_type", "")).strip().lower()
+        freshness = str(item.get("freshness_status", "")).strip().lower()
+        as_of_date = str(item.get("as_of_date", "")).strip()
+        as_of_ts = str(item.get("as_of_ts", "")).strip()
+        source = str(item.get("source", "")).strip()
+        data_age_hours = item.get("data_age_hours")
+
+        if asset_type not in allowed_asset_types:
+            violations.append(f"snapshot_invalid_asset_type:{asset}")
+        if asset_type == "crypto":
+            has_crypto = True
+        if asset_type == "us_session":
+            has_us_session = True
+
+        if freshness not in allowed_statuses:
+            violations.append(f"snapshot_invalid_freshness_status:{asset}")
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", as_of_date):
+            violations.append(f"snapshot_invalid_as_of_date:{asset}")
+        if not re.match(r"^\d{4}-\d{2}-\d{2}T", as_of_ts):
+            violations.append(f"snapshot_invalid_as_of_ts:{asset}")
+        if not source:
+            violations.append(f"snapshot_missing_source:{asset}")
+        if data_age_hours is not None and not is_finite_number(data_age_hours):
+            violations.append(f"snapshot_invalid_data_age_hours:{asset}")
+
+        for field in ["price", "change", "high", "low"]:
+            if field not in item or not is_finite_number(item.get(field)):
+                violations.append(f"snapshot_invalid_{field}:{asset}")
+
+    if not has_crypto:
+        violations.append("snapshot_missing_crypto_assets")
+    if not has_us_session:
+        violations.append("snapshot_missing_us_session_assets")
+
+    if not index_path.exists():
+        violations.append("missing_index_astro_for_snapshot_contract")
+    else:
+        index_source = index_path.read_text(encoding="utf-8")
+        if "As-of:" not in index_source:
+            violations.append("snapshot_ui_missing_asof_label")
+        if "freshnessLabel" not in index_source:
+            violations.append("snapshot_ui_missing_freshness_badge")
+        if "24/7 Data Updates" in index_source:
+            violations.append("snapshot_ui_contains_misleading_24_7_claim")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_conditional_sample_contract(content_dir: Path, csv_path: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+    if not csv_path.exists():
+        return {"violations": ["missing_verified_targets_csv"], "count": 1}
+
+    with csv_path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        csv_map: Dict[str, Dict[str, str]] = {}
+        positive_rows = 0
+        valid_rows = 0
+        for row in reader:
+            slug = str(row.get("url_slug", "")).strip()
+            if not slug:
+                continue
+            csv_map[slug] = row
+            value = to_float(row.get("conditional_sample_size"))
+            if value is not None:
+                valid_rows += 1
+                if value > 0:
+                    positive_rows += 1
+
+    if valid_rows == 0:
+        violations.append("conditional_sample_missing_or_non_numeric_in_csv")
+        return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+    if positive_rows == 0:
+        violations.append("conditional_sample_all_zero")
+
+    for path in sorted(content_dir.glob("*.md")):
+        slug = path.stem
+        row = csv_map.get(slug)
+        if row is None:
+            violations.append("conditional_sample_csv_row_missing")
+            break
+
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        probabilities = fm.get("probabilities")
+        conditional = probabilities.get("conditional") if isinstance(probabilities, dict) else None
+        fm_size = to_float(conditional.get("sample_size") if isinstance(conditional, dict) else None)
+        csv_size = to_float(row.get("conditional_sample_size"))
+        if fm_size is None or csv_size is None:
+            violations.append("conditional_sample_non_numeric")
+            break
+        if abs(fm_size - csv_size) > 0.01:
+            violations.append("conditional_sample_csv_frontmatter_mismatch")
+            break
+
+    return {
+        "violations": sorted(set(violations)),
+        "count": len(sorted(set(violations))),
+        "valid_rows": valid_rows,
+        "positive_rows": positive_rows,
+    }
+
+
+def token_lcs_ratio(left: Sequence[str], right: Sequence[str]) -> float:
+    if not left or not right:
+        return 0.0
+    rows = len(left) + 1
+    cols = len(right) + 1
+    dp = [[0] * cols for _ in range(rows)]
+    for i in range(1, rows):
+        for j in range(1, cols):
+            if left[i - 1] == right[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    lcs = dp[-1][-1]
+    return float(lcs) / float(max(len(left), len(right)))
+
+
+def normalize_title_template(title: str) -> str:
+    text = str(title or "").strip().lower()
+    text = re.sub(r"\b\d{4}-\d{2}-\d{2}\b", "{date}", text)
+    text = re.sub(r"\b(btc|eth|gold|qqq|spy)\b", "{asset}", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def validate_title_diversity_contract(content_dir: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+
+    per_event_counts: Dict[str, Dict[str, int]] = {}
+    per_event_templates: Dict[str, Dict[str, str]] = {}
+
+    for path in sorted(content_dir.glob("*.md")):
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        event_type = str(fm.get("event_type", "")).upper().strip()
+        if event_type not in ALLOWED_EVENT_TYPES:
+            continue
+        template_key = str(fm.get("title_template_key", "")).strip()
+        title = str(fm.get("title", "")).strip()
+        if not template_key or not title:
+            violations.append("title_diversity_missing_template_metadata")
+            continue
+
+        per_event_counts.setdefault(event_type, {})
+        per_event_templates.setdefault(event_type, {})
+        per_event_counts[event_type][template_key] = per_event_counts[event_type].get(template_key, 0) + 1
+        per_event_templates[event_type].setdefault(template_key, normalize_title_template(title))
+
+    for event_type in sorted(ALLOWED_EVENT_TYPES):
+        counts = per_event_counts.get(event_type, {})
+        templates = per_event_templates.get(event_type, {})
+        total = sum(counts.values())
+        if total == 0:
+            violations.append(f"title_diversity_missing_event_titles:{event_type.lower()}")
+            continue
+
+        unique_count = len(counts)
+        if unique_count < 3:
+            violations.append(f"title_diversity_min_templates_fail:{event_type.lower()}")
+
+        max_share = max(counts.values()) / float(total)
+        if max_share > 0.50:
+            violations.append(f"title_diversity_max_share_fail:{event_type.lower()}")
+
+        template_keys = sorted(templates.keys())
+        for idx, left_key in enumerate(template_keys):
+            left_tokens = templates[left_key].split()
+            for right_key in template_keys[idx + 1 :]:
+                right_tokens = templates[right_key].split()
+                ratio = token_lcs_ratio(left_tokens, right_tokens)
+                if ratio >= 0.60:
+                    violations.append(f"title_diversity_lcs_fail:{event_type.lower()}:{left_key}:{right_key}")
+                    break
+            if any(v.startswith(f"title_diversity_lcs_fail:{event_type.lower()}") for v in violations):
+                break
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_calendar_fetch_resilience_contract(root: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    sync_path = root / "scripts" / "macro_pipeline" / "sync_event_calendar.py"
+    ops_path = root / "scripts" / "macro_pipeline" / "run_daily_ops.py"
+
+    if not sync_path.exists():
+        return {"violations": ["missing_sync_event_calendar_script"], "count": 1}
+    if not ops_path.exists():
+        return {"violations": ["missing_run_daily_ops_script"], "count": 1}
+
+    sync_text = sync_path.read_text(encoding="utf-8")
+    ops_text = ops_path.read_text(encoding="utf-8")
+
+    required_sync_markers = [
+        "requests.Session()",
+        "Retry(",
+        "status_forcelist=[429, 500, 502, 503, 504]",
+        "backoff_factor=1",
+        "record_fetch_issue",
+        "FETCH_DIAGNOSTICS",
+        "parse_fred_csv",
+    ]
+    for marker in required_sync_markers:
+        if marker not in sync_text:
+            violations.append(f"calendar_fetch_missing_marker:{marker}")
+
+    if "fetch_diagnostics_count" not in sync_text or "fetch_diagnostics" not in sync_text:
+        violations.append("calendar_fetch_missing_diagnostics_summary")
+
+    required_ops_markers = [
+        "CURRENT_STEP_LOGS_DIR",
+        "stdout_path",
+        "stderr_path",
+        "EVIDENCE=",
+        "evidence_paths",
+    ]
+    for marker in required_ops_markers:
+        if marker not in ops_text:
+            violations.append(f"calendar_fetch_missing_ops_evidence_marker:{marker}")
 
     return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
 
@@ -1606,6 +1886,7 @@ def run_gates(
     csv_path: Path,
     db_path: Path,
     index_path: Path,
+    snapshot_path: Path,
 ) -> Dict[str, object]:
     files = sorted(content_dir.glob("*.md"))
 
@@ -1638,6 +1919,14 @@ def run_gates(
         index_path=index_path,
         content_dir=content_dir,
     )
+    snapshot_freshness_result = validate_snapshot_freshness_contract(
+        root,
+        snapshot_path=snapshot_path,
+        index_path=index_path,
+    )
+    conditional_sample_result = validate_conditional_sample_contract(content_dir, csv_path)
+    title_diversity_result = validate_title_diversity_contract(content_dir)
+    calendar_fetch_resilience_result = validate_calendar_fetch_resilience_contract(root)
     schema_breadcrumb_result = validate_schema_graph_and_breadcrumbs(root)
     related_events_result = validate_related_events_integrity(content_dir)
     trust_layer_result = validate_trust_layer(root)
@@ -1661,6 +1950,10 @@ def run_gates(
         event_pool_result,
         cta_result,
         freshness_result,
+        snapshot_freshness_result,
+        conditional_sample_result,
+        title_diversity_result,
+        calendar_fetch_resilience_result,
         schema_breadcrumb_result,
         related_events_result,
         trust_layer_result,
@@ -1686,6 +1979,10 @@ def run_gates(
     report["event_pool_violations"] = event_pool_result
     report["cta_violations"] = cta_result
     report["freshness_violations"] = freshness_result
+    report["snapshot_freshness_violations"] = snapshot_freshness_result
+    report["conditional_sample_violations"] = conditional_sample_result
+    report["title_diversity_violations"] = title_diversity_result
+    report["calendar_fetch_resilience_violations"] = calendar_fetch_resilience_result
     report["schema_breadcrumb_violations"] = schema_breadcrumb_result
     report["related_events_violations"] = related_events_result
     report["trust_layer_violations"] = trust_layer_result
@@ -1716,6 +2013,10 @@ def run_gates(
         + int(event_pool_result["count"])
         + int(cta_result["count"])
         + int(freshness_result["count"])
+        + int(snapshot_freshness_result["count"])
+        + int(conditional_sample_result["count"])
+        + int(title_diversity_result["count"])
+        + int(calendar_fetch_resilience_result["count"])
         + int(schema_breadcrumb_result["count"])
         + int(related_events_result["count"])
         + int(trust_layer_result["count"])
@@ -1750,6 +2051,7 @@ def main() -> None:
     csv_path = Path(args.csv_path).resolve() if args.csv_path else root / "data" / "verified_targets.csv"
     db_path = Path(args.db_path).resolve() if args.db_path else root / "data" / "macro_events.db"
     index_path = Path(args.index_path).resolve() if args.index_path else root / "src" / "pages" / "index.astro"
+    snapshot_path = Path(args.snapshot_path).resolve() if args.snapshot_path else root / "src" / "daily_snapshot.json"
     report_path = Path(args.report).resolve() if args.report else root / "logs" / "daily_ops" / "quality_gates.json"
 
     result = run_gates(
@@ -1764,6 +2066,7 @@ def main() -> None:
         csv_path=csv_path,
         db_path=db_path,
         index_path=index_path,
+        snapshot_path=snapshot_path,
     )
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")

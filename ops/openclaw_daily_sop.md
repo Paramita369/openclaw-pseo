@@ -1,4 +1,4 @@
-# QuantMacro OpenClaw Daily SOP (V2.6R)
+# QuantMacro OpenClaw Daily SOP (V2.7R)
 
 ## 1. Purpose
 Daily fail-fast operations for QuantMacro with audit evidence.  
@@ -43,6 +43,10 @@ Pass criteria:
   Check file: `logs/daily_ops/quality_<YYYY-MM-DD>.json`
 - [ ] `accuracy_mismatch_count == 0`  
   Check file: `logs/daily_ops/content_accuracy_<YYYY-MM-DD>.json`
+- [ ] `snapshot_freshness_contract` passed (no stale false alarm on non-trading days)
+- [ ] `conditional_sample_contract` passed (CSV/frontmatter aligned, not all zero)
+- [ ] `title_diversity_contract` passed (>=3 templates/event, max share <=50%, LCS gate pass)
+- [ ] `calendar_fetch_resilience_contract` passed (retry/backoff + evidence markers present)
 - [ ] Crawl contract is healthy  
   Check file: `logs/daily_ops/crawl_access_<YYYY-MM-DD>.json`
 - [ ] `public/sitemap.xml` includes `sitemap-playbooks.xml`
@@ -72,11 +76,15 @@ Then do all actions below:
 
 2. `STEP=fetch_event_outcomes`
 - Meaning: source/runtime `event_outcomes` sync inconsistency or write failure.
-- Action: inspect DB paths and consistency stats in step output; rerun after DB fix.
+- Action: inspect step stderr/stdout evidence logs; if FRED fetch failed, confirm fallback reuse and retry on next run.
 
 3. `STEP=quality_gates`
 - Meaning: one or more strict contracts failed.
 - Action: open `quality_<date>.json`, resolve all violations.
+
+4. `STEP=fetch_snapshot`
+- Meaning: market snapshot source unavailable or stale logic contract broken.
+- Action: validate `src/daily_snapshot.json` schema (`as_of_date/as_of_ts/asset_type/freshness_status`) and rerun.
 
 ## 9. Standard Daily Summary Template
 ```text
