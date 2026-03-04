@@ -16,10 +16,20 @@ Backup path: manual GitHub workflow dispatch only.
 - [ ] Node dependencies installed: `npm ci`
 - [ ] Network reachable (FRED + site domain)
 - [ ] Disk has free space for runtime logs/build artifacts
+- [ ] Source DB exists or can be bootstrapped: `var/data/macro_events.db`
+- [ ] Source DB health check:
+  - `sqlite3 var/data/macro_events.db \"PRAGMA integrity_check;\"` -> `ok`
+  - `sqlite3 var/data/macro_events.db \"SELECT COUNT(1) FROM event_outcomes;\"` -> non-error
 
 ## 4. Step A: Strict Dry Run (Required)
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --dry-run
+python3 scripts/macro_pipeline/run_daily_ops.py \
+  --project-root . \
+  --strict \
+  --dry-run \
+  --source-db-path var/data/macro_events.db \
+  --bootstrap-if-missing \
+  --seed-db-path data/macro_events.db
 ```
 
 Pass criteria:
@@ -30,7 +40,13 @@ Pass criteria:
 
 ## 5. Step B: Strict Live Run (If A passed)
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
+python3 scripts/macro_pipeline/run_daily_ops.py \
+  --project-root . \
+  --strict \
+  --push \
+  --source-db-path var/data/macro_events.db \
+  --bootstrap-if-missing \
+  --seed-db-path data/macro_events.db
 ```
 
 Pass criteria:

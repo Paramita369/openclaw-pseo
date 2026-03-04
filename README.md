@@ -10,17 +10,23 @@ QuantMacro is a static-first pSEO system on Vercel focused on event-driven proba
 
 ## Daily Command (OpenClaw)
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
+python3 scripts/macro_pipeline/run_daily_ops.py \
+  --project-root . \
+  --strict \
+  --push \
+  --source-db-path var/data/macro_events.db \
+  --bootstrap-if-missing \
+  --seed-db-path data/macro_events.db
 ```
 
 Skip remote crawler contract check when needed:
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --skip-crawl-check
+python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --skip-crawl-check --source-db-path var/data/macro_events.db --bootstrap-if-missing --seed-db-path data/macro_events.db
 ```
 
 Skip content accuracy contract only for emergency debugging (not daily standard):
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --skip-accuracy-check
+python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --skip-accuracy-check --source-db-path var/data/macro_events.db --bootstrap-if-missing --seed-db-path data/macro_events.db
 ```
 
 ## Daily SOP / SKILL
@@ -33,7 +39,7 @@ python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
 - Schedule: disabled (no daily cron)
 - Command executed by workflow:
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
+python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --source-db-path var/data/macro_events.db --bootstrap-if-missing --seed-db-path data/macro_events.db
 ```
 - Expected behavior:
   - If whitelisted files changed, workflow commits and pushes.
@@ -42,6 +48,20 @@ python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
 ## Python Dependencies
 ```bash
 pip install -r requirements.txt
+```
+
+## Source DB Migration (V2.8)
+Primary source DB path is now `var/data/macro_events.db`.
+
+Bootstrap (copy from legacy DB if available):
+```bash
+python3 scripts/ops/bootstrap_source_db.py --project-root . --source-db-path var/data/macro_events.db --seed-db-path data/macro_events.db --strict
+```
+
+Backup and restore:
+```bash
+scripts/ops/backup_source_db.sh --source-db-path var/data/macro_events.db --backup-dir var/backups/source-db --keep 14
+scripts/ops/restore_source_db.sh --source-db-path var/data/macro_events.db --backup-dir var/backups/source-db
 ```
 
 ## Pipeline Steps

@@ -39,6 +39,8 @@ IGNORED_RUNTIME_PREFIXES = (
     "node_modules/",
     ".astro/",
     "dist/",
+    "var/data/",
+    "var/backups/source-db/",
 )
 CURRENT_STEP_LOGS_DIR: Optional[Path] = None
 
@@ -72,6 +74,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run daily pSEO operations")
     parser.add_argument("--project-root", default=".", help="Repository root")
     parser.add_argument("--as-of-date", default=date.today().isoformat(), help="YYYY-MM-DD")
+    parser.add_argument("--source-db-path", default=None, help="Path to source macro_events DB (default: var/data/macro_events.db)")
+    parser.add_argument("--seed-db-path", default=None, help="Optional seed DB path for bootstrap")
+    parser.add_argument("--bootstrap-if-missing", action="store_true", help="Bootstrap source DB when missing")
     parser.add_argument("--strict", action="store_true", help="Enable strict gates")
     parser.add_argument("--dry-run", action="store_true", help="Run without commit/push")
     parser.add_argument("--push", action="store_true", help="Commit and push if whitelist files changed")
@@ -250,6 +255,29 @@ def build_incident(
     }
 
 
+def resolve_source_db_paths(root: Path, args: argparse.Namespace) -> tuple[Path, Optional[Path], Optional[str]]:
+    default_source = root / "var" / "data" / "macro_events.db"
+    legacy_source = root / "data" / "macro_events.db"
+
+    source_db = Path(args.source_db_path).expanduser().resolve() if args.source_db_path else default_source
+    seed_db = Path(args.seed_db_path).expanduser().resolve() if args.seed_db_path else None
+    compatibility_note: Optional[str] = None
+
+    if source_db.exists():
+        return source_db, seed_db, compatibility_note
+
+    if seed_db is None and legacy_source.exists() and source_db != legacy_source:
+        seed_db = legacy_source
+
+    if not args.bootstrap_if_missing and not args.source_db_path and legacy_source.exists() and source_db != legacy_source:
+        compatibility_note = (
+            f"source_db_missing_default_fallback_to_legacy:{default_source} -> {legacy_source}"
+        )
+        source_db = legacy_source
+
+    return source_db, seed_db, compatibility_note
+
+
 def main() -> None:
     global CURRENT_STEP_LOGS_DIR
     args = parse_args()
@@ -294,7 +322,45 @@ def main() -> None:
     crawl_report_path: Optional[Path] = None
     accuracy_report_path: Optional[Path] = None
     try:
-        source_db = root / "data" / "macro_events.db"
+        source_db, seed_db, compatibility_note = resolve_source_db_paths(root, args)
+        run_log["source_db_path"] = str(source_db)
+        if seed_db is not None:
+            run_log["seed_db_path"] = str(seed_db)
+        if compatibility_note:
+            run_log.setdefault("warnings", [])
+            if isinstance(run_log["warnings"], list):
+                run_log["warnings"].append(compatibility_note)
+
+        auto_bootstrap = False
+        legacy_source = root / "data" / "macro_events.db"
+        if (
+            not source_db.exists()
+            and not args.bootstrap_if_missing
+            and not args.source_db_path
+            and not legacy_source.exists()
+        ):
+            auto_bootstrap = True
+            run_log.setdefault("warnings", [])
+            if isinstance(run_log["warnings"], list):
+                run_log["warnings"].append("source_db_missing_auto_bootstrap_enabled")
+
+        if not source_db.exists() and (args.bootstrap_if_missing or auto_bootstrap):
+            bootstrap_cmd = [
+                python,
+                "scripts/ops/bootstrap_source_db.py",
+                "--project-root",
+                str(root),
+                "--source-db-path",
+                str(source_db),
+                "--as-of-date",
+                args.as_of_date,
+            ]
+            if seed_db is not None:
+                bootstrap_cmd.extend(["--seed-db-path", str(seed_db)])
+            if args.strict:
+                bootstrap_cmd.append("--strict")
+            steps.append(run_step("bootstrap_source_db", bootstrap_cmd, cwd=root, required=True))
+
         if not source_db.exists():
             raise RuntimeError(f"Missing source DB: {source_db}")
 
