@@ -5,7 +5,7 @@ import { listHubRoutes, loadHubBriefs } from '../../lib/hubBriefs';
 
 const breadcrumbs = [
   { name: 'Home', url: '/' },
-  { name: 'Playbooks', url: '/playbooks' },
+  { name: 'Strategy Hubs', url: '/playbooks' },
 ];
 
 const briefMap = loadHubBriefs();
@@ -15,7 +15,7 @@ const cards = listHubRoutes().map((route) => {
     ...route,
     status: brief.status,
     reviewedAt: brief.reviewed_at,
-    title: `${route.asset} × ${route.event} Hub Playbook`,
+    title: `${route.asset} × ${route.event} Strategy Hub`,
     href: `/playbooks/${route.asset.toLowerCase()}/${route.event.toLowerCase()}`,
   };
 });
@@ -27,14 +27,14 @@ const grouped = ['BTC', 'ETH', 'GOLD', 'QQQ', 'SPY'].map((asset) => ({
 ---
 
 <Layout
-  title="Playbook Hubs"
+  title="Strategy Hubs"
   description="Human+Template hub pages for BTC/ETH/GOLD/QQQ/SPY across CPI, NFP, and FOMC."
   breadcrumbs={breadcrumbs}
 >
   <section class="hero-panel py-14">
     <div class="max-w-6xl mx-auto px-4">
       <Breadcrumbs items={breadcrumbs} />
-      <h1 class="text-4xl font-extrabold text-white">Playbook Hubs</h1>
+      <h1 class="text-4xl font-extrabold text-white">Strategy Hubs</h1>
       <p class="text-blue-100 mt-3 text-lg">15 asset-event hubs with trust layer and operator checklist.</p>
     </div>
   </section>

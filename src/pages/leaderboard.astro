@@ -6,7 +6,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 const posts = await getCollection('blog');
 const breadcrumbs = [
   { name: 'Home', url: '/' },
-  { name: 'Playbook', url: '/leaderboard' },
+  { name: 'Signal Board', url: '/leaderboard' },
 ];
 
 const finiteOrNull = (value) => {
@@ -101,14 +101,14 @@ const bestRows = [...latestByAssetEvent.values()].sort((a, b) => {
 ---
 
 <Layout
-  title="Playbook Leaderboard"
-  description="Ranked CPI/NFP/FOMC event playbooks by signal score and historical probabilities."
+  title="Signal Board"
+  description="Ranked CPI/NFP/FOMC event signals by robustness score and historical probabilities."
   breadcrumbs={breadcrumbs}
 >
   <section class="py-12 hero-panel">
     <div class="max-w-7xl mx-auto px-4">
       <Breadcrumbs items={breadcrumbs} />
-      <h1 class="text-4xl font-extrabold text-white">Event Playbook Leaderboard</h1>
+      <h1 class="text-4xl font-extrabold text-white">Event Signal Board</h1>
       <p class="text-blue-100 text-lg mt-3">Latest row per Asset × Event (CPI/NFP/FOMC), ranked by Robust Score with reliability penalties.</p>
     </div>
   </section>

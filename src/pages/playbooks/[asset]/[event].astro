@@ -60,7 +60,7 @@ export async function getStaticPaths() {
 const { asset, eventType, brief, latestSlug, latestEventDate, crossEventRows = [] } = Astro.props;
 const breadcrumbs = [
   { name: 'Home', url: '/' },
-  { name: 'Playbooks', url: '/playbooks' },
+  { name: 'Strategy Hubs', url: '/playbooks' },
   { name: asset, url: `/tags/${asset.toLowerCase()}` },
   { name: eventType, url: `/playbooks/${asset.toLowerCase()}/${eventType.toLowerCase()}` },
 ];
