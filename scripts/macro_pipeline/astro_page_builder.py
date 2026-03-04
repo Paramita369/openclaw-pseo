@@ -94,6 +94,11 @@ EVENT_FRESHNESS_THRESHOLDS = {
 
 HUB_ASSETS = ["BTC", "ETH", "GOLD", "QQQ", "SPY"]
 HUB_EVENTS = ["CPI", "NFP", "FOMC"]
+HUB_MIN_THESIS_LEN = 120
+HUB_MIN_CHANGED_LEN = 80
+HUB_MIN_RISK_LEN = 80
+HUB_MIN_CHECKLIST_ITEMS = 3
+HUB_MIN_CHECKLIST_ITEM_LEN = 12
 
 
 @dataclass
@@ -1068,9 +1073,37 @@ def normalize_hub_indexing(status: str, value: object) -> str:
     return "index" if status == "approved" else "noindex"
 
 
+def is_hub_content_strong(brief: Dict[str, Any]) -> bool:
+    thesis = str(brief.get("thesis", "")).strip()
+    changed = str(brief.get("what_changed_recently", "")).strip()
+    risk = str(brief.get("risk_watchouts", "")).strip()
+    checklist_raw = brief.get("execution_checklist")
+    checklist = checklist_raw if isinstance(checklist_raw, list) else []
+
+    if len(thesis) < HUB_MIN_THESIS_LEN:
+        return False
+    if len(changed) < HUB_MIN_CHANGED_LEN:
+        return False
+    if len(risk) < HUB_MIN_RISK_LEN:
+        return False
+    if len(checklist) < HUB_MIN_CHECKLIST_ITEMS:
+        return False
+    for item in checklist:
+        if len(str(item or "").strip()) < HUB_MIN_CHECKLIST_ITEM_LEN:
+            return False
+    return True
+
+
 def load_playbook_hubs(project_root: Path, default_date: str) -> List[Dict[str, str]]:
     fallback = [
-        {"asset": asset, "event": event, "lastmod": default_date, "status": "draft", "indexing": "noindex"}
+        {
+            "asset": asset,
+            "event": event,
+            "lastmod": default_date,
+            "status": "draft",
+            "indexing": "noindex",
+            "content_depth_pass": "false",
+        }
         for asset in HUB_ASSETS
         for event in HUB_EVENTS
     ]
@@ -1100,6 +1133,7 @@ def load_playbook_hubs(project_root: Path, default_date: str) -> List[Dict[str, 
             reviewed_norm = reviewed if re.match(r"^\d{4}-\d{2}-\d{2}$", reviewed) else default_date
             status = normalize_hub_status(brief.get("status") if isinstance(brief, dict) else None)
             indexing = normalize_hub_indexing(status, brief.get("indexing") if isinstance(brief, dict) else None)
+            content_depth_pass = is_hub_content_strong(brief) if isinstance(brief, dict) else False
             items.append(
                 {
                     "asset": asset,
@@ -1107,6 +1141,7 @@ def load_playbook_hubs(project_root: Path, default_date: str) -> List[Dict[str, 
                     "lastmod": reviewed_norm,
                     "status": status,
                     "indexing": indexing,
+                    "content_depth_pass": "true" if content_depth_pass else "false",
                 }
             )
     return items
@@ -1123,7 +1158,11 @@ def generate_dynamic_sitemaps(
     ensure_dir(public_dir)
     today = (normalize_db_timestamp(build_timestamp) or datetime.now(timezone.utc).isoformat())[:10]
     playbook_hubs = load_playbook_hubs(project_root=project_root, default_date=today)
-    indexable_playbook_hubs = [item for item in playbook_hubs if str(item.get("indexing", "")).lower() == "index"]
+    indexable_playbook_hubs = [
+        item
+        for item in playbook_hubs
+        if str(item.get("indexing", "")).lower() == "index" and str(item.get("content_depth_pass", "")).lower() == "true"
+    ]
     slugs = sorted(path.stem for path in output_dir.glob("*.md"))
 
     pages_manifest = manifest.get("pages", {}) if isinstance(manifest.get("pages"), dict) else {}
@@ -1174,6 +1213,7 @@ def generate_dynamic_sitemaps(
         {"loc": f"{domain}/events", "lastmod": events_root_lastmod, "changefreq": "daily", "priority": "0.9"},
         {"loc": f"{domain}/playbooks", "lastmod": playbooks_root_lastmod, "changefreq": "daily", "priority": "0.88"},
         {"loc": f"{domain}/blog", "lastmod": blog_root_lastmod, "changefreq": "daily", "priority": "0.85"},
+        {"loc": f"{domain}/about", "lastmod": today, "changefreq": "weekly", "priority": "0.82"},
     ]
     write_urlset(public_dir / "sitemap-core.xml", core_entries)
 
