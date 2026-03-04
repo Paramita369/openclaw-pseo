@@ -8,8 +8,6 @@ import csv
 import json
 import os
 import sqlite3
-import urllib.parse
-import urllib.request
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -17,6 +15,14 @@ from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
 from pipeline_utils import ALLOWED_EVENT_TYPES, PRIMARY_ASSETS, cutoff_date, event_filter_sql, resolve_project_root
 
+try:
+    import requests
+    from requests.adapters import HTTPAdapter
+    from urllib3.util.retry import Retry
+except Exception:  # pragma: no cover
+    requests = None  # type: ignore
+    HTTPAdapter = None  # type: ignore
+    Retry = None  # type: ignore
 try:
     import yfinance as yf
 except Exception:  # pragma: no cover
@@ -43,6 +49,7 @@ ASSET_META = {
     "QQQ": ("Stock", "NASDAQ", "QQQ"),
     "SPY": ("Stock", "NYSE", "SPY"),
 }
+FETCH_DIAGNOSTICS: List[Dict[str, str]] = []
 
 
 @dataclass
@@ -105,9 +112,47 @@ def valid_iso_date(value: str) -> bool:
         return False
 
 
+def get_fred_session():
+    if requests is None:
+        return None
+    session = requests.Session()
+    if Retry is not None and HTTPAdapter is not None:
+        retries = Retry(
+            total=3,
+            connect=3,
+            read=3,
+            backoff_factor=1,
+            status_forcelist=[429, 500, 502, 503, 504],
+            allowed_methods={"GET"},
+            raise_on_status=False,
+        )
+        session.mount("https://", HTTPAdapter(max_retries=retries))
+    return session
+
+
+def record_fetch_issue(event: str, series_id: str, code: str, detail: str) -> None:
+    FETCH_DIAGNOSTICS.append(
+        {
+            "event": event,
+            "series_id": series_id,
+            "code": code,
+            "detail": detail[:280],
+        }
+    )
+
+
 def fetch_json(url: str) -> Dict[str, object]:
-    with urllib.request.urlopen(url, timeout=30) as response:
-        return json.loads(response.read().decode("utf-8"))
+    if requests is None:
+        raise RuntimeError("requests_unavailable")
+    session = get_fred_session()
+    if session is None:
+        raise RuntimeError("fred_session_unavailable")
+    response = session.get(url, timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    if not isinstance(payload, dict):
+        raise RuntimeError("invalid_json_payload")
+    return payload
 
 
 def fred_api(path: str, params: Dict[str, str], api_key: str) -> Dict[str, object]:
@@ -115,15 +160,35 @@ def fred_api(path: str, params: Dict[str, str], api_key: str) -> Dict[str, objec
     payload["file_type"] = "json"
     if api_key:
         payload["api_key"] = api_key
-    query = urllib.parse.urlencode(payload)
+    if requests is None:
+        raise RuntimeError("requests_unavailable")
+    query = requests.compat.urlencode(payload)
     url = f"https://api.stlouisfed.org{path}?{query}"
     return fetch_json(url)
 
 
 def parse_fred_csv(series_id: str) -> List[Tuple[str, float]]:
     url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
-    with urllib.request.urlopen(url, timeout=30) as response:
-        raw = response.read().decode("utf-8")
+    if requests is None:
+        record_fetch_issue("fred_csv", series_id, "requests_unavailable", "requests import failed")
+        return []
+    session = get_fred_session()
+    if session is None:
+        record_fetch_issue("fred_csv", series_id, "fred_session_unavailable", "unable to init requests session")
+        return []
+    try:
+        response = session.get(url, timeout=30)
+        response.raise_for_status()
+        raw = response.text
+    except Exception as exc:
+        code = "network_error"
+        if isinstance(exc, requests.Timeout):
+            code = "timeout"
+        elif isinstance(exc, requests.HTTPError):
+            status = exc.response.status_code if exc.response is not None else "unknown"
+            code = f"http_{status}"
+        record_fetch_issue("fred_csv", series_id, code, str(exc))
+        return []
     rows: List[Tuple[str, float]] = []
     reader = csv.DictReader(raw.splitlines())
     for item in reader:
@@ -149,7 +214,14 @@ def fetch_series_observations(series_id: str, api_key: str) -> List[Tuple[str, f
             },
             api_key,
         )
-    except Exception:
+    except Exception as exc:
+        code = "network_error"
+        if requests is not None and isinstance(exc, requests.Timeout):
+            code = "timeout"
+        elif requests is not None and isinstance(exc, requests.HTTPError):
+            status = exc.response.status_code if exc.response is not None else "unknown"
+            code = f"http_{status}"
+        record_fetch_issue("fred_api", series_id, code, str(exc))
         return parse_fred_csv(series_id)
 
     rows: List[Tuple[str, float]] = []
@@ -163,32 +235,57 @@ def fetch_series_observations(series_id: str, api_key: str) -> List[Tuple[str, f
         except ValueError:
             continue
     if not rows:
+        record_fetch_issue("fred_api", series_id, "empty_payload", "observations payload empty after filtering")
         return parse_fred_csv(series_id)
     return rows
 
 
 def fetch_release_dates_for_series(series_id: str, api_key: str) -> List[str]:
-    payload = fred_api("/fred/series/release", {"series_id": series_id}, api_key)
+    try:
+        payload = fred_api("/fred/series/release", {"series_id": series_id}, api_key)
+    except Exception as exc:
+        code = "network_error"
+        if requests is not None and isinstance(exc, requests.Timeout):
+            code = "timeout"
+        elif requests is not None and isinstance(exc, requests.HTTPError):
+            status = exc.response.status_code if exc.response is not None else "unknown"
+            code = f"http_{status}"
+        record_fetch_issue("fred_release", series_id, code, str(exc))
+        return []
     releases = payload.get("releases", []) or []
     if not releases:
+        record_fetch_issue("fred_release", series_id, "empty_payload", "release payload missing")
         return []
     release_id = releases[0].get("id")
     if release_id is None:
+        record_fetch_issue("fred_release", series_id, "missing_release_id", "release id unavailable")
         return []
-    dates_payload = fred_api(
-        "/fred/release/dates",
-        {
-            "release_id": str(release_id),
-            "sort_order": "asc",
-            "include_release_dates_with_no_data": "true",
-        },
-        api_key,
-    )
+    try:
+        dates_payload = fred_api(
+            "/fred/release/dates",
+            {
+                "release_id": str(release_id),
+                "sort_order": "asc",
+                "include_release_dates_with_no_data": "true",
+            },
+            api_key,
+        )
+    except Exception as exc:
+        code = "network_error"
+        if requests is not None and isinstance(exc, requests.Timeout):
+            code = "timeout"
+        elif requests is not None and isinstance(exc, requests.HTTPError):
+            status = exc.response.status_code if exc.response is not None else "unknown"
+            code = f"http_{status}"
+        record_fetch_issue("fred_release_dates", series_id, code, str(exc))
+        return []
     dates: List[str] = []
     for row in dates_payload.get("release_dates", []) or []:
         value = str(row.get("date", "")).strip()
         if valid_iso_date(value):
             dates.append(value)
+    if not dates:
+        record_fetch_issue("fred_release_dates", series_id, "empty_payload", "no valid release dates")
     return dates
 
 
@@ -553,6 +650,7 @@ def main() -> None:
     )
     as_of_cutoff = cutoff_date(args.as_of_date)
     fred_api_key = os.getenv("FRED_API_KEY", "").strip()
+    FETCH_DIAGNOSTICS.clear()
 
     conn = sqlite3.connect(db_path)
     try:
@@ -589,6 +687,8 @@ def main() -> None:
         "new_macro_events": new_events,
         "new_asset_impacts": new_impacts,
         "override_file": str(override_path),
+        "fetch_diagnostics_count": len(FETCH_DIAGNOSTICS),
+        "fetch_diagnostics": FETCH_DIAGNOSTICS[:15],
     }
     print(json.dumps(summary, ensure_ascii=False))
 

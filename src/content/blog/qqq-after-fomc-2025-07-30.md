@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of QQQ After FOMC (2025-07-30)"
+title: "QQQ After FOMC (2025-07-30): Historical Signal & Probability"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 1
+title_template_key: "fomc_1"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
@@ -9,20 +11,26 @@ event_date: "2025-07-30"
 asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "ibkr"
-signal: "Neutral"
-raw_signal_score: 3.3
-robust_score: -2.7
+signal: "Bullish"
+raw_signal_score: 17.56
+robust_score: 7.56
 penalties:
-  sample: 0.0
+  sample: 4.0
   freshness: 6.0
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
-sample_size: 23
+quality_score: 60
+sample_size: 9
 freshness_days: 216
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/fomc"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
 event_direction: "flat"
 event_actual: 4.5
 event_previous: 4.5
@@ -31,43 +39,42 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["qqq", "fomc", "event-probability", "general"]
 metrics:
-  sharpe_t7: -0.3
-  mdd_t7: -0.53
-  volatility: 0.41
-  impact_t1_pct: -0.53
-  impact_t7_pct: -0.12
+  sharpe_t7: 1.08
+  mdd_t7: 0.0
+  volatility: 0.95
+  impact_t1_pct: 0.08
+  impact_t7_pct: 1.03
 probabilities:
-  sample_size: 23
+  sample_size: 9
   t1:
-    up: 43.48
-    down: 56.52
-    median: -0.19
-    mean: -0.05
-    sample: 23
+    up: 55.56
+    down: 44.44
+    median: 0.43
+    mean: 0.08
+    sample: 9
   t7:
-    up: 56.52
-    down: 43.48
-    median: 0.88
-    mean: 0.27
-    sample: 23
+    up: 77.78
+    down: 22.22
+    median: 1.16
+    mean: 1.03
+    sample: 9
   conditional:
     basis: "event_direction"
     direction: "flat"
-    sample_size: 17
+    sample_size: 9
     t1:
-      up: 41.18
-      down: 58.82
-      median: -0.34
-      mean: -0.06
-      sample: 17
+      up: 55.56
+      down: 44.44
+      median: 0.43
+      mean: 0.08
+      sample: 9
     t7:
-      up: 64.71
-      down: 35.29
-      median: 1.08
-      mean: 0.6
-      sample: 17
-related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "QQQ After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.07, "median_t7_pct": 0.54, "sample_size": 0}, {"slug": "qqq-after-fomc-2026-01-28", "title": "QQQ After FOMC (2026-01-28): Historical T+1/T+7 Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -4.34, "sample_size": 0}, {"slug": "qqq-after-fomc-2025-12-11", "title": "QQQ After FOMC (2025-12-11): Historical T+1/T+7 Probability", "event_date": "2025-12-11", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -2.63, "sample_size": 0}]
-chartData: [{"time": "2025-07-28", "open": 566.35, "high": 567.65, "low": 565.48, "close": 566.75}, {"time": "2025-07-29", "open": 569.37, "high": 570.71, "low": 565.15, "close": 565.87}, {"time": "2025-07-30", "open": 566.79, "high": 569.23, "low": 563.67, "close": 566.63}, {"time": "2025-07-31", "open": 573.14, "high": 573.23, "low": 562.49, "close": 563.63}, {"time": "2025-08-01", "open": 557.46, "high": 557.65, "low": 550.33, "close": 552.53}, {"time": "2025-08-04", "open": 557.68, "high": 562.94, "low": 557.58, "close": 562.72}, {"time": "2025-08-05", "open": 564.01, "high": 565.18, "low": 558.36, "close": 558.9}, {"time": "2025-08-06", "open": 559.74, "high": 566.37, "low": 559.26, "close": 565.93}]
+      up: 77.78
+      down: 22.22
+      median: 1.16
+      mean: 1.03
+      sample: 9
+related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and QQQ: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 2.07, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and QQQ: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2025-12-10", "title": "QQQ Post-FOMC Reaction (2025-12-10): Quant Backtest Snapshot", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}]
 ---
 
 ## Event Snapshot
@@ -77,7 +84,7 @@ chartData: [{"time": "2025-07-28", "open": 566.35, "high": 567.65, "low": 565.48
 - Event date: **2025-07-30**
 - As-of date (T-1): **2026-03-03**
 - Freshness age: **216 days**
-- Sample size (all-history): **23**
+- Sample size (all-history): **9**
 
 ## Event Outcome
 
@@ -88,25 +95,25 @@ chartData: [{"time": "2025-07-28", "open": 566.35, "high": 567.65, "low": 565.48
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 43.48% | 56.52% | -0.19% | -0.05% | 23 |
-| T+7 | 56.52% | 43.48% | 0.88% | 0.27% | 23 |
+| T+1 | 55.56% | 44.44% | 0.43% | 0.08% | 9 |
+| T+7 | 77.78% | 22.22% | 1.16% | 1.03% | 9 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 41.18% | 58.82% | -0.34% | -0.06% | 17 |
-| T+7 | 64.71% | 35.29% | 1.08% | 0.6% | 17 |
+| T+1 | 55.56% | 44.44% | 0.43% | 0.08% | 9 |
+| T+7 | 77.78% | 22.22% | 1.16% | 1.03% | 9 |
 
 ## Historical Distribution Summary
 
-When FOMC was **FLAT**, QQQ T+1 up probability was **41.18%** (n=17).
+When FOMC was **FLAT**, QQQ T+1 up probability was **55.56%** (n=9).
 
-When FOMC was **FLAT**, QQQ T+7 up probability was **64.71%** (n=17).
+When FOMC was **FLAT**, QQQ T+7 up probability was **77.78%** (n=9).
 
-Same-direction T+7 median return: **1.08%**.
+Same-direction T+7 median return: **1.16%**.
 
-For QQQ, historical FOMC windows show all-history T+1 up probability of 43.48% and T+7 up probability of 56.52%. When FOMC printed Flat versus previous, T+1 up probability was 41.18% and T+7 up probability was 64.71% across 17 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+For QQQ, historical FOMC windows show all-history T+1 up probability of 55.56% and T+7 up probability of 77.78%. When FOMC printed Flat versus previous, T+1 up probability was 55.56% and T+7 up probability was 77.78% across 9 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

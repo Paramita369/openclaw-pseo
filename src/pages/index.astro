@@ -12,6 +12,22 @@ const finiteOrNull = (value) => {
   return Number.isFinite(num) ? num : null;
 };
 
+const formatAsOf = (value) => {
+  const text = String(value || '').trim();
+  if (!text) return '--';
+  const parsed = new Date(text);
+  if (Number.isNaN(parsed.getTime())) return text;
+  return `${parsed.toISOString().slice(0, 16).replace('T', ' ')} UTC`;
+};
+
+const freshnessLabel = (status) => {
+  const value = String(status || '').toLowerCase();
+  if (value === 'fresh') return 'Fresh';
+  if (value === 'stale') return 'Stale';
+  if (value === 'fallback') return 'Fallback';
+  return 'Unknown';
+};
+
 const parseIsoDate = (value) => {
   const text = String(value || '').slice(0, 10);
   if (!text) return null;
@@ -173,7 +189,7 @@ const steps = [
         </div>
         <div class="mt-7 flex flex-wrap gap-3">
           <a href="#playbook" class="btn-primary focus-ring" data-track-event="playbook_open" data-surface="hero">Open Playbook</a>
-          <a href="/playbooks" class="btn-ghost focus-ring" style="border-color:rgba(255,255,255,.4);color:#f2f6ff;">Open Hub Playbooks</a>
+          <a href="/playbooks" class="btn-ghost focus-ring" style="border-color:rgba(255,255,255,.4);color:#f2f6ff;">Open Strategy Hubs</a>
           <a href="/events" class="btn-ghost focus-ring" style="border-color:rgba(255,255,255,.4);color:#f2f6ff;">Open Event Hubs</a>
           <a href="/blog" class="btn-ghost focus-ring" style="border-color:rgba(255,255,255,.4);color:#f2f6ff;">Browse All Research</a>
         </div>
@@ -204,15 +220,25 @@ const steps = [
             {dailySnapshot.timestamp ? new Date(dailySnapshot.timestamp).toLocaleString() : 'No snapshot timestamp'}
           </span>
         </div>
+        <p class="text-xs mb-3" style="color:var(--muted);">
+          Crypto is near real-time; US session assets reflect latest market close and trading-calendar freshness.
+        </p>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
           {Object.entries(markets).map(([name, data]) => {
             const positive = data.change >= 0;
+            const status = String(data.freshness_status || '').toLowerCase();
+            const badgeClass =
+              status === 'fresh' ? 'metric-up' : status === 'stale' ? 'metric-down' : 'metric-muted';
             return (
               <div class="rounded-xl border p-3" style="border-color:var(--border);background:var(--surface-alt);">
                 <p class="text-xs font-semibold" style="color:var(--muted);">{name}</p>
                 <p class="text-lg font-bold mt-1">{typeof data.price === 'number' ? data.price.toLocaleString() : data.price}</p>
                 <p class={`text-sm font-semibold mt-1 ${positive ? 'metric-up' : 'metric-down'}`}>
                   {positive ? '+' : ''}{data.change}%
+                </p>
+                <p class="text-[11px] mt-1" style="color:var(--muted);">As-of: {formatAsOf(data.as_of_ts)}</p>
+                <p class="text-[11px] mt-1">
+                  <span class={`badge-chip ${badgeClass}`}>{freshnessLabel(data.freshness_status)}</span>
                 </p>
               </div>
             );
@@ -235,8 +261,8 @@ const steps = [
           )}
         </div>
         <div class="flex gap-2">
-          <a class="btn-ghost focus-ring" href="/playbooks">Open Hub Playbooks</a>
-          <a class="btn-ghost focus-ring" href="/leaderboard">Open Full Playbook</a>
+          <a class="btn-ghost focus-ring" href="/playbooks">Open Strategy Hubs</a>
+          <a class="btn-ghost focus-ring" href="/leaderboard">Open Signal Board</a>
         </div>
       </div>
 

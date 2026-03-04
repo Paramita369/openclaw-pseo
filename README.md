@@ -10,17 +10,23 @@ QuantMacro is a static-first pSEO system on Vercel focused on event-driven proba
 
 ## Daily Command (OpenClaw)
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
+python3 scripts/macro_pipeline/run_daily_ops.py \
+  --project-root . \
+  --strict \
+  --push \
+  --source-db-path var/data/macro_events.db \
+  --bootstrap-if-missing \
+  --seed-db-path data/macro_events.db
 ```
 
 Skip remote crawler contract check when needed:
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --skip-crawl-check
+python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --skip-crawl-check --source-db-path var/data/macro_events.db --bootstrap-if-missing --seed-db-path data/macro_events.db
 ```
 
 Skip content accuracy contract only for emergency debugging (not daily standard):
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --skip-accuracy-check
+python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --skip-accuracy-check --source-db-path var/data/macro_events.db --bootstrap-if-missing --seed-db-path data/macro_events.db
 ```
 
 ## Daily SOP / SKILL
@@ -33,7 +39,7 @@ python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
 - Schedule: disabled (no daily cron)
 - Command executed by workflow:
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
+python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push --source-db-path var/data/macro_events.db --bootstrap-if-missing --seed-db-path data/macro_events.db
 ```
 - Expected behavior:
   - If whitelisted files changed, workflow commits and pushes.
@@ -42,6 +48,20 @@ python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
 ## Python Dependencies
 ```bash
 pip install -r requirements.txt
+```
+
+## Source DB Migration (V2.8)
+Primary source DB path is now `var/data/macro_events.db`.
+
+Bootstrap (copy from legacy DB if available):
+```bash
+python3 scripts/ops/bootstrap_source_db.py --project-root . --source-db-path var/data/macro_events.db --seed-db-path data/macro_events.db --strict
+```
+
+Backup and restore:
+```bash
+scripts/ops/backup_source_db.sh --source-db-path var/data/macro_events.db --backup-dir var/backups/source-db --keep 14
+scripts/ops/restore_source_db.sh --source-db-path var/data/macro_events.db --backup-dir var/backups/source-db
 ```
 
 ## Pipeline Steps
@@ -81,6 +101,7 @@ Required base columns:
 
 V2 extension columns:
 - `event_label,event_slug,rise_prob_t1,fall_prob_t1,rise_prob_t7,fall_prob_t7,median_t1_pct,median_t7_pct,sample_size,asof_date,freshness_days,signal`
+- `conditional_sample_size,title_variant_id,title_template_key`
 - `event_direction,event_actual,event_previous,event_delta,direction_basis,outcome_status`
 
 ### Frontmatter Contract
@@ -88,9 +109,19 @@ Required fields include:
 - `event_type,event_label,event_slug,event_date,asof_date`
 - `event_direction,event_actual,event_previous,event_delta,direction_basis`
 - `signal,confidence_level,sample_size`
+- `title_variant_id,title_template_key`
 - `freshness_days`
 - `metrics` numeric block
 - `probabilities` block (`t1`, `t7`, `conditional`, `sample_size`)
+
+### Snapshot Contract (`src/daily_snapshot.json`)
+Per-asset required fields:
+- `asset_type` (`crypto|us_session`)
+- `as_of_date`
+- `as_of_ts`
+- `freshness_status` (`fresh|stale|fallback|calendar_unknown`)
+- `data_age_hours`
+- `source`
 
 ### Redirect Outputs
 - `data/slug_redirects.json` (legacy slug -> new event slug)
@@ -127,6 +158,10 @@ Strict failures include:
 - stale semantic mismatch (homepage should switch to `Latest Event Playbook` when data is old)
 - crawler policy mismatch (`robots.txt`/`vercel.json` blocks `Google-Extended` or sets global blocking `X-Robots-Tag`)
 - missing Hub route contract (`/playbooks/{asset}/{event}` + trust layer + sitemap coverage)
+- snapshot freshness contract failure (schema/status/UI as-of mismatch)
+- conditional sample contract failure (CSV/frontmatter mismatch or all-zero anomaly)
+- title diversity contract failure (per-event template spread + LCS similarity)
+- calendar fetch resilience contract failure (retry/backoff/evidence markers missing)
 
 ## Accuracy Audit (strict full sweep)
 Run directly:

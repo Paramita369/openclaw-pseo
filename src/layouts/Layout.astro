@@ -1,14 +1,31 @@
 ---
 import Analytics from '@vercel/analytics/astro';
 import '../styles/global.css';
+import authorConfig from '../data/authors.json';
 
-const { title, description, frontmatter, breadcrumbs = [], robotsDirective = 'index,follow' } = Astro.props;
+const {
+  title,
+  description,
+  frontmatter,
+  breadcrumbs = [],
+  robotsDirective = 'index,follow',
+  canonicalHref = undefined,
+  schemaExtras = [],
+  authorKey = authorConfig.defaultAuthorKey || 'paramita',
+  authorOverride = null,
+} = Astro.props;
 
 const metaDesc =
   description ||
   'Event-driven return probabilities across BTC, ETH, GOLD, QQQ, and SPY from historical CPI, NFP, and FOMC datasets.';
 const siteUrl = 'https://quantmacro.vercel.app';
 const currentUrl = Astro.url.href;
+const resolvedCanonicalHref =
+  canonicalHref === null
+    ? null
+    : (typeof canonicalHref === 'string' && canonicalHref.trim()
+        ? canonicalHref.trim()
+        : currentUrl);
 const ga4MeasurementId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID || '';
 const normalizedBreadcrumbs = Array.isArray(breadcrumbs)
   ? breadcrumbs
@@ -26,16 +43,29 @@ const websiteId = `${siteUrl}/#website`;
 const webpageId = `${currentUrl}#webpage`;
 const articleId = `${currentUrl}#article`;
 const breadcrumbId = `${currentUrl}#breadcrumb`;
+const authors = Array.isArray(authorConfig?.authors) ? authorConfig.authors : [];
+const selectedAuthor =
+  (authorOverride && typeof authorOverride === 'object' ? authorOverride : null) ||
+  authors.find((item) => item && item.key === authorKey) ||
+  authors.find((item) => item && item.key === authorConfig.defaultAuthorKey) ||
+  null;
+const authorSlug = String(selectedAuthor?.key || authorKey || 'paramita')
+  .trim()
+  .toLowerCase()
+  .replace(/[^a-z0-9-]/g, '-');
+const authorId = `${siteUrl}/#author-${authorSlug}`;
 
 const organizationSchema = {
   '@type': 'Organization',
   '@id': organizationId,
-  name: 'QuantMacro',
+  name: 'QuantMacro Analytics',
   url: siteUrl,
   logo: {
     '@type': 'ImageObject',
     url: `${siteUrl}/favicon.svg`,
   },
+  founder: { '@id': authorId },
+  sameAs: ['https://github.com/Paramita369'],
 };
 
 const websiteSchema = {
@@ -47,6 +77,20 @@ const websiteSchema = {
   publisher: { '@id': organizationId },
 };
 
+const personSchema = {
+  '@type': 'Person',
+  '@id': authorId,
+  name: String(selectedAuthor?.name || 'Paramita'),
+  jobTitle: String(selectedAuthor?.jobTitle || 'Quantitative Trader & Senior IT Officer'),
+  url: String(selectedAuthor?.url || `${siteUrl}/about`),
+  description: String(
+    selectedAuthor?.description ||
+      'QuantMacro analyst focused on event-driven probability research and reliability-first operations.'
+  ),
+  sameAs: Array.isArray(selectedAuthor?.sameAs) ? selectedAuthor.sameAs : ['https://github.com/Paramita369'],
+  worksFor: { '@id': organizationId },
+};
+
 const pageSchema = frontmatter
   ? {
       '@type': 'Article',
@@ -54,7 +98,7 @@ const pageSchema = frontmatter
       mainEntityOfPage: { '@id': webpageId },
       headline: title,
       description: metaDesc,
-      author: { '@id': organizationId },
+      author: { '@id': authorId },
       publisher: { '@id': organizationId },
       datePublished: frontmatter.pubDate || new Date().toISOString().split('T')[0],
       dateModified: frontmatter.data_last_updated_at || frontmatter.pubDate || new Date().toISOString().split('T')[0],
@@ -69,7 +113,7 @@ const pageSchema = frontmatter
       url: currentUrl,
     };
 
-const graphNodes = [organizationSchema, websiteSchema, pageSchema];
+const graphNodes = [organizationSchema, websiteSchema, personSchema, pageSchema];
 if (normalizedBreadcrumbs.length > 0) {
   graphNodes.push({
     '@type': 'BreadcrumbList',
@@ -81,6 +125,13 @@ if (normalizedBreadcrumbs.length > 0) {
       item: crumb.url,
     })),
   });
+}
+if (Array.isArray(schemaExtras)) {
+  for (const extraNode of schemaExtras) {
+    if (extraNode && typeof extraNode === 'object' && !Array.isArray(extraNode)) {
+      graphNodes.push(extraNode);
+    }
+  }
 }
 const schemaGraph = {
   '@context': 'https://schema.org',
@@ -97,7 +148,7 @@ const schemaGraph = {
     <title>{title} | QuantMacro</title>
     <meta name="description" content={metaDesc} />
     <meta name="robots" content={robotsDirective} />
-    <link rel="canonical" href={currentUrl} />
+    {resolvedCanonicalHref && <link rel="canonical" href={resolvedCanonicalHref} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <script is:inline>
@@ -144,9 +195,10 @@ const schemaGraph = {
           <div class="hidden md:flex items-center gap-2 text-sm font-semibold">
             <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/">Dashboard</a>
             <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/events">Events</a>
-            <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/playbooks">Playbooks</a>
-            <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/leaderboard">Playbook</a>
+            <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/playbooks">Strategy Hubs</a>
+            <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/leaderboard">Signal Board</a>
             <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/blog">Research</a>
+            <a class="px-3 py-2 rounded-lg hover:bg-[var(--surface-alt)] focus-ring" href="/about">About</a>
           </div>
 
           <div class="flex items-center gap-2">
@@ -172,7 +224,7 @@ const schemaGraph = {
       <footer class="border-t mt-16" style="background:var(--surface); border-color:var(--border);">
         <div class="max-w-7xl mx-auto px-4 py-8 text-sm flex flex-col md:flex-row gap-3 md:items-center md:justify-between" style="color:var(--muted);">
           <p>© 2026 QuantMacro. Event-driven probability research for educational use only.</p>
-          <p>Data cut-off: T-1 close. Not investment advice.</p>
+          <p>Data cut-off: T-1 close. Not investment advice. <a href="/about" class="underline">About</a></p>
         </div>
       </footer>
     </div>

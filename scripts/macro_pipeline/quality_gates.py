@@ -21,6 +21,8 @@ except Exception:  # pragma: no cover
     yaml = None
 
 REQUIRED_FRONTMATTER_KEYS = [
+    "title_variant_id",
+    "title_template_key",
     "event_type",
     "event_label",
     "event_slug",
@@ -34,6 +36,12 @@ REQUIRED_FRONTMATTER_KEYS = [
     "sample_size",
     "freshness_days",
     "freshness_status",
+    "index_tier",
+    "is_recent_90d",
+    "canonical_target",
+    "canonical_url",
+    "robots_directive",
+    "in_blog_sitemap",
     "raw_signal_score",
     "robust_score",
     "penalties",
@@ -69,9 +77,20 @@ EXPECTED_CSV_COLUMNS = {
     "median_t1_pct",
     "median_t7_pct",
     "sample_size",
+    "conditional_sample_size",
     "asof_date",
     "freshness_days",
     "signal",
+    "raw_signal_score",
+    "robust_score",
+    "title_variant_id",
+    "title_template_key",
+    "index_tier",
+    "is_recent_90d",
+    "canonical_target",
+    "canonical_url",
+    "robots_directive",
+    "in_blog_sitemap",
     "event_direction",
     "event_actual",
     "event_previous",
@@ -93,6 +112,11 @@ EVENT_FRESHNESS_THRESHOLDS = {
 
 HUB_ASSETS = ["BTC", "ETH", "GOLD", "QQQ", "SPY"]
 HUB_EVENTS = ["CPI", "NFP", "FOMC"]
+HUB_MIN_THESIS_LEN = 120
+HUB_MIN_CHANGED_LEN = 80
+HUB_MIN_RISK_LEN = 80
+HUB_MIN_CHECKLIST_ITEMS = 3
+HUB_MIN_CHECKLIST_ITEM_LEN = 12
 
 EXPECTED_ROBUST_PENALTIES = {
     "freshness_stale": 6.0,
@@ -102,6 +126,37 @@ EXPECTED_ROBUST_PENALTIES = {
     "outcome_ok": 0.0,
     "outcome_pending": 12.0,
 }
+
+
+def hub_content_depth_passes(item: object) -> bool:
+    if not isinstance(item, dict):
+        return False
+    thesis = str(item.get("thesis", "")).strip()
+    changed = str(item.get("what_changed_recently", "")).strip()
+    risk = str(item.get("risk_watchouts", "")).strip()
+    checklist = item.get("execution_checklist")
+    if len(thesis) < HUB_MIN_THESIS_LEN:
+        return False
+    if len(changed) < HUB_MIN_CHANGED_LEN:
+        return False
+    if len(risk) < HUB_MIN_RISK_LEN:
+        return False
+    if not isinstance(checklist, list) or len(checklist) < HUB_MIN_CHECKLIST_ITEMS:
+        return False
+    for value in checklist:
+        if len(str(value or "").strip()) < HUB_MIN_CHECKLIST_ITEM_LEN:
+            return False
+    return True
+
+
+def load_hub_briefs_payload(path: Path) -> object:
+    raw_content = path.read_text(encoding="utf-8")
+    if yaml is not None:
+        try:
+            return yaml.safe_load(raw_content)
+        except Exception:
+            return parse_hub_briefs_fallback(raw_content)
+    return parse_hub_briefs_fallback(raw_content)
 
 
 def table_exists(conn: sqlite3.Connection, table_name: str) -> bool:
@@ -125,6 +180,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--csv-path", default=None, help="verified_targets.csv override")
     parser.add_argument("--db-path", default=None, help="macro_events.db override")
     parser.add_argument("--index-path", default=None, help="index.astro override")
+    parser.add_argument("--snapshot-path", default=None, help="daily_snapshot.json override")
     parser.add_argument("--strict", action="store_true", help="Fail on any violations")
     parser.add_argument("--report", default=None, help="Output report path")
     parser.add_argument("--as-of-date", default=date.today().isoformat(), help="Run date (YYYY-MM-DD)")
@@ -212,6 +268,16 @@ def is_finite_number(value: object) -> bool:
         return math.isfinite(number)
     except Exception:
         return False
+
+
+def to_float(value: object) -> float | None:
+    try:
+        number = float(value)
+        if not math.isfinite(number):
+            return None
+        return number
+    except Exception:
+        return None
 
 
 def expected_sample_penalty(sample_size: float) -> float:
@@ -410,6 +476,53 @@ def scan_file(path: Path) -> List[str]:
         if abs(reconstructed - float(robust_score)) > 0.01:
             violations.append("robust_score_formula_mismatch")
 
+    index_tier = str(fm.get("index_tier", "")).upper()
+    if index_tier not in {"A", "B", "C"}:
+        violations.append("invalid_index_tier")
+    is_recent_90d = fm.get("is_recent_90d")
+    if not isinstance(is_recent_90d, bool):
+        violations.append("invalid_is_recent_90d")
+    canonical_target = str(fm.get("canonical_target", "")).lower()
+    if canonical_target not in {"self", "hub", "none"}:
+        violations.append("invalid_canonical_target")
+    canonical_url = str(fm.get("canonical_url", "")).strip()
+    robots_directive = str(fm.get("robots_directive", "")).strip().lower()
+    if robots_directive not in {"index,follow", "noindex,follow"}:
+        violations.append("invalid_robots_directive")
+    in_blog_sitemap = fm.get("in_blog_sitemap")
+    if not isinstance(in_blog_sitemap, bool):
+        violations.append("invalid_in_blog_sitemap")
+
+    if robots_directive == "noindex,follow" and canonical_target == "hub":
+        violations.append("seo_signal_conflict_noindex_with_hub_canonical")
+    if canonical_target == "none" and canonical_url:
+        violations.append("canonical_none_must_not_have_url")
+    if canonical_target in {"self", "hub"} and not canonical_url:
+        violations.append("canonical_target_missing_url")
+    if canonical_target == "hub" and "/playbooks/" not in canonical_url:
+        violations.append("canonical_hub_url_invalid")
+    if canonical_target == "self" and "/blog/" not in canonical_url:
+        violations.append("canonical_self_url_invalid")
+
+    if index_tier == "C":
+        if robots_directive != "noindex,follow":
+            violations.append("tier_c_requires_noindex")
+        if canonical_target != "none":
+            violations.append("tier_c_requires_canonical_none")
+        if in_blog_sitemap is True:
+            violations.append("tier_c_must_not_be_in_blog_sitemap")
+    elif index_tier in {"A", "B"}:
+        if robots_directive != "index,follow":
+            violations.append("tier_ab_requires_index")
+        if isinstance(is_recent_90d, bool):
+            expected_canonical = "self" if is_recent_90d else "hub"
+            if canonical_target != expected_canonical:
+                violations.append("tier_ab_canonical_target_mismatch")
+            if is_recent_90d and in_blog_sitemap is not True:
+                violations.append("recent_ab_requires_blog_sitemap")
+            if (not is_recent_90d) and in_blog_sitemap is not False:
+                violations.append("old_ab_must_not_be_in_blog_sitemap")
+
     return sorted(set(violations))
 
 
@@ -530,6 +643,7 @@ def validate_sitemap(
             "/events": "0.9",
             "/playbooks": "0.88",
             "/blog": "0.85",
+            "/about": "0.82",
         }
         for route, priority in expected_priorities.items():
             loc_pattern = (
@@ -564,7 +678,8 @@ def validate_sitemap(
                             indexing = str(item.get("indexing", "")).lower()
                             if indexing not in {"index", "noindex"}:
                                 indexing = "index" if status == "approved" else "noindex"
-                            if indexing == "index":
+                            content_depth_ok = hub_content_depth_passes(item)
+                            if indexing == "index" and content_depth_ok:
                                 expected_indexable += 1
             if expected_indexable > 0:
                 violations.append("playbooks_sitemap_missing_playbook_routes")
@@ -883,6 +998,356 @@ def validate_freshness_semantics(
     return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
 
 
+def validate_snapshot_freshness_contract(
+    root: Path,
+    snapshot_path: Path | None = None,
+    index_path: Path | None = None,
+) -> Dict[str, object]:
+    violations: List[str] = []
+    snapshot_path = snapshot_path or (root / "src" / "daily_snapshot.json")
+    index_path = index_path or (root / "src" / "pages" / "index.astro")
+    allowed_statuses = {"fresh", "stale", "fallback", "calendar_unknown"}
+    allowed_asset_types = {"crypto", "us_session"}
+
+    if not snapshot_path.exists():
+        return {"violations": ["missing_daily_snapshot_json"], "count": 1}
+
+    try:
+        payload = json.loads(snapshot_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {"violations": ["invalid_daily_snapshot_json"], "count": 1}
+
+    if not isinstance(payload, dict):
+        return {"violations": ["daily_snapshot_not_object"], "count": 1}
+    if not re.match(r"^\d{4}-\d{2}-\d{2}T", str(payload.get("timestamp", ""))):
+        violations.append("daily_snapshot_missing_timestamp")
+
+    markets = payload.get("markets")
+    if not isinstance(markets, dict) or not markets:
+        violations.append("daily_snapshot_missing_markets")
+        return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+    has_crypto = False
+    has_us_session = False
+    for asset, item in markets.items():
+        if not isinstance(item, dict):
+            violations.append(f"snapshot_market_not_object:{asset}")
+            continue
+
+        asset_type = str(item.get("asset_type", "")).strip().lower()
+        freshness = str(item.get("freshness_status", "")).strip().lower()
+        as_of_date = str(item.get("as_of_date", "")).strip()
+        as_of_ts = str(item.get("as_of_ts", "")).strip()
+        source = str(item.get("source", "")).strip()
+        data_age_hours = item.get("data_age_hours")
+
+        if asset_type not in allowed_asset_types:
+            violations.append(f"snapshot_invalid_asset_type:{asset}")
+        if asset_type == "crypto":
+            has_crypto = True
+        if asset_type == "us_session":
+            has_us_session = True
+
+        if freshness not in allowed_statuses:
+            violations.append(f"snapshot_invalid_freshness_status:{asset}")
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", as_of_date):
+            violations.append(f"snapshot_invalid_as_of_date:{asset}")
+        if not re.match(r"^\d{4}-\d{2}-\d{2}T", as_of_ts):
+            violations.append(f"snapshot_invalid_as_of_ts:{asset}")
+        if not source:
+            violations.append(f"snapshot_missing_source:{asset}")
+        if data_age_hours is not None and not is_finite_number(data_age_hours):
+            violations.append(f"snapshot_invalid_data_age_hours:{asset}")
+
+        for field in ["price", "change", "high", "low"]:
+            if field not in item or not is_finite_number(item.get(field)):
+                violations.append(f"snapshot_invalid_{field}:{asset}")
+
+    if not has_crypto:
+        violations.append("snapshot_missing_crypto_assets")
+    if not has_us_session:
+        violations.append("snapshot_missing_us_session_assets")
+
+    if not index_path.exists():
+        violations.append("missing_index_astro_for_snapshot_contract")
+    else:
+        index_source = index_path.read_text(encoding="utf-8")
+        if "As-of:" not in index_source:
+            violations.append("snapshot_ui_missing_asof_label")
+        if "freshnessLabel" not in index_source:
+            violations.append("snapshot_ui_missing_freshness_badge")
+        if "24/7 Data Updates" in index_source:
+            violations.append("snapshot_ui_contains_misleading_24_7_claim")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_conditional_sample_contract(content_dir: Path, csv_path: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+    if not csv_path.exists():
+        return {"violations": ["missing_verified_targets_csv"], "count": 1}
+
+    with csv_path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        csv_map: Dict[str, Dict[str, str]] = {}
+        positive_rows = 0
+        valid_rows = 0
+        for row in reader:
+            slug = str(row.get("url_slug", "")).strip()
+            if not slug:
+                continue
+            csv_map[slug] = row
+            value = to_float(row.get("conditional_sample_size"))
+            if value is not None:
+                valid_rows += 1
+                if value > 0:
+                    positive_rows += 1
+
+    if valid_rows == 0:
+        violations.append("conditional_sample_missing_or_non_numeric_in_csv")
+        return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+    if positive_rows == 0:
+        violations.append("conditional_sample_all_zero")
+
+    for path in sorted(content_dir.glob("*.md")):
+        slug = path.stem
+        row = csv_map.get(slug)
+        if row is None:
+            violations.append("conditional_sample_csv_row_missing")
+            break
+
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        probabilities = fm.get("probabilities")
+        conditional = probabilities.get("conditional") if isinstance(probabilities, dict) else None
+        fm_size = to_float(conditional.get("sample_size") if isinstance(conditional, dict) else None)
+        csv_size = to_float(row.get("conditional_sample_size"))
+        if fm_size is None or csv_size is None:
+            violations.append("conditional_sample_non_numeric")
+            break
+        if abs(fm_size - csv_size) > 0.01:
+            violations.append("conditional_sample_csv_frontmatter_mismatch")
+            break
+
+    return {
+        "violations": sorted(set(violations)),
+        "count": len(sorted(set(violations))),
+        "valid_rows": valid_rows,
+        "positive_rows": positive_rows,
+    }
+
+
+def validate_csv_contract_backfill(csv_path: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not csv_path.exists():
+        return {"violations": ["missing_verified_targets_csv"], "count": 1}
+    with csv_path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        headers = set(reader.fieldnames or [])
+        required = {"conditional_sample_size", "title_variant_id", "title_template_key"}
+        missing = sorted(required - headers)
+        if missing:
+            violations.append("csv_contract_missing_backfill_columns:" + ",".join(missing))
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_seo_signal_conflict_contract(content_dir: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+    for path in sorted(content_dir.glob("*.md")):
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        robots_directive = str(fm.get("robots_directive", "")).lower()
+        canonical_target = str(fm.get("canonical_target", "")).lower()
+        if "noindex" in robots_directive and canonical_target not in {"none", "self"}:
+            violations.append("seo_signal_conflict_noindex_with_nonself_canonical")
+            break
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_sitemap_canonical_contract(content_dir: Path, public_dir: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+
+    blog_paths = sorted(public_dir.glob("sitemap-blog-*.xml"))
+    indexed_slugs: set[str] = set()
+    for path in blog_paths:
+        content = path.read_text(encoding="utf-8")
+        for slug in re.findall(r"/blog/([a-z0-9-]+)</loc>", content):
+            indexed_slugs.add(slug)
+
+    for path in sorted(content_dir.glob("*.md")):
+        slug = path.stem
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        canonical_target = str(fm.get("canonical_target", "")).lower()
+        in_blog_sitemap = fm.get("in_blog_sitemap")
+        if canonical_target != "self":
+            if slug in indexed_slugs:
+                violations.append("sitemap_contains_nonself_canonical_page")
+                break
+            if in_blog_sitemap is True:
+                violations.append("frontmatter_nonself_canonical_marked_in_blog_sitemap")
+                break
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_tier_contract(content_dir: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+
+    for path in sorted(content_dir.glob("*.md")):
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        tier = str(fm.get("index_tier", "")).upper()
+        robots_directive = str(fm.get("robots_directive", "")).lower()
+        canonical_target = str(fm.get("canonical_target", "")).lower()
+        is_recent_90d = fm.get("is_recent_90d")
+        in_blog_sitemap = fm.get("in_blog_sitemap")
+
+        if tier == "C":
+            if robots_directive != "noindex,follow" or canonical_target != "none" or in_blog_sitemap is True:
+                violations.append("tier_contract_c_mismatch")
+                break
+        elif tier in {"A", "B"}:
+            if robots_directive != "index,follow":
+                violations.append("tier_contract_ab_requires_index")
+                break
+            if isinstance(is_recent_90d, bool):
+                expected = "self" if is_recent_90d else "hub"
+                if canonical_target != expected:
+                    violations.append("tier_contract_ab_canonical_mismatch")
+                    break
+        else:
+            violations.append("tier_contract_invalid_tier")
+            break
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def token_lcs_ratio(left: Sequence[str], right: Sequence[str]) -> float:
+    if not left or not right:
+        return 0.0
+    rows = len(left) + 1
+    cols = len(right) + 1
+    dp = [[0] * cols for _ in range(rows)]
+    for i in range(1, rows):
+        for j in range(1, cols):
+            if left[i - 1] == right[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    lcs = dp[-1][-1]
+    return float(lcs) / float(max(len(left), len(right)))
+
+
+def normalize_title_template(title: str) -> str:
+    text = str(title or "").strip().lower()
+    text = re.sub(r"\b\d{4}-\d{2}-\d{2}\b", "{date}", text)
+    text = re.sub(r"\b(btc|eth|gold|qqq|spy)\b", "{asset}", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def validate_title_diversity_contract(content_dir: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+
+    per_event_counts: Dict[str, Dict[str, int]] = {}
+    per_event_templates: Dict[str, Dict[str, str]] = {}
+
+    for path in sorted(content_dir.glob("*.md")):
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        event_type = str(fm.get("event_type", "")).upper().strip()
+        if event_type not in ALLOWED_EVENT_TYPES:
+            continue
+        template_key = str(fm.get("title_template_key", "")).strip()
+        title = str(fm.get("title", "")).strip()
+        if not template_key or not title:
+            violations.append("title_diversity_missing_template_metadata")
+            continue
+
+        per_event_counts.setdefault(event_type, {})
+        per_event_templates.setdefault(event_type, {})
+        per_event_counts[event_type][template_key] = per_event_counts[event_type].get(template_key, 0) + 1
+        per_event_templates[event_type].setdefault(template_key, normalize_title_template(title))
+
+    for event_type in sorted(ALLOWED_EVENT_TYPES):
+        counts = per_event_counts.get(event_type, {})
+        templates = per_event_templates.get(event_type, {})
+        total = sum(counts.values())
+        if total == 0:
+            violations.append(f"title_diversity_missing_event_titles:{event_type.lower()}")
+            continue
+
+        unique_count = len(counts)
+        if unique_count < 3:
+            violations.append(f"title_diversity_min_templates_fail:{event_type.lower()}")
+
+        max_share = max(counts.values()) / float(total)
+        if max_share > 0.50:
+            violations.append(f"title_diversity_max_share_fail:{event_type.lower()}")
+
+        template_keys = sorted(templates.keys())
+        for idx, left_key in enumerate(template_keys):
+            left_tokens = templates[left_key].split()
+            for right_key in template_keys[idx + 1 :]:
+                right_tokens = templates[right_key].split()
+                ratio = token_lcs_ratio(left_tokens, right_tokens)
+                if ratio >= 0.60:
+                    violations.append(f"title_diversity_lcs_fail:{event_type.lower()}:{left_key}:{right_key}")
+                    break
+            if any(v.startswith(f"title_diversity_lcs_fail:{event_type.lower()}") for v in violations):
+                break
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_calendar_fetch_resilience_contract(root: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    sync_path = root / "scripts" / "macro_pipeline" / "sync_event_calendar.py"
+    ops_path = root / "scripts" / "macro_pipeline" / "run_daily_ops.py"
+
+    if not sync_path.exists():
+        return {"violations": ["missing_sync_event_calendar_script"], "count": 1}
+    if not ops_path.exists():
+        return {"violations": ["missing_run_daily_ops_script"], "count": 1}
+
+    sync_text = sync_path.read_text(encoding="utf-8")
+    ops_text = ops_path.read_text(encoding="utf-8")
+
+    required_sync_markers = [
+        "requests.Session()",
+        "Retry(",
+        "status_forcelist=[429, 500, 502, 503, 504]",
+        "backoff_factor=1",
+        "record_fetch_issue",
+        "FETCH_DIAGNOSTICS",
+        "parse_fred_csv",
+    ]
+    for marker in required_sync_markers:
+        if marker not in sync_text:
+            violations.append(f"calendar_fetch_missing_marker:{marker}")
+
+    if "fetch_diagnostics_count" not in sync_text or "fetch_diagnostics" not in sync_text:
+        violations.append("calendar_fetch_missing_diagnostics_summary")
+
+    required_ops_markers = [
+        "CURRENT_STEP_LOGS_DIR",
+        "stdout_path",
+        "stderr_path",
+        "EVIDENCE=",
+        "evidence_paths",
+    ]
+    for marker in required_ops_markers:
+        if marker not in ops_text:
+            violations.append(f"calendar_fetch_missing_ops_evidence_marker:{marker}")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
 def validate_schema_graph_and_breadcrumbs(root: Path) -> Dict[str, object]:
     violations: List[str] = []
 
@@ -893,6 +1358,7 @@ def validate_schema_graph_and_breadcrumbs(root: Path) -> Dict[str, object]:
         root / "src" / "pages" / "events" / "[event].astro",
         root / "src" / "pages" / "tags" / "[tag].astro",
         root / "src" / "pages" / "leaderboard.astro",
+        root / "src" / "pages" / "about.astro",
         root / "src" / "pages" / "playbooks" / "index.astro",
         root / "src" / "pages" / "playbooks" / "[asset]" / "[event].astro",
     ]
@@ -1076,15 +1542,7 @@ def validate_hub_briefs_contract(root: Path) -> Dict[str, object]:
     if not path.exists():
         return {"violations": ["missing_hub_briefs_yaml"], "count": 1}
 
-    raw_content = path.read_text(encoding="utf-8")
-    payload: object
-    if yaml is not None:
-        try:
-            payload = yaml.safe_load(raw_content)
-        except Exception:
-            payload = parse_hub_briefs_fallback(raw_content)
-    else:
-        payload = parse_hub_briefs_fallback(raw_content)
+    payload = load_hub_briefs_payload(path)
 
     if not isinstance(payload, dict):
         return {"violations": ["hub_briefs_not_object"], "count": 1}
@@ -1134,6 +1592,155 @@ def validate_hub_briefs_contract(root: Path) -> Dict[str, object]:
             violations.append(f"hub_brief_draft_must_be_noindex:{key}")
 
     return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_author_entity_contract(root: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    layout_path = root / "src" / "layouts" / "Layout.astro"
+    authors_path = root / "src" / "data" / "authors.json"
+    if not layout_path.exists():
+        return {"violations": ["missing_layout_astro"], "count": 1}
+    if not authors_path.exists():
+        return {"violations": ["missing_authors_json"], "count": 1}
+
+    layout_text = layout_path.read_text(encoding="utf-8")
+    if "'@type': 'Person'" not in layout_text:
+        violations.append("schema_missing_person_entity")
+    if "author: { '@id': authorId }" not in layout_text and 'author: {"@id": authorId}' not in layout_text:
+        violations.append("article_author_not_linked_to_person")
+    if "authorConfig" not in layout_text:
+        violations.append("layout_missing_author_config_binding")
+
+    try:
+        payload = json.loads(authors_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {"violations": ["invalid_authors_json"], "count": 1}
+    if not isinstance(payload, dict):
+        return {"violations": ["authors_json_not_object"], "count": 1}
+
+    default_key = str(payload.get("defaultAuthorKey", "")).strip()
+    authors = payload.get("authors")
+    if not default_key:
+        violations.append("authors_missing_default_key")
+    if not isinstance(authors, list) or not authors:
+        violations.append("authors_missing_authors_array")
+    else:
+        key_set = set()
+        for item in authors:
+            if not isinstance(item, dict):
+                violations.append("authors_item_not_object")
+                continue
+            key = str(item.get("key", "")).strip()
+            if not key:
+                violations.append("authors_item_missing_key")
+                continue
+            key_set.add(key)
+            required_fields = ["name", "jobTitle", "url", "sameAs", "description", "credentials"]
+            for field in required_fields:
+                value = item.get(field)
+                if value is None or (isinstance(value, str) and not value.strip()):
+                    violations.append(f"authors_item_missing_{field}")
+            same_as = item.get("sameAs")
+            if not isinstance(same_as, list) or not same_as:
+                violations.append("authors_item_invalid_sameAs")
+            credentials = item.get("credentials")
+            if not isinstance(credentials, list) or not credentials:
+                violations.append("authors_item_invalid_credentials")
+        if default_key and default_key not in key_set:
+            violations.append("authors_default_key_not_found")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_about_page_contract(root: Path, public_dir: Path | None = None) -> Dict[str, object]:
+    violations: List[str] = []
+    public_dir = public_dir or (root / "public")
+    about_page = root / "src" / "pages" / "about.astro"
+    if not about_page.exists():
+        return {"violations": ["missing_about_page"], "count": 1}
+
+    text = about_page.read_text(encoding="utf-8")
+    required_terms = [
+        "The Analyst",
+        "Infrastructure",
+        "Methodology",
+        "Transparency & Disclaimer",
+        "FRED",
+        "yfinance",
+        "OpenClaw daily primary",
+        "GitHub Actions manual backup only",
+        "Not investment advice",
+    ]
+    for term in required_terms:
+        if term not in text:
+            violations.append(f"about_missing_{term.lower().replace(' ', '_').replace('&', 'and')}")
+
+    if "Breadcrumbs" not in text or "breadcrumbs" not in text:
+        violations.append("about_missing_breadcrumbs")
+
+    core_sitemap = public_dir / "sitemap-core.xml"
+    if not core_sitemap.exists():
+        violations.append("missing_sitemap_core")
+    else:
+        core_text = core_sitemap.read_text(encoding="utf-8")
+        if "/about" not in core_text:
+            violations.append("about_not_in_core_sitemap")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_hub_content_depth_contract(root: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    path = root / "data" / "hub_briefs.yaml"
+    if not path.exists():
+        return {"violations": ["missing_hub_briefs_yaml"], "count": 1}
+    payload = load_hub_briefs_payload(path)
+    if not isinstance(payload, dict):
+        return {"violations": ["hub_briefs_not_object"], "count": 1}
+
+    for asset in HUB_ASSETS:
+        for event in HUB_EVENTS:
+            key = f"{asset}_{event}"
+            item = payload.get(key)
+            if not isinstance(item, dict):
+                violations.append(f"hub_content_missing_item:{key}")
+                continue
+            status = str(item.get("status", "")).lower()
+            indexing = str(item.get("indexing", "")).lower()
+            if indexing not in {"index", "noindex"}:
+                indexing = "index" if status == "approved" else "noindex"
+            if status == "approved" and indexing == "index" and not hub_content_depth_passes(item):
+                violations.append(f"hub_content_depth_fail:{key}")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_approved_hub_minimum_contract(root: Path) -> Dict[str, object]:
+    warnings: List[str] = []
+    path = root / "data" / "hub_briefs.yaml"
+    if not path.exists():
+        return {"violations": [], "warnings": ["missing_hub_briefs_yaml"], "count": 0}
+    payload = load_hub_briefs_payload(path)
+    if not isinstance(payload, dict):
+        return {"violations": [], "warnings": ["hub_briefs_not_object"], "count": 0}
+
+    indexable_count = 0
+    for asset in HUB_ASSETS:
+        for event in HUB_EVENTS:
+            key = f"{asset}_{event}"
+            item = payload.get(key)
+            if not isinstance(item, dict):
+                continue
+            status = str(item.get("status", "")).lower()
+            indexing = str(item.get("indexing", "")).lower()
+            if indexing not in {"index", "noindex"}:
+                indexing = "index" if status == "approved" else "noindex"
+            if status == "approved" and indexing == "index" and hub_content_depth_passes(item):
+                indexable_count += 1
+    if indexable_count < 6:
+        warnings.append(f"approved_hub_count_low:{indexable_count}")
+
+    return {"violations": [], "warnings": warnings, "count": 0}
 
 
 def validate_crawl_policy_contract(
@@ -1220,15 +1827,7 @@ def validate_hub_route_contract(root: Path, public_dir: Path | None = None) -> D
         expected_indexable_routes: List[str] = []
         draft_routes: List[str] = []
         if hub_briefs_path.exists():
-            raw = hub_briefs_path.read_text(encoding="utf-8")
-            payload: object
-            if yaml is not None:
-                try:
-                    payload = yaml.safe_load(raw)
-                except Exception:
-                    payload = parse_hub_briefs_fallback(raw)
-            else:
-                payload = parse_hub_briefs_fallback(raw)
+            payload = load_hub_briefs_payload(hub_briefs_path)
 
             if isinstance(payload, dict):
                 for asset in HUB_ASSETS:
@@ -1240,12 +1839,13 @@ def validate_hub_route_contract(root: Path, public_dir: Path | None = None) -> D
                         if indexing not in {"index", "noindex"}:
                             indexing = "index" if status == "approved" else "noindex"
                         route = f"/playbooks/{asset.lower()}/{event.lower()}"
-                        if indexing == "index":
+                        content_depth_ok = hub_content_depth_passes(item)
+                        if indexing == "index" and content_depth_ok:
                             expected_indexable_routes.append(route)
                         else:
                             draft_routes.append(route)
 
-        if len(expected_indexable_routes) < 3:
+        if len(expected_indexable_routes) < 6:
             warnings.append("approved_hub_count_low")
 
         if url_count != len(expected_indexable_routes):
@@ -1292,15 +1892,7 @@ def validate_hub_draft_noindex_contract(root: Path, public_dir: Path | None = No
         violations.append("missing_hub_briefs_yaml")
         return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
 
-    raw = hub_briefs_path.read_text(encoding="utf-8")
-    payload: object
-    if yaml is not None:
-        try:
-            payload = yaml.safe_load(raw)
-        except Exception:
-            payload = parse_hub_briefs_fallback(raw)
-    else:
-        payload = parse_hub_briefs_fallback(raw)
+    payload = load_hub_briefs_payload(hub_briefs_path)
 
     if not isinstance(payload, dict):
         violations.append("hub_briefs_not_object")
@@ -1315,7 +1907,8 @@ def validate_hub_draft_noindex_contract(root: Path, public_dir: Path | None = No
             if indexing not in {"index", "noindex"}:
                 indexing = "index" if status == "approved" else "noindex"
             route = f"/playbooks/{asset.lower()}/{event.lower()}"
-            if indexing == "noindex" and route in sitemap_text:
+            content_depth_ok = hub_content_depth_passes(item)
+            if (indexing == "noindex" or not content_depth_ok) and route in sitemap_text:
                 violations.append("draft_or_noindex_hub_present_in_sitemap")
                 break
         if "draft_or_noindex_hub_present_in_sitemap" in violations:
@@ -1440,6 +2033,7 @@ def run_gates(
     csv_path: Path,
     db_path: Path,
     index_path: Path,
+    snapshot_path: Path,
 ) -> Dict[str, object]:
     files = sorted(content_dir.glob("*.md"))
 
@@ -1472,6 +2066,15 @@ def run_gates(
         index_path=index_path,
         content_dir=content_dir,
     )
+    snapshot_freshness_result = validate_snapshot_freshness_contract(
+        root,
+        snapshot_path=snapshot_path,
+        index_path=index_path,
+    )
+    conditional_sample_result = validate_conditional_sample_contract(content_dir, csv_path)
+    csv_contract_backfill_result = validate_csv_contract_backfill(csv_path)
+    title_diversity_result = validate_title_diversity_contract(content_dir)
+    calendar_fetch_resilience_result = validate_calendar_fetch_resilience_contract(root)
     schema_breadcrumb_result = validate_schema_graph_and_breadcrumbs(root)
     related_events_result = validate_related_events_integrity(content_dir)
     trust_layer_result = validate_trust_layer(root)
@@ -1482,6 +2085,13 @@ def run_gates(
     blog_hub_link_result = validate_blog_hub_link_contract(root)
     lastmod_threshold_result = validate_lastmod_threshold_contract(manifest_path)
     ymyl_regex_result = validate_ymyl_regex_contract(root, content_dir)
+    author_entity_result = validate_author_entity_contract(root)
+    about_page_result = validate_about_page_contract(root, public_dir=public_dir)
+    hub_depth_result = validate_hub_content_depth_contract(root)
+    approved_hub_minimum_result = validate_approved_hub_minimum_contract(root)
+    seo_signal_conflict_result = validate_seo_signal_conflict_contract(content_dir)
+    sitemap_canonical_result = validate_sitemap_canonical_contract(content_dir, public_dir)
+    tier_contract_result = validate_tier_contract(content_dir)
 
     for scope in [
         redirect_result,
@@ -1491,6 +2101,11 @@ def run_gates(
         event_pool_result,
         cta_result,
         freshness_result,
+        snapshot_freshness_result,
+        conditional_sample_result,
+        csv_contract_backfill_result,
+        title_diversity_result,
+        calendar_fetch_resilience_result,
         schema_breadcrumb_result,
         related_events_result,
         trust_layer_result,
@@ -1501,6 +2116,12 @@ def run_gates(
         blog_hub_link_result,
         lastmod_threshold_result,
         ymyl_regex_result,
+        author_entity_result,
+        about_page_result,
+        hub_depth_result,
+        seo_signal_conflict_result,
+        sitemap_canonical_result,
+        tier_contract_result,
     ]:
         for issue in scope["violations"]:
             report["summary"][issue] = report["summary"].get(issue, 0) + 1
@@ -1513,6 +2134,11 @@ def run_gates(
     report["event_pool_violations"] = event_pool_result
     report["cta_violations"] = cta_result
     report["freshness_violations"] = freshness_result
+    report["snapshot_freshness_violations"] = snapshot_freshness_result
+    report["conditional_sample_violations"] = conditional_sample_result
+    report["csv_contract_backfill_violations"] = csv_contract_backfill_result
+    report["title_diversity_violations"] = title_diversity_result
+    report["calendar_fetch_resilience_violations"] = calendar_fetch_resilience_result
     report["schema_breadcrumb_violations"] = schema_breadcrumb_result
     report["related_events_violations"] = related_events_result
     report["trust_layer_violations"] = trust_layer_result
@@ -1523,9 +2149,17 @@ def run_gates(
     report["blog_hub_link_violations"] = blog_hub_link_result
     report["lastmod_threshold_violations"] = lastmod_threshold_result
     report["ymyl_regex_violations"] = ymyl_regex_result
+    report["author_entity_violations"] = author_entity_result
+    report["about_page_violations"] = about_page_result
+    report["hub_content_depth_violations"] = hub_depth_result
+    report["seo_signal_conflict_violations"] = seo_signal_conflict_result
+    report["sitemap_canonical_violations"] = sitemap_canonical_result
+    report["tier_contract_violations"] = tier_contract_result
+    report["approved_hub_minimum_contract"] = approved_hub_minimum_result
     report["warnings"] = {
         "cta": cta_result.get("warnings", []),
         "hub_route": hub_route_result.get("warnings", []),
+        "approved_hub_minimum": approved_hub_minimum_result.get("warnings", []),
     }
 
     content_violations = sum(len(v) for v in violations_by_file.values())
@@ -1538,6 +2172,11 @@ def run_gates(
         + int(event_pool_result["count"])
         + int(cta_result["count"])
         + int(freshness_result["count"])
+        + int(snapshot_freshness_result["count"])
+        + int(conditional_sample_result["count"])
+        + int(csv_contract_backfill_result["count"])
+        + int(title_diversity_result["count"])
+        + int(calendar_fetch_resilience_result["count"])
         + int(schema_breadcrumb_result["count"])
         + int(related_events_result["count"])
         + int(trust_layer_result["count"])
@@ -1548,6 +2187,12 @@ def run_gates(
         + int(blog_hub_link_result["count"])
         + int(lastmod_threshold_result["count"])
         + int(ymyl_regex_result["count"])
+        + int(author_entity_result["count"])
+        + int(about_page_result["count"])
+        + int(hub_depth_result["count"])
+        + int(seo_signal_conflict_result["count"])
+        + int(sitemap_canonical_result["count"])
+        + int(tier_contract_result["count"])
     )
     report["content_violations"] = content_violations
     report["total_violations"] = total_violations
@@ -1569,6 +2214,7 @@ def main() -> None:
     csv_path = Path(args.csv_path).resolve() if args.csv_path else root / "data" / "verified_targets.csv"
     db_path = Path(args.db_path).resolve() if args.db_path else root / "data" / "macro_events.db"
     index_path = Path(args.index_path).resolve() if args.index_path else root / "src" / "pages" / "index.astro"
+    snapshot_path = Path(args.snapshot_path).resolve() if args.snapshot_path else root / "src" / "daily_snapshot.json"
     report_path = Path(args.report).resolve() if args.report else root / "logs" / "daily_ops" / "quality_gates.json"
 
     result = run_gates(
@@ -1583,6 +2229,7 @@ def main() -> None:
         csv_path=csv_path,
         db_path=db_path,
         index_path=index_path,
+        snapshot_path=snapshot_path,
     )
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")

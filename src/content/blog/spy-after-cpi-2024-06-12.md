@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of SPY After CPI (2024-06-12)"
+title: "US CPI (2024-06-12) and SPY: Event-Driven Return Odds"
 description: "Historical probability profile for SPY around CPI events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 3
+title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
@@ -10,8 +12,8 @@ asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
-raw_signal_score: 15.44
-robust_score: 9.44
+raw_signal_score: 19.75
+robust_score: 13.75
 penalties:
   sample: 0.0
   freshness: 6.0
@@ -19,10 +21,16 @@ penalties:
   outcome: 0.0
 confidence_level: "normal"
 quality_score: 50
-sample_size: 39
+sample_size: 14
 freshness_days: 629
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "C"
+is_recent_90d: false
+canonical_target: "none"
+canonical_url: ""
+robots_directive: "noindex,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T00:01:00+00:00"
 event_direction: "down"
 event_actual: 313.044
 event_previous: 313.175
@@ -31,25 +39,25 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["spy", "cpi", "event-probability", "general"]
 metrics:
-  sharpe_t7: 21.0
+  sharpe_t7: 1.65
   mdd_t7: 0.0
-  volatility: 0.01
+  volatility: 0.31
   impact_t1_pct: 0.2
-  impact_t7_pct: 0.21
+  impact_t7_pct: 0.51
 probabilities:
-  sample_size: 39
+  sample_size: 14
   t1:
-    up: 64.1
-    down: 35.9
-    median: 0.16
-    mean: 0.21
-    sample: 39
+    up: 64.29
+    down: 35.71
+    median: 0.15
+    mean: 0.26
+    sample: 14
   t7:
-    up: 68.42
-    down: 31.58
-    median: 0.51
-    mean: 0.21
-    sample: 38
+    up: 76.92
+    down: 23.08
+    median: 1.08
+    mean: 0.51
+    sample: 13
   conditional:
     basis: "event_direction"
     direction: "down"
@@ -66,8 +74,7 @@ probabilities:
       median: 0.0
       mean: 0.0
       sample: 0
-related_events: [{"slug": "spy-after-cpi-2024-03-12", "title": "SPY After CPI (2024-03-12): Historical T+1/T+7 Probability", "event_date": "2024-03-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 3.94, "median_t7_pct": 0.1, "sample_size": 0}, {"slug": "spy-after-cpi-2024-11-14", "title": "SPY After CPI (2024-11-14): Historical T+1/T+7 Probability", "event_date": "2024-11-14", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.43, "median_t7_pct": 0.05, "sample_size": 0}, {"slug": "spy-after-cpi-2024-05-15", "title": "SPY After CPI (2024-05-15): Historical T+1/T+7 Probability", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.37, "median_t7_pct": 0.01, "sample_size": 0}]
-chartData: [{"time": "2024-06-10", "open": 521.93, "high": 524.68, "low": 521.34, "close": 524.36}, {"time": "2024-06-11", "open": 522.8, "high": 525.68, "low": 520.83, "close": 525.62}, {"time": "2024-06-12", "open": 530.21, "high": 532.64, "low": 528.9, "close": 529.94}, {"time": "2024-06-13", "open": 531.69, "high": 531.87, "low": 528.21, "close": 531.01}, {"time": "2024-06-14", "open": 529.47, "high": 531.36, "low": 528.46, "close": 531.33}, {"time": "2024-06-17", "open": 530.65, "high": 536.96, "low": 530.19, "close": 535.56}, {"time": "2024-06-18", "open": 535.62, "high": 537.05, "low": 535.2, "close": 536.92}]
+related_events: [{"slug": "spy-after-cpi-2024-03-12", "title": "SPY CPI Win Rate (2024-03-12): Historical T+1/T+7 Probability", "event_date": "2024-03-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 3.94, "median_t7_pct": 1.08, "sample_size": 14}, {"slug": "spy-after-cpi-2024-11-14", "title": "2024-11-14 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-11-14", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.43, "median_t7_pct": 1.08, "sample_size": 14}, {"slug": "spy-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.37, "median_t7_pct": 1.08, "sample_size": 14}]
 ---
 
 ## Event Snapshot
@@ -77,7 +84,7 @@ chartData: [{"time": "2024-06-10", "open": 521.93, "high": 524.68, "low": 521.34
 - Event date: **2024-06-12**
 - As-of date (T-1): **2026-03-03**
 - Freshness age: **629 days**
-- Sample size (all-history): **39**
+- Sample size (all-history): **14**
 
 ## Event Outcome
 
@@ -88,8 +95,8 @@ chartData: [{"time": "2024-06-10", "open": 521.93, "high": 524.68, "low": 521.34
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 64.1% | 35.9% | 0.16% | 0.21% | 39 |
-| T+7 | 68.42% | 31.58% | 0.51% | 0.21% | 38 |
+| T+1 | 64.29% | 35.71% | 0.15% | 0.26% | 14 |
+| T+7 | 76.92% | 23.08% | 1.08% | 0.51% | 13 |
 
 ## Probability Table (Same-direction)
 
@@ -106,7 +113,7 @@ When CPI was **DOWN**, SPY T+7 up probability was **0.0%** (n=0).
 
 Same-direction T+7 median return: **0.0%**.
 
-For SPY, historical CPI windows show all-history T+1 up probability of 64.1% and T+7 up probability of 68.42%. When CPI printed Down versus previous, T+1 up probability was 100.0% and T+7 up probability was 0.0% across 0 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
+For SPY, historical CPI windows show all-history T+1 up probability of 64.29% and T+7 up probability of 76.92%. When CPI printed Down versus previous, T+1 up probability was 100.0% and T+7 up probability was 0.0% across 0 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

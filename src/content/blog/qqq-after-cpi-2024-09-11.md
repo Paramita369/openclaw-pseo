@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of QQQ After CPI (2024-09-11)"
+title: "US CPI (2024-09-11) and QQQ: Event-Driven Return Odds"
 description: "Historical probability profile for QQQ around CPI events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 3
+title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
@@ -9,9 +11,9 @@ event_date: "2024-09-11"
 asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "ibkr"
-signal: "Bullish"
-raw_signal_score: 8.09
-robust_score: 2.09
+signal: "Neutral"
+raw_signal_score: 6.07
+robust_score: 0.07
 penalties:
   sample: 0.0
   freshness: 6.0
@@ -19,10 +21,16 @@ penalties:
   outcome: 0.0
 confidence_level: "normal"
 quality_score: 90
-sample_size: 39
+sample_size: 14
 freshness_days: 538
 freshness_status: "stale"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/cpi"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T00:01:00+00:00"
 event_direction: "up"
 event_actual: 314.732
 event_previous: 314.062
@@ -37,37 +45,36 @@ metrics:
   impact_t1_pct: 0.98
   impact_t7_pct: 0.6
 probabilities:
-  sample_size: 39
+  sample_size: 14
   t1:
-    up: 61.54
-    down: 38.46
-    median: 0.21
-    mean: 0.23
-    sample: 39
+    up: 57.14
+    down: 42.86
+    median: 0.35
+    mean: 0.28
+    sample: 14
   t7:
-    up: 55.26
-    down: 44.74
-    median: 0.58
-    mean: 0.2
-    sample: 38
+    up: 53.85
+    down: 46.15
+    median: 0.6
+    mean: 0.54
+    sample: 13
   conditional:
     basis: "event_direction"
     direction: "up"
-    sample_size: 38
+    sample_size: 13
     t1:
-      up: 60.53
-      down: 39.47
-      median: 0.19
-      mean: 0.23
-      sample: 38
+      up: 53.85
+      down: 46.15
+      median: 0.16
+      mean: 0.26
+      sample: 13
     t7:
-      up: 55.26
-      down: 44.74
-      median: 0.58
-      mean: 0.2
-      sample: 38
-related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "QQQ After CPI (2024-05-15): Historical T+1/T+7 Probability", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.6, "median_t7_pct": 0.62, "sample_size": 0}, {"slug": "qqq-after-cpi-2026-02-13", "title": "QQQ After CPI (2026-02-13): Historical T+1/T+7 Probability", "event_date": "2026-02-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.14, "sample_size": 0}, {"slug": "qqq-after-cpi-2026-02-12", "title": "QQQ After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.47, "sample_size": 0}]
-chartData: [{"time": "2024-09-09", "open": 449.42, "high": 451.8, "low": 446.2, "close": 450.81}, {"time": "2024-09-10", "open": 452.57, "high": 455.48, "low": 448.59, "close": 454.97}, {"time": "2024-09-11", "open": 456.21, "high": 465.6, "low": 447.65, "close": 464.85}, {"time": "2024-09-12", "open": 464.88, "high": 470.23, "low": 463.1, "close": 469.41}, {"time": "2024-09-13", "open": 468.68, "high": 472.7, "low": 468.45, "close": 471.52}, {"time": "2024-09-16", "open": 469.38, "high": 470.05, "low": 466.11, "close": 469.43}, {"time": "2024-09-17", "open": 472.46, "high": 473.76, "low": 467.18, "close": 469.68}, {"time": "2024-09-18", "open": 470.88, "high": 474.98, "low": 467.04, "close": 467.65}]
+      up: 53.85
+      down: 46.15
+      median: 0.6
+      mean: 0.54
+      sample: 13
+related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: QQQ Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.6, "median_t7_pct": 0.6, "sample_size": 14}, {"slug": "qqq-after-cpi-2026-02-12", "title": "QQQ CPI Win Rate (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.6, "sample_size": 14}, {"slug": "qqq-after-cpi-2026-01-12", "title": "QQQ CPI Win Rate (2026-01-12): Historical T+1/T+7 Probability", "event_date": "2026-01-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.6, "sample_size": 14}]
 ---
 
 ## Event Snapshot
@@ -77,7 +84,7 @@ chartData: [{"time": "2024-09-09", "open": 449.42, "high": 451.8, "low": 446.2, 
 - Event date: **2024-09-11**
 - As-of date (T-1): **2026-03-03**
 - Freshness age: **538 days**
-- Sample size (all-history): **39**
+- Sample size (all-history): **14**
 
 ## Event Outcome
 
@@ -88,25 +95,25 @@ chartData: [{"time": "2024-09-09", "open": 449.42, "high": 451.8, "low": 446.2, 
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 61.54% | 38.46% | 0.21% | 0.23% | 39 |
-| T+7 | 55.26% | 44.74% | 0.58% | 0.2% | 38 |
+| T+1 | 57.14% | 42.86% | 0.35% | 0.28% | 14 |
+| T+7 | 53.85% | 46.15% | 0.6% | 0.54% | 13 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 60.53% | 39.47% | 0.19% | 0.23% | 38 |
-| T+7 | 55.26% | 44.74% | 0.58% | 0.2% | 38 |
+| T+1 | 53.85% | 46.15% | 0.16% | 0.26% | 13 |
+| T+7 | 53.85% | 46.15% | 0.6% | 0.54% | 13 |
 
 ## Historical Distribution Summary
 
-When CPI was **UP**, QQQ T+1 up probability was **60.53%** (n=38).
+When CPI was **UP**, QQQ T+1 up probability was **53.85%** (n=13).
 
-When CPI was **UP**, QQQ T+7 up probability was **55.26%** (n=38).
+When CPI was **UP**, QQQ T+7 up probability was **53.85%** (n=13).
 
-Same-direction T+7 median return: **0.58%**.
+Same-direction T+7 median return: **0.6%**.
 
-For QQQ, historical CPI windows show all-history T+1 up probability of 61.54% and T+7 up probability of 55.26%. When CPI printed Up versus previous, T+1 up probability was 60.53% and T+7 up probability was 55.26% across 38 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
+For QQQ, historical CPI windows show all-history T+1 up probability of 57.14% and T+7 up probability of 53.85%. When CPI printed Up versus previous, T+1 up probability was 53.85% and T+7 up probability was 53.85% across 13 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

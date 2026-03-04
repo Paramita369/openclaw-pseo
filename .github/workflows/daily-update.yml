@@ -38,9 +38,22 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
+      - name: Bootstrap source DB (if missing)
+        run: |
+          python3 scripts/ops/bootstrap_source_db.py \
+            --project-root . \
+            --source-db-path var/data/macro_events.db \
+            --as-of-date "$(date -u +%F)" \
+            --strict
+
       - name: Run OpenClaw backup pipeline
         env:
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: |
-          python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --strict --push
+          python3 scripts/macro_pipeline/run_daily_ops.py \
+            --project-root . \
+            --strict \
+            --push \
+            --source-db-path var/data/macro_events.db \
+            --bootstrap-if-missing

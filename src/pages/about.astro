@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'About', url: '/about' },
+];
+---
+
+<Layout
+  title="About QuantMacro"
+  description="Analyst background, methodology, infrastructure, and transparency policy for QuantMacro event-driven probability research."
+  breadcrumbs={breadcrumbs}
+>
+  <section class="hero-panel py-14">
+    <div class="max-w-5xl mx-auto px-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <h1 class="text-4xl font-extrabold text-white">About QuantMacro</h1>
+      <p class="text-blue-100 mt-3 text-lg">
+        Trust layer for YMYL content: analyst background, data pipeline, methodology, and disclosure policy.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-5xl mx-auto px-4 py-10 space-y-4">
+    <article class="surface-card p-6">
+      <h2 class="text-xl font-extrabold">The Analyst</h2>
+      <p class="mt-3 text-sm leading-7" style="color:var(--muted);">
+        QuantMacro is operated by Paramita, a quantitative trader and senior IT operator with 10+ years of market and
+        system experience. The project focuses on event-driven probability research for CPI, NFP, and FOMC across BTC,
+        ETH, GOLD, QQQ, and SPY.
+      </p>
+    </article>
+
+    <article class="surface-card p-6">
+      <h2 class="text-xl font-extrabold">Infrastructure</h2>
+      <p class="mt-3 text-sm leading-7" style="color:var(--muted);">
+        The stack is Python pipeline + Astro static delivery on Vercel. Data collection, probability calculation,
+        generation, and gates are orchestrated through a fail-fast daily runbook to keep publishing stable and auditable.
+      </p>
+    </article>
+
+    <article class="surface-card p-6">
+      <h2 class="text-xl font-extrabold">Methodology</h2>
+      <p class="mt-3 text-sm leading-7" style="color:var(--muted);">
+        Each page reports all-history and same-direction probabilities for T+1 and T+7 windows. Median return is shown
+        together with sample size to reduce outlier distortion. Freshness and confidence are explicitly labeled; low
+        sample observations are marked as low confidence.
+      </p>
+    </article>
+
+    <article class="surface-card p-6">
+      <h2 class="text-xl font-extrabold">Transparency & Disclaimer</h2>
+      <ul class="mt-3 space-y-2 text-sm" style="color:var(--muted);">
+        <li>• Data sources: FRED and yfinance.</li>
+        <li>• Operations: OpenClaw daily primary, GitHub Actions manual backup only.</li>
+        <li>• Update policy: T-1 cutoff with strict quality and accuracy gates before publishing.</li>
+        <li>• Not investment advice; educational and research use only.</li>
+      </ul>
+    </article>
+  </section>
+</Layout>

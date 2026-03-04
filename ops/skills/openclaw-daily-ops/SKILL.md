@@ -1,4 +1,4 @@
-# OpenClaw Daily Ops Skill (QuantMacro V2.6R)
+# OpenClaw Daily Ops Skill (QuantMacro V2.7R)
 
 ## Skill Intent
 Execute daily QuantMacro operations in fail-fast mode with evidence-first reporting.
@@ -17,15 +17,30 @@ Execute daily QuantMacro operations in fail-fast mode with evidence-first report
 1. Preflight
 - Validate current branch and `git status`
 - Confirm dependencies (`pip`, `npm`)
+- Validate source DB health (`var/data/macro_events.db`)
 
 2. Dry-run (always first)
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --as-of-date <as_of_date> --strict --dry-run
+python3 scripts/macro_pipeline/run_daily_ops.py \
+  --project-root . \
+  --as-of-date <as_of_date> \
+  --strict \
+  --dry-run \
+  --source-db-path var/data/macro_events.db \
+  --bootstrap-if-missing \
+  --seed-db-path data/macro_events.db
 ```
 
 3. Live-run (only if dry-run passed and `push=true`)
 ```bash
-python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --as-of-date <as_of_date> --strict --push
+python3 scripts/macro_pipeline/run_daily_ops.py \
+  --project-root . \
+  --as-of-date <as_of_date> \
+  --strict \
+  --push \
+  --source-db-path var/data/macro_events.db \
+  --bootstrap-if-missing \
+  --seed-db-path data/macro_events.db
 ```
 
 4. Post-check
@@ -37,6 +52,10 @@ python3 scripts/macro_pipeline/run_daily_ops.py --project-root . --as-of-date <a
 - Confirm:
   - quality violations `0`
   - accuracy mismatches `0`
+  - snapshot freshness contract passed
+  - conditional sample contract passed
+  - title diversity contract passed
+  - calendar fetch resilience contract passed
   - crawl check `0` violations
   - sitemap entrypoint remains healthy
 

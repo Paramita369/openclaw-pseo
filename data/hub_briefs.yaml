@@ -20,44 +20,44 @@ BTC_CPI:
 BTC_NFP:
   asset: "BTC"
   event_type: "NFP"
-  thesis: "BTC often responds to payroll surprises through USD liquidity expectations rather than labor data itself. Use the print as a volatility trigger and validate direction with rates and DXY reaction."
-  what_changed_recently: "Post-ETF positioning has reduced immediate panic selling on routine NFP beats."
-  risk_watchouts: "A sharp DXY spike can override crypto-specific momentum in the first hour."
+  thesis: "BTC often responds to payroll surprises through USD liquidity expectations rather than labor data itself. The first reaction is usually a rates-and-dollar impulse, while directional follow-through depends on whether the payroll print changes the expected Fed path. Treat the release as a volatility catalyst first, then align with confirmation from DXY, front-end Treasury yields, and futures basis before sizing."
+  what_changed_recently: "Post-ETF positioning has reduced immediate panic selling on routine NFP beats, but reaction speed has increased because macro desks and crypto venues now arbitrage the rates signal faster. This shortens the useful decision window and makes delayed entries less efficient."
+  risk_watchouts: "A sharp DXY spike can override crypto-specific momentum in the first hour, even when crypto order flow initially looks constructive. Revisions, wages, and unemployment-rate cross-signals can also flip the headline interpretation and invalidate the first impulse."
   execution_checklist:
     - "Track DXY and US2Y move in the first 15 minutes."
     - "Avoid full-size entries before volatility normalizes."
     - "Use stop placement outside event candle extremes."
   reviewed_at: "2026-03-03"
-  status: "draft"
-  indexing: "noindex"
+  status: "approved"
+  indexing: "index"
 
 BTC_FOMC:
   asset: "BTC"
   event_type: "FOMC"
-  thesis: "BTC tends to price the path of liquidity and real yields around FOMC, with press-conference tone frequently dominating the initial statement reaction."
-  what_changed_recently: "Rate-path sensitivity has increased versus headline policy-rate level."
-  risk_watchouts: "Whipsaw risk is highest between statement release and Powell Q&A."
+  thesis: "BTC tends to price the path of liquidity and real yields around FOMC, and the press-conference tone often dominates the initial statement reaction. The strongest setups appear when policy language, dot-plot implications, and rate futures repricing point in the same direction. When those signals diverge, BTC frequently whipsaws before selecting trend."
+  what_changed_recently: "Rate-path sensitivity has increased versus the headline policy-rate level, especially after ETF-driven participation expanded macro crossover flow. Markets now reprice expected cuts and real-yield trajectory faster than before, making post-statement context mapping more important than the headline alone."
+  risk_watchouts: "Whipsaw risk is highest between statement release and Powell Q&A, where a second narrative can reverse the first move. Funding-rate extremes, thin liquidity in correlated alt markets, and sudden bond-volatility spikes can magnify false breakouts during this window."
   execution_checklist:
     - "Map expected policy path versus futures pricing pre-event."
     - "Wait for confirmation after press conference starts."
     - "Scale entries in multiple tranches, not one fill."
   reviewed_at: "2026-03-03"
-  status: "draft"
-  indexing: "noindex"
+  status: "approved"
+  indexing: "index"
 
 ETH_CPI:
   asset: "ETH"
   event_type: "CPI"
-  thesis: "ETH reacts to inflation prints through both risk appetite and crypto-beta rotation, often showing larger relative swings than BTC during regime shifts."
-  what_changed_recently: "Layer-2 narrative flows can amplify post-CPI trend continuation."
-  risk_watchouts: "Network-specific headlines may contaminate pure macro interpretation."
+  thesis: "ETH reacts to inflation prints through both risk appetite and crypto-beta rotation, often showing larger relative swings than BTC during regime shifts. CPI surprises can trigger an initial valuation shock, then a second-stage rotation once traders assess yields, dollar trend, and Ethereum-specific participation. Execution quality improves when ETH/BTC, perp funding, and spot breadth confirm the same direction."
+  what_changed_recently: "Layer-2 and ETF-adjacent narrative flows can amplify post-CPI trend continuation, especially when macro surprise aligns with existing positioning. At the same time, cross-exchange liquidity has become more synchronized, causing both faster momentum and faster invalidation when macro context is misread."
+  risk_watchouts: "Network-specific headlines and protocol news can contaminate pure macro interpretation around release windows. If USD and front-end yields diverge, ETH can print misleading first-candle direction before reverting; leverage-driven liquidations then increase realized slippage and drawdown risk."
   execution_checklist:
     - "Compare ETH/BTC ratio around event open."
     - "Confirm spot-volume participation before breakout trades."
     - "Reduce leverage when spread volatility widens."
   reviewed_at: "2026-03-03"
-  status: "draft"
-  indexing: "noindex"
+  status: "approved"
+  indexing: "index"
 
 ETH_NFP:
   asset: "ETH"
@@ -160,16 +160,16 @@ QQQ_NFP:
 QQQ_FOMC:
   asset: "QQQ"
   event_type: "FOMC"
-  thesis: "QQQ generally trends with forward-rate expectations, and reactions are magnified when valuation is stretched before the meeting."
-  what_changed_recently: "Communication tone has become a bigger driver than rate level itself."
-  risk_watchouts: "A dovish statement can still fail if Q&A tone turns cautious."
+  thesis: "QQQ generally trends with forward-rate expectations, and reactions are magnified when valuation is stretched before the meeting. The highest-quality playbook setup occurs when statement language, dot-plot repricing, and Treasury curve response align. If the first move is unsupported by rates and sector breadth, follow-through probability falls sharply."
+  what_changed_recently: "Communication tone has become a bigger driver than the headline rate level itself, particularly in periods where terminal-rate uncertainty is lower and policy-path uncertainty is higher. This increases the importance of monitoring Powell Q&A and real-time curve repricing rather than reacting only to the initial statement."
+  risk_watchouts: "A dovish statement can still fail if Q&A tone turns cautious or if long-end yields reprice higher into the close. Mega-cap concentration can mask weak breadth, so index-level strength without broad participation often leads to late-session fade and poor risk-adjusted continuation."
   execution_checklist:
     - "Track implied cuts path before and after statement."
     - "Wait for confirmation after Q&A begins."
     - "Size positions based on realized volatility percentile."
   reviewed_at: "2026-03-03"
-  status: "draft"
-  indexing: "noindex"
+  status: "approved"
+  indexing: "index"
 
 SPY_CPI:
   asset: "SPY"

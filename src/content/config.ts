@@ -61,6 +61,12 @@ const blog = defineCollection({
     freshness_days: z.number().int().nonnegative(),
     freshness_status: z.enum(['fresh', 'stale']).optional(),
     data_last_updated_at: z.string().min(10).optional(),
+    index_tier: z.enum(['A', 'B', 'C']).optional(),
+    is_recent_90d: z.boolean().optional(),
+    canonical_target: z.enum(['self', 'hub', 'none']).optional(),
+    canonical_url: z.string().optional(),
+    robots_directive: z.enum(['index,follow', 'noindex,follow']).optional(),
+    in_blog_sitemap: z.boolean().optional(),
     tags: z.array(z.string()).min(1),
     metrics: z.object({
       sharpe_t7: z.number().finite(),

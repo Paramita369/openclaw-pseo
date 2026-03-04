@@ -3,7 +3,11 @@ node_modules/
 dist/
 logs/
 reports/
+data/macro_events.db
 data/macro_events.db-journal
+var/data/*.db
+var/data/*.db-journal
+var/backups/source-db/
 .venv/
 __pycache__/
 scripts/macro_pipeline/__pycache__/

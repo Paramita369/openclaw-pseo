@@ -72,11 +72,20 @@ CSV_EXTRA_COLUMNS = [
     "median_t1_pct",
     "median_t7_pct",
     "sample_size",
+    "conditional_sample_size",
     "asof_date",
     "freshness_days",
     "signal",
     "raw_signal_score",
     "robust_score",
+    "title_variant_id",
+    "title_template_key",
+    "index_tier",
+    "is_recent_90d",
+    "canonical_target",
+    "canonical_url",
+    "robots_directive",
+    "in_blog_sitemap",
     "confidence_level",
     "event_direction",
     "event_actual",
@@ -94,6 +103,34 @@ EVENT_FRESHNESS_THRESHOLDS = {
 
 HUB_ASSETS = ["BTC", "ETH", "GOLD", "QQQ", "SPY"]
 HUB_EVENTS = ["CPI", "NFP", "FOMC"]
+HUB_MIN_THESIS_LEN = 120
+HUB_MIN_CHANGED_LEN = 80
+HUB_MIN_RISK_LEN = 80
+HUB_MIN_CHECKLIST_ITEMS = 3
+HUB_MIN_CHECKLIST_ITEM_LEN = 12
+TITLE_TEMPLATE_POOLS: Dict[str, List[str]] = {
+    "CPI": [
+        "{ASSET} CPI Win Rate ({DATE}): Historical T+1/T+7 Probability",
+        "{ASSET} Reaction to US CPI ({DATE}): Quant Probability Breakdown",
+        "US CPI ({DATE}) and {ASSET}: Event-Driven Return Odds",
+        "{DATE} CPI Release: {ASSET} Directional Probability Snapshot",
+        "{ASSET} After CPI ({DATE}): Up/Down Odds and Median Returns",
+    ],
+    "NFP": [
+        "{ASSET} NFP Reaction ({DATE}): T+1/T+7 Up Probability",
+        "{DATE} Nonfarm Payrolls: {ASSET} Historical Win Rate",
+        "{ASSET} After NFP ({DATE}): Event Probability and Median Return",
+        "NFP Print ({DATE}) vs {ASSET}: Quantified Directional Odds",
+        "{ASSET} Post-NFP Setup ({DATE}): Historical Probability Lens",
+    ],
+    "FOMC": [
+        "{ASSET} After FOMC ({DATE}): Historical Signal & Probability",
+        "Fed Decision ({DATE}) and {ASSET}: Event-Driven Odds",
+        "{DATE} FOMC Meeting: {ASSET} T+1/T+7 Probability Profile",
+        "{ASSET} Post-FOMC Reaction ({DATE}): Quant Backtest Snapshot",
+        "FOMC Outcome ({DATE}) for {ASSET}: Up/Down Probability View",
+    ],
+}
 
 
 @dataclass
@@ -461,11 +498,35 @@ def robust_penalty_breakdown(
     return breakdown, total
 
 
+def resolve_index_tier(*, sample_size: int, freshness_status_value: str, quality: int) -> str:
+    if sample_size >= 20 and freshness_status_value == "fresh" and quality >= 80:
+        return "A"
+    if sample_size >= 8 and quality >= 60:
+        return "B"
+    return "C"
+
+
 def parse_int(value: object, fallback: int = 0) -> int:
     number = parse_float(value)
     if number is None:
         return fallback
     return int(round(number))
+
+
+def deterministic_title(
+    *,
+    slug: str,
+    asset: str,
+    event_type: str,
+    event_date: str,
+) -> Tuple[str, int, str]:
+    templates = TITLE_TEMPLATE_POOLS.get(event_type, ["Historical Performance of {ASSET} After {EVENT} ({DATE})"])
+    payload = {"slug": slug, "event_type": event_type}
+    digest = stable_hash(payload)
+    variant_index = int(digest[:8], 16) % max(len(templates), 1)
+    template = templates[variant_index]
+    title = template.format(ASSET=asset, EVENT=event_type, DATE=event_date)
+    return title, variant_index + 1, f"{event_type.lower()}_{variant_index + 1}"
 
 
 def sort_date_rank(value: str) -> int:
@@ -705,12 +766,20 @@ def build_markdown(
     signal: str,
     raw_signal_score: float,
     robust_score: float,
+    title_variant_id: int,
+    title_template_key: str,
     penalty_breakdown: Dict[str, float],
     confidence_level: str,
     quality: int,
     sample_size: int,
     freshness_days: int,
     freshness_status_value: str,
+    index_tier: str,
+    is_recent_90d: bool,
+    canonical_target: str,
+    canonical_url: str,
+    robots_directive: str,
+    in_blog_sitemap: bool,
     data_last_updated_at: str,
     metrics: Dict[str, float],
     probabilities: Dict[str, Any],
@@ -737,6 +806,8 @@ def build_markdown(
 title: "{title}"
 description: "Historical probability profile for {asset} around {event_type} events (T+1/T+7)."
 pubDate: "{publish_date}"
+title_variant_id: {title_variant_id}
+title_template_key: "{title_template_key}"
 event_type: "{event_type}"
 event_label: "{event_label}"
 event_slug: "{event_slug}"
@@ -757,6 +828,12 @@ quality_score: {quality}
 sample_size: {sample_size}
 freshness_days: {freshness_days}
 freshness_status: "{freshness_status_value}"
+index_tier: "{index_tier}"
+is_recent_90d: {str(bool(is_recent_90d)).lower()}
+canonical_target: "{canonical_target}"
+canonical_url: "{canonical_url}"
+robots_directive: "{robots_directive}"
+in_blog_sitemap: {str(bool(in_blog_sitemap)).lower()}
 data_last_updated_at: "{data_last_updated_at}"
 event_direction: "{event_direction}"
 event_actual: {event_actual}
@@ -1068,9 +1145,37 @@ def normalize_hub_indexing(status: str, value: object) -> str:
     return "index" if status == "approved" else "noindex"
 
 
+def is_hub_content_strong(brief: Dict[str, Any]) -> bool:
+    thesis = str(brief.get("thesis", "")).strip()
+    changed = str(brief.get("what_changed_recently", "")).strip()
+    risk = str(brief.get("risk_watchouts", "")).strip()
+    checklist_raw = brief.get("execution_checklist")
+    checklist = checklist_raw if isinstance(checklist_raw, list) else []
+
+    if len(thesis) < HUB_MIN_THESIS_LEN:
+        return False
+    if len(changed) < HUB_MIN_CHANGED_LEN:
+        return False
+    if len(risk) < HUB_MIN_RISK_LEN:
+        return False
+    if len(checklist) < HUB_MIN_CHECKLIST_ITEMS:
+        return False
+    for item in checklist:
+        if len(str(item or "").strip()) < HUB_MIN_CHECKLIST_ITEM_LEN:
+            return False
+    return True
+
+
 def load_playbook_hubs(project_root: Path, default_date: str) -> List[Dict[str, str]]:
     fallback = [
-        {"asset": asset, "event": event, "lastmod": default_date, "status": "draft", "indexing": "noindex"}
+        {
+            "asset": asset,
+            "event": event,
+            "lastmod": default_date,
+            "status": "draft",
+            "indexing": "noindex",
+            "content_depth_pass": "false",
+        }
         for asset in HUB_ASSETS
         for event in HUB_EVENTS
     ]
@@ -1100,6 +1205,7 @@ def load_playbook_hubs(project_root: Path, default_date: str) -> List[Dict[str, 
             reviewed_norm = reviewed if re.match(r"^\d{4}-\d{2}-\d{2}$", reviewed) else default_date
             status = normalize_hub_status(brief.get("status") if isinstance(brief, dict) else None)
             indexing = normalize_hub_indexing(status, brief.get("indexing") if isinstance(brief, dict) else None)
+            content_depth_pass = is_hub_content_strong(brief) if isinstance(brief, dict) else False
             items.append(
                 {
                     "asset": asset,
@@ -1107,6 +1213,7 @@ def load_playbook_hubs(project_root: Path, default_date: str) -> List[Dict[str, 
                     "lastmod": reviewed_norm,
                     "status": status,
                     "indexing": indexing,
+                    "content_depth_pass": "true" if content_depth_pass else "false",
                 }
             )
     return items
@@ -1123,10 +1230,18 @@ def generate_dynamic_sitemaps(
     ensure_dir(public_dir)
     today = (normalize_db_timestamp(build_timestamp) or datetime.now(timezone.utc).isoformat())[:10]
     playbook_hubs = load_playbook_hubs(project_root=project_root, default_date=today)
-    indexable_playbook_hubs = [item for item in playbook_hubs if str(item.get("indexing", "")).lower() == "index"]
-    slugs = sorted(path.stem for path in output_dir.glob("*.md"))
-
+    indexable_playbook_hubs = [
+        item
+        for item in playbook_hubs
+        if str(item.get("indexing", "")).lower() == "index" and str(item.get("content_depth_pass", "")).lower() == "true"
+    ]
     pages_manifest = manifest.get("pages", {}) if isinstance(manifest.get("pages"), dict) else {}
+    slugs = sorted(path.stem for path in output_dir.glob("*.md"))
+    sitemap_blog_slugs = [
+        slug
+        for slug in slugs
+        if bool((pages_manifest.get(slug) or {}).get("in_blog_sitemap", False))
+    ]
 
     def slug_lastmod(slug: str) -> str:
         page = pages_manifest.get(slug) or {}
@@ -1163,7 +1278,7 @@ def generate_dynamic_sitemaps(
         if event in slugs_by_event:
             slugs_by_event[event].append(slug)
 
-    blog_root_lastmod = max_lastmod(slugs)
+    blog_root_lastmod = max_lastmod(sitemap_blog_slugs or slugs)
     events_root_lastmod = max([max_lastmod(slugs_by_event[event]) for event in events], default=today)
     playbooks_root_lastmod = max((item["lastmod"] for item in indexable_playbook_hubs), default=today)
     home_lastmod = max(blog_root_lastmod, events_root_lastmod, playbooks_root_lastmod)
@@ -1174,6 +1289,7 @@ def generate_dynamic_sitemaps(
         {"loc": f"{domain}/events", "lastmod": events_root_lastmod, "changefreq": "daily", "priority": "0.9"},
         {"loc": f"{domain}/playbooks", "lastmod": playbooks_root_lastmod, "changefreq": "daily", "priority": "0.88"},
         {"loc": f"{domain}/blog", "lastmod": blog_root_lastmod, "changefreq": "daily", "priority": "0.85"},
+        {"loc": f"{domain}/about", "lastmod": today, "changefreq": "weekly", "priority": "0.82"},
     ]
     write_urlset(public_dir / "sitemap-core.xml", core_entries)
 
@@ -1213,8 +1329,8 @@ def generate_dynamic_sitemaps(
     chunk_size = 1000
     blog_files: List[str] = []
     file_lastmods: Dict[str, str] = {}
-    for idx in range(0, len(slugs), chunk_size):
-        chunk = slugs[idx : idx + chunk_size]
+    for idx in range(0, len(sitemap_blog_slugs), chunk_size):
+        chunk = sitemap_blog_slugs[idx : idx + chunk_size]
         file_index = idx // chunk_size + 1
         filename = f"sitemap-blog-{file_index}.xml"
         blog_files.append(filename)
@@ -1338,9 +1454,6 @@ def process_row(
     except ValueError:
         freshness_days = 0
 
-    raw_freshness = parse_float(row.get("freshness_days"))
-    if raw_freshness is not None:
-        freshness_days = max(int(round(raw_freshness)), 0)
     freshness_status_value = freshness_status(event_type, freshness_days)
 
     summary = fetch_event_distribution(
@@ -1465,8 +1578,38 @@ def process_row(
 
     quality = quality_score(raw_t1, raw_t7, raw_vol, probabilities["conditional"]["sample_size"])
     offer_key = to_offer_key(asset, context.offers_config)
+    index_tier = resolve_index_tier(
+        sample_size=probabilities["sample_size"],
+        freshness_status_value=freshness_status_value,
+        quality=quality,
+    )
+    is_recent_90d = freshness_days <= 90
+    default_domain = str(context.offers_config.get("default_domain", "quantmacro.vercel.app")).strip() or "quantmacro.vercel.app"
+    site_domain = default_domain if default_domain.startswith("http") else f"https://{default_domain}"
+    canonical_self_url = f"{site_domain}/blog/{slug}"
+    canonical_hub_url = f"{site_domain}/playbooks/{asset.lower()}/{event_type.lower()}"
+    if index_tier == "C":
+        canonical_target = "none"
+        canonical_url = ""
+        robots_directive = "noindex,follow"
+        in_blog_sitemap = False
+    elif is_recent_90d:
+        canonical_target = "self"
+        canonical_url = canonical_self_url
+        robots_directive = "index,follow"
+        in_blog_sitemap = True
+    else:
+        canonical_target = "hub"
+        canonical_url = canonical_hub_url
+        robots_directive = "index,follow"
+        in_blog_sitemap = False
 
-    title = f"Historical Performance of {asset} After {event_type} ({event_date})"
+    title, title_variant_id, title_template_key = deterministic_title(
+        slug=slug,
+        asset=asset,
+        event_type=event_type,
+        event_date=event_date,
+    )
     event_label = event_type
     event_slug = event_type.lower()
     asof_date = asof_cutoff
@@ -1499,10 +1642,18 @@ def process_row(
         "signal": signal,
         "raw_signal_score": raw_signal_score,
         "robust_score": robust_score,
+        "title_variant_id": title_variant_id,
+        "title_template_key": title_template_key,
         "penalty_breakdown": penalty_breakdown,
         "confidence_level": confidence_level,
         "quality": quality,
         "offer_key": offer_key,
+        "index_tier": index_tier,
+        "is_recent_90d": is_recent_90d,
+        "canonical_target": canonical_target,
+        "canonical_url": canonical_url,
+        "robots_directive": robots_directive,
+        "in_blog_sitemap": in_blog_sitemap,
         "asof_date": asof_date,
         "event_direction": event_direction,
         "event_actual": event_actual,
@@ -1535,12 +1686,20 @@ def process_row(
             signal=signal,
             raw_signal_score=raw_signal_score,
             robust_score=robust_score,
+            title_variant_id=title_variant_id,
+            title_template_key=title_template_key,
             penalty_breakdown=penalty_breakdown,
             confidence_level=confidence_level,
             quality=quality,
             sample_size=probabilities["sample_size"],
             freshness_days=freshness_days,
             freshness_status_value=freshness_status_value,
+            index_tier=index_tier,
+            is_recent_90d=is_recent_90d,
+            canonical_target=canonical_target,
+            canonical_url=canonical_url,
+            robots_directive=robots_directive,
+            in_blog_sitemap=in_blog_sitemap,
             data_last_updated_at=normalized_data_last_updated_at,
             metrics=metrics,
             probabilities=probabilities,
@@ -1590,6 +1749,12 @@ def process_row(
         "lastmod_metric_signature": current_metric_signature,
         "lastmod_decision_reason": lastmod_decision_reason,
         "freshness_status": freshness_status_value,
+        "index_tier": index_tier,
+        "is_recent_90d": is_recent_90d,
+        "canonical_target": canonical_target,
+        "canonical_url": canonical_url,
+        "robots_directive": robots_directive,
+        "in_blog_sitemap": in_blog_sitemap,
         "created_at": created_at,
         "quality_score": quality,
         "offer_key": offer_key,
@@ -1597,6 +1762,8 @@ def process_row(
         "signal_score": raw_signal_score,
         "raw_signal_score": raw_signal_score,
         "robust_score": robust_score,
+        "title_variant_id": title_variant_id,
+        "title_template_key": title_template_key,
         "penalty_breakdown": penalty_breakdown,
         "sample_size": probabilities["sample_size"],
         "related_count": len(related_events),
@@ -1628,11 +1795,20 @@ def process_row(
     row["median_t1_pct"] = str(t1_window["median"])
     row["median_t7_pct"] = str(t7_window["median"])
     row["sample_size"] = str(probabilities["sample_size"])
+    row["conditional_sample_size"] = str(probabilities["conditional"]["sample_size"])
     row["asof_date"] = asof_date
     row["freshness_days"] = str(freshness_days)
     row["signal"] = signal
     row["raw_signal_score"] = str(raw_signal_score)
     row["robust_score"] = str(robust_score)
+    row["title_variant_id"] = str(title_variant_id)
+    row["title_template_key"] = title_template_key
+    row["index_tier"] = index_tier
+    row["is_recent_90d"] = "true" if is_recent_90d else "false"
+    row["canonical_target"] = canonical_target
+    row["canonical_url"] = canonical_url
+    row["robots_directive"] = robots_directive
+    row["in_blog_sitemap"] = "true" if in_blog_sitemap else "false"
     row["confidence_level"] = confidence_level
     row["event_direction"] = event_direction
     row["event_actual"] = str(event_actual if event_actual is not None else "")

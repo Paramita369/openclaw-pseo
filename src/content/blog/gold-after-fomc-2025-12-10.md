@@ -1,7 +1,9 @@
 ---
-title: "Historical Performance of GOLD After FOMC (2025-12-10)"
+title: "2025-12-10 FOMC Meeting: GOLD T+1/T+7 Probability Profile"
 description: "Historical probability profile for GOLD around FOMC events (T+1/T+7)."
 pubDate: "2026-03-04"
+title_variant_id: 3
+title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
@@ -10,19 +12,25 @@ asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
-raw_signal_score: 11.13
-robust_score: 11.13
+raw_signal_score: 22.0
+robust_score: 18.0
 penalties:
-  sample: 0.0
+  sample: 4.0
   freshness: 0.0
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
-sample_size: 23
+quality_score: 60
+sample_size: 9
 freshness_days: 83
 freshness_status: "fresh"
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+index_tier: "B"
+is_recent_90d: true
+canonical_target: "self"
+canonical_url: "https://quantmacro.vercel.app/blog/gold-after-fomc-2025-12-10"
+robots_directive: "index,follow"
+in_blog_sitemap: true
+data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
 event_direction: "flat"
 event_actual: 4.0
 event_previous: 4.0
@@ -31,43 +39,42 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["gold", "fomc", "event-probability", "general"]
 metrics:
-  sharpe_t7: 2.43
+  sharpe_t7: 4.54
   mdd_t7: 0.0
-  volatility: 1.48
-  impact_t1_pct: 2.12
-  impact_t7_pct: 3.6
+  volatility: 0.13
+  impact_t1_pct: 0.72
+  impact_t7_pct: 0.59
 probabilities:
-  sample_size: 23
+  sample_size: 9
   t1:
-    up: 69.57
-    down: 30.43
-    median: 0.34
-    mean: 0.24
-    sample: 23
+    up: 88.89
+    down: 11.11
+    median: 0.83
+    mean: 0.72
+    sample: 9
   t7:
-    up: 56.52
-    down: 43.48
+    up: 66.67
+    down: 33.33
     median: 0.9
-    mean: 0.05
-    sample: 23
+    mean: 0.59
+    sample: 9
   conditional:
     basis: "event_direction"
     direction: "flat"
-    sample_size: 17
+    sample_size: 9
     t1:
-      up: 70.59
-      down: 29.41
-      median: 0.32
-      mean: 0.31
-      sample: 17
+      up: 88.89
+      down: 11.11
+      median: 0.83
+      mean: 0.72
+      sample: 9
     t7:
-      up: 52.94
-      down: 47.06
-      median: 0.15
-      mean: -0.16
-      sample: 17
-related_events: [{"slug": "gold-after-fomc-2024-01-30", "title": "GOLD After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 1.61, "median_t7_pct": 0.15, "sample_size": 0}, {"slug": "gold-after-fomc-2026-01-28", "title": "GOLD After FOMC (2026-01-28): Historical T+1/T+7 Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -7.19, "sample_size": 0}, {"slug": "gold-after-fomc-2025-12-11", "title": "GOLD After FOMC (2025-12-11): Historical T+1/T+7 Probability", "event_date": "2025-12-11", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.26, "sample_size": 0}]
-chartData: [{"time": "2025-12-08", "open": 4205.5, "high": 4215.8, "low": 4175.5, "close": 4187.2}, {"time": "2025-12-09", "open": 4190.7, "high": 4219.7, "low": 4177.7, "close": 4206.7}, {"time": "2025-12-10", "open": 4209.0, "high": 4234.5, "low": 4183.6, "close": 4196.4}, {"time": "2025-12-11", "open": 4224.0, "high": 4286.9, "low": 4214.3, "close": 4285.5}, {"time": "2025-12-12", "open": 4276.4, "high": 4355.0, "low": 4260.0, "close": 4300.1}, {"time": "2025-12-15", "open": 4308.3, "high": 4349.2, "low": 4292.9, "close": 4306.7}, {"time": "2025-12-16", "open": 4270.5, "high": 4321.4, "low": 4270.5, "close": 4304.5}, {"time": "2025-12-17", "open": 4308.5, "high": 4351.4, "low": 4308.5, "close": 4347.5}]
+      up: 66.67
+      down: 33.33
+      median: 0.9
+      mean: 0.59
+      sample: 9
+related_events: [{"slug": "gold-after-fomc-2024-01-30", "title": "2024-01-30 FOMC Meeting: GOLD T+1/T+7 Probability Profile", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 1.61, "median_t7_pct": 0.9, "sample_size": 9}, {"slug": "gold-after-fomc-2026-01-28", "title": "GOLD After FOMC (2026-01-28): Historical Signal & Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.9, "sample_size": 9}, {"slug": "gold-after-fomc-2025-10-29", "title": "2025-10-29 FOMC Meeting: GOLD T+1/T+7 Probability Profile", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.9, "sample_size": 9}]
 ---
 
 ## Event Snapshot
@@ -77,7 +84,7 @@ chartData: [{"time": "2025-12-08", "open": 4205.5, "high": 4215.8, "low": 4175.5
 - Event date: **2025-12-10**
 - As-of date (T-1): **2026-03-03**
 - Freshness age: **83 days**
-- Sample size (all-history): **23**
+- Sample size (all-history): **9**
 
 ## Event Outcome
 
@@ -88,25 +95,25 @@ chartData: [{"time": "2025-12-08", "open": 4205.5, "high": 4215.8, "low": 4175.5
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 69.57% | 30.43% | 0.34% | 0.24% | 23 |
-| T+7 | 56.52% | 43.48% | 0.9% | 0.05% | 23 |
+| T+1 | 88.89% | 11.11% | 0.83% | 0.72% | 9 |
+| T+7 | 66.67% | 33.33% | 0.9% | 0.59% | 9 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 70.59% | 29.41% | 0.32% | 0.31% | 17 |
-| T+7 | 52.94% | 47.06% | 0.15% | -0.16% | 17 |
+| T+1 | 88.89% | 11.11% | 0.83% | 0.72% | 9 |
+| T+7 | 66.67% | 33.33% | 0.9% | 0.59% | 9 |
 
 ## Historical Distribution Summary
 
-When FOMC was **FLAT**, GOLD T+1 up probability was **70.59%** (n=17).
+When FOMC was **FLAT**, GOLD T+1 up probability was **88.89%** (n=9).
 
-When FOMC was **FLAT**, GOLD T+7 up probability was **52.94%** (n=17).
+When FOMC was **FLAT**, GOLD T+7 up probability was **66.67%** (n=9).
 
-Same-direction T+7 median return: **0.15%**.
+Same-direction T+7 median return: **0.9%**.
 
-For GOLD, historical FOMC windows show all-history T+1 up probability of 69.57% and T+7 up probability of 56.52%. When FOMC printed Flat versus previous, T+1 up probability was 70.59% and T+7 up probability was 52.94% across 17 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
+For GOLD, historical FOMC windows show all-history T+1 up probability of 88.89% and T+7 up probability of 66.67%. When FOMC printed Flat versus previous, T+1 up probability was 88.89% and T+7 up probability was 66.67% across 9 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

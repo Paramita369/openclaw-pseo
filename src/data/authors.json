@@ -1,0 +1,20 @@
+{
+  "defaultAuthorKey": "paramita",
+  "authors": [
+    {
+      "key": "paramita",
+      "name": "Paramita",
+      "jobTitle": "Quantitative Trader & Senior IT Officer",
+      "url": "https://quantmacro.vercel.app/about",
+      "sameAs": [
+        "https://github.com/Paramita369"
+      ],
+      "description": "Builds and operates QuantMacro event-driven probability research with a reliability-first automation workflow.",
+      "credentials": [
+        "10+ years of market and trading system experience",
+        "Designs Python-based data pipelines and quality gates",
+        "Runs OpenClaw daily operations for static-first pSEO publishing"
+      ]
+    }
+  ]
+}
