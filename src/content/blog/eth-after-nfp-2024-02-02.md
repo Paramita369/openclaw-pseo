@@ -1,12 +1,14 @@
 ---
-title: "Historical Performance of ETH After NFP (2024-02-02)"
+title: "2024-02-02 Nonfarm Payrolls: ETH Historical Win Rate"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
+title_variant_id: 2
+title_template_key: "nfp_2"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-02-02"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Bullish"
@@ -20,9 +22,15 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 13
-freshness_days: 759
+freshness_days: 760
 freshness_status: "stale"
-data_last_updated_at: "2026-03-03T14:52:49+00:00"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/eth/nfp"
+robots_directive: "index,follow"
+in_blog_sitemap: false
+data_last_updated_at: "2026-03-04T00:01:00+00:00"
 event_direction: "up"
 event_actual: 157238.0
 event_previous: 157032.0
@@ -66,7 +74,7 @@ probabilities:
       median: 3.01
       mean: 3.07
       sample: 12
-related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "eth-after-nfp-2026-01-02", "title": "ETH After NFP (2026-01-02): Historical T+1/T+7 Probability", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "eth-after-nfp-2025-12-05", "title": "ETH After NFP (2025-12-05): Historical T+1/T+7 Probability", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH NFP Reaction (2026-02-06): T+1/T+7 Up Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}, {"slug": "eth-after-nfp-2026-01-02", "title": "2026-01-02 Nonfarm Payrolls: ETH Historical Win Rate", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}, {"slug": "eth-after-nfp-2025-12-05", "title": "ETH Post-NFP Setup (2025-12-05): Historical Probability Lens", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}]
 ---
 
 ## Event Snapshot
@@ -74,8 +82,8 @@ related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH After NFP (2
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2024-02-02**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **759 days**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **760 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome

@@ -71,6 +71,46 @@ const indexing = String(brief?.indexing || (status === 'approved' ? 'index' : 'n
 const robotsDirective = indexing === 'index' ? 'index,follow' : 'noindex,follow';
 const reviewedYear = String(reviewedAt).match(/^\d{4}/)?.[0] || String(new Date().getUTCFullYear());
 const hubTitle = `${asset} ${eventType} Probability Playbook & Execution Guide (${reviewedYear} Update)`;
+const siteUrl = 'https://quantmacro.vercel.app';
+const hubPath = `/playbooks/${asset.toLowerCase()}/${eventType.toLowerCase()}`;
+const hubUrl = `${siteUrl}${hubPath}`;
+const hubVisualPayload = crossEventRows.map((row) => {
+  const t1Up = Number(row.t1Up);
+  const t7Up = Number(row.t7Up);
+  const t7Median = Number(row.t7Median);
+  const sample = Number(row.sample);
+  return {
+    event: String(row.event || '').toUpperCase(),
+    eventDate: String(row.eventDate || '--'),
+    t1Up: Number.isFinite(t1Up) ? t1Up : null,
+    t7Up: Number.isFinite(t7Up) ? t7Up : null,
+    t7Median: Number.isFinite(t7Median) ? t7Median : null,
+    sample: Number.isFinite(sample) ? sample : null,
+    slug: String(row.slug || ''),
+  };
+});
+const reviewedDateIso = /^\d{4}-\d{2}-\d{2}$/.test(String(reviewedAt))
+  ? String(reviewedAt)
+  : new Date().toISOString().slice(0, 10);
+const schemaExtras = [
+  {
+    '@type': 'Dataset',
+    '@id': `${hubUrl}#dataset`,
+    name: `${asset} ${eventType} Event Probability Dataset`,
+    description: `Historical CPI/NFP/FOMC probability and median return observations for ${asset}.`,
+    url: hubUrl,
+    creator: { '@id': `${siteUrl}/#organization` },
+    isBasedOn: ['https://fred.stlouisfed.org/', 'https://finance.yahoo.com/'],
+    temporalCoverage: `${reviewedDateIso}/${reviewedDateIso}`,
+    dateModified: reviewedDateIso,
+    variableMeasured: [
+      { '@type': 'PropertyValue', name: 'T+1 Up Probability' },
+      { '@type': 'PropertyValue', name: 'T+7 Up Probability' },
+      { '@type': 'PropertyValue', name: 'T+7 Median Return' },
+      { '@type': 'PropertyValue', name: 'Sample Size' },
+    ],
+  },
+];
 ---
 
 <Layout
@@ -78,6 +118,7 @@ const hubTitle = `${asset} ${eventType} Probability Playbook & Execution Guide (
   description={`${asset} × ${eventType} human-guided playbook with thesis, risk watchouts, and execution checklist.`}
   breadcrumbs={breadcrumbs}
   robotsDirective={robotsDirective}
+  schemaExtras={schemaExtras}
 >
   <section class="hero-panel py-14">
     <div class="max-w-5xl mx-auto px-4">
@@ -118,6 +159,16 @@ const hubTitle = `${asset} ${eventType} Probability Playbook & Execution Guide (
         Compare latest CPI/NFP/FOMC observations for {asset}. This section is unique to Hub pages and is used to avoid
         one-event narrative bias.
       </p>
+      <div class="mt-4 grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div class="rounded-xl border p-3" style="border-color:var(--border);background:var(--surface);">
+          <h3 class="text-sm font-bold mb-2">Probability Overview (T+1/T+7)</h3>
+          <div id="hub-prob-chart" style="height:280px;"></div>
+        </div>
+        <div class="rounded-xl border p-3" style="border-color:var(--border);background:var(--surface);">
+          <h3 class="text-sm font-bold mb-2">T+7 Median Return</h3>
+          <div id="hub-median-chart" style="height:280px;"></div>
+        </div>
+      </div>
       <div class="mt-4 overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
@@ -132,7 +183,7 @@ const hubTitle = `${asset} ${eventType} Probability Playbook & Execution Guide (
             </tr>
           </thead>
           <tbody>
-            {crossEventRows.map((row) => (
+            {hubVisualPayload.map((row) => (
               <tr class="border-t" style="border-color:var(--border);">
                 <td class="py-2 pr-3 font-semibold">{row.event}</td>
                 <td class="py-2 pr-3">{row.eventDate}</td>
@@ -152,6 +203,37 @@ const hubTitle = `${asset} ${eventType} Probability Playbook & Execution Guide (
           </tbody>
         </table>
       </div>
+      <noscript>
+        <div class="mt-3">
+          <p class="text-xs" style="color:var(--muted);">
+            JavaScript is disabled. Fallback data table:
+          </p>
+          <table class="w-full text-xs mt-2">
+            <thead>
+              <tr style="color:var(--muted);">
+                <th class="text-left py-1 pr-2">Event</th>
+                <th class="text-left py-1 pr-2">Date</th>
+                <th class="text-left py-1 pr-2">T+1 P(up)</th>
+                <th class="text-left py-1 pr-2">T+7 P(up)</th>
+                <th class="text-left py-1 pr-2">T+7 Median</th>
+                <th class="text-left py-1">Sample</th>
+              </tr>
+            </thead>
+            <tbody>
+              {hubVisualPayload.map((row) => (
+                <tr>
+                  <td class="py-1 pr-2">{row.event}</td>
+                  <td class="py-1 pr-2">{row.eventDate}</td>
+                  <td class="py-1 pr-2">{row.t1Up ?? '--'}{row.t1Up !== null ? '%' : ''}</td>
+                  <td class="py-1 pr-2">{row.t7Up ?? '--'}{row.t7Up !== null ? '%' : ''}</td>
+                  <td class="py-1 pr-2">{row.t7Median ?? '--'}{row.t7Median !== null ? '%' : ''}</td>
+                  <td class="py-1">{row.sample ?? '--'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </noscript>
     </article>
 
     <article class="surface-card p-6">
@@ -178,4 +260,61 @@ const hubTitle = `${asset} ${eventType} Probability Playbook & Execution Guide (
 
     <TrustSignals dataLastUpdatedAt={reviewedAt} confidenceLevel={status === 'draft' ? 'low' : 'normal'} />
   </section>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js" defer></script>
+  <script is:inline define:vars={{ hubVisualPayload }}>
+    (() => {
+      const rows = Array.isArray(hubVisualPayload) ? hubVisualPayload : [];
+      if (!rows.length) return;
+
+      const render = () => {
+        if (!window.echarts) return false;
+        const probEl = document.getElementById('hub-prob-chart');
+        const medianEl = document.getElementById('hub-median-chart');
+        if (!probEl || !medianEl) return true;
+
+        const labels = rows.map((row) => row.event);
+        const t1 = rows.map((row) => (typeof row.t1Up === 'number' ? row.t1Up : null));
+        const t7 = rows.map((row) => (typeof row.t7Up === 'number' ? row.t7Up : null));
+        const median = rows.map((row) => (typeof row.t7Median === 'number' ? row.t7Median : null));
+
+        const probChart = window.echarts.init(probEl);
+        probChart.setOption({
+          tooltip: { trigger: 'axis' },
+          legend: { data: ['T+1 P(up)', 'T+7 P(up)'] },
+          xAxis: { type: 'category', data: labels },
+          yAxis: { type: 'value', min: 0, max: 100, axisLabel: { formatter: '{value}%' } },
+          series: [
+            { name: 'T+1 P(up)', type: 'bar', data: t1 },
+            { name: 'T+7 P(up)', type: 'bar', data: t7 },
+          ],
+        });
+
+        const medianChart = window.echarts.init(medianEl);
+        medianChart.setOption({
+          tooltip: { trigger: 'axis' },
+          xAxis: { type: 'category', data: labels },
+          yAxis: { type: 'value', axisLabel: { formatter: '{value}%' } },
+          series: [{ name: 'T+7 Median', type: 'line', smooth: true, data: median }],
+        });
+        return true;
+      };
+
+      const tryRender = () => {
+        if (render()) return;
+        let retry = 0;
+        const timer = setInterval(() => {
+          retry += 1;
+          if (render() || retry >= 30) {
+            clearInterval(timer);
+          }
+        }, 150);
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', tryRender, { once: true });
+      } else {
+        tryRender();
+      }
+    })();
+  </script>
 </Layout>

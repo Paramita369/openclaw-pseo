@@ -1,12 +1,14 @@
 ---
-title: "Historical Performance of QQQ After FOMC (2025-05-07)"
+title: "2025-05-07 FOMC Meeting: QQQ T+1/T+7 Probability Profile"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
+title_variant_id: 3
+title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-05-07"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -20,8 +22,14 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 9
-freshness_days: 299
+freshness_days: 300
 freshness_status: "stale"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/fomc"
+robots_directive: "index,follow"
+in_blog_sitemap: false
 data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
 event_direction: "flat"
 event_actual: 4.5
@@ -66,7 +74,7 @@ probabilities:
       median: 1.16
       mean: 1.03
       sample: 9
-related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "QQQ After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.07, "median_t7_pct": 0.54, "sample_size": 0}, {"slug": "qqq-after-fomc-2026-01-28", "title": "QQQ After FOMC (2026-01-28): Historical T+1/T+7 Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "qqq-after-fomc-2025-12-10", "title": "QQQ After FOMC (2025-12-10): Historical T+1/T+7 Probability", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and QQQ: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 2.07, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and QQQ: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2025-12-10", "title": "QQQ Post-FOMC Reaction (2025-12-10): Quant Backtest Snapshot", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}]
 ---
 
 ## Event Snapshot
@@ -74,8 +82,8 @@ related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "QQQ After FOMC 
 - Event: **FOMC**
 - Asset: **QQQ**
 - Event date: **2025-05-07**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **299 days**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **300 days**
 - Sample size (all-history): **9**
 
 ## Event Outcome

@@ -1,12 +1,14 @@
 ---
-title: "Historical Performance of QQQ After NFP (2025-12-05)"
+title: "2025-12-05 Nonfarm Payrolls: QQQ Historical Win Rate"
 description: "Historical probability profile for QQQ around NFP events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
+title_variant_id: 2
+title_template_key: "nfp_2"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-12-05"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -20,8 +22,14 @@ penalties:
 confidence_level: "normal"
 quality_score: 40
 sample_size: 13
-freshness_days: 87
+freshness_days: 88
 freshness_status: "stale"
+index_tier: "C"
+is_recent_90d: true
+canonical_target: "none"
+canonical_url: ""
+robots_directive: "noindex,follow"
+in_blog_sitemap: false
 data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
 event_direction: "up"
 event_actual: 158497.0
@@ -66,7 +74,7 @@ probabilities:
       median: 1.38
       mean: 1.81
       sample: 12
-related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "QQQ After NFP (2025-01-10): Historical T+1/T+7 Probability", "event_date": "2025-01-10", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.64, "median_t7_pct": 2.87, "sample_size": 0}, {"slug": "qqq-after-nfp-2024-12-06", "title": "QQQ After NFP (2024-12-06): Historical T+1/T+7 Probability", "event_date": "2024-12-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.77, "median_t7_pct": 0.77, "sample_size": 0}, {"slug": "qqq-after-nfp-2024-08-02", "title": "QQQ After NFP (2024-08-02): Historical T+1/T+7 Probability", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.35, "median_t7_pct": 0.37, "sample_size": 0}]
+related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "2025-01-10 Nonfarm Payrolls: QQQ Historical Win Rate", "event_date": "2025-01-10", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.64, "median_t7_pct": 1.51, "sample_size": 13}, {"slug": "qqq-after-nfp-2024-12-06", "title": "QQQ After NFP (2024-12-06): Event Probability and Median Return", "event_date": "2024-12-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.77, "median_t7_pct": 1.51, "sample_size": 13}, {"slug": "qqq-after-nfp-2024-08-02", "title": "QQQ After NFP (2024-08-02): Event Probability and Median Return", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.35, "median_t7_pct": 1.51, "sample_size": 13}]
 ---
 
 ## Event Snapshot
@@ -74,8 +82,8 @@ related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "QQQ After NFP (2
 - Event: **NFP**
 - Asset: **QQQ**
 - Event date: **2025-12-05**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **87 days**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **88 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome

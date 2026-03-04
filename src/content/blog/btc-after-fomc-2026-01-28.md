@@ -1,12 +1,14 @@
 ---
-title: "Historical Performance of BTC After FOMC (2026-01-28)"
+title: "FOMC Outcome (2026-01-28) for BTC: Up/Down Probability View"
 description: "Historical probability profile for BTC around FOMC events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
+title_variant_id: 5
+title_template_key: "fomc_5"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2026-01-28"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -20,8 +22,14 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 9
-freshness_days: 33
+freshness_days: 34
 freshness_status: "fresh"
+index_tier: "B"
+is_recent_90d: true
+canonical_target: "self"
+canonical_url: "https://quantmacro.vercel.app/blog/btc-after-fomc-2026-01-28"
+robots_directive: "index,follow"
+in_blog_sitemap: true
 data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
 event_direction: "flat"
 event_actual: 3.75
@@ -66,7 +74,7 @@ probabilities:
       median: 0.31
       mean: 1.12
       sample: 9
-related_events: [{"slug": "btc-after-fomc-2024-04-30", "title": "BTC After FOMC (2024-04-30): Historical T+1/T+7 Probability", "event_date": "2024-04-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 5.37, "median_t7_pct": 2.8, "sample_size": 0}, {"slug": "btc-after-fomc-2024-01-30", "title": "BTC After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.97, "median_t7_pct": 0.31, "sample_size": 0}, {"slug": "btc-after-fomc-2025-12-10", "title": "BTC After FOMC (2025-12-10): Historical T+1/T+7 Probability", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+related_events: [{"slug": "btc-after-fomc-2024-04-30", "title": "BTC After FOMC (2024-04-30): Historical Signal & Probability", "event_date": "2024-04-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 5.37, "median_t7_pct": 0.31, "sample_size": 9}, {"slug": "btc-after-fomc-2024-01-30", "title": "BTC Post-FOMC Reaction (2024-01-30): Quant Backtest Snapshot", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.97, "median_t7_pct": 0.31, "sample_size": 9}, {"slug": "btc-after-fomc-2025-12-10", "title": "Fed Decision (2025-12-10) and BTC: Event-Driven Odds", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.31, "sample_size": 9}]
 ---
 
 ## Event Snapshot
@@ -74,8 +82,8 @@ related_events: [{"slug": "btc-after-fomc-2024-04-30", "title": "BTC After FOMC 
 - Event: **FOMC**
 - Asset: **BTC**
 - Event date: **2026-01-28**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **33 days**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **34 days**
 - Sample size (all-history): **9**
 
 ## Event Outcome

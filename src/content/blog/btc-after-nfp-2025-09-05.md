@@ -1,12 +1,14 @@
 ---
-title: "Historical Performance of BTC After NFP (2025-09-05)"
+title: "BTC NFP Reaction (2025-09-05): T+1/T+7 Up Probability"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
+title_variant_id: 1
+title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-09-05"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -20,8 +22,14 @@ penalties:
 confidence_level: "normal"
 quality_score: 70
 sample_size: 13
-freshness_days: 178
+freshness_days: 179
 freshness_status: "stale"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/btc/nfp"
+robots_directive: "index,follow"
+in_blog_sitemap: false
 data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
 event_direction: "up"
 event_actual: 158548.0
@@ -66,7 +74,7 @@ probabilities:
       median: 1.07
       mean: 2.7
       sample: 12
-related_events: [{"slug": "btc-after-nfp-2026-02-06", "title": "BTC After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "btc-after-nfp-2026-01-02", "title": "BTC After NFP (2026-01-02): Historical T+1/T+7 Probability", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "btc-after-nfp-2025-12-05", "title": "BTC After NFP (2025-12-05): Historical T+1/T+7 Probability", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+related_events: [{"slug": "btc-after-nfp-2026-02-06", "title": "BTC Post-NFP Setup (2026-02-06): Historical Probability Lens", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.54, "sample_size": 13}, {"slug": "btc-after-nfp-2026-01-02", "title": "NFP Print (2026-01-02) vs BTC: Quantified Directional Odds", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.54, "sample_size": 13}, {"slug": "btc-after-nfp-2025-12-05", "title": "BTC Post-NFP Setup (2025-12-05): Historical Probability Lens", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.54, "sample_size": 13}]
 ---
 
 ## Event Snapshot
@@ -74,8 +82,8 @@ related_events: [{"slug": "btc-after-nfp-2026-02-06", "title": "BTC After NFP (2
 - Event: **NFP**
 - Asset: **BTC**
 - Event date: **2025-09-05**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **178 days**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **179 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome

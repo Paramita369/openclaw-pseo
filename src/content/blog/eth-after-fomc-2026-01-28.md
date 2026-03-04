@@ -1,12 +1,14 @@
 ---
-title: "Historical Performance of ETH After FOMC (2026-01-28)"
+title: "Fed Decision (2026-01-28) and ETH: Event-Driven Odds"
 description: "Historical probability profile for ETH around FOMC events (T+1/T+7)."
-pubDate: "2026-03-03"
+pubDate: "2026-03-04"
+title_variant_id: 2
+title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2026-01-28"
-asof_date: "2026-03-02"
+asof_date: "2026-03-03"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -20,8 +22,14 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 9
-freshness_days: 33
+freshness_days: 34
 freshness_status: "fresh"
+index_tier: "B"
+is_recent_90d: true
+canonical_target: "self"
+canonical_url: "https://quantmacro.vercel.app/blog/eth-after-fomc-2026-01-28"
+robots_directive: "index,follow"
+in_blog_sitemap: true
 data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
 event_direction: "flat"
 event_actual: 3.75
@@ -66,7 +74,7 @@ probabilities:
       median: -0.19
       mean: -0.1
       sample: 9
-related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH After FOMC (2024-01-30): Historical T+1/T+7 Probability", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 3.74, "median_t7_pct": 1.18, "sample_size": 0}, {"slug": "eth-after-fomc-2025-12-10", "title": "ETH After FOMC (2025-12-10): Historical T+1/T+7 Probability", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}, {"slug": "eth-after-fomc-2025-10-29", "title": "ETH After FOMC (2025-10-29): Historical T+1/T+7 Probability", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.0, "sample_size": 0}]
+related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH Post-FOMC Reaction (2024-01-30): Quant Backtest Snapshot", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 3.74, "median_t7_pct": -0.19, "sample_size": 9}, {"slug": "eth-after-fomc-2025-12-10", "title": "2025-12-10 FOMC Meeting: ETH T+1/T+7 Probability Profile", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.19, "sample_size": 9}, {"slug": "eth-after-fomc-2025-10-29", "title": "ETH After FOMC (2025-10-29): Historical Signal & Probability", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.19, "sample_size": 9}]
 ---
 
 ## Event Snapshot
@@ -74,8 +82,8 @@ related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH After FOMC 
 - Event: **FOMC**
 - Asset: **ETH**
 - Event date: **2026-01-28**
-- As-of date (T-1): **2026-03-02**
-- Freshness age: **33 days**
+- As-of date (T-1): **2026-03-03**
+- Freshness age: **34 days**
 - Sample size (all-history): **9**
 
 ## Event Outcome

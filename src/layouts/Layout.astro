@@ -9,6 +9,8 @@ const {
   frontmatter,
   breadcrumbs = [],
   robotsDirective = 'index,follow',
+  canonicalHref = undefined,
+  schemaExtras = [],
   authorKey = authorConfig.defaultAuthorKey || 'paramita',
   authorOverride = null,
 } = Astro.props;
@@ -18,6 +20,12 @@ const metaDesc =
   'Event-driven return probabilities across BTC, ETH, GOLD, QQQ, and SPY from historical CPI, NFP, and FOMC datasets.';
 const siteUrl = 'https://quantmacro.vercel.app';
 const currentUrl = Astro.url.href;
+const resolvedCanonicalHref =
+  canonicalHref === null
+    ? null
+    : (typeof canonicalHref === 'string' && canonicalHref.trim()
+        ? canonicalHref.trim()
+        : currentUrl);
 const ga4MeasurementId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID || '';
 const normalizedBreadcrumbs = Array.isArray(breadcrumbs)
   ? breadcrumbs
@@ -118,6 +126,13 @@ if (normalizedBreadcrumbs.length > 0) {
     })),
   });
 }
+if (Array.isArray(schemaExtras)) {
+  for (const extraNode of schemaExtras) {
+    if (extraNode && typeof extraNode === 'object' && !Array.isArray(extraNode)) {
+      graphNodes.push(extraNode);
+    }
+  }
+}
 const schemaGraph = {
   '@context': 'https://schema.org',
   '@graph': graphNodes,
@@ -133,7 +148,7 @@ const schemaGraph = {
     <title>{title} | QuantMacro</title>
     <meta name="description" content={metaDesc} />
     <meta name="robots" content={robotsDirective} />
-    <link rel="canonical" href={currentUrl} />
+    {resolvedCanonicalHref && <link rel="canonical" href={resolvedCanonicalHref} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <script is:inline>

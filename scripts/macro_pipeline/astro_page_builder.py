@@ -80,6 +80,12 @@ CSV_EXTRA_COLUMNS = [
     "robust_score",
     "title_variant_id",
     "title_template_key",
+    "index_tier",
+    "is_recent_90d",
+    "canonical_target",
+    "canonical_url",
+    "robots_directive",
+    "in_blog_sitemap",
     "confidence_level",
     "event_direction",
     "event_actual",
@@ -492,6 +498,14 @@ def robust_penalty_breakdown(
     return breakdown, total
 
 
+def resolve_index_tier(*, sample_size: int, freshness_status_value: str, quality: int) -> str:
+    if sample_size >= 20 and freshness_status_value == "fresh" and quality >= 80:
+        return "A"
+    if sample_size >= 8 and quality >= 60:
+        return "B"
+    return "C"
+
+
 def parse_int(value: object, fallback: int = 0) -> int:
     number = parse_float(value)
     if number is None:
@@ -760,6 +774,12 @@ def build_markdown(
     sample_size: int,
     freshness_days: int,
     freshness_status_value: str,
+    index_tier: str,
+    is_recent_90d: bool,
+    canonical_target: str,
+    canonical_url: str,
+    robots_directive: str,
+    in_blog_sitemap: bool,
     data_last_updated_at: str,
     metrics: Dict[str, float],
     probabilities: Dict[str, Any],
@@ -808,6 +828,12 @@ quality_score: {quality}
 sample_size: {sample_size}
 freshness_days: {freshness_days}
 freshness_status: "{freshness_status_value}"
+index_tier: "{index_tier}"
+is_recent_90d: {str(bool(is_recent_90d)).lower()}
+canonical_target: "{canonical_target}"
+canonical_url: "{canonical_url}"
+robots_directive: "{robots_directive}"
+in_blog_sitemap: {str(bool(in_blog_sitemap)).lower()}
 data_last_updated_at: "{data_last_updated_at}"
 event_direction: "{event_direction}"
 event_actual: {event_actual}
@@ -1209,9 +1235,13 @@ def generate_dynamic_sitemaps(
         for item in playbook_hubs
         if str(item.get("indexing", "")).lower() == "index" and str(item.get("content_depth_pass", "")).lower() == "true"
     ]
-    slugs = sorted(path.stem for path in output_dir.glob("*.md"))
-
     pages_manifest = manifest.get("pages", {}) if isinstance(manifest.get("pages"), dict) else {}
+    slugs = sorted(path.stem for path in output_dir.glob("*.md"))
+    sitemap_blog_slugs = [
+        slug
+        for slug in slugs
+        if bool((pages_manifest.get(slug) or {}).get("in_blog_sitemap", False))
+    ]
 
     def slug_lastmod(slug: str) -> str:
         page = pages_manifest.get(slug) or {}
@@ -1248,7 +1278,7 @@ def generate_dynamic_sitemaps(
         if event in slugs_by_event:
             slugs_by_event[event].append(slug)
 
-    blog_root_lastmod = max_lastmod(slugs)
+    blog_root_lastmod = max_lastmod(sitemap_blog_slugs or slugs)
     events_root_lastmod = max([max_lastmod(slugs_by_event[event]) for event in events], default=today)
     playbooks_root_lastmod = max((item["lastmod"] for item in indexable_playbook_hubs), default=today)
     home_lastmod = max(blog_root_lastmod, events_root_lastmod, playbooks_root_lastmod)
@@ -1299,8 +1329,8 @@ def generate_dynamic_sitemaps(
     chunk_size = 1000
     blog_files: List[str] = []
     file_lastmods: Dict[str, str] = {}
-    for idx in range(0, len(slugs), chunk_size):
-        chunk = slugs[idx : idx + chunk_size]
+    for idx in range(0, len(sitemap_blog_slugs), chunk_size):
+        chunk = sitemap_blog_slugs[idx : idx + chunk_size]
         file_index = idx // chunk_size + 1
         filename = f"sitemap-blog-{file_index}.xml"
         blog_files.append(filename)
@@ -1424,9 +1454,6 @@ def process_row(
     except ValueError:
         freshness_days = 0
 
-    raw_freshness = parse_float(row.get("freshness_days"))
-    if raw_freshness is not None:
-        freshness_days = max(int(round(raw_freshness)), 0)
     freshness_status_value = freshness_status(event_type, freshness_days)
 
     summary = fetch_event_distribution(
@@ -1551,6 +1578,31 @@ def process_row(
 
     quality = quality_score(raw_t1, raw_t7, raw_vol, probabilities["conditional"]["sample_size"])
     offer_key = to_offer_key(asset, context.offers_config)
+    index_tier = resolve_index_tier(
+        sample_size=probabilities["sample_size"],
+        freshness_status_value=freshness_status_value,
+        quality=quality,
+    )
+    is_recent_90d = freshness_days <= 90
+    default_domain = str(context.offers_config.get("default_domain", "quantmacro.vercel.app")).strip() or "quantmacro.vercel.app"
+    site_domain = default_domain if default_domain.startswith("http") else f"https://{default_domain}"
+    canonical_self_url = f"{site_domain}/blog/{slug}"
+    canonical_hub_url = f"{site_domain}/playbooks/{asset.lower()}/{event_type.lower()}"
+    if index_tier == "C":
+        canonical_target = "none"
+        canonical_url = ""
+        robots_directive = "noindex,follow"
+        in_blog_sitemap = False
+    elif is_recent_90d:
+        canonical_target = "self"
+        canonical_url = canonical_self_url
+        robots_directive = "index,follow"
+        in_blog_sitemap = True
+    else:
+        canonical_target = "hub"
+        canonical_url = canonical_hub_url
+        robots_directive = "index,follow"
+        in_blog_sitemap = False
 
     title, title_variant_id, title_template_key = deterministic_title(
         slug=slug,
@@ -1596,6 +1648,12 @@ def process_row(
         "confidence_level": confidence_level,
         "quality": quality,
         "offer_key": offer_key,
+        "index_tier": index_tier,
+        "is_recent_90d": is_recent_90d,
+        "canonical_target": canonical_target,
+        "canonical_url": canonical_url,
+        "robots_directive": robots_directive,
+        "in_blog_sitemap": in_blog_sitemap,
         "asof_date": asof_date,
         "event_direction": event_direction,
         "event_actual": event_actual,
@@ -1636,6 +1694,12 @@ def process_row(
             sample_size=probabilities["sample_size"],
             freshness_days=freshness_days,
             freshness_status_value=freshness_status_value,
+            index_tier=index_tier,
+            is_recent_90d=is_recent_90d,
+            canonical_target=canonical_target,
+            canonical_url=canonical_url,
+            robots_directive=robots_directive,
+            in_blog_sitemap=in_blog_sitemap,
             data_last_updated_at=normalized_data_last_updated_at,
             metrics=metrics,
             probabilities=probabilities,
@@ -1685,6 +1749,12 @@ def process_row(
         "lastmod_metric_signature": current_metric_signature,
         "lastmod_decision_reason": lastmod_decision_reason,
         "freshness_status": freshness_status_value,
+        "index_tier": index_tier,
+        "is_recent_90d": is_recent_90d,
+        "canonical_target": canonical_target,
+        "canonical_url": canonical_url,
+        "robots_directive": robots_directive,
+        "in_blog_sitemap": in_blog_sitemap,
         "created_at": created_at,
         "quality_score": quality,
         "offer_key": offer_key,
@@ -1733,6 +1803,12 @@ def process_row(
     row["robust_score"] = str(robust_score)
     row["title_variant_id"] = str(title_variant_id)
     row["title_template_key"] = title_template_key
+    row["index_tier"] = index_tier
+    row["is_recent_90d"] = "true" if is_recent_90d else "false"
+    row["canonical_target"] = canonical_target
+    row["canonical_url"] = canonical_url
+    row["robots_directive"] = robots_directive
+    row["in_blog_sitemap"] = "true" if in_blog_sitemap else "false"
     row["confidence_level"] = confidence_level
     row["event_direction"] = event_direction
     row["event_actual"] = str(event_actual if event_actual is not None else "")

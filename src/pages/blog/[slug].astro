@@ -21,7 +21,7 @@ const { Content } = await entry.render();
 const eventDate = entry.data.event_date || entry.slug.match(/(\d{4}-\d{2}-\d{2})$/)?.[1] || '--';
 const eventLabel = entry.data.event_label || entry.data.event_type || '--';
 const assetTag = String(entry.data.tags?.[0] || '').toUpperCase() || 'UNKNOWN';
-const displayTitle = `Historical Performance of ${assetTag} After ${eventLabel} (${eventDate})`;
+const displayTitle = entry.data.title || `Historical Performance of ${assetTag} After ${eventLabel} (${eventDate})`;
 const p = entry.data.probabilities || null;
 const t1 = p?.t1 || {};
 const t7 = p?.t7 || {};
@@ -65,9 +65,20 @@ const breadcrumbs = [
   { name: displayTitle, url: `/blog/${entry.slug}` },
 ];
 const relatedEvents = Array.isArray(entry.data.related_events) ? entry.data.related_events : [];
+const pageRobotsDirective = String(entry.data.robots_directive || '').trim() || undefined;
+const canonicalTarget = String(entry.data.canonical_target || '').toLowerCase();
+const canonicalValue = String(entry.data.canonical_url || '').trim();
+const pageCanonicalHref = canonicalTarget === 'none' ? null : canonicalValue || undefined;
 ---
 
-<Layout title={displayTitle} description={entry.data.description} frontmatter={entry.data} breadcrumbs={breadcrumbs}>
+<Layout
+  title={displayTitle}
+  description={entry.data.description}
+  frontmatter={entry.data}
+  breadcrumbs={breadcrumbs}
+  robotsDirective={pageRobotsDirective}
+  canonicalHref={pageCanonicalHref}
+>
   <section class="py-10">
     <main class="max-w-5xl mx-auto px-4">
       <Breadcrumbs items={breadcrumbs} />

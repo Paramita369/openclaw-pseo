@@ -36,6 +36,12 @@ REQUIRED_FRONTMATTER_KEYS = [
     "sample_size",
     "freshness_days",
     "freshness_status",
+    "index_tier",
+    "is_recent_90d",
+    "canonical_target",
+    "canonical_url",
+    "robots_directive",
+    "in_blog_sitemap",
     "raw_signal_score",
     "robust_score",
     "penalties",
@@ -79,6 +85,12 @@ EXPECTED_CSV_COLUMNS = {
     "robust_score",
     "title_variant_id",
     "title_template_key",
+    "index_tier",
+    "is_recent_90d",
+    "canonical_target",
+    "canonical_url",
+    "robots_directive",
+    "in_blog_sitemap",
     "event_direction",
     "event_actual",
     "event_previous",
@@ -463,6 +475,53 @@ def scan_file(path: Path) -> List[str]:
         reconstructed = float(raw_score) - (sample_penalty + freshness_penalty + confidence_penalty + outcome_penalty)
         if abs(reconstructed - float(robust_score)) > 0.01:
             violations.append("robust_score_formula_mismatch")
+
+    index_tier = str(fm.get("index_tier", "")).upper()
+    if index_tier not in {"A", "B", "C"}:
+        violations.append("invalid_index_tier")
+    is_recent_90d = fm.get("is_recent_90d")
+    if not isinstance(is_recent_90d, bool):
+        violations.append("invalid_is_recent_90d")
+    canonical_target = str(fm.get("canonical_target", "")).lower()
+    if canonical_target not in {"self", "hub", "none"}:
+        violations.append("invalid_canonical_target")
+    canonical_url = str(fm.get("canonical_url", "")).strip()
+    robots_directive = str(fm.get("robots_directive", "")).strip().lower()
+    if robots_directive not in {"index,follow", "noindex,follow"}:
+        violations.append("invalid_robots_directive")
+    in_blog_sitemap = fm.get("in_blog_sitemap")
+    if not isinstance(in_blog_sitemap, bool):
+        violations.append("invalid_in_blog_sitemap")
+
+    if robots_directive == "noindex,follow" and canonical_target == "hub":
+        violations.append("seo_signal_conflict_noindex_with_hub_canonical")
+    if canonical_target == "none" and canonical_url:
+        violations.append("canonical_none_must_not_have_url")
+    if canonical_target in {"self", "hub"} and not canonical_url:
+        violations.append("canonical_target_missing_url")
+    if canonical_target == "hub" and "/playbooks/" not in canonical_url:
+        violations.append("canonical_hub_url_invalid")
+    if canonical_target == "self" and "/blog/" not in canonical_url:
+        violations.append("canonical_self_url_invalid")
+
+    if index_tier == "C":
+        if robots_directive != "noindex,follow":
+            violations.append("tier_c_requires_noindex")
+        if canonical_target != "none":
+            violations.append("tier_c_requires_canonical_none")
+        if in_blog_sitemap is True:
+            violations.append("tier_c_must_not_be_in_blog_sitemap")
+    elif index_tier in {"A", "B"}:
+        if robots_directive != "index,follow":
+            violations.append("tier_ab_requires_index")
+        if isinstance(is_recent_90d, bool):
+            expected_canonical = "self" if is_recent_90d else "hub"
+            if canonical_target != expected_canonical:
+                violations.append("tier_ab_canonical_target_mismatch")
+            if is_recent_90d and in_blog_sitemap is not True:
+                violations.append("recent_ab_requires_blog_sitemap")
+            if (not is_recent_90d) and in_blog_sitemap is not False:
+                violations.append("old_ab_must_not_be_in_blog_sitemap")
 
     return sorted(set(violations))
 
@@ -1077,6 +1136,94 @@ def validate_conditional_sample_contract(content_dir: Path, csv_path: Path) -> D
         "valid_rows": valid_rows,
         "positive_rows": positive_rows,
     }
+
+
+def validate_csv_contract_backfill(csv_path: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not csv_path.exists():
+        return {"violations": ["missing_verified_targets_csv"], "count": 1}
+    with csv_path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        headers = set(reader.fieldnames or [])
+        required = {"conditional_sample_size", "title_variant_id", "title_template_key"}
+        missing = sorted(required - headers)
+        if missing:
+            violations.append("csv_contract_missing_backfill_columns:" + ",".join(missing))
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_seo_signal_conflict_contract(content_dir: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+    for path in sorted(content_dir.glob("*.md")):
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        robots_directive = str(fm.get("robots_directive", "")).lower()
+        canonical_target = str(fm.get("canonical_target", "")).lower()
+        if "noindex" in robots_directive and canonical_target not in {"none", "self"}:
+            violations.append("seo_signal_conflict_noindex_with_nonself_canonical")
+            break
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_sitemap_canonical_contract(content_dir: Path, public_dir: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+
+    blog_paths = sorted(public_dir.glob("sitemap-blog-*.xml"))
+    indexed_slugs: set[str] = set()
+    for path in blog_paths:
+        content = path.read_text(encoding="utf-8")
+        for slug in re.findall(r"/blog/([a-z0-9-]+)</loc>", content):
+            indexed_slugs.add(slug)
+
+    for path in sorted(content_dir.glob("*.md")):
+        slug = path.stem
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        canonical_target = str(fm.get("canonical_target", "")).lower()
+        in_blog_sitemap = fm.get("in_blog_sitemap")
+        if canonical_target != "self":
+            if slug in indexed_slugs:
+                violations.append("sitemap_contains_nonself_canonical_page")
+                break
+            if in_blog_sitemap is True:
+                violations.append("frontmatter_nonself_canonical_marked_in_blog_sitemap")
+                break
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_tier_contract(content_dir: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+
+    for path in sorted(content_dir.glob("*.md")):
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        tier = str(fm.get("index_tier", "")).upper()
+        robots_directive = str(fm.get("robots_directive", "")).lower()
+        canonical_target = str(fm.get("canonical_target", "")).lower()
+        is_recent_90d = fm.get("is_recent_90d")
+        in_blog_sitemap = fm.get("in_blog_sitemap")
+
+        if tier == "C":
+            if robots_directive != "noindex,follow" or canonical_target != "none" or in_blog_sitemap is True:
+                violations.append("tier_contract_c_mismatch")
+                break
+        elif tier in {"A", "B"}:
+            if robots_directive != "index,follow":
+                violations.append("tier_contract_ab_requires_index")
+                break
+            if isinstance(is_recent_90d, bool):
+                expected = "self" if is_recent_90d else "hub"
+                if canonical_target != expected:
+                    violations.append("tier_contract_ab_canonical_mismatch")
+                    break
+        else:
+            violations.append("tier_contract_invalid_tier")
+            break
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
 
 
 def token_lcs_ratio(left: Sequence[str], right: Sequence[str]) -> float:
@@ -1925,6 +2072,7 @@ def run_gates(
         index_path=index_path,
     )
     conditional_sample_result = validate_conditional_sample_contract(content_dir, csv_path)
+    csv_contract_backfill_result = validate_csv_contract_backfill(csv_path)
     title_diversity_result = validate_title_diversity_contract(content_dir)
     calendar_fetch_resilience_result = validate_calendar_fetch_resilience_contract(root)
     schema_breadcrumb_result = validate_schema_graph_and_breadcrumbs(root)
@@ -1941,6 +2089,9 @@ def run_gates(
     about_page_result = validate_about_page_contract(root, public_dir=public_dir)
     hub_depth_result = validate_hub_content_depth_contract(root)
     approved_hub_minimum_result = validate_approved_hub_minimum_contract(root)
+    seo_signal_conflict_result = validate_seo_signal_conflict_contract(content_dir)
+    sitemap_canonical_result = validate_sitemap_canonical_contract(content_dir, public_dir)
+    tier_contract_result = validate_tier_contract(content_dir)
 
     for scope in [
         redirect_result,
@@ -1952,6 +2103,7 @@ def run_gates(
         freshness_result,
         snapshot_freshness_result,
         conditional_sample_result,
+        csv_contract_backfill_result,
         title_diversity_result,
         calendar_fetch_resilience_result,
         schema_breadcrumb_result,
@@ -1967,6 +2119,9 @@ def run_gates(
         author_entity_result,
         about_page_result,
         hub_depth_result,
+        seo_signal_conflict_result,
+        sitemap_canonical_result,
+        tier_contract_result,
     ]:
         for issue in scope["violations"]:
             report["summary"][issue] = report["summary"].get(issue, 0) + 1
@@ -1981,6 +2136,7 @@ def run_gates(
     report["freshness_violations"] = freshness_result
     report["snapshot_freshness_violations"] = snapshot_freshness_result
     report["conditional_sample_violations"] = conditional_sample_result
+    report["csv_contract_backfill_violations"] = csv_contract_backfill_result
     report["title_diversity_violations"] = title_diversity_result
     report["calendar_fetch_resilience_violations"] = calendar_fetch_resilience_result
     report["schema_breadcrumb_violations"] = schema_breadcrumb_result
@@ -1996,6 +2152,9 @@ def run_gates(
     report["author_entity_violations"] = author_entity_result
     report["about_page_violations"] = about_page_result
     report["hub_content_depth_violations"] = hub_depth_result
+    report["seo_signal_conflict_violations"] = seo_signal_conflict_result
+    report["sitemap_canonical_violations"] = sitemap_canonical_result
+    report["tier_contract_violations"] = tier_contract_result
     report["approved_hub_minimum_contract"] = approved_hub_minimum_result
     report["warnings"] = {
         "cta": cta_result.get("warnings", []),
@@ -2015,6 +2174,7 @@ def run_gates(
         + int(freshness_result["count"])
         + int(snapshot_freshness_result["count"])
         + int(conditional_sample_result["count"])
+        + int(csv_contract_backfill_result["count"])
         + int(title_diversity_result["count"])
         + int(calendar_fetch_resilience_result["count"])
         + int(schema_breadcrumb_result["count"])
@@ -2030,6 +2190,9 @@ def run_gates(
         + int(author_entity_result["count"])
         + int(about_page_result["count"])
         + int(hub_depth_result["count"])
+        + int(seo_signal_conflict_result["count"])
+        + int(sitemap_canonical_result["count"])
+        + int(tier_contract_result["count"])
     )
     report["content_violations"] = content_violations
     report["total_violations"] = total_violations
