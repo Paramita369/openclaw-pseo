@@ -1,12 +1,14 @@
 ---
-title: "Historical Performance of GOLD After NFP (2024-03-08)"
+title: "GOLD Post-NFP Setup (2024-03-08): Historical Probability Lens"
 description: "Historical probability profile for GOLD around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
+title_variant_id: 5
+title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-03-08"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -18,10 +20,16 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 34
-freshness_days: 725
+freshness_days: 727
 freshness_status: "stale"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/gold/nfp"
+robots_directive: "index,follow"
+in_blog_sitemap: false
 data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 157466.0
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["gold", "nfp", "event-probability", "general"]
 metrics:
-  sharpe_t7: -0.84
-  mdd_t7: -0.98
-  volatility: 1.16
+  sharpe_t7: -8.73
+  mdd_t7: -1.15
+  volatility: 9.38
   impact_t1_pct: 0.18
   impact_t7_pct: -0.98
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 1.1
       mean: 1.49
       sample: 30
-related_events: [{"slug": "gold-after-nfp-2024-03-01", "title": "GOLD After NFP (2024-03-01): Historical T+1/T+7 Probability", "event_date": "2024-03-01", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.57, "median_t7_pct": 4.39, "sample_size": 0}, {"slug": "gold-after-nfp-2024-04-05", "title": "GOLD After NFP (2024-04-05): Historical T+1/T+7 Probability", "event_date": "2024-04-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 4.16, "median_t7_pct": 1.31, "sample_size": 0}, {"slug": "gold-after-nfp-2024-09-06", "title": "GOLD After NFP (2024-09-06): Historical T+1/T+7 Probability", "event_date": "2024-09-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 1.09, "median_t7_pct": 3.52, "sample_size": 0}]
+related_events: [{"slug": "gold-after-nfp-2026-01-02", "title": "GOLD After NFP (2026-01-02): Historical T+1/T+7 Probability", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 4.08, "sample_size": 0}, {"slug": "gold-after-nfp-2025-12-16", "title": "GOLD After NFP (2025-12-16): Historical T+1/T+7 Probability", "event_date": "2025-12-16", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 4.14, "sample_size": 0}, {"slug": "gold-after-nfp-2025-11-20", "title": "GOLD After NFP (2025-11-20): Historical T+1/T+7 Probability", "event_date": "2025-11-20", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 3.99, "sample_size": 0}]
 chartData: [{"time": "2024-03-05", "open": 2114.9, "high": 2133.5, "low": 2111.4, "close": 2133.5}, {"time": "2024-03-06", "open": 2125.5, "high": 2150.3, "low": 2125.5, "close": 2150.3}, {"time": "2024-03-07", "open": 2147.0, "high": 2163.0, "low": 2147.0, "close": 2158.0}, {"time": "2024-03-08", "open": 2167.3, "high": 2194.9, "low": 2166.3, "close": 2178.6}, {"time": "2024-03-11", "open": 2181.0, "high": 2184.0, "low": 2177.2, "close": 2182.5}, {"time": "2024-03-12", "open": 2182.5, "high": 2182.7, "low": 2160.4, "close": 2160.4}, {"time": "2024-03-13", "open": 2162.5, "high": 2175.4, "low": 2162.5, "close": 2175.4}, {"time": "2024-03-14", "open": 2163.0, "high": 2163.0, "low": 2162.3, "close": 2163.0}, {"time": "2024-03-15", "open": 2161.7, "high": 2161.7, "low": 2157.3, "close": 2157.3}]
 ---
 
@@ -75,8 +83,8 @@ chartData: [{"time": "2024-03-05", "open": 2114.9, "high": 2133.5, "low": 2111.4
 - Event: **NFP**
 - Asset: **GOLD**
 - Event date: **2024-03-08**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **725 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **727 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

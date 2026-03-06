@@ -1,12 +1,14 @@
 ---
-title: "Historical Performance of ETH After CPI (2024-02-13)"
+title: "2024-02-13 CPI Release: ETH Directional Probability Snapshot"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
+title_variant_id: 4
+title_template_key: "cpi_4"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-02-13"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -18,10 +20,16 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 39
-freshness_days: 749
+freshness_days: 751
 freshness_status: "stale"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/eth/cpi"
+robots_directive: "index,follow"
+in_blog_sitemap: false
 data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 310.967
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["eth", "cpi", "event-probability", "general"]
 metrics:
-  sharpe_t7: 1.58
+  sharpe_t7: 10.0
   mdd_t7: 0.0
-  volatility: 8.92
+  volatility: 51.81
   impact_t1_pct: 5.14
   impact_t7_pct: 14.05
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: -1.52
       mean: 0.24
       sample: 38
-related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH After CPI (2024-06-12): Historical T+1/T+7 Probability", "event_date": "2024-06-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.22, "median_t7_pct": -0.01, "sample_size": 0}, {"slug": "eth-after-cpi-2026-02-13", "title": "ETH After CPI (2026-02-13): Historical T+1/T+7 Probability", "event_date": "2026-02-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -3.88, "sample_size": 0}, {"slug": "eth-after-cpi-2026-02-12", "title": "ETH After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.06, "sample_size": 0}]
+related_events: [{"slug": "eth-after-cpi-2025-07-15", "title": "ETH After CPI (2025-07-15): Historical T+1/T+7 Probability", "event_date": "2025-07-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 19.4, "sample_size": 0}, {"slug": "eth-after-cpi-2025-07-12", "title": "ETH After CPI (2025-07-12): Historical T+1/T+7 Probability", "event_date": "2025-07-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 22.17, "sample_size": 0}, {"slug": "eth-after-cpi-2025-04-10", "title": "ETH After CPI (2025-04-10): Historical T+1/T+7 Probability", "event_date": "2025-04-10", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 3.94, "sample_size": 0}]
 chartData: [{"time": "2024-02-10", "open": 2487.65, "high": 2516.72, "low": 2475.86, "close": 2501.23}, {"time": "2024-02-11", "open": 2501.13, "high": 2537.68, "low": 2495.21, "close": 2507.57}, {"time": "2024-02-12", "open": 2507.58, "high": 2663.84, "low": 2473.81, "close": 2658.12}, {"time": "2024-02-13", "open": 2659.59, "high": 2686.46, "low": 2599.17, "close": 2642.19}, {"time": "2024-02-14", "open": 2641.69, "high": 2786.89, "low": 2621.03, "close": 2777.9}, {"time": "2024-02-15", "open": 2777.6, "high": 2865.85, "low": 2764.01, "close": 2824.38}, {"time": "2024-02-16", "open": 2825.48, "high": 2858.45, "low": 2760.33, "close": 2803.69}, {"time": "2024-02-17", "open": 2803.74, "high": 2805.13, "low": 2724.39, "close": 2786.67}, {"time": "2024-02-18", "open": 2786.71, "high": 2892.84, "low": 2767.91, "close": 2879.0}, {"time": "2024-02-19", "open": 2881.3, "high": 2983.37, "low": 2860.26, "close": 2943.57}, {"time": "2024-02-20", "open": 2944.11, "high": 3031.52, "low": 2879.9, "close": 3013.5}]
 ---
 
@@ -75,8 +83,8 @@ chartData: [{"time": "2024-02-10", "open": 2487.65, "high": 2516.72, "low": 2475
 - Event: **CPI**
 - Asset: **ETH**
 - Event date: **2024-02-13**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **749 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **751 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

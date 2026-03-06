@@ -1,14 +1,14 @@
 ---
 title: "2025-05-07 FOMC Meeting: QQQ T+1/T+7 Probability Profile"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 3
 title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-05-07"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 23
-freshness_days: 300
+freshness_days: 302
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/fomc"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "flat"
 event_actual: 4.5
 event_previous: 4.5
@@ -83,8 +83,8 @@ chartData: [{"time": "2025-05-05", "open": 482.87, "high": 487.29, "low": 482.38
 - Event: **FOMC**
 - Asset: **QQQ**
 - Event date: **2025-05-07**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **300 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **302 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

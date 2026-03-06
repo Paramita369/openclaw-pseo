@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2025-05-07) and SPY: Event-Driven Odds"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-05-07"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 23
-freshness_days: 300
+freshness_days: 302
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/spy/fomc"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "flat"
 event_actual: 4.5
 event_previous: 4.5
@@ -75,7 +75,7 @@ probabilities:
       mean: 0.48
       sample: 17
 related_events: [{"slug": "spy-after-fomc-2025-06-18", "title": "SPY After FOMC (2025-06-18): Historical T+1/T+7 Probability", "event_date": "2025-06-18", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.92, "sample_size": 0}, {"slug": "spy-after-fomc-2024-12-19", "title": "SPY After FOMC (2024-12-19): Historical T+1/T+7 Probability", "event_date": "2024-12-19", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.95, "sample_size": 0}, {"slug": "spy-after-fomc-2024-11-06", "title": "SPY After FOMC (2024-11-06): Historical T+1/T+7 Probability", "event_date": "2024-11-06", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.04, "sample_size": 0}]
-chartData: [{"time": "2025-05-05", "open": 557.71, "high": 561.76, "low": 556.85, "close": 558.64}, {"time": "2025-05-06", "open": 553.11, "high": 558.49, "low": 552.15, "close": 553.98}, {"time": "2025-05-07", "open": 555.31, "high": 558.95, "low": 551.24, "close": 556.31}, {"time": "2025-05-08", "open": 560.36, "high": 565.39, "low": 556.85, "close": 560.18}, {"time": "2025-05-09", "open": 561.59, "high": 562.6, "low": 557.9, "close": 559.47}, {"time": "2025-05-12", "open": 576.45, "high": 577.97, "low": 572.06, "close": 577.96}, {"time": "2025-05-13", "open": 578.37, "high": 583.99, "low": 577.81, "close": 581.77}, {"time": "2025-05-14", "open": 582.74, "high": 583.89, "low": 580.48, "close": 582.52}]
+chartData: [{"time": "2025-05-05", "open": 557.71, "high": 561.76, "low": 556.85, "close": 558.64}, {"time": "2025-05-06", "open": 553.11, "high": 558.49, "low": 552.15, "close": 553.98}, {"time": "2025-05-07", "open": 555.31, "high": 558.95, "low": 551.24, "close": 556.31}, {"time": "2025-05-08", "open": 560.36, "high": 565.39, "low": 556.85, "close": 560.18}, {"time": "2025-05-09", "open": 561.59, "high": 562.6, "low": 557.9, "close": 559.47}, {"time": "2025-05-12", "open": 576.45, "high": 577.97, "low": 572.06, "close": 577.96}, {"time": "2025-05-13", "open": 578.37, "high": 583.99, "low": 577.81, "close": 581.77}, {"time": "2025-05-14", "open": 582.74, "high": 583.9, "low": 580.48, "close": 582.52}]
 ---
 
 ## Event Snapshot
@@ -83,8 +83,8 @@ chartData: [{"time": "2025-05-05", "open": 557.71, "high": 561.76, "low": 556.85
 - Event: **FOMC**
 - Asset: **SPY**
 - Event date: **2025-05-07**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **300 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **302 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

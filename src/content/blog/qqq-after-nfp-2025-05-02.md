@@ -1,14 +1,14 @@
 ---
 title: "NFP Print (2025-05-02) vs QQQ: Quantified Directional Odds"
 description: "Historical probability profile for QQQ around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 4
 title_template_key: "nfp_4"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-05-02"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 34
-freshness_days: 305
+freshness_days: 307
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/nfp"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 158498.0
 event_previous: 158485.0
@@ -83,8 +83,8 @@ chartData: [{"time": "2025-04-29", "open": 468.5, "high": 474.72, "low": 467.92,
 - Event: **NFP**
 - Asset: **QQQ**
 - Event date: **2025-05-02**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **305 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **307 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2024-10-10) and QQQ: Event-Driven Return Odds"
 description: "Historical probability profile for QQQ around CPI events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-10-10"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 39
-freshness_days: 509
+freshness_days: 511
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/cpi"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 315.631
 event_previous: 314.732
@@ -83,8 +83,8 @@ chartData: [{"time": "2024-10-07", "open": 482.16, "high": 483.34, "low": 477.67
 - Event: **CPI**
 - Asset: **QQQ**
 - Event date: **2024-10-10**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **509 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **511 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

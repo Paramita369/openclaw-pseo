@@ -1,12 +1,14 @@
 ---
-title: "Historical Performance of ETH After NFP (2024-03-08)"
+title: "ETH Post-NFP Setup (2024-03-08): Historical Probability Lens"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
+title_variant_id: 5
+title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-03-08"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -18,10 +20,16 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 34
-freshness_days: 725
+freshness_days: 727
 freshness_status: "stale"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/eth/nfp"
+robots_directive: "index,follow"
+in_blog_sitemap: false
 data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 157466.0
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["eth", "nfp", "event-probability", "general"]
 metrics:
-  sharpe_t7: -0.87
-  mdd_t7: -4.03
-  volatility: 4.63
+  sharpe_t7: -4.63
+  mdd_t7: -8.15
+  volatility: 96.82
   impact_t1_pct: 0.6
   impact_t7_pct: -4.03
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 0.79
       mean: 2.65
       sample: 30
-related_events: [{"slug": "eth-after-nfp-2026-02-11", "title": "ETH After NFP (2026-02-11): Historical T+1/T+7 Probability", "event_date": "2026-02-11", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.69, "sample_size": 0}, {"slug": "eth-after-nfp-2026-02-06", "title": "ETH After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.72, "sample_size": 0}, {"slug": "eth-after-nfp-2026-01-09", "title": "ETH After NFP (2026-01-09): Historical T+1/T+7 Probability", "event_date": "2026-01-09", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 6.89, "sample_size": 0}]
+related_events: [{"slug": "eth-after-nfp-2026-01-09", "title": "ETH After NFP (2026-01-09): Historical T+1/T+7 Probability", "event_date": "2026-01-09", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 6.89, "sample_size": 0}, {"slug": "eth-after-nfp-2025-11-20", "title": "ETH After NFP (2025-11-20): Historical T+1/T+7 Probability", "event_date": "2025-11-20", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 6.45, "sample_size": 0}, {"slug": "eth-after-nfp-2025-09-05", "title": "ETH After NFP (2025-09-05): Historical T+1/T+7 Probability", "event_date": "2025-09-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 9.48, "sample_size": 0}]
 chartData: [{"time": "2024-03-05", "open": 3631.93, "high": 3828.16, "low": 3224.12, "close": 3554.96}, {"time": "2024-03-06", "open": 3554.07, "high": 3901.43, "low": 3502.8, "close": 3819.23}, {"time": "2024-03-07", "open": 3818.31, "high": 3939.59, "low": 3738.69, "close": 3874.35}, {"time": "2024-03-08", "open": 3874.83, "high": 3998.83, "low": 3828.36, "close": 3892.06}, {"time": "2024-03-09", "open": 3892.12, "high": 3950.4, "low": 3880.66, "close": 3915.42}, {"time": "2024-03-10", "open": 3915.59, "high": 3968.72, "low": 3800.56, "close": 3881.19}, {"time": "2024-03-11", "open": 3881.24, "high": 4087.05, "low": 3745.13, "close": 4066.45}, {"time": "2024-03-12", "open": 4066.69, "high": 4092.28, "low": 3831.89, "close": 3980.27}, {"time": "2024-03-13", "open": 3980.27, "high": 4083.01, "low": 3936.63, "close": 4006.46}, {"time": "2024-03-14", "open": 4005.75, "high": 4011.1, "low": 3721.79, "close": 3883.14}, {"time": "2024-03-15", "open": 3882.86, "high": 3928.78, "low": 3571.77, "close": 3735.22}]
 ---
 
@@ -75,8 +83,8 @@ chartData: [{"time": "2024-03-05", "open": 3631.93, "high": 3828.16, "low": 3224
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2024-03-08**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **725 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **727 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "2025-12-12 CPI Release: GOLD Directional Probability Snapshot"
 description: "Historical probability profile for GOLD around CPI events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 4
 title_template_key: "cpi_4"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-12-12"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 39
-freshness_days: 81
+freshness_days: 83
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
@@ -30,7 +30,7 @@ canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/gold-after-cpi-2025-12-12"
 robots_directive: "index,follow"
 in_blog_sitemap: true
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 326.031
 event_previous: 325.063
@@ -83,8 +83,8 @@ chartData: [{"time": "2025-12-09", "open": 4190.7, "high": 4219.7, "low": 4177.7
 - Event: **CPI**
 - Asset: **GOLD**
 - Event date: **2025-12-12**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **81 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **83 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

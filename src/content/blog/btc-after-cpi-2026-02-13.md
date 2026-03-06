@@ -1,14 +1,14 @@
 ---
 title: "BTC CPI Win Rate (2026-02-13): Historical T+1/T+7 Probability"
 description: "Historical probability profile for BTC around CPI events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 1
 title_template_key: "cpi_1"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2026-02-13"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 39
-freshness_days: 18
+freshness_days: 20
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
@@ -30,7 +30,7 @@ canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/btc-after-cpi-2026-02-13"
 robots_directive: "index,follow"
 in_blog_sitemap: true
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 326.588
 event_previous: 326.031
@@ -83,8 +83,8 @@ chartData: [{"time": "2026-02-10", "open": 70137.39, "high": 70464.27, "low": 67
 - Event: **CPI**
 - Asset: **BTC**
 - Event date: **2026-02-13**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **18 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **20 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

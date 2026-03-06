@@ -1,14 +1,14 @@
 ---
 title: "QQQ Post-NFP Setup (2026-02-11): Historical Probability Lens"
 description: "Historical probability profile for QQQ around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 5
 title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2026-02-11"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 34
-freshness_days: 20
+freshness_days: 22
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
@@ -30,7 +30,7 @@ canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/qqq-after-nfp-2026-02-11"
 robots_directive: "index,follow"
 in_blog_sitemap: true
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 158627.0
 event_previous: 158497.0
@@ -83,8 +83,8 @@ chartData: [{"time": "2026-02-09", "open": 607.54, "high": 616.46, "low": 605.07
 - Event: **NFP**
 - Asset: **QQQ**
 - Event date: **2026-02-11**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **20 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **22 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

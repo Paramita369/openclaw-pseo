@@ -1,14 +1,14 @@
 ---
 title: "2025-03-07 Nonfarm Payrolls: BTC Historical Win Rate"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 2
 title_template_key: "nfp_2"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-03-07"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 34
-freshness_days: 361
+freshness_days: 363
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/btc/nfp"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 158377.0
 event_previous: 158310.0
@@ -83,8 +83,8 @@ chartData: [{"time": "2025-03-04", "open": 86064.07, "high": 88911.27, "low": 81
 - Event: **NFP**
 - Asset: **BTC**
 - Event date: **2025-03-07**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **361 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **363 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

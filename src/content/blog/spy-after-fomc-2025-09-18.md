@@ -1,14 +1,14 @@
 ---
 title: "SPY Post-FOMC Reaction (2025-09-18): Quant Backtest Snapshot"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 4
 title_template_key: "fomc_4"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-09-18"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 166
+freshness_days: 168
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/spy/fomc"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "down"
 event_actual: 4.25
 event_previous: 4.5
@@ -83,8 +83,8 @@ chartData: [{"time": "2025-09-15", "open": 655.88, "high": 657.27, "low": 655.58
 - Event: **FOMC**
 - Asset: **SPY**
 - Event date: **2025-09-18**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **166 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **168 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

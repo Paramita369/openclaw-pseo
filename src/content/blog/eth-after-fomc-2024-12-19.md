@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2024-12-19) and ETH: Event-Driven Odds"
 description: "Historical probability profile for ETH around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2024-12-19"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Bearish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 439
+freshness_days: 441
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/eth/fomc"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "down"
 event_actual: 4.5
 event_previous: 4.75
@@ -83,8 +83,8 @@ chartData: [{"time": "2024-12-16", "open": 3951.65, "high": 4106.96, "low": 3882
 - Event: **FOMC**
 - Asset: **ETH**
 - Event date: **2024-12-19**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **439 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **441 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

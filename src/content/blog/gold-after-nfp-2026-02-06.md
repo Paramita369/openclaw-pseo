@@ -1,14 +1,14 @@
 ---
 title: "GOLD NFP Reaction (2026-02-06): T+1/T+7 Up Probability"
 description: "Historical probability profile for GOLD around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 1
 title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2026-02-06"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 34
-freshness_days: 25
+freshness_days: 27
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
@@ -30,7 +30,7 @@ canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/gold-after-nfp-2026-02-06"
 robots_directive: "index,follow"
 in_blog_sitemap: true
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 158627.0
 event_previous: 158497.0
@@ -83,8 +83,8 @@ chartData: [{"time": "2026-02-03", "open": 4680.0, "high": 4984.6, "low": 4674.3
 - Event: **NFP**
 - Asset: **GOLD**
 - Event date: **2026-02-06**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **25 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **27 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

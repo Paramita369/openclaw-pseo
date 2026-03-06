@@ -1,14 +1,14 @@
 ---
 title: "ETH NFP Reaction (2025-07-03): T+1/T+7 Up Probability"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 1
 title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-07-03"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 34
-freshness_days: 243
+freshness_days: 245
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/eth/nfp"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 158542.0
 event_previous: 158478.0
@@ -83,8 +83,8 @@ chartData: [{"time": "2025-06-30", "open": 2500.61, "high": 2521.72, "low": 2438
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2025-07-03**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **243 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **245 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

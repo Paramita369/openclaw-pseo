@@ -1,14 +1,14 @@
 ---
 title: "ETH Post-FOMC Reaction (2024-12-17): Quant Backtest Snapshot"
 description: "Historical probability profile for ETH around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 4
 title_template_key: "fomc_4"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2024-12-17"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Bearish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 23
-freshness_days: 441
+freshness_days: 443
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/eth/fomc"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-05T00:04:02+00:00"
 event_direction: "flat"
 event_actual: 4.75
 event_previous: 4.75
@@ -83,8 +83,8 @@ chartData: [{"time": "2024-12-14", "open": 3910.85, "high": 3943.28, "low": 3826
 - Event: **FOMC**
 - Asset: **ETH**
 - Event date: **2024-12-17**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **441 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **443 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

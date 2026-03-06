@@ -1,14 +1,14 @@
 ---
 title: "2025-02-12 CPI Release: QQQ Directional Probability Snapshot"
 description: "Historical probability profile for QQQ around CPI events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 4
 title_template_key: "cpi_4"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-02-12"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 39
-freshness_days: 384
+freshness_days: 386
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/cpi"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-05T00:04:08+00:00"
 event_direction: "up"
 event_actual: 319.679
 event_previous: 318.961
@@ -83,8 +83,8 @@ chartData: [{"time": "2025-02-10", "open": 524.56, "high": 527.68, "low": 524.09
 - Event: **CPI**
 - Asset: **QQQ**
 - Event date: **2025-02-12**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **384 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **386 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "FOMC Outcome (2025-10-30) for GOLD: Up/Down Probability View"
 description: "Historical probability profile for GOLD around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 5
 title_template_key: "fomc_5"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-10-30"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 124
+freshness_days: 126
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/gold/fomc"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "down"
 event_actual: 4.0
 event_previous: 4.25
@@ -83,8 +83,8 @@ chartData: [{"time": "2025-10-27", "open": 4060.0, "high": 4078.6, "low": 3971.3
 - Event: **FOMC**
 - Asset: **GOLD**
 - Event date: **2025-10-30**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **124 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **126 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "2025-03-19 FOMC Meeting: BTC T+1/T+7 Probability Profile"
 description: "Historical probability profile for BTC around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 3
 title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-03-19"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 23
-freshness_days: 349
+freshness_days: 351
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -30,7 +30,7 @@ canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/btc/fomc"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "flat"
 event_actual: 4.5
 event_previous: 4.5
@@ -83,8 +83,8 @@ chartData: [{"time": "2025-03-16", "open": 84333.32, "high": 85051.6, "low": 820
 - Event: **FOMC**
 - Asset: **BTC**
 - Event date: **2025-03-19**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **349 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **351 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2025-12-10) and SPY: Event-Driven Odds"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-12-10"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 100
 sample_size: 23
-freshness_days: 83
+freshness_days: 85
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
@@ -30,7 +30,7 @@ canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/spy-after-fomc-2025-12-10"
 robots_directive: "index,follow"
 in_blog_sitemap: true
-data_last_updated_at: "2026-03-04T11:37:55+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "flat"
 event_actual: 4.0
 event_previous: 4.0
@@ -83,8 +83,8 @@ chartData: [{"time": "2025-12-08", "open": 684.57, "high": 684.62, "low": 679.56
 - Event: **FOMC**
 - Asset: **SPY**
 - Event date: **2025-12-10**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **83 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **85 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

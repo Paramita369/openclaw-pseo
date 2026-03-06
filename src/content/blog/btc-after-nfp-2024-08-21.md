@@ -1,12 +1,14 @@
 ---
-title: "Historical Performance of BTC After NFP (2024-08-21)"
+title: "NFP Print (2024-08-21) vs BTC: Quantified Directional Odds"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
+title_variant_id: 4
+title_template_key: "nfp_4"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-08-21"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -18,10 +20,16 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 34
-freshness_days: 559
+freshness_days: 561
 freshness_status: "stale"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/btc/nfp"
+robots_directive: "index,follow"
+in_blog_sitemap: false
 data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 157757.0
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["btc", "nfp", "event-probability", "general"]
 metrics:
-  sharpe_t7: -1.59
-  mdd_t7: -3.51
-  volatility: 2.21
+  sharpe_t7: -3.31
+  mdd_t7: -8.03
+  volatility: 111.72
   impact_t1_pct: -1.3
   impact_t7_pct: -3.51
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 0.81
       mean: 1.51
       sample: 30
-related_events: [{"slug": "btc-after-nfp-2026-02-11", "title": "BTC After NFP (2026-02-11): Historical T+1/T+7 Probability", "event_date": "2026-02-11", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.85, "sample_size": 0}, {"slug": "btc-after-nfp-2026-02-06", "title": "BTC After NFP (2026-02-06): Historical T+1/T+7 Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -2.41, "sample_size": 0}, {"slug": "btc-after-nfp-2026-01-09", "title": "BTC After NFP (2026-01-09): Historical T+1/T+7 Probability", "event_date": "2026-01-09", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 5.54, "sample_size": 0}]
+related_events: [{"slug": "btc-after-nfp-2026-01-09", "title": "BTC After NFP (2026-01-09): Historical T+1/T+7 Probability", "event_date": "2026-01-09", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 5.54, "sample_size": 0}, {"slug": "btc-after-nfp-2025-11-20", "title": "BTC After NFP (2025-11-20): Historical T+1/T+7 Probability", "event_date": "2025-11-20", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 5.37, "sample_size": 0}, {"slug": "btc-after-nfp-2025-09-05", "title": "BTC After NFP (2025-09-05): Historical T+1/T+7 Probability", "event_date": "2025-09-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 4.93, "sample_size": 0}]
 chartData: [{"time": "2024-08-18", "open": 59468.13, "high": 60262.72, "low": 58445.4, "close": 58483.96}, {"time": "2024-08-19", "open": 58480.71, "high": 59612.66, "low": 57864.71, "close": 59493.45}, {"time": "2024-08-20", "open": 59493.45, "high": 61396.33, "low": 58610.88, "close": 59012.79}, {"time": "2024-08-21", "open": 59014.99, "high": 61834.35, "low": 58823.45, "close": 61175.19}, {"time": "2024-08-22", "open": 61168.32, "high": 61408.11, "low": 59815.25, "close": 60381.91}, {"time": "2024-08-23", "open": 60380.95, "high": 64947.06, "low": 60372.05, "close": 64094.36}, {"time": "2024-08-24", "open": 64103.87, "high": 64513.79, "low": 63619.92, "close": 64178.99}, {"time": "2024-08-25", "open": 64176.37, "high": 64996.42, "low": 63833.52, "close": 64333.54}, {"time": "2024-08-26", "open": 64342.23, "high": 64489.71, "low": 62849.56, "close": 62880.66}, {"time": "2024-08-27", "open": 62879.71, "high": 63210.8, "low": 58116.75, "close": 59504.13}, {"time": "2024-08-28", "open": 59507.93, "high": 60236.45, "low": 57890.68, "close": 59027.62}]
 ---
 
@@ -75,8 +83,8 @@ chartData: [{"time": "2024-08-18", "open": 59468.13, "high": 60262.72, "low": 58
 - Event: **NFP**
 - Asset: **BTC**
 - Event date: **2024-08-21**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **559 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **561 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

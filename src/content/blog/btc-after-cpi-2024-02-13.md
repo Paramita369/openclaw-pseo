@@ -1,12 +1,14 @@
 ---
-title: "Historical Performance of BTC After CPI (2024-02-13)"
+title: "US CPI (2024-02-13) and BTC: Event-Driven Return Odds"
 description: "Historical probability profile for BTC around CPI events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
+title_variant_id: 3
+title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-02-13"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -18,10 +20,16 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 39
-freshness_days: 749
+freshness_days: 751
 freshness_status: "stale"
+index_tier: "B"
+is_recent_90d: false
+canonical_target: "hub"
+canonical_url: "https://quantmacro.vercel.app/playbooks/btc/cpi"
+robots_directive: "index,follow"
+in_blog_sitemap: false
 data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "up"
 event_actual: 310.967
@@ -31,9 +39,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["btc", "cpi", "event-probability", "general"]
 metrics:
-  sharpe_t7: 5.56
+  sharpe_t7: 10.0
   mdd_t7: 0.0
-  volatility: 0.92
+  volatility: 33.91
   impact_t1_pct: 4.19
   impact_t7_pct: 5.11
 probabilities:
@@ -66,7 +74,7 @@ probabilities:
       median: 1.26
       mean: 0.58
       sample: 38
-related_events: [{"slug": "btc-after-cpi-2024-08-14", "title": "BTC After CPI (2024-08-14): Historical T+1/T+7 Probability", "event_date": "2024-08-14", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.86, "median_t7_pct": 4.15, "sample_size": 0}, {"slug": "btc-after-cpi-2026-02-13", "title": "BTC After CPI (2026-02-13): Historical T+1/T+7 Probability", "event_date": "2026-02-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -1.24, "sample_size": 0}, {"slug": "btc-after-cpi-2026-02-12", "title": "BTC After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.11, "sample_size": 0}]
+related_events: [{"slug": "btc-after-cpi-2025-09-11", "title": "BTC After CPI (2025-09-11): Historical T+1/T+7 Probability", "event_date": "2025-09-11", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.41, "sample_size": 0}, {"slug": "btc-after-cpi-2025-07-15", "title": "BTC After CPI (2025-07-15): Historical T+1/T+7 Probability", "event_date": "2025-07-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.88, "sample_size": 0}, {"slug": "btc-after-cpi-2025-05-12", "title": "BTC After CPI (2025-05-12): Historical T+1/T+7 Probability", "event_date": "2025-05-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.72, "sample_size": 0}]
 chartData: [{"time": "2024-02-10", "open": 47153.53, "high": 48146.17, "low": 46905.32, "close": 47771.28}, {"time": "2024-02-11", "open": 47768.97, "high": 48535.94, "low": 47617.41, "close": 48293.92}, {"time": "2024-02-12", "open": 48296.39, "high": 50280.48, "low": 47745.76, "close": 49958.22}, {"time": "2024-02-13", "open": 49941.36, "high": 50358.39, "low": 48406.5, "close": 49742.44}, {"time": "2024-02-14", "open": 49733.45, "high": 52021.37, "low": 49296.83, "close": 51826.7}, {"time": "2024-02-15", "open": 51836.79, "high": 52820.07, "low": 51371.63, "close": 51938.55}, {"time": "2024-02-16", "open": 51937.73, "high": 52537.97, "low": 51641.37, "close": 52160.2}, {"time": "2024-02-17", "open": 52161.68, "high": 52191.91, "low": 50669.67, "close": 51663.0}, {"time": "2024-02-18", "open": 51661.97, "high": 52356.96, "low": 51233.71, "close": 52122.55}, {"time": "2024-02-19", "open": 52134.81, "high": 52483.32, "low": 51711.82, "close": 51779.14}, {"time": "2024-02-20", "open": 51777.73, "high": 52945.05, "low": 50792.31, "close": 52284.88}]
 ---
 
@@ -75,8 +83,8 @@ chartData: [{"time": "2024-02-10", "open": 47153.53, "high": 48146.17, "low": 46
 - Event: **CPI**
 - Asset: **BTC**
 - Event date: **2024-02-13**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **749 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **751 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome
