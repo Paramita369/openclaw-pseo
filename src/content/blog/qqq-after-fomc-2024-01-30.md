@@ -35,7 +35,9 @@ hub_baseline_std_t7: 2.2487
 hub_baseline_delta: -0.62
 z_score_t7: -0.22
 percentile_t7: 33.33
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/fomc"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 1.03
       sample: 9
 related_events: [{"slug": "qqq-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and QQQ: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2025-12-10", "title": "QQQ Post-FOMC Reaction (2025-12-10): Quant Backtest Snapshot", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2025-10-29", "title": "2025-10-29 FOMC Meeting: QQQ T+1/T+7 Probability Profile", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}]
+chartData: [{"time": "2024-01-29", "open": 419.64, "high": 423.67, "low": 418.98, "close": 423.47}, {"time": "2024-01-30", "open": 422.43, "high": 423.01, "low": 419.74, "close": 420.65}, {"time": "2024-01-31", "open": 416.25, "high": 418.25, "low": 412.24, "close": 412.42}, {"time": "2024-02-01", "open": 414.22, "high": 417.77, "low": 413.25, "close": 417.27}, {"time": "2024-02-02", "open": 419.17, "high": 425.54, "low": 418.17, "close": 424.32}, {"time": "2024-02-05", "open": 424.38, "high": 424.92, "low": 420.36, "close": 423.77}, {"time": "2024-02-06", "open": 424.92, "high": 425.52, "low": 420.57, "close": 422.92}]
 ---
 
 ## Event Snapshot

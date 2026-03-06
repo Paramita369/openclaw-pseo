@@ -14,7 +14,15 @@ from pathlib import Path
 from typing import Dict, List, Sequence, Tuple
 
 from pipeline_utils import ALLOWED_EVENT_TYPES, PRIMARY_ASSETS, cutoff_date, event_filter_sql, resolve_project_root
-from content_features import CORE_WINDOW_DAYS, FEATURE_EPSILON, compute_statistical_features, is_core_page_for_window
+from content_features import (
+    CORE_WINDOW_DAYS,
+    FEATURE_EPSILON,
+    compute_statistical_features,
+    is_core_page_for_window,
+    narrative_direction_band,
+    narrative_rank_band,
+    resolve_narrative_trigger,
+)
 
 try:
     import yaml
@@ -49,6 +57,8 @@ REQUIRED_FRONTMATTER_KEYS = [
     "z_score_t7",
     "percentile_t7",
     "narrative_trigger",
+    "narrative_rank_band",
+    "narrative_direction_band",
     "canonical_target",
     "canonical_url",
     "robots_directive",
@@ -301,6 +311,33 @@ def compute_core_page_flag(frontmatter: Dict[str, object], as_of_date: str) -> b
     )
 
 
+def extract_section_text(body: str, heading: str) -> str:
+    match = re.search(
+        rf"{re.escape(heading)}\n\n(.+?)(?=\n## |\Z)",
+        body,
+        flags=re.DOTALL,
+    )
+    return match.group(1).strip() if match else ""
+
+
+def first_sentence(text: str) -> str:
+    match = re.search(r"(.+?)(?:[.!?])(?:\s|$)", text.strip(), flags=re.DOTALL)
+    return match.group(1).strip() if match else text.strip()
+
+
+def load_core_page_entries(content_dir: Path, as_of_date: str) -> List[Tuple[str, Dict[str, object], str]]:
+    entries: List[Tuple[str, Dict[str, object], str]] = []
+    for path in sorted(content_dir.glob("*.md")):
+        content = path.read_text(encoding="utf-8")
+        fm = extract_frontmatter(content)
+        if not compute_core_page_flag(fm, as_of_date):
+            continue
+        body = extract_markdown_body(content)
+        body_before_methodology = body.split("## Methodology", 1)[0]
+        entries.append((path.stem, fm, body_before_methodology))
+    return entries
+
+
 def is_finite_number(value: object) -> bool:
     try:
         number = float(value)
@@ -439,12 +476,18 @@ def scan_file(path: Path) -> List[str]:
     if not str(fm.get("body_variant_family", "")).strip():
         violations.append("invalid_body_variant_family")
     if str(fm.get("narrative_trigger", "")).strip() not in {
-        "significant_outperformance",
-        "significant_underperformance",
-        "within_historical_norm",
+        "extreme_outperformance",
+        "moderate_outperformance",
+        "strict_median_norm",
+        "moderate_underperformance",
+        "extreme_underperformance",
         "low_context",
     }:
         violations.append("invalid_narrative_trigger")
+    if str(fm.get("narrative_rank_band", "")).strip() not in {"extreme", "moderate", "median", "low_context"}:
+        violations.append("invalid_narrative_rank_band")
+    if str(fm.get("narrative_direction_band", "")).strip() not in {"positive", "negative", "neutral", "unknown"}:
+        violations.append("invalid_narrative_direction_band")
     for field in [
         "hub_baseline_mean_t7",
         "hub_baseline_median_t7",
@@ -1428,24 +1471,7 @@ def validate_core_content_depth_contract(content_dir: Path, as_of_date: str) -> 
 def validate_content_uniqueness_contract(content_dir: Path, as_of_date: str) -> Dict[str, object]:
     violations: List[str] = []
     warnings: List[str] = []
-    core_pages: List[Tuple[str, Dict[str, object], str]] = []
-
-    for path in sorted(content_dir.glob("*.md")):
-        content = path.read_text(encoding="utf-8")
-        fm = extract_frontmatter(content)
-        if not compute_core_page_flag(fm, as_of_date):
-            continue
-        body = extract_markdown_body(content)
-        body_before_methodology = body.split("## Methodology", 1)[0]
-        word_count = len(re.findall(r"[A-Za-z0-9][A-Za-z0-9'-]*", body_before_methodology))
-        if word_count < 450:
-            violations.append(f"core_page_word_count_below_min:{path.stem}:{word_count}")
-        if not str(fm.get("narrative_trigger", "")).strip():
-            violations.append(f"core_page_missing_narrative_trigger:{path.stem}")
-        for field in ["hub_baseline_delta", "z_score_t7", "percentile_t7"]:
-            if not is_finite_number(fm.get(field)):
-                violations.append(f"core_page_missing_{field}:{path.stem}")
-        core_pages.append((path.stem, fm, body_before_methodology))
+    core_pages = load_core_page_entries(content_dir, as_of_date)
 
     if not core_pages:
         warnings.append("no_core_pages_in_recent_window")
@@ -1453,50 +1479,202 @@ def validate_content_uniqueness_contract(content_dir: Path, as_of_date: str) -> 
     if len(core_pages) < 10:
         warnings.append(f"low_core_page_count:{len(core_pages)}")
 
-    sentence_pages: Dict[str, set[str]] = {}
-    section_headings = [
-        "## Event Outcome Interpretation",
-        "## Distribution Position",
-        "## Comparison vs Hub Baseline",
-        "## Failure Modes",
-        "## Execution Relevance",
-    ]
-    for slug, _fm, body in core_pages:
-        section_sentences: List[str] = []
-        for heading in section_headings:
-            match = re.search(
-                rf"{re.escape(heading)}\n\n(.+?)(?:[.!?])(?:\s|$)",
-                body,
-                flags=re.DOTALL,
-            )
-            if not match:
-                continue
-            first_sentence = match.group(1).strip()
-            if len(first_sentence) >= 40:
-                section_sentences.append(first_sentence)
-        sentences = section_sentences
-        for sentence in set(sentences):
-            sentence_pages.setdefault(sentence, set()).add(slug)
-
-    max_sentence_share = 0.4
-    threshold = max(2, math.ceil(len(core_pages) * max_sentence_share))
-    for sentence, page_set in sentence_pages.items():
-        if len(page_set) > threshold:
-            violations.append(f"repeated_sentence_over_limit:{len(page_set)}:{sentence[:80]}")
-            break
-
-    family_counts: Dict[str, int] = {}
-    for _slug, fm, _body in core_pages:
-        family = str(fm.get("body_variant_family", "")).strip()
-        family_counts[family] = family_counts.get(family, 0) + 1
-    if len([name for name, count in family_counts.items() if name and count > 0]) < 2 and len(core_pages) >= 4:
-        violations.append("insufficient_body_variant_family_usage")
+    for slug, fm, body in core_pages:
+        word_count = len(re.findall(r"[A-Za-z0-9][A-Za-z0-9'-]*", body))
+        if word_count < 450:
+            violations.append(f"core_page_word_count_below_min:{slug}:{word_count}")
+        if not str(fm.get("narrative_trigger", "")).strip():
+            violations.append(f"core_page_missing_narrative_trigger:{slug}")
+        for field in [
+            "narrative_rank_band",
+            "narrative_direction_band",
+            "hub_baseline_delta",
+            "z_score_t7",
+            "percentile_t7",
+        ]:
+            value = fm.get(field)
+            if field.startswith("narrative_"):
+                if not str(value or "").strip():
+                    violations.append(f"core_page_missing_{field}:{slug}")
+            elif not is_finite_number(value):
+                violations.append(f"core_page_missing_{field}:{slug}")
 
     return {
         "violations": sorted(set(violations)),
         "count": len(sorted(set(violations))),
         "warnings": warnings,
         "core_pages": len(core_pages),
+    }
+
+
+def validate_narrative_distribution_contract(content_dir: Path, as_of_date: str) -> Dict[str, object]:
+    warnings: List[str] = []
+    core_pages = load_core_page_entries(content_dir, as_of_date)
+    trigger_counts: Dict[str, int] = {}
+    for _slug, fm, _body in core_pages:
+        trigger = str(fm.get("narrative_trigger", "")).strip() or "missing"
+        trigger_counts[trigger] = trigger_counts.get(trigger, 0) + 1
+
+    core_count = len(core_pages)
+    strict_median_share = 0.0
+    if core_count > 0:
+        strict_median_share = float(trigger_counts.get("strict_median_norm", 0)) / float(core_count)
+
+    trigger_types_present = sorted(name for name, count in trigger_counts.items() if count > 0)
+    if core_count >= 12 and strict_median_share > 0.70:
+        warnings.append(f"strict_median_norm_share_high:{strict_median_share:.2f}")
+    if core_count >= 12 and len(trigger_types_present) == 1:
+        warnings.append("single_trigger_type_across_core_pages")
+    if core_count >= 20:
+        non_median_types = [
+            name for name in trigger_types_present if name.startswith("moderate_") or name.startswith("extreme_")
+        ]
+        if not non_median_types:
+            warnings.append("no_moderate_or_extreme_core_pages")
+
+    return {
+        "violations": [],
+        "count": 0,
+        "warnings": warnings,
+        "core_pages": core_count,
+        "core_page_trigger_counts": trigger_counts,
+        "strict_median_norm_share": round(strict_median_share, 4),
+        "trigger_types_present": trigger_types_present,
+    }
+
+
+def validate_narrative_text_divergence_contract(content_dir: Path, as_of_date: str) -> Dict[str, object]:
+    violations: List[str] = []
+    core_pages = load_core_page_entries(content_dir, as_of_date)
+    if not core_pages:
+        return {"violations": [], "count": 0, "warnings": ["no_core_pages_in_recent_window"], "core_pages": 0}
+
+    required_patterns = {
+        "extreme_outperformance": {
+            "distribution": [r"\btail\b", r"\bupper decile\b", r"\bextreme positive deviation\b"],
+            "execution": [r"\breversion risk\b", r"\bdo not extrapolate\b", r"\bhigher confirmation burden\b"],
+        },
+        "moderate_outperformance": {
+            "distribution": [r"\babove baseline\b", r"\bconstructive\b", r"\bpositive but not extreme\b"],
+            "execution": [r"\bconfirmation is still required\b", r"\bconstructive but not extreme\b", r"\babove-baseline\b"],
+        },
+        "strict_median_norm": {
+            "distribution": [r"\bmedian band\b", r"\bcalibration\b", r"\bdo not overstate\b"],
+            "execution": [r"\bcalibration\b", r"\bdo not overstate\b", r"\bkeep sizing conservative\b"],
+        },
+        "moderate_underperformance": {
+            "distribution": [r"\bbelow baseline\b", r"\bfragile\b", r"\bbounce risk\b"],
+            "execution": [r"\bbounce risk\b", r"\bbelow-baseline\b", r"\btighter invalidation\b"],
+        },
+        "extreme_underperformance": {
+            "distribution": [r"\bweak tail\b", r"\bdownside tail\b", r"\bhigher invalidation burden\b"],
+            "execution": [r"\bdownside tail\b", r"\bhigher invalidation burden\b", r"\bwait for confirmation\b"],
+        },
+        "low_context": {
+            "distribution": [r"\binsufficient sample\b", r"\blow context\b", r"\bresearch breadcrumb\b"],
+            "execution": [r"\binsufficient sample\b", r"\blow context\b", r"\bresearch breadcrumb\b"],
+        },
+    }
+    forbidden_patterns = {
+        "strict_median_norm": [r"\btail\b"],
+    }
+    shared_first_sentences: Dict[Tuple[str, str], set[str]] = {}
+
+    for slug, fm, body in core_pages:
+        trigger = str(fm.get("narrative_trigger", "")).strip()
+        distribution_text = extract_section_text(body, "## Distribution Position").lower()
+        execution_text = extract_section_text(body, "## Execution Relevance").lower()
+        distribution_first = first_sentence(distribution_text)
+        execution_first = first_sentence(execution_text)
+
+        if distribution_first:
+            shared_first_sentences.setdefault(("distribution", distribution_first), set()).add(trigger)
+        if execution_first:
+            shared_first_sentences.setdefault(("execution", execution_first), set()).add(trigger)
+
+        patterns = required_patterns.get(trigger, {})
+        for scope, pattern_list in patterns.items():
+            haystack = distribution_text if scope == "distribution" else execution_text
+            if not any(re.search(pattern, haystack) for pattern in pattern_list):
+                violations.append(f"missing_{scope}_anchor:{slug}:{trigger}")
+        for scope, pattern_list in forbidden_patterns.items():
+            if trigger != scope:
+                continue
+            for pattern in pattern_list:
+                if re.search(pattern, distribution_text) or re.search(pattern, execution_text):
+                    violations.append(f"forbidden_trigger_anchor:{slug}:{trigger}:{pattern}")
+                    break
+
+    for (scope, sentence), triggers in shared_first_sentences.items():
+        if len(triggers) > 1 and sentence:
+            violations.append(f"shared_{scope}_first_sentence_across_triggers:{sentence[:80]}")
+
+    return {
+        "violations": sorted(set(violations)),
+        "count": len(sorted(set(violations))),
+        "warnings": [],
+        "core_pages": len(core_pages),
+    }
+
+
+def validate_core_page_trigger_coverage_contract(content_dir: Path, as_of_date: str) -> Dict[str, object]:
+    violations: List[str] = []
+    core_pages = load_core_page_entries(content_dir, as_of_date)
+    if not core_pages:
+        return {"violations": [], "count": 0, "warnings": ["no_core_pages_in_recent_window"], "core_pages": 0}
+
+    for slug, fm, _body in core_pages:
+        trigger = str(fm.get("narrative_trigger", "")).strip()
+        rank_band = str(fm.get("narrative_rank_band", "")).strip()
+        direction_band = str(fm.get("narrative_direction_band", "")).strip()
+        sample_size = int(float(fm.get("sample_size", 0) or 0))
+        z_score = to_float(fm.get("z_score_t7"))
+        percentile = to_float(fm.get("percentile_t7"))
+        hub_delta = to_float(fm.get("hub_baseline_delta"))
+        if not trigger:
+            violations.append(f"missing_narrative_trigger:{slug}")
+            continue
+        if z_score is None or percentile is None or hub_delta is None:
+            violations.append(f"missing_narrative_metrics:{slug}")
+            continue
+        expected_trigger = resolve_narrative_trigger(z_score, percentile, sample_size)
+        if trigger != expected_trigger:
+            violations.append(f"trigger_resolution_mismatch:{slug}:{trigger}:{expected_trigger}")
+        expected_rank_band = narrative_rank_band(trigger)
+        expected_direction_band = narrative_direction_band(trigger)
+        if rank_band != expected_rank_band:
+            violations.append(f"rank_band_mismatch:{slug}:{rank_band}:{expected_rank_band}")
+        if direction_band != expected_direction_band:
+            violations.append(f"direction_band_mismatch:{slug}:{direction_band}:{expected_direction_band}")
+
+    return {
+        "violations": sorted(set(violations)),
+        "count": len(sorted(set(violations))),
+        "warnings": [],
+        "core_pages": len(core_pages),
+    }
+
+
+def validate_core_page_trigger_telemetry_contract(content_dir: Path, as_of_date: str) -> Dict[str, object]:
+    warnings: List[str] = []
+    core_pages = load_core_page_entries(content_dir, as_of_date)
+    trigger_counts: Dict[str, int] = {}
+    trigger_slugs: Dict[str, List[str]] = {}
+    for slug, fm, _body in core_pages:
+        trigger = str(fm.get("narrative_trigger", "")).strip() or "missing"
+        trigger_counts[trigger] = trigger_counts.get(trigger, 0) + 1
+        trigger_slugs.setdefault(trigger, []).append(slug)
+
+    if len(core_pages) >= 12 and len([name for name, count in trigger_counts.items() if count > 0]) == 1:
+        warnings.append("all_core_pages_share_one_trigger")
+
+    return {
+        "violations": [],
+        "count": 0,
+        "warnings": warnings,
+        "core_pages": len(core_pages),
+        "trigger_counts": trigger_counts,
+        "trigger_slugs": {key: value[:10] for key, value in sorted(trigger_slugs.items())},
     }
 
 
@@ -2371,6 +2549,10 @@ def run_gates(
     core_content_depth_result = validate_core_content_depth_contract(content_dir, as_of_date)
     statistical_feature_safety_result = validate_statistical_feature_safety_contract(content_dir, as_of_date)
     content_uniqueness_result = validate_content_uniqueness_contract(content_dir, as_of_date)
+    narrative_distribution_result = validate_narrative_distribution_contract(content_dir, as_of_date)
+    narrative_text_divergence_result = validate_narrative_text_divergence_contract(content_dir, as_of_date)
+    core_page_trigger_coverage_result = validate_core_page_trigger_coverage_contract(content_dir, as_of_date)
+    core_page_trigger_telemetry_result = validate_core_page_trigger_telemetry_contract(content_dir, as_of_date)
 
     for scope in [
         redirect_result,
@@ -2406,6 +2588,8 @@ def run_gates(
         core_content_depth_result,
         statistical_feature_safety_result,
         content_uniqueness_result,
+        narrative_text_divergence_result,
+        core_page_trigger_coverage_result,
     ]:
         for issue in scope["violations"]:
             report["summary"][issue] = report["summary"].get(issue, 0) + 1
@@ -2444,6 +2628,10 @@ def run_gates(
     report["core_content_depth_violations"] = core_content_depth_result
     report["statistical_feature_safety_violations"] = statistical_feature_safety_result
     report["content_uniqueness_violations"] = content_uniqueness_result
+    report["narrative_distribution_violations"] = narrative_distribution_result
+    report["narrative_text_divergence_violations"] = narrative_text_divergence_result
+    report["core_page_trigger_coverage_violations"] = core_page_trigger_coverage_result
+    report["core_page_trigger_telemetry_violations"] = core_page_trigger_telemetry_result
     report["approved_hub_minimum_contract"] = approved_hub_minimum_result
     report["warnings"] = {
         "cta": cta_result.get("warnings", []),
@@ -2451,6 +2639,8 @@ def run_gates(
         "approved_hub_minimum": approved_hub_minimum_result.get("warnings", []),
         "core_content_depth": core_content_depth_result.get("warnings", []),
         "content_uniqueness": content_uniqueness_result.get("warnings", []),
+        "narrative_distribution": narrative_distribution_result.get("warnings", []),
+        "core_page_trigger_telemetry": core_page_trigger_telemetry_result.get("warnings", []),
     }
 
     content_violations = sum(len(v) for v in violations_by_file.values())
@@ -2489,6 +2679,8 @@ def run_gates(
         + int(core_content_depth_result["count"])
         + int(statistical_feature_safety_result["count"])
         + int(content_uniqueness_result["count"])
+        + int(narrative_text_divergence_result["count"])
+        + int(core_page_trigger_coverage_result["count"])
     )
     report["content_violations"] = content_violations
     report["total_violations"] = total_violations

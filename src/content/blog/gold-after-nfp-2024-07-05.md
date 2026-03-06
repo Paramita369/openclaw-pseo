@@ -35,7 +35,9 @@ hub_baseline_std_t7: 1.6215
 hub_baseline_delta: 0.0
 z_score_t7: -0.04
 percentile_t7: 53.85
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "none"
 canonical_url: ""
 robots_directive: "noindex,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 1.12
       sample: 12
 related_events: [{"slug": "gold-after-nfp-2024-03-01", "title": "GOLD NFP Reaction (2024-03-01): T+1/T+7 Up Probability", "event_date": "2024-03-01", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.57, "median_t7_pct": 1.07, "sample_size": 13}, {"slug": "gold-after-nfp-2024-04-05", "title": "NFP Print (2024-04-05) vs GOLD: Quantified Directional Odds", "event_date": "2024-04-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 4.16, "median_t7_pct": 1.07, "sample_size": 13}, {"slug": "gold-after-nfp-2024-09-06", "title": "GOLD Post-NFP Setup (2024-09-06): Historical Probability Lens", "event_date": "2024-09-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 1.09, "median_t7_pct": 1.07, "sample_size": 13}]
+chartData: [{"time": "2024-07-02", "open": 2330.7, "high": 2334.6, "low": 2323.0, "close": 2323.0}, {"time": "2024-07-03", "open": 2330.9, "high": 2361.6, "low": 2330.9, "close": 2359.8}, {"time": "2024-07-05", "open": 2354.9, "high": 2388.5, "low": 2354.9, "close": 2388.5}, {"time": "2024-07-08", "open": 2381.7, "high": 2383.8, "low": 2352.8, "close": 2355.2}, {"time": "2024-07-09", "open": 2363.1, "high": 2363.7, "low": 2360.1, "close": 2360.1}, {"time": "2024-07-10", "open": 2366.3, "high": 2377.0, "low": 2365.8, "close": 2372.2}, {"time": "2024-07-11", "open": 2378.7, "high": 2416.7, "low": 2378.7, "close": 2415.0}, {"time": "2024-07-12", "open": 2399.8, "high": 2414.0, "low": 2391.3, "close": 2414.0}]
 ---
 
 ## Event Snapshot

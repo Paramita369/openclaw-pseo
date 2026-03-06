@@ -35,7 +35,9 @@ hub_baseline_std_t7: 2.0208
 hub_baseline_delta: 0.0
 z_score_t7: 0.15
 percentile_t7: 55.56
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/gold/fomc"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 0.59
       sample: 9
 related_events: [{"slug": "gold-after-fomc-2024-01-30", "title": "2024-01-30 FOMC Meeting: GOLD T+1/T+7 Probability Profile", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 1.61, "median_t7_pct": 0.9, "sample_size": 9}, {"slug": "gold-after-fomc-2026-01-28", "title": "GOLD After FOMC (2026-01-28): Historical Signal & Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.9, "sample_size": 9}, {"slug": "gold-after-fomc-2025-12-10", "title": "2025-12-10 FOMC Meeting: GOLD T+1/T+7 Probability Profile", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.9, "sample_size": 9}]
+chartData: [{"time": "2024-03-18", "open": 2146.2, "high": 2160.7, "low": 2146.2, "close": 2160.7}, {"time": "2024-03-19", "open": 2156.1, "high": 2156.3, "low": 2156.1, "close": 2156.3}, {"time": "2024-03-20", "open": 2157.3, "high": 2185.9, "low": 2150.9, "close": 2157.9}, {"time": "2024-03-21", "open": 2207.0, "high": 2211.6, "low": 2182.4, "close": 2182.4}, {"time": "2024-03-22", "open": 2179.2, "high": 2179.6, "low": 2157.5, "close": 2158.1}, {"time": "2024-03-25", "open": 2166.2, "high": 2179.4, "low": 2166.2, "close": 2174.8}, {"time": "2024-03-26", "open": 2182.7, "high": 2182.7, "low": 2175.6, "close": 2175.6}]
 ---
 
 ## Event Snapshot

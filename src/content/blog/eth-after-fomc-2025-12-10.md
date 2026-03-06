@@ -35,7 +35,9 @@ hub_baseline_std_t7: 12.9045
 hub_baseline_delta: 0.09
 z_score_t7: -0.0
 percentile_t7: 55.56
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/eth-after-fomc-2025-12-10"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: -0.1
       sample: 9
 related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH Post-FOMC Reaction (2024-01-30): Quant Backtest Snapshot", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 3.74, "median_t7_pct": -0.19, "sample_size": 9}, {"slug": "eth-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and ETH: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.19, "sample_size": 9}, {"slug": "eth-after-fomc-2025-10-29", "title": "ETH After FOMC (2025-10-29): Historical Signal & Probability", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.19, "sample_size": 9}]
+chartData: [{"time": "2025-12-07", "open": 3040.18, "high": 3148.77, "low": 2930.65, "close": 3061.3}, {"time": "2025-12-08", "open": 3061.01, "high": 3177.87, "low": 3043.7, "close": 3125.2}, {"time": "2025-12-09", "open": 3124.94, "high": 3395.84, "low": 3092.88, "close": 3321.11}, {"time": "2025-12-10", "open": 3321.2, "high": 3446.62, "low": 3290.15, "close": 3325.39}, {"time": "2025-12-11", "open": 3324.39, "high": 3327.34, "low": 3149.03, "close": 3237.06}, {"time": "2025-12-12", "open": 3237.03, "high": 3265.37, "low": 3050.27, "close": 3084.17}, {"time": "2025-12-13", "open": 3084.13, "high": 3134.85, "low": 3080.08, "close": 3116.7}, {"time": "2025-12-14", "open": 3116.74, "high": 3128.62, "low": 3034.69, "close": 3060.59}, {"time": "2025-12-15", "open": 3060.48, "high": 3175.12, "low": 2899.69, "close": 2964.18}, {"time": "2025-12-16", "open": 2964.38, "high": 2978.92, "low": 2890.01, "close": 2964.18}, {"time": "2025-12-17", "open": 2964.02, "high": 3025.82, "low": 2791.33, "close": 2831.4}]
 ---
 
 ## Event Snapshot
@@ -117,23 +120,23 @@ related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH Post-FOMC R
 
 ## Event Outcome Interpretation
 
-The main mistake after macro releases is to treat every surprise as a regime break. ETH around FOMC is best framed through how the release landed unchanged versus the previous release. The current observation shows actual value 4.0000 versus previous 4.0000, a delta of +0.0000. Across the full history, ETH has a T+7 up probability of 44.44% versus 55.56% down, with a median return of -0.19%. When only matching the same event direction, the T+7 up probability shifts to 44.44% across 9 comparable releases, with a same-direction median of -0.19%. That is the immediate context behind the current neutral classification. The standing hub thesis for this asset-event pair is: ETH tends to inherit macro direction from rate expectations, but relative performance improves when policy uncertainty falls and volatility compresses.
+The main mistake after macro releases is to treat every surprise as a regime break. ETH around FOMC is best framed through how the release landed unchanged versus the previous release. The current observation shows actual value 4.0000 versus previous 4.0000, a delta of +0.0000. Across the full history, ETH has a T+7 up probability of 44.44% versus 55.56% down, with a median return of -0.19%. When only matching the same event direction, the T+7 up probability shifts to 44.44% across 9 comparable releases, with a same-direction median of -0.19%. The current release therefore reads as a calibration event inside the median band, not as a high-conviction break. The standing hub thesis for this asset-event pair is: ETH tends to inherit macro direction from rate expectations, but relative performance improves when policy uncertainty falls and volatility compresses.
 
 ## Distribution Position
 
-The current T+7 reaction of -0.10% sits in the middle of its historical distribution for ETH after FOMC. Its z-score is -0.00, which measures distance from the historical mean, and its percentile rank is 55.56, which shows how often prior releases were weaker than this one. That places the observation inside the central band of observed windows, not in an obvious tail bucket. That is the difference between a manageable macro impulse and a tail event that can invalidate prior playbooks. In practice this means the page is useful for calibration, but it does not justify upgrading a routine macro response into a regime-break narrative.
+This window sits in the median band and should be used for calibration rather than conviction. The current T+7 move of -0.10% carries a z-score of -0.00 and a percentile rank of 55.56, which keeps the release inside the central band of observed windows. That is exactly what a strict median norm looks like: neither extreme strength nor extreme weakness, just a normal response range that helps calibrate expectations. The key instruction here is simple: do not overstate what is still a routine macro window.
 
 ## Comparison vs Hub Baseline
 
-The baseline comparison matters because most false positives come from overreacting to ordinary noise. The hub baseline median T+7 return for ETH after FOMC is -0.19%, while the baseline mean is -0.10% and the baseline standard deviation is 12.9045. The current event is running at +0.09% versus the baseline median. Same-direction probability is +0.00% versus the all-history T+7 up rate, and the same-direction median differs by +0.00%. That distance from baseline is what determines whether this is noise, pressure, or a real outlier worth extra caution. This release is classified as within historical norm rather than handled as a generic macro template. If the current move only differed by a few basis points, the narrative would collapse back toward historical norm. The current regime context also matters: Macro-to-crypto transmission is faster due to tighter cross-asset monitoring.
+This comparison stays close to the median band and is best used for calibration. The baseline comparison matters because most false positives come from overreacting to ordinary noise. The hub baseline median T+7 return is -0.19% and the current gap is +0.09%. Same-direction probability moves by +0.00% and the same-direction median differs by +0.00%. Those numbers matter because they show where normal variation ends, not because they justify an outsized story. The current regime context also matters: Macro-to-crypto transmission is faster due to tighter cross-asset monitoring.
 
 ## Failure Modes
 
-The main failure mode is assuming the first interpretation of the release will survive cross-asset confirmation. Policy surprise can trigger correlated liquidation cascades. This matters because the historical distribution is built on end-of-window outcomes, not the first minute of price discovery. A release can look constructive initially, then fail once rates, the dollar, and sector breadth reprice in a different direction. That is also why low sample environments and mixed reaction functions should be handled as weaker evidence.
+The failure mode here is over-reading ordinary data as if it were exceptional. The main failure mode is assuming the first interpretation will survive cross-asset confirmation. Policy surprise can trigger correlated liquidation cascades. Median-band releases often produce the worst decisions when operators insist on finding a dramatic narrative where the distribution is actually telling them to stay measured.
 
 ## Execution Relevance
 
-Treat this as an educational risk framework, not investment advice. The practical takeaway is to use the current page as a decision filter: read the release, compare it with the hub baseline, then decide whether the event is behaving like a normal FOMC setup or a tail observation. For this asset-event pair, the operational checklist is: Track implied volatility term structure before event.; Avoid chasing first impulse candle.; Anchor exits to predefined volatility bands.. When the page is marked within historical norm, the right response is not automatically to trade more aggressively; it is to decide whether confirmation quality is strong enough to justify action.
+Treat this as an educational risk framework, not investment advice. The operational takeaway is calibration, not escalation. The checklist remains Track implied volatility term structure before event.; Avoid chasing first impulse candle.; Anchor exits to predefined volatility bands.. When a page is marked strict median norm, the right move is to compare it against the hub, keep sizing conservative, and do not overstate the evidence.
 
 ## Methodology
 

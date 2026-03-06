@@ -35,7 +35,9 @@ hub_baseline_std_t7: 11.002
 hub_baseline_delta: -7.6
 z_score_t7: -0.75
 percentile_t7: 21.43
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "moderate_underperformance"
+narrative_rank_band: "moderate"
+narrative_direction_band: "negative"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/eth/cpi"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 0.28
       sample: 13
 related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH Reaction to US CPI (2024-06-12): Quant Probability Breakdown", "event_date": "2024-06-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.22, "median_t7_pct": -0.39, "sample_size": 14}, {"slug": "eth-after-cpi-2026-02-12", "title": "ETH CPI Win Rate (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.39, "sample_size": 14}, {"slug": "eth-after-cpi-2026-01-12", "title": "2026-01-12 CPI Release: ETH Directional Probability Snapshot", "event_date": "2026-01-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.39, "sample_size": 14}]
+chartData: [{"time": "2024-01-12", "open": 2619.18, "high": 2710.42, "low": 2460.93, "close": 2524.46}, {"time": "2024-01-13", "open": 2522.93, "high": 2589.08, "low": 2498.59, "close": 2576.6}, {"time": "2024-01-14", "open": 2578.0, "high": 2578.33, "low": 2470.42, "close": 2472.24}, {"time": "2024-01-15", "open": 2471.67, "high": 2550.77, "low": 2470.82, "close": 2511.36}, {"time": "2024-01-16", "open": 2510.63, "high": 2613.57, "low": 2500.0, "close": 2587.69}, {"time": "2024-01-17", "open": 2587.04, "high": 2592.74, "low": 2508.43, "close": 2528.37}, {"time": "2024-01-18", "open": 2528.59, "high": 2546.26, "low": 2426.14, "close": 2467.02}, {"time": "2024-01-19", "open": 2468.69, "high": 2501.31, "low": 2414.71, "close": 2489.5}, {"time": "2024-01-20", "open": 2489.85, "high": 2489.85, "low": 2456.1, "close": 2469.59}, {"time": "2024-01-21", "open": 2469.8, "high": 2479.76, "low": 2452.38, "close": 2453.91}, {"time": "2024-01-22", "open": 2454.99, "high": 2463.45, "low": 2303.5, "close": 2310.83}]
 ---
 
 ## Event Snapshot

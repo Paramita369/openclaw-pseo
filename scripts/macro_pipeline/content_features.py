@@ -19,6 +19,8 @@ class StatisticalFeatures:
     z_score_t7: float
     percentile_t7: float
     narrative_trigger: str
+    narrative_rank_band: str
+    narrative_direction_band: str
     sample_size: int
 
 
@@ -47,6 +49,61 @@ def finite_values(values: Iterable[object]) -> List[float]:
         if number is not None:
             output.append(number)
     return output
+
+
+def resolve_narrative_trigger(z_score: float, percentile: float, sample_size: int) -> str:
+    if sample_size < 8:
+        return "low_context"
+
+    def z_bucket(value: float) -> tuple[int, str]:
+        if value >= 1.5:
+            return (5, "extreme_outperformance")
+        if value <= -1.5:
+            return (5, "extreme_underperformance")
+        if value >= 0.5:
+            return (3, "moderate_outperformance")
+        if value <= -0.5:
+            return (3, "moderate_underperformance")
+        return (1, "strict_median_norm")
+
+    def percentile_bucket(value: float) -> tuple[int, str]:
+        if value >= 90.0:
+            return (5, "extreme_outperformance")
+        if value <= 10.0:
+            return (5, "extreme_underperformance")
+        if value >= 70.0:
+            return (3, "moderate_outperformance")
+        if value < 30.0:
+            return (3, "moderate_underperformance")
+        return (1, "strict_median_norm")
+
+    z_severity, z_trigger = z_bucket(z_score)
+    percentile_severity, percentile_trigger = percentile_bucket(percentile)
+    return z_trigger if z_severity >= percentile_severity else percentile_trigger
+
+
+def narrative_rank_band(trigger: str) -> str:
+    mapping = {
+        "extreme_outperformance": "extreme",
+        "extreme_underperformance": "extreme",
+        "moderate_outperformance": "moderate",
+        "moderate_underperformance": "moderate",
+        "strict_median_norm": "median",
+        "low_context": "low_context",
+    }
+    return mapping.get(str(trigger or "").strip(), "unknown")
+
+
+def narrative_direction_band(trigger: str) -> str:
+    mapping = {
+        "extreme_outperformance": "positive",
+        "moderate_outperformance": "positive",
+        "strict_median_norm": "neutral",
+        "moderate_underperformance": "negative",
+        "extreme_underperformance": "negative",
+        "low_context": "unknown",
+    }
+    return mapping.get(str(trigger or "").strip(), "unknown")
 
 
 def compute_recent_cutoff(as_of_date: str, window_days: int = CORE_WINDOW_DAYS) -> Optional[str]:
@@ -100,6 +157,8 @@ def compute_statistical_features(
             z_score_t7=0.0,
             percentile_t7=0.0,
             narrative_trigger='low_context',
+            narrative_rank_band='low_context',
+            narrative_direction_band='unknown',
             sample_size=len(baseline),
         )
 
@@ -118,12 +177,7 @@ def compute_statistical_features(
     if not math.isfinite(percentile):
         percentile = 0.0
 
-    if z_score >= 1.25 or percentile >= 85.0:
-        narrative = 'significant_outperformance'
-    elif z_score <= -1.25 or percentile <= 15.0:
-        narrative = 'significant_underperformance'
-    else:
-        narrative = 'within_historical_norm'
+    narrative = resolve_narrative_trigger(z_score, percentile, len(baseline))
 
     return StatisticalFeatures(
         baseline_mean_t7=round(mean_value, 2),
@@ -133,5 +187,7 @@ def compute_statistical_features(
         z_score_t7=round(z_score, 2),
         percentile_t7=round(percentile, 2),
         narrative_trigger=narrative,
+        narrative_rank_band=narrative_rank_band(narrative),
+        narrative_direction_band=narrative_direction_band(narrative),
         sample_size=len(baseline),
     )

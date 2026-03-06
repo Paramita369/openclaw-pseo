@@ -35,7 +35,9 @@ hub_baseline_std_t7: 2.0208
 hub_baseline_delta: -0.31
 z_score_t7: -0.0
 percentile_t7: 44.44
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/gold-after-fomc-2025-12-10"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 0.59
       sample: 9
 related_events: [{"slug": "gold-after-fomc-2024-01-30", "title": "2024-01-30 FOMC Meeting: GOLD T+1/T+7 Probability Profile", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 1.61, "median_t7_pct": 0.9, "sample_size": 9}, {"slug": "gold-after-fomc-2026-01-28", "title": "GOLD After FOMC (2026-01-28): Historical Signal & Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.9, "sample_size": 9}, {"slug": "gold-after-fomc-2025-10-29", "title": "2025-10-29 FOMC Meeting: GOLD T+1/T+7 Probability Profile", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.9, "sample_size": 9}]
+chartData: [{"time": "2025-12-08", "open": 4205.5, "high": 4215.8, "low": 4175.5, "close": 4187.2}, {"time": "2025-12-09", "open": 4190.7, "high": 4219.7, "low": 4177.7, "close": 4206.7}, {"time": "2025-12-10", "open": 4209.0, "high": 4234.5, "low": 4183.6, "close": 4196.4}, {"time": "2025-12-11", "open": 4224.0, "high": 4286.9, "low": 4214.3, "close": 4285.5}, {"time": "2025-12-12", "open": 4276.4, "high": 4355.0, "low": 4260.0, "close": 4300.1}, {"time": "2025-12-15", "open": 4308.3, "high": 4349.2, "low": 4292.9, "close": 4306.7}, {"time": "2025-12-16", "open": 4270.5, "high": 4321.4, "low": 4270.5, "close": 4304.5}, {"time": "2025-12-17", "open": 4308.5, "high": 4351.4, "low": 4308.5, "close": 4347.5}]
 ---
 
 ## Event Snapshot
@@ -117,23 +120,23 @@ related_events: [{"slug": "gold-after-fomc-2024-01-30", "title": "2024-01-30 FOM
 
 ## Event Outcome Interpretation
 
-The main mistake after macro releases is to treat every surprise as a regime break. GOLD around FOMC is best framed through how the release landed unchanged versus the previous release. The current observation shows actual value 4.0000 versus previous 4.0000, a delta of +0.0000. Across the full history, GOLD has a T+7 up probability of 66.67% versus 33.33% down, with a median return of 0.90%. When only matching the same event direction, the T+7 up probability shifts to 66.67% across 9 comparable releases, with a same-direction median of 0.90%. That is the immediate context behind the current bullish classification. The standing hub thesis for this asset-event pair is: Gold's post-FOMC edge is strongest when statement, dots, and press conference align on easing or tightening trajectory.
+The main mistake after macro releases is to treat every surprise as a regime break. GOLD around FOMC is best framed through how the release landed unchanged versus the previous release. The current observation shows actual value 4.0000 versus previous 4.0000, a delta of +0.0000. Across the full history, GOLD has a T+7 up probability of 66.67% versus 33.33% down, with a median return of 0.90%. When only matching the same event direction, the T+7 up probability shifts to 66.67% across 9 comparable releases, with a same-direction median of 0.90%. The current release therefore reads as a calibration event inside the median band, not as a high-conviction break. The standing hub thesis for this asset-event pair is: Gold's post-FOMC edge is strongest when statement, dots, and press conference align on easing or tightening trajectory.
 
 ## Distribution Position
 
-The current T+7 reaction of 0.59% sits in the middle of its historical distribution for GOLD after FOMC. Its z-score is -0.00, which measures distance from the historical mean, and its percentile rank is 44.44, which shows how often prior releases were weaker than this one. That places the observation inside the central band of observed windows, not in an obvious tail bucket. That is the difference between a manageable macro impulse and a tail event that can invalidate prior playbooks. In practice this means the page is useful for calibration, but it does not justify upgrading a routine macro response into a regime-break narrative.
+This window sits in the median band and should be used for calibration rather than conviction. The current T+7 move of 0.59% carries a z-score of -0.00 and a percentile rank of 44.44, which keeps the release inside the central band of observed windows. That is exactly what a strict median norm looks like: neither extreme strength nor extreme weakness, just a normal response range that helps calibrate expectations. The key instruction here is simple: do not overstate what is still a routine macro window.
 
 ## Comparison vs Hub Baseline
 
-The baseline comparison matters because most false positives come from overreacting to ordinary noise. The hub baseline median T+7 return for GOLD after FOMC is 0.90%, while the baseline mean is 0.59% and the baseline standard deviation is 2.0208. The current event is running at -0.31% versus the baseline median. Same-direction probability is +0.00% versus the all-history T+7 up rate, and the same-direction median differs by +0.00%. That distance from baseline is what determines whether this is noise, pressure, or a real outlier worth extra caution. This release is classified as within historical norm rather than handled as a generic macro template. If the current move only differed by a few basis points, the narrative would collapse back toward historical norm. The current regime context also matters: Terminal-rate narrative has given way to pace-of-easing narrative.
+This comparison stays close to the median band and is best used for calibration. The baseline comparison matters because most false positives come from overreacting to ordinary noise. The hub baseline median T+7 return is 0.90% and the current gap is -0.31%. Same-direction probability moves by +0.00% and the same-direction median differs by +0.00%. Those numbers matter because they show where normal variation ends, not because they justify an outsized story. The current regime context also matters: Terminal-rate narrative has given way to pace-of-easing narrative.
 
 ## Failure Modes
 
-The main failure mode is assuming the first interpretation of the release will survive cross-asset confirmation. Headline fade risk rises when policy message is mixed. This matters because the historical distribution is built on end-of-window outcomes, not the first minute of price discovery. A release can look constructive initially, then fail once rates, the dollar, and sector breadth reprice in a different direction. That is also why low sample environments and mixed reaction functions should be handled as weaker evidence.
+The failure mode here is over-reading ordinary data as if it were exceptional. The main failure mode is assuming the first interpretation will survive cross-asset confirmation. Headline fade risk rises when policy message is mixed. Median-band releases often produce the worst decisions when operators insist on finding a dramatic narrative where the distribution is actually telling them to stay measured.
 
 ## Execution Relevance
 
-Treat this as an educational risk framework, not investment advice. The practical takeaway is to use the current page as a decision filter: read the release, compare it with the hub baseline, then decide whether the event is behaving like a normal FOMC setup or a tail observation. For this asset-event pair, the operational checklist is: Map pre-event consensus versus actual guidance.; Reassess after press conference starts.; Use a hard invalidation level tied to yield reversal.. When the page is marked within historical norm, the right response is not automatically to trade more aggressively; it is to decide whether confirmation quality is strong enough to justify action.
+Treat this as an educational risk framework, not investment advice. The operational takeaway is calibration, not escalation. The checklist remains Map pre-event consensus versus actual guidance.; Reassess after press conference starts.; Use a hard invalidation level tied to yield reversal.. When a page is marked strict median norm, the right move is to compare it against the hub, keep sizing conservative, and do not overstate the evidence.
 
 ## Methodology
 

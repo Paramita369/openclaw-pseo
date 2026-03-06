@@ -35,7 +35,9 @@ hub_baseline_std_t7: 10.2392
 hub_baseline_delta: 12.73
 z_score_t7: 1.16
 percentile_t7: 88.89
-narrative_trigger: "significant_outperformance"
+narrative_trigger: "moderate_outperformance"
+narrative_rank_band: "moderate"
+narrative_direction_band: "positive"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/btc/fomc"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 1.12
       sample: 9
 related_events: [{"slug": "btc-after-fomc-2024-04-30", "title": "BTC After FOMC (2024-04-30): Historical Signal & Probability", "event_date": "2024-04-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 5.37, "median_t7_pct": 0.31, "sample_size": 9}, {"slug": "btc-after-fomc-2024-01-30", "title": "BTC Post-FOMC Reaction (2024-01-30): Quant Backtest Snapshot", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.97, "median_t7_pct": 0.31, "sample_size": 9}, {"slug": "btc-after-fomc-2026-01-28", "title": "FOMC Outcome (2026-01-28) for BTC: Up/Down Probability View", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.31, "sample_size": 9}]
+chartData: [{"time": "2024-03-16", "open": 69392.48, "high": 70046.27, "low": 64801.39, "close": 65315.12}, {"time": "2024-03-17", "open": 65316.34, "high": 68845.72, "low": 64545.32, "close": 68390.62}, {"time": "2024-03-18", "open": 68371.3, "high": 68897.13, "low": 66594.23, "close": 67548.59}, {"time": "2024-03-19", "open": 67556.13, "high": 68106.93, "low": 61536.18, "close": 61912.77}, {"time": "2024-03-20", "open": 61930.16, "high": 68115.26, "low": 60807.79, "close": 67913.67}, {"time": "2024-03-21", "open": 67911.59, "high": 68199.99, "low": 64580.92, "close": 65491.39}, {"time": "2024-03-22", "open": 65489.93, "high": 66623.75, "low": 62355.37, "close": 63778.76}, {"time": "2024-03-23", "open": 63802.72, "high": 65976.4, "low": 63038.49, "close": 64062.2}, {"time": "2024-03-24", "open": 64070.75, "high": 67622.76, "low": 63825.85, "close": 67234.17}, {"time": "2024-03-25", "open": 67234.09, "high": 71162.59, "low": 66414.84, "close": 69958.81}, {"time": "2024-03-26", "open": 69931.33, "high": 71535.74, "low": 69335.61, "close": 69987.84}]
 ---
 
 ## Event Snapshot

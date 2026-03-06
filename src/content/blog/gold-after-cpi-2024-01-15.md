@@ -35,7 +35,9 @@ hub_baseline_std_t7: 1.8614
 hub_baseline_delta: -1.86
 z_score_t7: -0.76
 percentile_t7: 15.38
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "moderate_underperformance"
+narrative_rank_band: "moderate"
+narrative_direction_band: "negative"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/gold/cpi"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 1.07
       sample: 13
 related_events: [{"slug": "gold-after-cpi-2025-02-12", "title": "US CPI (2025-02-12) and GOLD: Event-Driven Return Odds", "event_date": "2025-02-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 7.09, "median_t7_pct": 1.52, "sample_size": 14}, {"slug": "gold-after-cpi-2024-02-20", "title": "US CPI (2024-02-20) and GOLD: Event-Driven Return Odds", "event_date": "2024-02-20", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 6.12, "median_t7_pct": 1.52, "sample_size": 14}, {"slug": "gold-after-cpi-2024-05-15", "title": "US CPI (2024-05-15) and GOLD: Event-Driven Return Odds", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.47, "median_t7_pct": 1.52, "sample_size": 14}]
+chartData: [{"time": "2024-01-12", "open": 2031.1, "high": 2057.0, "low": 2031.1, "close": 2046.7}, {"time": "2024-01-16", "open": 2051.7, "high": 2054.8, "low": 2026.0, "close": 2026.0}, {"time": "2024-01-17", "open": 2026.5, "high": 2026.5, "low": 2002.6, "close": 2002.6}, {"time": "2024-01-18", "open": 2012.8, "high": 2018.6, "low": 2009.5, "close": 2018.6}, {"time": "2024-01-19", "open": 2023.2, "high": 2036.0, "low": 2019.5, "close": 2026.5}, {"time": "2024-01-22", "open": 2021.3, "high": 2021.3, "low": 2019.8, "close": 2019.8}]
 ---
 
 ## Event Snapshot

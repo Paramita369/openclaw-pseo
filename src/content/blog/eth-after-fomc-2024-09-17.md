@@ -35,7 +35,9 @@ hub_baseline_std_t7: 12.9045
 hub_baseline_delta: 13.54
 z_score_t7: 1.04
 percentile_t7: 77.78
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "moderate_outperformance"
+narrative_rank_band: "moderate"
+narrative_direction_band: "positive"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/eth/fomc"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: -0.1
       sample: 9
 related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH Post-FOMC Reaction (2024-01-30): Quant Backtest Snapshot", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 3.74, "median_t7_pct": -0.19, "sample_size": 9}, {"slug": "eth-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and ETH: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.19, "sample_size": 9}, {"slug": "eth-after-fomc-2025-12-10", "title": "2025-12-10 FOMC Meeting: ETH T+1/T+7 Probability Profile", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.19, "sample_size": 9}]
+chartData: [{"time": "2024-09-14", "open": 2441.58, "high": 2442.63, "low": 2386.98, "close": 2418.6}, {"time": "2024-09-15", "open": 2418.27, "high": 2430.38, "low": 2286.63, "close": 2320.9}, {"time": "2024-09-16", "open": 2320.89, "high": 2334.79, "low": 2253.72, "close": 2295.28}, {"time": "2024-09-17", "open": 2295.28, "high": 2392.15, "low": 2263.79, "close": 2341.71}, {"time": "2024-09-18", "open": 2341.73, "high": 2369.73, "low": 2278.66, "close": 2369.73}, {"time": "2024-09-19", "open": 2369.37, "high": 2492.2, "low": 2369.37, "close": 2464.75}, {"time": "2024-09-20", "open": 2464.78, "high": 2571.99, "low": 2439.38, "close": 2561.07}, {"time": "2024-09-21", "open": 2560.88, "high": 2621.62, "low": 2530.84, "close": 2615.86}, {"time": "2024-09-22", "open": 2615.85, "high": 2632.04, "low": 2528.52, "close": 2582.86}, {"time": "2024-09-23", "open": 2582.77, "high": 2701.68, "low": 2541.91, "close": 2648.55}, {"time": "2024-09-24", "open": 2648.48, "high": 2671.28, "low": 2593.15, "close": 2654.35}]
 ---
 
 ## Event Snapshot

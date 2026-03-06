@@ -35,7 +35,9 @@ hub_baseline_std_t7: 1.8429
 hub_baseline_delta: 1.22
 z_score_t7: 0.97
 percentile_t7: 92.31
-narrative_trigger: "significant_outperformance"
+narrative_trigger: "extreme_outperformance"
+narrative_rank_band: "extreme"
+narrative_direction_band: "positive"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/spy/cpi"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 0.51
       sample: 13
 related_events: [{"slug": "spy-after-cpi-2024-03-12", "title": "SPY CPI Win Rate (2024-03-12): Historical T+1/T+7 Probability", "event_date": "2024-03-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 3.94, "median_t7_pct": 1.08, "sample_size": 14}, {"slug": "spy-after-cpi-2024-11-14", "title": "2024-11-14 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-11-14", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.43, "median_t7_pct": 1.08, "sample_size": 14}, {"slug": "spy-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.37, "median_t7_pct": 1.08, "sample_size": 14}]
+chartData: [{"time": "2025-01-13", "open": 569.09, "high": 575.0, "low": 568.67, "close": 574.64}, {"time": "2025-01-14", "open": 577.58, "high": 578.21, "low": 571.64, "close": 575.43}, {"time": "2025-01-15", "open": 583.48, "high": 587.05, "low": 582.36, "close": 585.9}, {"time": "2025-01-16", "open": 587.27, "high": 587.45, "low": 584.07, "close": 584.77}, {"time": "2025-01-17", "open": 590.03, "high": 592.4, "low": 588.7, "close": 590.64}, {"time": "2025-01-21", "open": 593.7, "high": 596.06, "low": 591.72, "close": 596.05}, {"time": "2025-01-22", "open": 598.89, "high": 600.77, "low": 598.33, "close": 599.4}]
 ---
 
 ## Event Snapshot

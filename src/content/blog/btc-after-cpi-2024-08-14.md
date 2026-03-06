@@ -35,7 +35,9 @@ hub_baseline_std_t7: 8.5155
 hub_baseline_delta: 0.51
 z_score_t7: 0.29
 percentile_t7: 57.14
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/btc/cpi"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 2.19
       sample: 13
 related_events: [{"slug": "btc-after-cpi-2026-02-12", "title": "BTC After CPI (2026-02-12): Up/Down Odds and Median Returns", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 3.64, "sample_size": 14}, {"slug": "btc-after-cpi-2026-01-12", "title": "BTC CPI Win Rate (2026-01-12): Historical T+1/T+7 Probability", "event_date": "2026-01-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 3.64, "sample_size": 14}, {"slug": "btc-after-cpi-2025-12-12", "title": "BTC After CPI (2025-12-12): Up/Down Odds and Median Returns", "event_date": "2025-12-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 3.64, "sample_size": 14}]
+chartData: [{"time": "2024-08-11", "open": 60944.89, "high": 61778.66, "low": 58348.82, "close": 58719.48}, {"time": "2024-08-12", "open": 58719.39, "high": 60680.33, "low": 57688.9, "close": 59354.52}, {"time": "2024-08-13", "open": 59356.21, "high": 61572.4, "low": 58506.25, "close": 60609.57}, {"time": "2024-08-14", "open": 60611.05, "high": 61687.76, "low": 58472.88, "close": 58737.27}, {"time": "2024-08-15", "open": 58733.26, "high": 59838.65, "low": 56161.59, "close": 57560.1}, {"time": "2024-08-16", "open": 57560.27, "high": 59847.36, "low": 57110.02, "close": 58894.11}, {"time": "2024-08-17", "open": 58893.53, "high": 59694.67, "low": 58814.83, "close": 59478.97}, {"time": "2024-08-18", "open": 59468.13, "high": 60262.72, "low": 58445.4, "close": 58483.96}, {"time": "2024-08-19", "open": 58480.71, "high": 59612.66, "low": 57864.71, "close": 59493.45}, {"time": "2024-08-20", "open": 59493.45, "high": 61396.33, "low": 58610.88, "close": 59012.79}, {"time": "2024-08-21", "open": 59014.99, "high": 61834.35, "low": 58823.45, "close": 61175.19}]
 ---
 
 ## Event Snapshot

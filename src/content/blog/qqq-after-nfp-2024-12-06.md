@@ -35,7 +35,9 @@ hub_baseline_std_t7: 2.1579
 hub_baseline_delta: -0.74
 z_score_t7: -0.52
 percentile_t7: 38.46
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "moderate_underperformance"
+narrative_rank_band: "moderate"
+narrative_direction_band: "negative"
 canonical_target: "none"
 canonical_url: ""
 robots_directive: "noindex,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 1.81
       sample: 12
 related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "2025-01-10 Nonfarm Payrolls: QQQ Historical Win Rate", "event_date": "2025-01-10", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.64, "median_t7_pct": 1.51, "sample_size": 13}, {"slug": "qqq-after-nfp-2024-08-02", "title": "QQQ After NFP (2024-08-02): Event Probability and Median Return", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.35, "median_t7_pct": 1.51, "sample_size": 13}, {"slug": "qqq-after-nfp-2024-10-04", "title": "QQQ Post-NFP Setup (2024-10-04): Historical Probability Lens", "event_date": "2024-10-04", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 1.58, "median_t7_pct": 1.51, "sample_size": 13}]
+chartData: [{"time": "2024-12-03", "open": 510.53, "high": 513.71, "low": 509.96, "close": 513.43}, {"time": "2024-12-04", "open": 516.86, "high": 520.04, "low": 516.15, "close": 519.78}, {"time": "2024-12-05", "open": 519.83, "high": 520.56, "low": 517.95, "close": 518.34}, {"time": "2024-12-06", "open": 519.01, "high": 523.22, "low": 518.88, "close": 522.98}, {"time": "2024-12-09", "open": 522.06, "high": 522.85, "low": 517.76, "close": 518.91}, {"time": "2024-12-10", "open": 520.14, "high": 521.89, "low": 515.71, "close": 517.14}, {"time": "2024-12-11", "open": 521.51, "high": 527.08, "low": 521.1, "close": 526.4}, {"time": "2024-12-12", "open": 524.17, "high": 525.44, "low": 522.52, "close": 523.0}, {"time": "2024-12-13", "open": 526.93, "high": 529.63, "low": 523.79, "close": 527.0}]
 ---
 
 ## Event Snapshot

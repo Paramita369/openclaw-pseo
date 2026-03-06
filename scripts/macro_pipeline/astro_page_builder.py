@@ -793,9 +793,11 @@ def direction_phrase(event_direction: str) -> str:
 
 def narrative_trigger_text(trigger: str) -> str:
     mapping = {
-        "significant_outperformance": "the upper end of its historical distribution",
-        "significant_underperformance": "the weak tail of its historical distribution",
-        "within_historical_norm": "the middle of its historical distribution",
+        "extreme_outperformance": "the upper tail of its historical distribution",
+        "moderate_outperformance": "an above-baseline slice of its historical distribution",
+        "strict_median_norm": "the median band of its historical distribution",
+        "moderate_underperformance": "a below-baseline slice of its historical distribution",
+        "extreme_underperformance": "the downside tail of its historical distribution",
         "low_context": "a low-context sample bucket",
     }
     return mapping.get(trigger, "its historical distribution")
@@ -880,31 +882,27 @@ def compose_core_body(
         "analyst": "Against the hub baseline for this asset-event pair, the current print is measurable rather than anecdotal.",
         "distribution": "Relative to the hub baseline, this release can be located with a concrete distance from normal behavior.",
         "risk-first": "The baseline comparison matters because most false positives come from overreacting to ordinary noise.",
-        "checklist": "The baseline comparison is what turns this page from observation into a repeatable checklist.",
-    }
-    distribution_explanations = {
-        "analyst": "That keeps the interpretation anchored in the shape of the historical sample rather than the release headline.",
-        "distribution": "That framing matters because it separates ordinary event noise from true tail behavior inside the same distribution.",
-        "risk-first": "That is the difference between a manageable macro impulse and a tail event that can invalidate prior playbooks.",
-        "checklist": "That distinction is what tells an operator whether to slow down, confirm, or stand aside.",
-    }
-    comparison_explanations = {
-        "analyst": "The classification is therefore tied to a measurable gap versus baseline, not to narrative convenience.",
-        "distribution": "In other words, the baseline gap decides the narrative, not a cosmetic change in wording.",
-        "risk-first": "That distance from baseline is what determines whether this is noise, pressure, or a real outlier worth extra caution.",
-        "checklist": "That baseline gap is what turns the page into an action filter instead of a generic macro recap.",
+        "checklist": "The baseline comparison is what turns the page from observation into a repeatable checklist.",
     }
     failure_intros = {
-        "analyst": "The main failure mode is misreading a statistically ordinary move as a structural break.",
-        "distribution": "The main failure mode is forgetting that distributions absorb a lot of noise before they change shape.",
-        "risk-first": "The main failure mode is assuming the first interpretation of the release will survive cross-asset confirmation.",
-        "checklist": "The main failure mode is skipping confirmation steps because the headline seems obvious.",
+        "analyst": "The main failure mode is confusing distribution evidence with certainty.",
+        "distribution": "The main failure mode is forgetting that distributions absorb noise before they change shape.",
+        "risk-first": "The main failure mode is assuming the first interpretation will survive cross-asset confirmation.",
+        "checklist": "The main failure mode is skipping confirmation steps because the headline feels obvious.",
     }
     execution_intros = {
         "analyst": "Use this page as an educational operating lens, not a trading instruction.",
         "distribution": "Use this page as a distribution map, not a shortcut to conviction.",
         "risk-first": "Treat this as an educational risk framework, not investment advice.",
         "checklist": "Treat this page as an execution checklist input, not a buy or sell signal.",
+    }
+    trigger_outcome_overlays = {
+        "extreme_outperformance": "The current release therefore belongs to a strong positive tail regime rather than a routine upside outcome.",
+        "moderate_outperformance": "The current release therefore reads as constructive and above baseline, but not as a full regime break.",
+        "strict_median_norm": "The current release therefore reads as a calibration event inside the median band, not as a high-conviction break.",
+        "moderate_underperformance": "The current release therefore reads as a below-baseline and fragile response rather than a collapse.",
+        "extreme_underperformance": "The current release therefore belongs to the downside tail and should be treated as materially weak.",
+        "low_context": "The current release therefore remains a low-context observation and should defer to the broader hub rather than stand alone.",
     }
 
     outcome_paragraph = (
@@ -914,78 +912,177 @@ def compose_core_body(
         f"T+7 up probability of {t7_up:.2f}% versus {t7_down:.2f}% down, with a median return of {t7_median:.2f}%. "
         f"When only matching the same event direction, the T+7 up probability shifts to {conditional_t7_up:.2f}% "
         f"across {conditional_sample} comparable releases, with a same-direction median of {conditional_t7_median:.2f}%. "
-        f"That is the immediate context behind the current {signal.lower()} classification. The standing hub thesis for this "
-        f"asset-event pair is: {thesis_context}"
+        f"{trigger_outcome_overlays[trigger]} The standing hub thesis for this asset-event pair is: {thesis_context}"
     )
 
     if trigger == "low_context":
         distribution_paragraph = (
             f"## Distribution Position\n\n"
-            f"This page currently falls into a low-context bucket because the valid baseline sample is below the minimum "
-            f"needed for a stable distribution read. Z-score is held at {z_score:.2f} and percentile at {percentile:.2f} "
-            f"by contract, which means the system is intentionally refusing to overstate confidence. In practical terms, "
-            f"that means the observed T+7 move of {metrics['impact_t7_pct']:.2f}% should be treated as descriptive evidence "
-            f"rather than a statistically strong signal. In this regime the safer interpretation is to treat the page as a "
-            f"research breadcrumb that should be subordinated to the broader {asset} {event_label} hub, not as a self-contained setup."
+            f"This remains an insufficient sample and low context read for {asset} after {event_label}. The baseline only carries "
+            f"{features.get('sample_size', 0)} valid windows, so z-score is clamped at {z_score:.2f} and percentile at {percentile:.2f} "
+            f"by contract. That means the observed T+7 move of {metrics['impact_t7_pct']:.2f}% is descriptive evidence, not a stable "
+            f"distribution call. The page should be used as a research breadcrumb that routes attention back to the hub instead of "
+            f"pretending to be a self-sufficient setup."
         )
-    elif trigger == "significant_outperformance":
+        comparison_paragraph = (
+            f"## Comparison vs Hub Baseline\n\n"
+            f"This baseline comparison stays intentionally conservative because the sample is not deep enough to promote a numeric edge. "
+            f"{comparison_intros[family]} The baseline median is {baseline_median:.2f}%, the mean is {baseline_mean:.2f}%, and the current "
+            f"gap is {format_pct(baseline_delta, signed=True)}. Same-direction probability differs by {format_pct(same_direction_gap, signed=True)} "
+            f"and the same-direction median differs by {format_pct(same_direction_median_gap, signed=True)}. The point is not to force a rank, "
+            f"but to document what changed while keeping confidence capped. The current regime context still matters: {changed_context}"
+        )
+        failure_paragraph = (
+            f"## Failure Modes\n\n"
+            f"A low context page fails when an operator mistakes sparse history for hidden edge. {failure_intros[family]} "
+            f"{failure_modes} With only a small matched sample, one additional release can materially change the baseline, which is why this page "
+            f"should not be treated as proof of persistent behavior."
+        )
+        execution_paragraph = (
+            f"## Execution Relevance\n\n"
+            f"{execution_intros[family]} The execution stance here is to acknowledge insufficient sample, preserve low context discipline, and "
+            f"use the page as a research breadcrumb. The checklist remains: {checklist_text}. That means waiting for broader confirmation instead "
+            f"of pretending the current window carries enough evidence to justify conviction."
+        )
+    elif trigger == "extreme_outperformance":
         distribution_paragraph = (
             f"## Distribution Position\n\n"
-            f"The current T+7 reaction of {metrics['impact_t7_pct']:.2f}% sits in {narrative_trigger_text(trigger)} for "
-            f"{asset} after {event_label}. Its z-score is {z_score:.2f}, meaning the window is more than a standard deviation "
-            f"above the mean response, and its percentile rank is {percentile:.2f}, placing it in {percentile_band}. "
-            f"{distribution_explanations[family]} This is not just a positive reading; it is a stronger-than-typical response "
-            f"relative to the same asset-event history, so the operator should assume reversion risk rises if confirmation from rates, "
-            f"the dollar, or index breadth fails to hold."
+            f"This window sits in the upper decile and behaves like an extreme positive deviation for {asset} after {event_label}. "
+            f"The T+7 move of {metrics['impact_t7_pct']:.2f}% prints a z-score of {z_score:.2f} and a percentile rank of {percentile:.2f}, "
+            f"which places the release in {percentile_band} and inside the positive tail rather than the median band. That matters because tail "
+            f"behavior is not the same thing as ordinary upside drift; it says this event landed materially stronger than baseline and should be "
+            f"handled as a high-variance state, not a generic bullish recap."
         )
-    elif trigger == "significant_underperformance":
+        comparison_paragraph = (
+            f"## Comparison vs Hub Baseline\n\n"
+            f"This comparison is materially above baseline rather than cosmetically positive. {comparison_intros[family]} The hub baseline median "
+            f"T+7 return is {baseline_median:.2f}% versus a current gap of {format_pct(baseline_delta, signed=True)}. Same-direction probability is "
+            f"{format_pct(same_direction_gap, signed=True)} above the all-history T+7 up rate, while the same-direction median differs by "
+            f"{format_pct(same_direction_median_gap, signed=True)}. That spread is large enough to justify an outlier label, but not large enough "
+            f"to excuse lazy extrapolation. The current regime context also matters: {changed_context}"
+        )
+        failure_paragraph = (
+            f"## Failure Modes\n\n"
+            f"The failure mode here is treating a positive tail event as if it automatically upgrades the whole regime. {failure_intros[family]} "
+            f"{failure_modes} Once rates, the dollar, or breadth stop confirming the move, upper-tail reactions can mean-revert quickly and punish "
+            f"late entries."
+        )
+        execution_paragraph = (
+            f"## Execution Relevance\n\n"
+            f"{execution_intros[family]} The practical takeaway is to respect the tail profile while keeping reversion risk front and center. "
+            f"Operators should not extrapolate this window without stronger confirmation, and the higher confirmation burden should be explicit in "
+            f"the checklist: {checklist_text}. A page marked extreme outperformance is strongest as a filter for discipline, not a license to chase."
+        )
+    elif trigger == "moderate_outperformance":
         distribution_paragraph = (
             f"## Distribution Position\n\n"
-            f"The current T+7 reaction of {metrics['impact_t7_pct']:.2f}% sits in {narrative_trigger_text(trigger)} for "
-            f"{asset} after {event_label}. Its z-score is {z_score:.2f}, which places the move materially below the historical mean, "
-            f"and its percentile rank is {percentile:.2f}, leaving it in {percentile_band}. {distribution_explanations[family]} "
-            f"That makes the current release a weaker-than-normal outcome rather than routine variance, so downside follow-through and "
-            f"false-positive bounce risk both matter more than in a median event window."
+            f"This window is above baseline and reads as constructive, positive but not extreme. The current T+7 move of "
+            f"{metrics['impact_t7_pct']:.2f}% carries a z-score of {z_score:.2f} and a percentile rank of {percentile:.2f}, placing the release in "
+            f"{percentile_band}. That keeps the interpretation on the stronger side of normal without pushing it into tail language. The right read is "
+            f"that the event behaved better than usual, but not so far beyond baseline that it should be mistaken for a structural break."
+        )
+        comparison_paragraph = (
+            f"## Comparison vs Hub Baseline\n\n"
+            f"This comparison is above baseline, but it remains constructive rather than extreme. {comparison_intros[family]} The hub baseline "
+            f"median T+7 return is {baseline_median:.2f}% and the current gap is {format_pct(baseline_delta, signed=True)}. Same-direction "
+            f"probability is {format_pct(same_direction_gap, signed=True)} versus all-history, and the same-direction median differs by "
+            f"{format_pct(same_direction_median_gap, signed=True)}. That is enough to mark the page as positively skewed, while still requiring "
+            f"cross-asset confirmation before upgrading conviction. The current regime context also matters: {changed_context}"
+        )
+        failure_paragraph = (
+            f"## Failure Modes\n\n"
+            f"The failure mode here is over-promoting a constructive setup into a false regime break. {failure_intros[family]} "
+            f"{failure_modes} Moderate upside events often fail when secondary markets stop confirming, so the biggest mistake is ignoring the "
+            f"difference between above-baseline behavior and true tail behavior."
+        )
+        execution_paragraph = (
+            f"## Execution Relevance\n\n"
+            f"{execution_intros[family]} The correct stance is to treat this as constructive but not extreme. The checklist is still {checklist_text}, "
+            f"and confirmation is still required before acting on the signal. Above-baseline pages deserve attention, but they do not eliminate the "
+            f"need for discipline."
+        )
+    elif trigger == "extreme_underperformance":
+        distribution_paragraph = (
+            f"## Distribution Position\n\n"
+            f"This window sits in the weak tail and should be classified as a downside tail event for {asset} after {event_label}. "
+            f"The current T+7 move of {metrics['impact_t7_pct']:.2f}% carries a z-score of {z_score:.2f} and a percentile rank of {percentile:.2f}, "
+            f"which pushes the release into {percentile_band} and away from ordinary downside noise. That makes this an extreme negative deviation "
+            f"rather than a routine weak print, so the page should be read with explicit downside-tail caution."
+        )
+        comparison_paragraph = (
+            f"## Comparison vs Hub Baseline\n\n"
+            f"This comparison is materially below baseline and should be treated as a true downside-tail gap. {comparison_intros[family]} "
+            f"The hub baseline median T+7 return is {baseline_median:.2f}% and the current gap is {format_pct(baseline_delta, signed=True)}. "
+            f"Same-direction probability differs by {format_pct(same_direction_gap, signed=True)} and the same-direction median differs by "
+            f"{format_pct(same_direction_median_gap, signed=True)}. The baseline gap is now large enough to justify a weak-tail classification "
+            f"and a more defensive interpretation. The current regime context also matters: {changed_context}"
+        )
+        failure_paragraph = (
+            f"## Failure Modes\n\n"
+            f"The failure mode here is underestimating how far a downside tail can travel before it stabilizes. {failure_intros[family]} "
+            f"{failure_modes} Invalidation needs to be tighter because weak-tail conditions can extend farther than a normal weak window."
+        )
+        execution_paragraph = (
+            f"## Execution Relevance\n\n"
+            f"{execution_intros[family]} The operational takeaway is to respect the downside tail and accept a higher invalidation burden before "
+            f"assuming the move is spent. The checklist remains {checklist_text}. This is exactly the state where waiting for confirmation matters "
+            f"more than trying to fade weakness too early."
+        )
+    elif trigger == "moderate_underperformance":
+        distribution_paragraph = (
+            f"## Distribution Position\n\n"
+            f"This window is below baseline and looks fragile rather than structurally broken. The current T+7 move of "
+            f"{metrics['impact_t7_pct']:.2f}% carries a z-score of {z_score:.2f} and a percentile rank of {percentile:.2f}, leaving the release in "
+            f"{percentile_band}. That puts the event on the weak side of normal without forcing it into a full downside tail label. The important "
+            f"distinction is that fragile reactions can still bounce, which is why a mild underperformance should not be confused with regime failure."
+        )
+        comparison_paragraph = (
+            f"## Comparison vs Hub Baseline\n\n"
+            f"This comparison is below baseline, but it is still better read as fragile than catastrophic. {comparison_intros[family]} "
+            f"The hub baseline median T+7 return is {baseline_median:.2f}% and the current gap is {format_pct(baseline_delta, signed=True)}. "
+            f"Same-direction probability differs by {format_pct(same_direction_gap, signed=True)} and the same-direction median differs by "
+            f"{format_pct(same_direction_median_gap, signed=True)}. The baseline gap is large enough to matter, but not large enough to imply that "
+            f"the broader playbook is broken. The current regime context also matters: {changed_context}"
+        )
+        failure_paragraph = (
+            f"## Failure Modes\n\n"
+            f"The failure mode here is reading a fragile window as proof of permanent weakness. {failure_intros[family]} "
+            f"{failure_modes} Moderate underperformance often creates bounce risk, especially if rates or the dollar stop reinforcing the weak read."
+        )
+        execution_paragraph = (
+            f"## Execution Relevance\n\n"
+            f"{execution_intros[family]} The operational takeaway is to respect the below-baseline read without assuming collapse. The checklist is "
+            f"{checklist_text}. Fragile setups demand tighter invalidation and more patience because bounce risk is often highest when traders treat "
+            f"every weak release as a one-way trend."
         )
     else:
         distribution_paragraph = (
             f"## Distribution Position\n\n"
-            f"The current T+7 reaction of {metrics['impact_t7_pct']:.2f}% sits in {narrative_trigger_text(trigger)} for "
-            f"{asset} after {event_label}. Its z-score is {z_score:.2f}, which measures distance from the historical mean, "
-            f"and its percentile rank is {percentile:.2f}, which shows how often prior releases were weaker than this one. "
-            f"That places the observation inside {percentile_band}, not in an obvious tail bucket. {distribution_explanations[family]} "
-            f"In practice this means the page is useful for calibration, but it does not justify upgrading a routine macro response "
-            f"into a regime-break narrative."
+            f"This window sits in the median band and should be used for calibration rather than conviction. The current T+7 move of "
+            f"{metrics['impact_t7_pct']:.2f}% carries a z-score of {z_score:.2f} and a percentile rank of {percentile:.2f}, which keeps the release "
+            f"inside {percentile_band}. That is exactly what a strict median norm looks like: neither extreme strength nor extreme weakness, just a normal "
+            f"response range that helps calibrate expectations. The key instruction here is simple: do not overstate what is still a routine macro window."
         )
-
-    comparison_paragraph = (
-        f"## Comparison vs Hub Baseline\n\n"
-        f"{comparison_intros[family]} The hub baseline median T+7 return for {asset} after {event_label} is "
-        f"{baseline_median:.2f}%, while the baseline mean is {baseline_mean:.2f}% and the baseline standard deviation is "
-        f"{baseline_std:.4f}. The current event is running at {format_pct(baseline_delta, signed=True)} versus the baseline median. "
-        f"Same-direction probability is {format_pct(same_direction_gap, signed=True)} versus the all-history T+7 up rate, and the "
-        f"same-direction median differs by {format_pct(same_direction_median_gap, signed=True)}. "
-        f"{comparison_explanations[family]} This release is classified as {trigger.replace('_', ' ')} rather than handled as a generic macro template. "
-        f"If the current move only differed by a few basis points, the narrative would collapse back toward historical norm. "
-        f"The current regime context also matters: {changed_context}"
-    )
-
-    failure_paragraph = (
-        f"## Failure Modes\n\n"
-        f"{failure_intros[family]} "
-        f"{failure_modes} This matters because the historical distribution is built on end-of-window outcomes, not the first minute of "
-        f"price discovery. A release can look constructive initially, then fail once rates, the dollar, and sector breadth reprice in a "
-        f"different direction. That is also why low sample environments and mixed reaction functions should be handled as weaker evidence."
-    )
-
-    execution_paragraph = (
-        f"## Execution Relevance\n\n"
-        f"{execution_intros[family]} The practical takeaway is to use the current page as a "
-        f"decision filter: read the release, compare it with the hub baseline, then decide whether the event is behaving like a normal "
-        f"{event_label} setup or a tail observation. For this asset-event pair, the operational checklist is: {checklist_text}. "
-        f"When the page is marked {trigger.replace('_', ' ')}, the right response is not automatically to trade more aggressively; "
-        f"it is to decide whether confirmation quality is strong enough to justify action."
-    )
+        comparison_paragraph = (
+            f"## Comparison vs Hub Baseline\n\n"
+            f"This comparison stays close to the median band and is best used for calibration. {comparison_intros[family]} The hub baseline median "
+            f"T+7 return is {baseline_median:.2f}% and the current gap is {format_pct(baseline_delta, signed=True)}. Same-direction probability "
+            f"moves by {format_pct(same_direction_gap, signed=True)} and the same-direction median differs by {format_pct(same_direction_median_gap, signed=True)}. "
+            f"Those numbers matter because they show where normal variation ends, not because they justify an outsized story. The current regime context "
+            f"also matters: {changed_context}"
+        )
+        failure_paragraph = (
+            f"## Failure Modes\n\n"
+            f"The failure mode here is over-reading ordinary data as if it were exceptional. {failure_intros[family]} "
+            f"{failure_modes} Median-band releases often produce the worst decisions when operators insist on finding a dramatic narrative where the "
+            f"distribution is actually telling them to stay measured."
+        )
+        execution_paragraph = (
+            f"## Execution Relevance\n\n"
+            f"{execution_intros[family]} The operational takeaway is calibration, not escalation. The checklist remains {checklist_text}. "
+            f"When a page is marked strict median norm, the right move is to compare it against the hub, keep sizing conservative, and do not overstate "
+            f"the evidence."
+        )
 
     return (
         "## Event Outcome Interpretation\n\n"
@@ -1042,6 +1139,8 @@ def build_markdown(
     z_score_t7: float,
     percentile_t7: float,
     narrative_trigger: str,
+    narrative_rank_band: str,
+    narrative_direction_band: str,
     data_last_updated_at: str,
     metrics: Dict[str, float],
     probabilities: Dict[str, Any],
@@ -1103,6 +1202,8 @@ hub_baseline_delta: {hub_baseline_delta}
 z_score_t7: {z_score_t7}
 percentile_t7: {percentile_t7}
 narrative_trigger: "{narrative_trigger}"
+narrative_rank_band: "{narrative_rank_band}"
+narrative_direction_band: "{narrative_direction_band}"
 canonical_target: "{canonical_target}"
 canonical_url: "{canonical_url}"
 robots_directive: "{robots_directive}"
@@ -2007,6 +2108,8 @@ def process_row(
         "z_score_t7": statistical_features.z_score_t7,
         "percentile_t7": statistical_features.percentile_t7,
         "narrative_trigger": statistical_features.narrative_trigger,
+        "narrative_rank_band": statistical_features.narrative_rank_band,
+        "narrative_direction_band": statistical_features.narrative_direction_band,
         "canonical_target": canonical_target,
         "canonical_url": canonical_url,
         "robots_directive": robots_directive,
@@ -2064,6 +2167,8 @@ def process_row(
             z_score_t7=statistical_features.z_score_t7,
             percentile_t7=statistical_features.percentile_t7,
             narrative_trigger=statistical_features.narrative_trigger,
+            narrative_rank_band=statistical_features.narrative_rank_band,
+            narrative_direction_band=statistical_features.narrative_direction_band,
             canonical_target=canonical_target,
             canonical_url=canonical_url,
             robots_directive=robots_directive,
@@ -2130,6 +2235,8 @@ def process_row(
         "z_score_t7": statistical_features.z_score_t7,
         "percentile_t7": statistical_features.percentile_t7,
         "narrative_trigger": statistical_features.narrative_trigger,
+        "narrative_rank_band": statistical_features.narrative_rank_band,
+        "narrative_direction_band": statistical_features.narrative_direction_band,
         "canonical_target": canonical_target,
         "canonical_url": canonical_url,
         "robots_directive": robots_directive,

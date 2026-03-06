@@ -35,7 +35,9 @@ hub_baseline_std_t7: 8.5559
 hub_baseline_delta: -1.8
 z_score_t7: -0.0
 percentile_t7: 46.15
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/eth-after-nfp-2026-02-06"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 3.07
       sample: 12
 related_events: [{"slug": "eth-after-nfp-2026-01-02", "title": "2026-01-02 Nonfarm Payrolls: ETH Historical Win Rate", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}, {"slug": "eth-after-nfp-2025-12-05", "title": "ETH Post-NFP Setup (2025-12-05): Historical Probability Lens", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}, {"slug": "eth-after-nfp-2025-11-07", "title": "NFP Print (2025-11-07) vs ETH: Quantified Directional Odds", "event_date": "2025-11-07", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}]
+chartData: [{"time": "2026-02-03", "open": 2344.45, "high": 2357.21, "low": 2109.06, "close": 2227.56}, {"time": "2026-02-04", "open": 2227.97, "high": 2291.13, "low": 2074.1, "close": 2143.5}, {"time": "2026-02-05", "open": 2143.62, "high": 2167.14, "low": 1818.66, "close": 1821.68}, {"time": "2026-02-06", "open": 1821.13, "high": 2090.33, "low": 1748.63, "close": 2063.39}, {"time": "2026-02-07", "open": 2063.33, "high": 2115.82, "low": 1995.92, "close": 2090.55}, {"time": "2026-02-08", "open": 2090.63, "high": 2148.12, "low": 2066.38, "close": 2088.76}, {"time": "2026-02-09", "open": 2087.92, "high": 2144.98, "low": 2008.36, "close": 2103.57}, {"time": "2026-02-10", "open": 2104.18, "high": 2122.02, "low": 1990.14, "close": 2019.5}, {"time": "2026-02-11", "open": 2019.58, "high": 2030.41, "low": 1903.69, "close": 1940.62}, {"time": "2026-02-12", "open": 1940.84, "high": 1999.5, "low": 1897.33, "close": 1946.94}, {"time": "2026-02-13", "open": 1946.61, "high": 2069.46, "low": 1924.14, "close": 2048.53}]
 ---
 
 ## Event Snapshot
@@ -117,23 +120,23 @@ related_events: [{"slug": "eth-after-nfp-2026-01-02", "title": "2026-01-02 Nonfa
 
 ## Event Outcome Interpretation
 
-The useful signal is where this release sits inside the historical range, not the headline in isolation. ETH around NFP is best framed through how the release landed higher than the previous release. The current observation shows actual value 158627.0000 versus previous 158497.0000, a delta of +130.0000. Across the full history, ETH has a T+7 up probability of 61.54% versus 38.46% down, with a median return of 5.12%. When only matching the same event direction, the T+7 up probability shifts to 58.33% across 12 comparable releases, with a same-direction median of 3.01%. That is the immediate context behind the current bullish classification. The standing hub thesis for this asset-event pair is: ETH has historically shown mixed first-day response to payroll shocks, but directional follow-through improves when dollar trend aligns with crypto market breadth.
+The useful signal is where this release sits inside the historical range, not the headline in isolation. ETH around NFP is best framed through how the release landed higher than the previous release. The current observation shows actual value 158627.0000 versus previous 158497.0000, a delta of +130.0000. Across the full history, ETH has a T+7 up probability of 61.54% versus 38.46% down, with a median return of 5.12%. When only matching the same event direction, the T+7 up probability shifts to 58.33% across 12 comparable releases, with a same-direction median of 3.01%. The current release therefore reads as a calibration event inside the median band, not as a high-conviction break. The standing hub thesis for this asset-event pair is: ETH has historically shown mixed first-day response to payroll shocks, but directional follow-through improves when dollar trend aligns with crypto market breadth.
 
 ## Distribution Position
 
-The current T+7 reaction of 3.32% sits in the middle of its historical distribution for ETH after NFP. Its z-score is -0.00, which measures distance from the historical mean, and its percentile rank is 46.15, which shows how often prior releases were weaker than this one. That places the observation inside the central band of observed windows, not in an obvious tail bucket. That framing matters because it separates ordinary event noise from true tail behavior inside the same distribution. In practice this means the page is useful for calibration, but it does not justify upgrading a routine macro response into a regime-break narrative.
+This window sits in the median band and should be used for calibration rather than conviction. The current T+7 move of 3.32% carries a z-score of -0.00 and a percentile rank of 46.15, which keeps the release inside the central band of observed windows. That is exactly what a strict median norm looks like: neither extreme strength nor extreme weakness, just a normal response range that helps calibrate expectations. The key instruction here is simple: do not overstate what is still a routine macro window.
 
 ## Comparison vs Hub Baseline
 
-Relative to the hub baseline, this release can be located with a concrete distance from normal behavior. The hub baseline median T+7 return for ETH after NFP is 5.12%, while the baseline mean is 3.32% and the baseline standard deviation is 8.5559. The current event is running at -1.80% versus the baseline median. Same-direction probability is -3.21% versus the all-history T+7 up rate, and the same-direction median differs by -2.11%. In other words, the baseline gap decides the narrative, not a cosmetic change in wording. This release is classified as within historical norm rather than handled as a generic macro template. If the current move only differed by a few basis points, the narrative would collapse back toward historical norm. The current regime context also matters: Cross-exchange depth has improved, reducing single-venue distortion.
+This comparison stays close to the median band and is best used for calibration. Relative to the hub baseline, this release can be located with a concrete distance from normal behavior. The hub baseline median T+7 return is 5.12% and the current gap is -1.80%. Same-direction probability moves by -3.21% and the same-direction median differs by -2.11%. Those numbers matter because they show where normal variation ends, not because they justify an outsized story. The current regime context also matters: Cross-exchange depth has improved, reducing single-venue distortion.
 
 ## Failure Modes
 
-The main failure mode is forgetting that distributions absorb a lot of noise before they change shape. Thin weekend-adjacent liquidity can produce false breaks. This matters because the historical distribution is built on end-of-window outcomes, not the first minute of price discovery. A release can look constructive initially, then fail once rates, the dollar, and sector breadth reprice in a different direction. That is also why low sample environments and mixed reaction functions should be handled as weaker evidence.
+The failure mode here is over-reading ordinary data as if it were exceptional. The main failure mode is forgetting that distributions absorb noise before they change shape. Thin weekend-adjacent liquidity can produce false breaks. Median-band releases often produce the worst decisions when operators insist on finding a dramatic narrative where the distribution is actually telling them to stay measured.
 
 ## Execution Relevance
 
-Use this page as a distribution map, not a shortcut to conviction. The practical takeaway is to use the current page as a decision filter: read the release, compare it with the hub baseline, then decide whether the event is behaving like a normal NFP setup or a tail observation. For this asset-event pair, the operational checklist is: Validate move with ETH perp funding and open interest.; Use smaller first entry and add on confirmation.; Monitor ETH/BTC and TOTAL3 for breadth confirmation.. When the page is marked within historical norm, the right response is not automatically to trade more aggressively; it is to decide whether confirmation quality is strong enough to justify action.
+Use this page as a distribution map, not a shortcut to conviction. The operational takeaway is calibration, not escalation. The checklist remains Validate move with ETH perp funding and open interest.; Use smaller first entry and add on confirmation.; Monitor ETH/BTC and TOTAL3 for breadth confirmation.. When a page is marked strict median norm, the right move is to compare it against the hub, keep sizing conservative, and do not overstate the evidence.
 
 ## Methodology
 

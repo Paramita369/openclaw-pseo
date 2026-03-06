@@ -35,7 +35,9 @@ hub_baseline_std_t7: 1.7817
 hub_baseline_delta: 0.0
 z_score_t7: -0.01
 percentile_t7: 55.56
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/spy/fomc"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 0.64
       sample: 9
 related_events: [{"slug": "spy-after-fomc-2025-01-29", "title": "Fed Decision (2025-01-29) and SPY: Event-Driven Odds", "event_date": "2025-01-29", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 9.47, "median_t7_pct": 0.63, "sample_size": 9}, {"slug": "spy-after-fomc-2024-03-19", "title": "SPY After FOMC (2024-03-19): Historical Signal & Probability", "event_date": "2024-03-19", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 7.7, "median_t7_pct": 0.63, "sample_size": 9}, {"slug": "spy-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and SPY: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.63, "sample_size": 9}]
+chartData: [{"time": "2024-01-29", "open": 475.96, "high": 479.56, "low": 475.42, "close": 479.42}, {"time": "2024-01-30", "open": 478.73, "high": 479.76, "low": 478.29, "close": 479.05}, {"time": "2024-01-31", "open": 476.83, "high": 477.28, "low": 471.21, "close": 471.23}, {"time": "2024-02-01", "open": 472.94, "high": 477.43, "low": 472.13, "close": 477.4}, {"time": "2024-02-02", "open": 477.84, "high": 484.08, "low": 477.5, "close": 482.42}, {"time": "2024-02-05", "open": 481.79, "high": 482.45, "low": 478.4, "close": 480.67}, {"time": "2024-02-06", "open": 481.61, "high": 482.39, "low": 480.18, "close": 482.06}]
 ---
 
 ## Event Snapshot

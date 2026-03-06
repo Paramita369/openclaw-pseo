@@ -35,7 +35,9 @@ hub_baseline_std_t7: 8.5559
 hub_baseline_delta: 12.81
 z_score_t7: 1.71
 percentile_t7: 100.0
-narrative_trigger: "significant_outperformance"
+narrative_trigger: "extreme_outperformance"
+narrative_rank_band: "extreme"
+narrative_direction_band: "positive"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/eth/nfp"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 3.07
       sample: 12
 related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH NFP Reaction (2026-02-06): T+1/T+7 Up Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}, {"slug": "eth-after-nfp-2026-01-02", "title": "2026-01-02 Nonfarm Payrolls: ETH Historical Win Rate", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}, {"slug": "eth-after-nfp-2025-12-05", "title": "ETH Post-NFP Setup (2025-12-05): Historical Probability Lens", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}]
+chartData: [{"time": "2024-10-29", "open": 2565.42, "high": 2680.05, "low": 2560.15, "close": 2637.96}, {"time": "2024-10-30", "open": 2637.64, "high": 2720.27, "low": 2600.61, "close": 2657.37}, {"time": "2024-10-31", "open": 2657.21, "high": 2667.56, "low": 2501.57, "close": 2515.8}, {"time": "2024-11-01", "open": 2515.87, "high": 2583.78, "low": 2467.82, "close": 2511.89}, {"time": "2024-11-02", "open": 2512.21, "high": 2522.36, "low": 2471.96, "close": 2491.07}, {"time": "2024-11-03", "open": 2491.09, "high": 2495.44, "low": 2411.4, "close": 2456.43}, {"time": "2024-11-04", "open": 2456.1, "high": 2488.35, "low": 2359.58, "close": 2397.03}, {"time": "2024-11-05", "open": 2397.04, "high": 2478.62, "low": 2380.6, "close": 2422.65}, {"time": "2024-11-06", "open": 2422.54, "high": 2743.96, "low": 2421.81, "close": 2724.17}, {"time": "2024-11-07", "open": 2724.01, "high": 2918.74, "low": 2701.59, "close": 2895.59}, {"time": "2024-11-08", "open": 2895.6, "high": 2983.74, "low": 2889.48, "close": 2962.3}]
 ---
 
 ## Event Snapshot

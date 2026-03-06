@@ -35,7 +35,9 @@ hub_baseline_std_t7: 1.8429
 hub_baseline_delta: -0.98
 z_score_t7: -0.22
 percentile_t7: 38.46
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/spy/cpi"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 0.51
       sample: 13
 related_events: [{"slug": "spy-after-cpi-2024-11-14", "title": "2024-11-14 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-11-14", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.43, "median_t7_pct": 1.08, "sample_size": 14}, {"slug": "spy-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.37, "median_t7_pct": 1.08, "sample_size": 14}, {"slug": "spy-after-cpi-2026-02-12", "title": "SPY Reaction to US CPI (2026-02-12): Quant Probability Breakdown", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.08, "sample_size": 14}]
+chartData: [{"time": "2024-03-11", "open": 498.16, "high": 499.53, "low": 496.23, "close": 498.95}, {"time": "2024-03-12", "open": 501.06, "high": 504.9, "low": 498.54, "close": 504.31}, {"time": "2024-03-13", "open": 504.63, "high": 504.81, "low": 502.08, "close": 503.52}, {"time": "2024-03-14", "open": 504.5, "high": 504.65, "low": 499.47, "close": 502.53}, {"time": "2024-03-15", "open": 499.45, "high": 500.91, "low": 497.4, "close": 499.08}, {"time": "2024-03-18", "open": 503.16, "high": 504.61, "low": 501.63, "close": 502.04}, {"time": "2024-03-19", "open": 501.35, "high": 505.12, "low": 500.34, "close": 504.83}]
 ---
 
 ## Event Snapshot

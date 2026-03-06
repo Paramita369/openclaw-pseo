@@ -35,7 +35,9 @@ hub_baseline_std_t7: 5.8462
 hub_baseline_delta: 1.75
 z_score_t7: 0.0
 percentile_t7: 61.54
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "none"
 canonical_url: ""
 robots_directive: "noindex,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 10.31
       sample: 1
 related_events: [{"slug": "btc-after-nfp-2026-02-06", "title": "BTC Post-NFP Setup (2026-02-06): Historical Probability Lens", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.54, "sample_size": 13}, {"slug": "btc-after-nfp-2026-01-02", "title": "NFP Print (2026-01-02) vs BTC: Quantified Directional Odds", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.54, "sample_size": 13}, {"slug": "btc-after-nfp-2025-12-05", "title": "BTC Post-NFP Setup (2025-12-05): Historical Probability Lens", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.54, "sample_size": 13}]
+chartData: [{"time": "2025-07-29", "open": 117938.59, "high": 119273.87, "low": 116987.37, "close": 117922.15}, {"time": "2025-07-30", "open": 117921.99, "high": 118780.73, "low": 115800.83, "close": 117831.19}, {"time": "2025-07-31", "open": 117833.63, "high": 118919.98, "low": 115505.22, "close": 115758.2}, {"time": "2025-08-01", "open": 115738.95, "high": 116060.77, "low": 112724.45, "close": 113320.09}, {"time": "2025-08-02", "open": 113320.39, "high": 114021.6, "low": 112005.77, "close": 112526.91}, {"time": "2025-08-03", "open": 112525.8, "high": 114747.42, "low": 111943.8, "close": 114217.67}, {"time": "2025-08-04", "open": 114223.92, "high": 115729.47, "low": 114130.41, "close": 115071.88}, {"time": "2025-08-05", "open": 115072.19, "high": 115117.44, "low": 112701.11, "close": 114141.45}, {"time": "2025-08-06", "open": 114140.91, "high": 115737.84, "low": 113372.25, "close": 115028.0}, {"time": "2025-08-07", "open": 115030.05, "high": 117676.91, "low": 114279.71, "close": 117496.9}, {"time": "2025-08-08", "open": 117505.5, "high": 117689.2, "low": 115917.46, "close": 116688.73}]
 ---
 
 ## Event Snapshot

@@ -35,7 +35,9 @@ hub_baseline_std_t7: 11.002
 hub_baseline_delta: 0.65
 z_score_t7: 0.0
 percentile_t7: 57.14
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/eth/cpi"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 0.28
       sample: 13
 related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH Reaction to US CPI (2024-06-12): Quant Probability Breakdown", "event_date": "2024-06-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.22, "median_t7_pct": -0.39, "sample_size": 14}, {"slug": "eth-after-cpi-2026-02-12", "title": "ETH CPI Win Rate (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.39, "sample_size": 14}, {"slug": "eth-after-cpi-2026-01-12", "title": "2026-01-12 CPI Release: ETH Directional Probability Snapshot", "event_date": "2026-01-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.39, "sample_size": 14}]
+chartData: [{"time": "2025-06-09", "open": 2510.84, "high": 2693.81, "low": 2479.87, "close": 2681.52}, {"time": "2025-06-10", "open": 2681.29, "high": 2824.81, "low": 2658.68, "close": 2813.52}, {"time": "2025-06-11", "open": 2813.74, "high": 2877.63, "low": 2746.46, "close": 2773.53}, {"time": "2025-06-12", "open": 2773.6, "high": 2784.26, "low": 2619.97, "close": 2651.8}, {"time": "2025-06-13", "open": 2651.92, "high": 2651.92, "low": 2443.96, "close": 2579.49}, {"time": "2025-06-14", "open": 2579.72, "high": 2580.16, "low": 2491.49, "close": 2533.44}, {"time": "2025-06-15", "open": 2533.18, "high": 2558.68, "low": 2493.2, "close": 2546.84}, {"time": "2025-06-16", "open": 2547.23, "high": 2680.09, "low": 2517.15, "close": 2540.6}, {"time": "2025-06-17", "open": 2540.31, "high": 2617.9, "low": 2456.65, "close": 2510.76}, {"time": "2025-06-18", "open": 2510.82, "high": 2546.63, "low": 2469.05, "close": 2524.3}, {"time": "2025-06-19", "open": 2524.4, "high": 2546.77, "low": 2486.1, "close": 2521.65}]
 ---
 
 ## Event Snapshot

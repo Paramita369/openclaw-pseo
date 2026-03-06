@@ -35,7 +35,9 @@ hub_baseline_std_t7: 12.9045
 hub_baseline_delta: 0.09
 z_score_t7: -0.0
 percentile_t7: 55.56
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/eth/fomc"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: -0.1
       sample: 9
 related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH Post-FOMC Reaction (2024-01-30): Quant Backtest Snapshot", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 3.74, "median_t7_pct": -0.19, "sample_size": 9}, {"slug": "eth-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and ETH: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.19, "sample_size": 9}, {"slug": "eth-after-fomc-2025-12-10", "title": "2025-12-10 FOMC Meeting: ETH T+1/T+7 Probability Profile", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -0.19, "sample_size": 9}]
+chartData: [{"time": "2025-10-26", "open": 3953.44, "high": 4177.31, "low": 3923.19, "close": 4157.99}, {"time": "2025-10-27", "open": 4158.01, "high": 4250.67, "low": 4099.57, "close": 4120.12}, {"time": "2025-10-28", "open": 4120.27, "high": 4173.51, "low": 3940.83, "close": 3982.26}, {"time": "2025-10-29", "open": 3980.76, "high": 4036.35, "low": 3849.54, "close": 3903.35}, {"time": "2025-10-30", "open": 3903.32, "high": 3948.22, "low": 3681.91, "close": 3804.38}, {"time": "2025-10-31", "open": 3805.08, "high": 3900.58, "low": 3797.67, "close": 3847.08}, {"time": "2025-11-01", "open": 3847.17, "high": 3906.78, "low": 3832.63, "close": 3874.19}, {"time": "2025-11-02", "open": 3873.89, "high": 3914.88, "low": 3840.0, "close": 3911.06}, {"time": "2025-11-03", "open": 3911.75, "high": 3912.63, "low": 3560.26, "close": 3602.31}, {"time": "2025-11-04", "open": 3602.04, "high": 3652.69, "low": 3063.09, "close": 3292.57}, {"time": "2025-11-05", "open": 3292.15, "high": 3479.81, "low": 3170.51, "close": 3425.17}]
 ---
 
 ## Event Snapshot

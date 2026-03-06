@@ -481,6 +481,20 @@ def validate_page(
             "narrative_trigger_mismatch",
             f"expected={expected_features.narrative_trigger} actual={frontmatter.get('narrative_trigger')}",
         )
+    if str(frontmatter.get("narrative_rank_band") or "").strip() != expected_features.narrative_rank_band:
+        add_mismatch(
+            mismatches,
+            slug,
+            "narrative_rank_band_mismatch",
+            f"expected={expected_features.narrative_rank_band} actual={frontmatter.get('narrative_rank_band')}",
+        )
+    if str(frontmatter.get("narrative_direction_band") or "").strip() != expected_features.narrative_direction_band:
+        add_mismatch(
+            mismatches,
+            slug,
+            "narrative_direction_band_mismatch",
+            f"expected={expected_features.narrative_direction_band} actual={frontmatter.get('narrative_direction_band')}",
+        )
 
     try:
         asof_dt = datetime.strptime(asof_date, "%Y-%m-%d").date()

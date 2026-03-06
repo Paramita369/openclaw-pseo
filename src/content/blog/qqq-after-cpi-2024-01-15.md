@@ -35,7 +35,9 @@ hub_baseline_std_t7: 2.3774
 hub_baseline_delta: 3.54
 z_score_t7: 1.51
 percentile_t7: 92.31
-narrative_trigger: "significant_outperformance"
+narrative_trigger: "extreme_outperformance"
+narrative_rank_band: "extreme"
+narrative_direction_band: "positive"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/cpi"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 0.54
       sample: 13
 related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: QQQ Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.6, "median_t7_pct": 0.6, "sample_size": 14}, {"slug": "qqq-after-cpi-2024-09-11", "title": "US CPI (2024-09-11) and QQQ: Event-Driven Return Odds", "event_date": "2024-09-11", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 7.08, "median_t7_pct": 0.6, "sample_size": 14}, {"slug": "qqq-after-cpi-2026-02-12", "title": "QQQ CPI Win Rate (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.6, "sample_size": 14}]
+chartData: [{"time": "2024-01-12", "open": 405.92, "high": 406.76, "low": 403.69, "close": 405.09}, {"time": "2024-01-16", "open": 403.85, "high": 406.63, "low": 402.39, "close": 405.05}, {"time": "2024-01-17", "open": 401.73, "high": 403.14, "low": 398.52, "close": 402.76}, {"time": "2024-01-18", "open": 406.04, "high": 409.06, "low": 404.69, "close": 408.48}, {"time": "2024-01-19", "open": 410.68, "high": 416.74, "low": 410.1, "close": 416.58}, {"time": "2024-01-22", "open": 418.78, "high": 420.09, "low": 416.52, "close": 417.12}]
 ---
 
 ## Event Snapshot

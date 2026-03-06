@@ -35,7 +35,9 @@ hub_baseline_std_t7: 1.7058
 hub_baseline_delta: -1.61
 z_score_t7: -0.96
 percentile_t7: 23.08
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "moderate_underperformance"
+narrative_rank_band: "moderate"
+narrative_direction_band: "negative"
 canonical_target: "none"
 canonical_url: ""
 robots_directive: "noindex,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 1.28
       sample: 12
 related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "2024-07-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-07-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.02, "median_t7_pct": 1.39, "sample_size": 13}, {"slug": "spy-after-nfp-2024-01-05", "title": "2024-01-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-01-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.04, "median_t7_pct": 1.39, "sample_size": 13}, {"slug": "spy-after-nfp-2024-10-04", "title": "SPY NFP Reaction (2024-10-04): T+1/T+7 Up Probability", "event_date": "2024-10-04", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.43, "median_t7_pct": 1.39, "sample_size": 13}]
+chartData: [{"time": "2024-02-27", "open": 494.48, "high": 494.92, "low": 492.57, "close": 494.7}, {"time": "2024-02-28", "open": 493.14, "high": 494.63, "low": 492.78, "close": 494.05}, {"time": "2024-02-29", "open": 495.81, "high": 497.44, "low": 493.16, "close": 495.82}, {"time": "2024-03-01", "open": 496.7, "high": 500.91, "low": 496.29, "close": 500.48}, {"time": "2024-03-04", "open": 499.68, "high": 501.8, "low": 499.65, "close": 499.94}, {"time": "2024-03-05", "open": 497.93, "high": 498.38, "low": 492.73, "close": 494.94}, {"time": "2024-03-06", "open": 498.23, "high": 499.72, "low": 496.15, "close": 497.45}, {"time": "2024-03-07", "open": 500.76, "high": 503.44, "low": 497.51, "close": 502.39}, {"time": "2024-03-08", "open": 503.02, "high": 505.72, "low": 498.8, "close": 499.37}]
 ---
 
 ## Event Snapshot

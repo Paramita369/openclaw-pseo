@@ -35,7 +35,9 @@ hub_baseline_std_t7: 2.2487
 hub_baseline_delta: -0.13
 z_score_t7: 0.0
 percentile_t7: 33.33
-narrative_trigger: "within_historical_norm"
+narrative_trigger: "strict_median_norm"
+narrative_rank_band: "median"
+narrative_direction_band: "neutral"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/qqq/fomc"
 robots_directive: "index,follow"
@@ -85,6 +87,7 @@ probabilities:
       mean: 1.03
       sample: 9
 related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and QQQ: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 2.07, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and QQQ: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2025-12-10", "title": "QQQ Post-FOMC Reaction (2025-12-10): Quant Backtest Snapshot", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}]
+chartData: [{"time": "2025-06-16", "open": 528.61, "high": 533.46, "low": 528.56, "close": 532.39}, {"time": "2025-06-17", "open": 529.82, "high": 531.43, "low": 526.03, "close": 527.2}, {"time": "2025-06-18", "open": 528.21, "high": 530.65, "low": 525.52, "close": 527.11}, {"time": "2025-06-20", "open": 530.36, "high": 531.66, "low": 523.01, "close": 524.95}, {"time": "2025-06-23", "open": 525.52, "high": 530.87, "low": 522.37, "close": 530.35}, {"time": "2025-06-24", "open": 535.58, "high": 539.38, "low": 534.96, "close": 538.46}, {"time": "2025-06-25", "open": 540.74, "high": 541.98, "low": 538.06, "close": 539.84}]
 ---
 
 ## Event Snapshot
