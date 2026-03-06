@@ -1,14 +1,14 @@
 ---
 title: "BTC After NFP (2025-01-10): Event Probability and Median Return"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 3
 title_template_key: "nfp_3"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-01-10"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 13
-freshness_days: 417
+freshness_days: 419
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
+is_core_page: false
+core_window_days: 90
+body_variant_family: "distribution"
+hub_baseline_mean_t7: 3.29
+hub_baseline_median_t7: 1.54
+hub_baseline_std_t7: 5.8462
+hub_baseline_delta: 8.77
+z_score_t7: 1.2
+percentile_t7: 92.31
+narrative_trigger: "significant_outperformance"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/btc/nfp"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "btc-after-nfp-2026-02-06", "title": "BTC Post-NFP Set
 - Event: **NFP**
 - Asset: **BTC**
 - Event date: **2025-01-10**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **417 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **419 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome

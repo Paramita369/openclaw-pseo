@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2026-01-28) and ETH: Event-Driven Odds"
 description: "Historical probability profile for ETH around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2026-01-28"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 9
-freshness_days: 34
+freshness_days: 36
 freshness_status: "fresh"
 index_tier: "B"
 is_recent_90d: true
+is_core_page: true
+core_window_days: 90
+body_variant_family: "checklist"
+hub_baseline_mean_t7: -0.1
+hub_baseline_median_t7: -0.19
+hub_baseline_std_t7: 12.9045
+hub_baseline_delta: 0.09
+z_score_t7: -0.0
+percentile_t7: 55.56
+narrative_trigger: "within_historical_norm"
 canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/eth-after-fomc-2026-01-28"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH Post-FOMC R
 - Event: **FOMC**
 - Asset: **ETH**
 - Event date: **2026-01-28**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **34 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **36 days**
 - Sample size (all-history): **9**
 
 ## Event Outcome
@@ -105,15 +115,25 @@ related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH Post-FOMC R
 | T+1 | 55.56% | 44.44% | 1.2% | 1.38% | 9 |
 | T+7 | 44.44% | 55.56% | -0.19% | -0.1% | 9 |
 
-## Historical Distribution Summary
+## Event Outcome Interpretation
 
-When FOMC was **FLAT**, ETH T+1 up probability was **55.56%** (n=9).
+Execution quality here comes from context discipline rather than reacting to the first candle. ETH around FOMC is best framed through how the release landed unchanged versus the previous release. The current observation shows actual value 3.7500 versus previous 3.7500, a delta of +0.0000. Across the full history, ETH has a T+7 up probability of 44.44% versus 55.56% down, with a median return of -0.19%. When only matching the same event direction, the T+7 up probability shifts to 44.44% across 9 comparable releases, with a same-direction median of -0.19%. That is the immediate context behind the current neutral classification. The standing hub thesis for this asset-event pair is: ETH tends to inherit macro direction from rate expectations, but relative performance improves when policy uncertainty falls and volatility compresses.
 
-When FOMC was **FLAT**, ETH T+7 up probability was **44.44%** (n=9).
+## Distribution Position
 
-Same-direction T+7 median return: **-0.19%**.
+The current T+7 reaction of -0.10% sits in the middle of its historical distribution for ETH after FOMC. Its z-score is -0.00, which measures distance from the historical mean, and its percentile rank is 55.56, which shows how often prior releases were weaker than this one. That places the observation inside the central band of observed windows, not in an obvious tail bucket. That distinction is what tells an operator whether to slow down, confirm, or stand aside. In practice this means the page is useful for calibration, but it does not justify upgrading a routine macro response into a regime-break narrative.
 
-For ETH, historical FOMC windows show all-history T+1 up probability of 55.56% and T+7 up probability of 44.44%. When FOMC printed Flat versus previous, T+1 up probability was 55.56% and T+7 up probability was 44.44% across 9 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+## Comparison vs Hub Baseline
+
+The baseline comparison is what turns this page from observation into a repeatable checklist. The hub baseline median T+7 return for ETH after FOMC is -0.19%, while the baseline mean is -0.10% and the baseline standard deviation is 12.9045. The current event is running at +0.09% versus the baseline median. Same-direction probability is +0.00% versus the all-history T+7 up rate, and the same-direction median differs by +0.00%. That baseline gap is what turns the page into an action filter instead of a generic macro recap. This release is classified as within historical norm rather than handled as a generic macro template. If the current move only differed by a few basis points, the narrative would collapse back toward historical norm. The current regime context also matters: Macro-to-crypto transmission is faster due to tighter cross-asset monitoring.
+
+## Failure Modes
+
+The main failure mode is skipping confirmation steps because the headline seems obvious. Policy surprise can trigger correlated liquidation cascades. This matters because the historical distribution is built on end-of-window outcomes, not the first minute of price discovery. A release can look constructive initially, then fail once rates, the dollar, and sector breadth reprice in a different direction. That is also why low sample environments and mixed reaction functions should be handled as weaker evidence.
+
+## Execution Relevance
+
+Treat this page as an execution checklist input, not a buy or sell signal. The practical takeaway is to use the current page as a decision filter: read the release, compare it with the hub baseline, then decide whether the event is behaving like a normal FOMC setup or a tail observation. For this asset-event pair, the operational checklist is: Track implied volatility term structure before event.; Avoid chasing first impulse candle.; Anchor exits to predefined volatility bands.. When the page is marked within historical norm, the right response is not automatically to trade more aggressively; it is to decide whether confirmation quality is strong enough to justify action.
 
 ## Methodology
 

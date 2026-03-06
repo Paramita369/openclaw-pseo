@@ -87,6 +87,8 @@ def fallback_entry(previous_entry: object, now_utc: datetime, *, asset_type: str
     entry["asset_type"] = asset_type
     entry["source"] = "fallback_cache"
     entry["freshness_status"] = "fallback"
+    entry["source_quality"] = "fallback"
+    entry["display_mode"] = "fallback"
     as_of_ts = parse_iso_datetime(entry.get("as_of_ts"))
     if as_of_ts:
         entry["data_age_hours"] = round((now_utc - as_of_ts).total_seconds() / 3600.0, 2)
@@ -152,6 +154,8 @@ def build_crypto_snapshot(name: str, ticker: str, now_utc: datetime, previous_en
         "data_age_hours": age_hours,
         "freshness_status": "stale" if age_hours > CRYPTO_STALE_HOURS else "fresh",
         "source": "yfinance",
+        "source_quality": "live",
+        "display_mode": "delayed" if age_hours > 1.0 else "live",
     }
 
 
@@ -236,6 +240,8 @@ def build_us_session_snapshot(
         "data_age_hours": age_hours,
         "freshness_status": freshness_status,
         "source": "yfinance",
+        "source_quality": "calendar_unknown" if freshness_status == "calendar_unknown" else "live",
+        "display_mode": "calendar_unknown" if freshness_status == "calendar_unknown" else ("delayed" if freshness_status == "stale" else "live"),
     }
 
 

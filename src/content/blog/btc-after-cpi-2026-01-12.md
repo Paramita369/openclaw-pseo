@@ -1,14 +1,14 @@
 ---
 title: "BTC CPI Win Rate (2026-01-12): Historical T+1/T+7 Probability"
 description: "Historical probability profile for BTC around CPI events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 1
 title_template_key: "cpi_1"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2026-01-12"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 70
 sample_size: 14
-freshness_days: 50
+freshness_days: 52
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
+is_core_page: true
+core_window_days: 90
+body_variant_family: "checklist"
+hub_baseline_mean_t7: 1.69
+hub_baseline_median_t7: 3.64
+hub_baseline_std_t7: 8.5155
+hub_baseline_delta: -1.95
+z_score_t7: -0.0
+percentile_t7: 42.86
+narrative_trigger: "within_historical_norm"
 canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/btc-after-cpi-2026-01-12"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "btc-after-cpi-2024-08-14", "title": "BTC Reaction to 
 - Event: **CPI**
 - Asset: **BTC**
 - Event date: **2026-01-12**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **50 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **52 days**
 - Sample size (all-history): **14**
 
 ## Event Outcome
@@ -105,15 +115,25 @@ related_events: [{"slug": "btc-after-cpi-2024-08-14", "title": "BTC Reaction to 
 | T+1 | 46.15% | 53.85% | -0.74% | 0.44% | 13 |
 | T+7 | 61.54% | 38.46% | 4.15% | 2.19% | 13 |
 
-## Historical Distribution Summary
+## Event Outcome Interpretation
 
-When CPI was **UP**, BTC T+1 up probability was **46.15%** (n=13).
+Execution quality here comes from context discipline rather than reacting to the first candle. BTC around CPI is best framed through how the release landed higher than the previous release. The current observation shows actual value 326.5880 versus previous 326.0310, a delta of +0.5570. Across the full history, BTC has a T+7 up probability of 57.14% versus 42.86% down, with a median return of 3.64%. When only matching the same event direction, the T+7 up probability shifts to 61.54% across 13 comparable releases, with a same-direction median of 4.15%. That is the immediate context behind the current neutral classification. The standing hub thesis for this asset-event pair is: Bitcoin's sensitivity to US inflation data has shifted from a pure risk-on asset to a complex liquidity proxy. Historical analysis reveals that upside CPI surprises often trigger acute T+1 drawdowns, followed by a robus...
 
-When CPI was **UP**, BTC T+7 up probability was **61.54%** (n=13).
+## Distribution Position
 
-Same-direction T+7 median return: **4.15%**.
+The current T+7 reaction of 1.69% sits in the middle of its historical distribution for BTC after CPI. Its z-score is -0.00, which measures distance from the historical mean, and its percentile rank is 42.86, which shows how often prior releases were weaker than this one. That places the observation inside the central band of observed windows, not in an obvious tail bucket. That distinction is what tells an operator whether to slow down, confirm, or stand aside. In practice this means the page is useful for calibration, but it does not justify upgrading a routine macro response into a regime-break narrative.
 
-For BTC, historical CPI windows show all-history T+1 up probability of 42.86% and T+7 up probability of 57.14%. When CPI printed Up versus previous, T+1 up probability was 46.15% and T+7 up probability was 61.54% across 13 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
+## Comparison vs Hub Baseline
+
+The baseline comparison is what turns this page from observation into a repeatable checklist. The hub baseline median T+7 return for BTC after CPI is 3.64%, while the baseline mean is 1.69% and the baseline standard deviation is 8.5155. The current event is running at -1.95% versus the baseline median. Same-direction probability is +4.40% versus the all-history T+7 up rate, and the same-direction median differs by +0.51%. That baseline gap is what turns the page into an action filter instead of a generic macro recap. This release is classified as within historical norm rather than handled as a generic macro template. If the current move only differed by a few basis points, the narrative would collapse back toward historical norm. The current regime context also matters: Institutional ETF flows now absorb immediate volatility shockwaves faster than in the 2022 tightening cycle, which means CPI-driven drawdowns can exhaust sooner than older crypto bear-market analogs suggested. The first...
+
+## Failure Modes
+
+The main failure mode is skipping confirmation steps because the headline seems obvious. Elevated funding rates on offshore exchanges can exacerbate liquidations independent of the CPI print, so a mechanically weak first candle is not enough on its own. Traders also need to watch whether real yields and DXY confirm the same macro read, because mismatched cross-asset signals often reverse the initial BTC move. This matters because the historical distribution is built on end-of-window outcomes, not the first minute of price discovery. A release can look constructive initially, then fail once rates, the dollar, and sector breadth reprice in a different direction. That is also why low sample environments and mixed reaction functions should be handled as weaker evidence.
+
+## Execution Relevance
+
+Treat this page as an execution checklist input, not a buy or sell signal. The practical takeaway is to use the current page as a decision filter: read the release, compare it with the hub baseline, then decide whether the event is behaving like a normal CPI setup or a tail observation. For this asset-event pair, the operational checklist is: Monitor CME futures basis pre-print.; Set limit orders 3-5% below current spot for flash crashes.; Wait for 1-hour candle close before deploying directional delta.. When the page is marked within historical norm, the right response is not automatically to trade more aggressively; it is to decide whether confirmation quality is strong enough to justify action.
 
 ## Methodology
 

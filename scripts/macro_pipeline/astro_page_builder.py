@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 import os
 import re
 import sqlite3
@@ -39,6 +40,7 @@ from pipeline_utils import (
     stable_hash,
     to_offer_key,
 )
+from content_features import CORE_WINDOW_DAYS, FEATURE_EPSILON, compute_statistical_features, is_core_page_for_window
 
 REQUIRED_CSV_COLUMNS = {
     "asset",
@@ -87,6 +89,16 @@ CSV_EXTRA_COLUMNS = [
     "robots_directive",
     "in_blog_sitemap",
     "confidence_level",
+    "is_core_page",
+    "core_window_days",
+    "body_variant_family",
+    "hub_baseline_mean_t7",
+    "hub_baseline_median_t7",
+    "hub_baseline_std_t7",
+    "hub_baseline_delta",
+    "z_score_t7",
+    "percentile_t7",
+    "narrative_trigger",
     "event_direction",
     "event_actual",
     "event_previous",
@@ -103,11 +115,12 @@ EVENT_FRESHNESS_THRESHOLDS = {
 
 HUB_ASSETS = ["BTC", "ETH", "GOLD", "QQQ", "SPY"]
 HUB_EVENTS = ["CPI", "NFP", "FOMC"]
-HUB_MIN_THESIS_LEN = 120
-HUB_MIN_CHANGED_LEN = 80
-HUB_MIN_RISK_LEN = 80
+HUB_MIN_THESIS_LEN = 180
+HUB_MIN_CHANGED_LEN = 120
+HUB_MIN_RISK_LEN = 120
 HUB_MIN_CHECKLIST_ITEMS = 3
 HUB_MIN_CHECKLIST_ITEM_LEN = 12
+BODY_VARIANT_FAMILIES = ("analyst", "distribution", "risk-first", "checklist")
 TITLE_TEMPLATE_POOLS: Dict[str, List[str]] = {
     "CPI": [
         "{ASSET} CPI Win Rate ({DATE}): Historical T+1/T+7 Probability",
@@ -142,6 +155,7 @@ class BuildContext:
     public_dir: Path
     manifest_path: Path
     offers_config: Dict[str, Any]
+    hub_briefs: Dict[str, Dict[str, Any]]
     as_of_date: str
     llm_enabled: bool
     llm_api_key: str
@@ -197,6 +211,7 @@ def build_context(args: argparse.Namespace) -> BuildContext:
         raise FileNotFoundError(f"Offers config not found: {offers_path}")
 
     offers_config = load_config(offers_path)
+    hub_briefs = load_hub_brief_map(root)
 
     llm_key = os.environ.get("MINIMAX_API_KEY", "")
     llm_enabled = bool(llm_key) and (not args.no_llm)
@@ -209,6 +224,7 @@ def build_context(args: argparse.Namespace) -> BuildContext:
         public_dir=public_dir,
         manifest_path=manifest_path,
         offers_config=offers_config,
+        hub_briefs=hub_briefs,
         as_of_date=args.as_of_date,
         llm_enabled=llm_enabled,
         llm_api_key=llm_key,
@@ -750,8 +766,244 @@ def fallback_analysis(asset: str, event_type: str, event_direction: str, probabi
     )
 
 
+def body_variant_family_for_slug(slug: str) -> str:
+    digest = stable_hash({"slug": slug, "scope": "body_variant"})
+    index = int(digest[:8], 16) % max(len(BODY_VARIANT_FAMILIES), 1)
+    return BODY_VARIANT_FAMILIES[index]
+
+
+def format_pct(value: object, signed: bool = False) -> str:
+    number = parse_float(value, 0.0) or 0.0
+    return f"{number:+.2f}%" if signed else f"{number:.2f}%"
+
+
+def format_basis_points(value: object) -> str:
+    number = parse_float(value, 0.0) or 0.0
+    return f"{number * 100:.0f} bps"
+
+
+def direction_phrase(event_direction: str) -> str:
+    mapping = {
+        "up": "higher than the previous release",
+        "down": "lower than the previous release",
+        "flat": "unchanged versus the previous release",
+    }
+    return mapping.get(str(event_direction).lower(), "mixed versus the previous release")
+
+
+def narrative_trigger_text(trigger: str) -> str:
+    mapping = {
+        "significant_outperformance": "the upper end of its historical distribution",
+        "significant_underperformance": "the weak tail of its historical distribution",
+        "within_historical_norm": "the middle of its historical distribution",
+        "low_context": "a low-context sample bucket",
+    }
+    return mapping.get(trigger, "its historical distribution")
+
+
+def percentile_band_text(percentile: float) -> str:
+    if percentile >= 90:
+        return "the top decile of observed windows"
+    if percentile >= 75:
+        return "the upper quartile of observed windows"
+    if percentile <= 10:
+        return "the weakest decile of observed windows"
+    if percentile <= 25:
+        return "the lower quartile of observed windows"
+    return "the central band of observed windows"
+
+
+def brief_snippet(value: object, fallback: str, max_chars: int = 220) -> str:
+    text = re.sub(r"\s+", " ", str(value or "")).strip()
+    if not text:
+        text = fallback
+    if len(text) <= max_chars:
+        return text
+    return text[: max_chars - 1].rstrip(" ,;:.") + "..."
+
+
+def compose_core_body(
+    *,
+    slug: str,
+    asset: str,
+    event_label: str,
+    event_direction: str,
+    event_actual: float,
+    event_previous: float,
+    event_delta: float,
+    probabilities: Dict[str, Any],
+    metrics: Dict[str, float],
+    signal: str,
+    features: Dict[str, Any],
+    brief: Dict[str, Any],
+) -> str:
+    family = body_variant_family_for_slug(slug)
+    trigger = str(features.get("narrative_trigger", "low_context"))
+    t7_up = probabilities["t7"]["up"]
+    t7_down = probabilities["t7"]["down"]
+    t7_median = probabilities["t7"]["median"]
+    conditional_sample = probabilities["conditional"]["sample_size"]
+    conditional_t7_up = probabilities["conditional"]["t7"]["up"]
+    conditional_t7_median = probabilities["conditional"]["t7"]["median"]
+    z_score = features["z_score_t7"]
+    percentile = features["percentile_t7"]
+    baseline_mean = features["hub_baseline_mean_t7"]
+    baseline_median = features["hub_baseline_median_t7"]
+    baseline_std = features["hub_baseline_std_t7"]
+    baseline_delta = features["hub_baseline_delta"]
+    same_direction_gap = round(conditional_t7_up - t7_up, 2)
+    same_direction_median_gap = round(conditional_t7_median - t7_median, 2)
+    percentile_band = percentile_band_text(percentile)
+    thesis_context = brief_snippet(
+        brief.get("thesis"),
+        f"{asset} around {event_label} should be handled as a macro response distribution, not a headline-only trade.",
+    )
+    changed_context = brief_snippet(
+        brief.get("what_changed_recently"),
+        f"Recent positioning and cross-asset confirmation still matter more than the first reaction bar after {event_label}.",
+    )
+    failure_modes = str(brief.get("risk_watchouts", "")).strip() or (
+        "Liquidity shocks, rate repricing, and cross-asset confirmation failures remain the main reasons this setup can break."
+    )
+    checklist = brief.get("execution_checklist") if isinstance(brief.get("execution_checklist"), list) else []
+    checklist_text = "; ".join(str(item).strip() for item in checklist[:3] if str(item).strip())
+    if not checklist_text:
+        checklist_text = "wait for confirmation, scale entries, and define invalidation before execution"
+
+    intros = {
+        "analyst": "This event should be read as a distribution problem, not a headline-only trade.",
+        "distribution": "The useful signal is where this release sits inside the historical range, not the headline in isolation.",
+        "risk-first": "The main mistake after macro releases is to treat every surprise as a regime break.",
+        "checklist": "Execution quality here comes from context discipline rather than reacting to the first candle.",
+    }
+    comparison_intros = {
+        "analyst": "Against the hub baseline for this asset-event pair, the current print is measurable rather than anecdotal.",
+        "distribution": "Relative to the hub baseline, this release can be located with a concrete distance from normal behavior.",
+        "risk-first": "The baseline comparison matters because most false positives come from overreacting to ordinary noise.",
+        "checklist": "The baseline comparison is what turns this page from observation into a repeatable checklist.",
+    }
+    distribution_explanations = {
+        "analyst": "That keeps the interpretation anchored in the shape of the historical sample rather than the release headline.",
+        "distribution": "That framing matters because it separates ordinary event noise from true tail behavior inside the same distribution.",
+        "risk-first": "That is the difference between a manageable macro impulse and a tail event that can invalidate prior playbooks.",
+        "checklist": "That distinction is what tells an operator whether to slow down, confirm, or stand aside.",
+    }
+    comparison_explanations = {
+        "analyst": "The classification is therefore tied to a measurable gap versus baseline, not to narrative convenience.",
+        "distribution": "In other words, the baseline gap decides the narrative, not a cosmetic change in wording.",
+        "risk-first": "That distance from baseline is what determines whether this is noise, pressure, or a real outlier worth extra caution.",
+        "checklist": "That baseline gap is what turns the page into an action filter instead of a generic macro recap.",
+    }
+    failure_intros = {
+        "analyst": "The main failure mode is misreading a statistically ordinary move as a structural break.",
+        "distribution": "The main failure mode is forgetting that distributions absorb a lot of noise before they change shape.",
+        "risk-first": "The main failure mode is assuming the first interpretation of the release will survive cross-asset confirmation.",
+        "checklist": "The main failure mode is skipping confirmation steps because the headline seems obvious.",
+    }
+    execution_intros = {
+        "analyst": "Use this page as an educational operating lens, not a trading instruction.",
+        "distribution": "Use this page as a distribution map, not a shortcut to conviction.",
+        "risk-first": "Treat this as an educational risk framework, not investment advice.",
+        "checklist": "Treat this page as an execution checklist input, not a buy or sell signal.",
+    }
+
+    outcome_paragraph = (
+        f"{intros[family]} {asset} around {event_label} is best framed through how the release landed "
+        f"{direction_phrase(event_direction)}. The current observation shows actual value {event_actual:.4f} versus "
+        f"previous {event_previous:.4f}, a delta of {event_delta:+.4f}. Across the full history, {asset} has a "
+        f"T+7 up probability of {t7_up:.2f}% versus {t7_down:.2f}% down, with a median return of {t7_median:.2f}%. "
+        f"When only matching the same event direction, the T+7 up probability shifts to {conditional_t7_up:.2f}% "
+        f"across {conditional_sample} comparable releases, with a same-direction median of {conditional_t7_median:.2f}%. "
+        f"That is the immediate context behind the current {signal.lower()} classification. The standing hub thesis for this "
+        f"asset-event pair is: {thesis_context}"
+    )
+
+    if trigger == "low_context":
+        distribution_paragraph = (
+            f"## Distribution Position\n\n"
+            f"This page currently falls into a low-context bucket because the valid baseline sample is below the minimum "
+            f"needed for a stable distribution read. Z-score is held at {z_score:.2f} and percentile at {percentile:.2f} "
+            f"by contract, which means the system is intentionally refusing to overstate confidence. In practical terms, "
+            f"that means the observed T+7 move of {metrics['impact_t7_pct']:.2f}% should be treated as descriptive evidence "
+            f"rather than a statistically strong signal. In this regime the safer interpretation is to treat the page as a "
+            f"research breadcrumb that should be subordinated to the broader {asset} {event_label} hub, not as a self-contained setup."
+        )
+    elif trigger == "significant_outperformance":
+        distribution_paragraph = (
+            f"## Distribution Position\n\n"
+            f"The current T+7 reaction of {metrics['impact_t7_pct']:.2f}% sits in {narrative_trigger_text(trigger)} for "
+            f"{asset} after {event_label}. Its z-score is {z_score:.2f}, meaning the window is more than a standard deviation "
+            f"above the mean response, and its percentile rank is {percentile:.2f}, placing it in {percentile_band}. "
+            f"{distribution_explanations[family]} This is not just a positive reading; it is a stronger-than-typical response "
+            f"relative to the same asset-event history, so the operator should assume reversion risk rises if confirmation from rates, "
+            f"the dollar, or index breadth fails to hold."
+        )
+    elif trigger == "significant_underperformance":
+        distribution_paragraph = (
+            f"## Distribution Position\n\n"
+            f"The current T+7 reaction of {metrics['impact_t7_pct']:.2f}% sits in {narrative_trigger_text(trigger)} for "
+            f"{asset} after {event_label}. Its z-score is {z_score:.2f}, which places the move materially below the historical mean, "
+            f"and its percentile rank is {percentile:.2f}, leaving it in {percentile_band}. {distribution_explanations[family]} "
+            f"That makes the current release a weaker-than-normal outcome rather than routine variance, so downside follow-through and "
+            f"false-positive bounce risk both matter more than in a median event window."
+        )
+    else:
+        distribution_paragraph = (
+            f"## Distribution Position\n\n"
+            f"The current T+7 reaction of {metrics['impact_t7_pct']:.2f}% sits in {narrative_trigger_text(trigger)} for "
+            f"{asset} after {event_label}. Its z-score is {z_score:.2f}, which measures distance from the historical mean, "
+            f"and its percentile rank is {percentile:.2f}, which shows how often prior releases were weaker than this one. "
+            f"That places the observation inside {percentile_band}, not in an obvious tail bucket. {distribution_explanations[family]} "
+            f"In practice this means the page is useful for calibration, but it does not justify upgrading a routine macro response "
+            f"into a regime-break narrative."
+        )
+
+    comparison_paragraph = (
+        f"## Comparison vs Hub Baseline\n\n"
+        f"{comparison_intros[family]} The hub baseline median T+7 return for {asset} after {event_label} is "
+        f"{baseline_median:.2f}%, while the baseline mean is {baseline_mean:.2f}% and the baseline standard deviation is "
+        f"{baseline_std:.4f}. The current event is running at {format_pct(baseline_delta, signed=True)} versus the baseline median. "
+        f"Same-direction probability is {format_pct(same_direction_gap, signed=True)} versus the all-history T+7 up rate, and the "
+        f"same-direction median differs by {format_pct(same_direction_median_gap, signed=True)}. "
+        f"{comparison_explanations[family]} This release is classified as {trigger.replace('_', ' ')} rather than handled as a generic macro template. "
+        f"If the current move only differed by a few basis points, the narrative would collapse back toward historical norm. "
+        f"The current regime context also matters: {changed_context}"
+    )
+
+    failure_paragraph = (
+        f"## Failure Modes\n\n"
+        f"{failure_intros[family]} "
+        f"{failure_modes} This matters because the historical distribution is built on end-of-window outcomes, not the first minute of "
+        f"price discovery. A release can look constructive initially, then fail once rates, the dollar, and sector breadth reprice in a "
+        f"different direction. That is also why low sample environments and mixed reaction functions should be handled as weaker evidence."
+    )
+
+    execution_paragraph = (
+        f"## Execution Relevance\n\n"
+        f"{execution_intros[family]} The practical takeaway is to use the current page as a "
+        f"decision filter: read the release, compare it with the hub baseline, then decide whether the event is behaving like a normal "
+        f"{event_label} setup or a tail observation. For this asset-event pair, the operational checklist is: {checklist_text}. "
+        f"When the page is marked {trigger.replace('_', ' ')}, the right response is not automatically to trade more aggressively; "
+        f"it is to decide whether confirmation quality is strong enough to justify action."
+    )
+
+    return (
+        "## Event Outcome Interpretation\n\n"
+        + outcome_paragraph
+        + "\n\n"
+        + distribution_paragraph
+        + "\n\n"
+        + comparison_paragraph
+        + "\n\n"
+        + failure_paragraph
+        + "\n\n"
+        + execution_paragraph
+    )
+
+
 def build_markdown(
     *,
+    slug: str,
     asset: str,
     title: str,
     publish_date: str,
@@ -780,6 +1032,16 @@ def build_markdown(
     canonical_url: str,
     robots_directive: str,
     in_blog_sitemap: bool,
+    is_core_page: bool,
+    core_window_days: int,
+    body_variant_family: str,
+    hub_baseline_mean_t7: float,
+    hub_baseline_median_t7: float,
+    hub_baseline_std_t7: float,
+    hub_baseline_delta: float,
+    z_score_t7: float,
+    percentile_t7: float,
+    narrative_trigger: str,
     data_last_updated_at: str,
     metrics: Dict[str, float],
     probabilities: Dict[str, Any],
@@ -792,6 +1054,7 @@ def build_markdown(
     event_delta: float,
     direction_basis: str,
     outcome_status: str,
+    brief: Dict[str, Any],
 ) -> str:
     tags = [asset.lower(), event_type.lower(), "event-probability", intent.replace(" ", "-").lower()]
 
@@ -830,6 +1093,16 @@ freshness_days: {freshness_days}
 freshness_status: "{freshness_status_value}"
 index_tier: "{index_tier}"
 is_recent_90d: {str(bool(is_recent_90d)).lower()}
+is_core_page: {str(bool(is_core_page)).lower()}
+core_window_days: {core_window_days}
+body_variant_family: "{body_variant_family}"
+hub_baseline_mean_t7: {hub_baseline_mean_t7}
+hub_baseline_median_t7: {hub_baseline_median_t7}
+hub_baseline_std_t7: {hub_baseline_std_t7}
+hub_baseline_delta: {hub_baseline_delta}
+z_score_t7: {z_score_t7}
+percentile_t7: {percentile_t7}
+narrative_trigger: "{narrative_trigger}"
 canonical_target: "{canonical_target}"
 canonical_url: "{canonical_url}"
 robots_directive: "{robots_directive}"
@@ -909,7 +1182,28 @@ related_events: {json.dumps(related_events)}
 | T+1 | {probabilities['conditional']['t1']['up']}% | {probabilities['conditional']['t1']['down']}% | {probabilities['conditional']['t1']['median']}% | {probabilities['conditional']['t1']['mean']}% | {probabilities['conditional']['t1']['sample']} |
 | T+7 | {probabilities['conditional']['t7']['up']}% | {probabilities['conditional']['t7']['down']}% | {probabilities['conditional']['t7']['median']}% | {probabilities['conditional']['t7']['mean']}% | {probabilities['conditional']['t7']['sample']} |
 
-## Historical Distribution Summary
+{compose_core_body(
+    slug=slug,
+    asset=asset,
+    event_label=event_label,
+    event_direction=event_direction,
+    event_actual=event_actual,
+    event_previous=event_previous,
+    event_delta=event_delta,
+    probabilities=probabilities,
+    metrics=metrics,
+    signal=signal,
+    features={
+        "hub_baseline_mean_t7": hub_baseline_mean_t7,
+        "hub_baseline_median_t7": hub_baseline_median_t7,
+        "hub_baseline_std_t7": hub_baseline_std_t7,
+        "hub_baseline_delta": hub_baseline_delta,
+        "z_score_t7": z_score_t7,
+        "percentile_t7": percentile_t7,
+        "narrative_trigger": narrative_trigger,
+    },
+    brief=brief,
+) if is_core_page else f'''## Historical Distribution Summary
 
 When {event_label} was **{event_direction.upper()}**, {asset} T+1 up probability was **{probabilities['conditional']['t1']['up']}%** (n={probabilities['conditional']['t1']['sample']}).
 
@@ -917,7 +1211,7 @@ When {event_label} was **{event_direction.upper()}**, {asset} T+7 up probability
 
 Same-direction T+7 median return: **{probabilities['conditional']['t7']['median']}%**.
 
-{analysis}
+{analysis}'''}
 
 ## Methodology
 
@@ -1164,6 +1458,33 @@ def is_hub_content_strong(brief: Dict[str, Any]) -> bool:
         if len(str(item or "").strip()) < HUB_MIN_CHECKLIST_ITEM_LEN:
             return False
     return True
+
+
+def load_hub_brief_map(project_root: Path) -> Dict[str, Dict[str, Any]]:
+    path = project_root / "data" / "hub_briefs.yaml"
+    if not path.exists():
+        return {}
+
+    raw = path.read_text(encoding="utf-8")
+    payload: Any
+    if yaml is not None:
+        try:
+            payload = yaml.safe_load(raw)
+        except Exception:
+            payload = parse_hub_briefs_fallback(raw)
+    else:
+        payload = parse_hub_briefs_fallback(raw)
+
+    if not isinstance(payload, dict):
+        return {}
+
+    normalized: Dict[str, Dict[str, Any]] = {}
+    for asset in HUB_ASSETS:
+        for event in HUB_EVENTS:
+            key = f"{asset}_{event}"
+            brief = payload.get(key)
+            normalized[key] = brief if isinstance(brief, dict) else {}
+    return normalized
 
 
 def load_playbook_hubs(project_root: Path, default_date: str) -> List[Dict[str, str]]:
@@ -1603,6 +1924,29 @@ def process_row(
         canonical_url = canonical_hub_url
         robots_directive = "index,follow"
         in_blog_sitemap = False
+    is_core_page = is_core_page_for_window(
+        event_date=event_date,
+        as_of_date=context.as_of_date,
+        canonical_target=canonical_target,
+        robots_directive=robots_directive,
+        in_blog_sitemap=in_blog_sitemap,
+        window_days=CORE_WINDOW_DAYS,
+    )
+    body_variant_family = body_variant_family_for_slug(slug)
+    baseline_t7_values = [r.get("impact_t7_pct") for r in summary["rows"] if r.get("impact_t7_pct") is not None]
+    statistical_features = compute_statistical_features(metrics["impact_t7_pct"], baseline_t7_values, epsilon=FEATURE_EPSILON)
+    if context.strict:
+        for field_name, field_value in [
+            ("hub_baseline_mean_t7", statistical_features.baseline_mean_t7),
+            ("hub_baseline_median_t7", statistical_features.baseline_median_t7),
+            ("hub_baseline_std_t7", statistical_features.baseline_std_t7),
+            ("hub_baseline_delta", statistical_features.hub_baseline_delta),
+            ("z_score_t7", statistical_features.z_score_t7),
+            ("percentile_t7", statistical_features.percentile_t7),
+        ]:
+            if not isinstance(field_value, float) or not math.isfinite(field_value):
+                raise ValueError(f"Non-finite statistical feature for {slug}: {field_name}={field_value}")
+    brief = context.hub_briefs.get(f"{asset}_{event_type}", {})
 
     title, title_variant_id, title_template_key = deterministic_title(
         slug=slug,
@@ -1614,8 +1958,11 @@ def process_row(
     event_slug = event_type.lower()
     asof_date = asof_cutoff
 
-    llm_text = generate_llm_analysis(asset, event_type, event_direction, probabilities, context)
-    analysis = llm_text or fallback_analysis(asset, event_type, event_direction, probabilities, signal)
+    if is_core_page:
+        analysis = ""
+    else:
+        llm_text = generate_llm_analysis(asset, event_type, event_direction, probabilities, context)
+        analysis = llm_text or fallback_analysis(asset, event_type, event_direction, probabilities, signal)
 
     previous = manifest.get("pages", {}).get(slug, {})
     related_events = related_lookup.get(slug, [])
@@ -1650,6 +1997,16 @@ def process_row(
         "offer_key": offer_key,
         "index_tier": index_tier,
         "is_recent_90d": is_recent_90d,
+        "is_core_page": is_core_page,
+        "core_window_days": CORE_WINDOW_DAYS,
+        "body_variant_family": body_variant_family,
+        "hub_baseline_mean_t7": statistical_features.baseline_mean_t7,
+        "hub_baseline_median_t7": statistical_features.baseline_median_t7,
+        "hub_baseline_std_t7": statistical_features.baseline_std_t7,
+        "hub_baseline_delta": statistical_features.hub_baseline_delta,
+        "z_score_t7": statistical_features.z_score_t7,
+        "percentile_t7": statistical_features.percentile_t7,
+        "narrative_trigger": statistical_features.narrative_trigger,
         "canonical_target": canonical_target,
         "canonical_url": canonical_url,
         "robots_directive": robots_directive,
@@ -1672,6 +2029,7 @@ def process_row(
 
     if need_generate:
         content = build_markdown(
+            slug=slug,
             asset=asset,
             title=title,
             publish_date=context.as_of_date,
@@ -1696,6 +2054,16 @@ def process_row(
             freshness_status_value=freshness_status_value,
             index_tier=index_tier,
             is_recent_90d=is_recent_90d,
+            is_core_page=is_core_page,
+            core_window_days=CORE_WINDOW_DAYS,
+            body_variant_family=body_variant_family,
+            hub_baseline_mean_t7=statistical_features.baseline_mean_t7,
+            hub_baseline_median_t7=statistical_features.baseline_median_t7,
+            hub_baseline_std_t7=statistical_features.baseline_std_t7,
+            hub_baseline_delta=statistical_features.hub_baseline_delta,
+            z_score_t7=statistical_features.z_score_t7,
+            percentile_t7=statistical_features.percentile_t7,
+            narrative_trigger=statistical_features.narrative_trigger,
             canonical_target=canonical_target,
             canonical_url=canonical_url,
             robots_directive=robots_directive,
@@ -1712,6 +2080,7 @@ def process_row(
             event_delta=float(event_delta or 0.0),
             direction_basis=direction_basis,
             outcome_status=outcome_status,
+            brief=brief if isinstance(brief, dict) else {},
         )
 
         ensure_dir(context.output_dir)
@@ -1751,6 +2120,16 @@ def process_row(
         "freshness_status": freshness_status_value,
         "index_tier": index_tier,
         "is_recent_90d": is_recent_90d,
+        "is_core_page": is_core_page,
+        "core_window_days": CORE_WINDOW_DAYS,
+        "body_variant_family": body_variant_family,
+        "hub_baseline_mean_t7": statistical_features.baseline_mean_t7,
+        "hub_baseline_median_t7": statistical_features.baseline_median_t7,
+        "hub_baseline_std_t7": statistical_features.baseline_std_t7,
+        "hub_baseline_delta": statistical_features.hub_baseline_delta,
+        "z_score_t7": statistical_features.z_score_t7,
+        "percentile_t7": statistical_features.percentile_t7,
+        "narrative_trigger": statistical_features.narrative_trigger,
         "canonical_target": canonical_target,
         "canonical_url": canonical_url,
         "robots_directive": robots_directive,
@@ -1805,6 +2184,16 @@ def process_row(
     row["title_template_key"] = title_template_key
     row["index_tier"] = index_tier
     row["is_recent_90d"] = "true" if is_recent_90d else "false"
+    row["is_core_page"] = "true" if is_core_page else "false"
+    row["core_window_days"] = str(CORE_WINDOW_DAYS)
+    row["body_variant_family"] = body_variant_family
+    row["hub_baseline_mean_t7"] = str(statistical_features.baseline_mean_t7)
+    row["hub_baseline_median_t7"] = str(statistical_features.baseline_median_t7)
+    row["hub_baseline_std_t7"] = str(statistical_features.baseline_std_t7)
+    row["hub_baseline_delta"] = str(statistical_features.hub_baseline_delta)
+    row["z_score_t7"] = str(statistical_features.z_score_t7)
+    row["percentile_t7"] = str(statistical_features.percentile_t7)
+    row["narrative_trigger"] = statistical_features.narrative_trigger
     row["canonical_target"] = canonical_target
     row["canonical_url"] = canonical_url
     row["robots_directive"] = robots_directive

@@ -22,8 +22,17 @@ export type HubBrief = {
 };
 
 type PartialHubBrief = Partial<HubBrief> & Record<string, unknown>;
+type LoadHubBriefsOptions = {
+  strict?: boolean;
+  referenceDate?: string;
+};
 
 const HUB_KEY_SET = new Set(HUB_ASSETS.flatMap((asset) => HUB_EVENTS.map((eventType) => `${asset}_${eventType}`)));
+export const HUB_MIN_THESIS_LEN = 180;
+export const HUB_MIN_CHANGED_LEN = 120;
+export const HUB_MIN_RISK_LEN = 120;
+export const HUB_MIN_CHECKLIST_ITEMS = 3;
+export const HUB_MIN_CHECKLIST_ITEM_LEN = 12;
 
 function parseScalar(raw: string): string {
   const text = String(raw || '').trim();
@@ -83,7 +92,37 @@ function parseHubBriefsFallback(content: string): Record<string, PartialHubBrief
   return payload;
 }
 
-function normalizeBrief(key: string, value: PartialHubBrief | undefined): HubBrief {
+function contentDepthIssues(key: string, value: PartialHubBrief | undefined): string[] {
+  const issues: string[] = [];
+  const thesis = String(value?.thesis || '').trim();
+  const changed = String(value?.what_changed_recently || '').trim();
+  const risk = String(value?.risk_watchouts || '').trim();
+  const checklist = Array.isArray(value?.execution_checklist)
+    ? value.execution_checklist.map((item) => String(item || '').trim()).filter(Boolean)
+    : [];
+
+  if (thesis.length < HUB_MIN_THESIS_LEN) issues.push(`${key}: thesis_too_short`);
+  if (changed.length < HUB_MIN_CHANGED_LEN) issues.push(`${key}: what_changed_recently_too_short`);
+  if (risk.length < HUB_MIN_RISK_LEN) issues.push(`${key}: risk_watchouts_too_short`);
+  if (checklist.length < HUB_MIN_CHECKLIST_ITEMS) {
+    issues.push(`${key}: execution_checklist_too_short`);
+  } else {
+    for (const item of checklist) {
+      if (item.length < HUB_MIN_CHECKLIST_ITEM_LEN) {
+        issues.push(`${key}: execution_checklist_item_too_short`);
+        break;
+      }
+    }
+  }
+  return issues;
+}
+
+function normalizeBrief(
+  key: string,
+  value: PartialHubBrief | undefined,
+  options: { strict?: boolean; referenceDate?: string } = {},
+): HubBrief {
+  const { strict = false, referenceDate = new Date().toISOString().slice(0, 10) } = options;
   const [assetRaw, eventRaw] = key.split('_');
   const asset = HUB_ASSETS.includes(assetRaw as HubAsset) ? (assetRaw as HubAsset) : 'BTC';
   const eventType = HUB_EVENTS.includes(eventRaw as HubEvent) ? (eventRaw as HubEvent) : 'CPI';
@@ -108,6 +147,13 @@ function normalizeBrief(key: string, value: PartialHubBrief | undefined): HubBri
         ? 'index'
         : 'noindex';
 
+  if (strict && status === 'approved' && indexing === 'index') {
+    const issues = contentDepthIssues(key, value);
+    if (issues.length > 0) {
+      throw new Error(`Hub brief contract failed for ${key}: ${issues.join(', ')}`);
+    }
+  }
+
   return {
     asset,
     event_type: eventType,
@@ -121,20 +167,21 @@ function normalizeBrief(key: string, value: PartialHubBrief | undefined): HubBri
         'Watch liquidity shocks, macro headline revisions, and policy communication tone changes.'
     ),
     execution_checklist: nonEmptyChecklist,
-    reviewed_at: String(value?.reviewed_at || new Date().toISOString().slice(0, 10)),
+    reviewed_at: String(value?.reviewed_at || referenceDate),
     status,
     indexing,
   };
 }
 
-export function loadHubBriefs(): Record<string, HubBrief> {
+export function loadHubBriefs(options: LoadHubBriefsOptions = {}): Record<string, HubBrief> {
+  const { strict = false, referenceDate = new Date().toISOString().slice(0, 10) } = options;
   const path = resolve(process.cwd(), 'data/hub_briefs.yaml');
   const raw = readFileSync(path, 'utf-8');
   const parsed = parseHubBriefsFallback(raw);
 
   const normalized: Record<string, HubBrief> = {};
   for (const key of HUB_KEY_SET) {
-    normalized[key] = normalizeBrief(key, parsed[key]);
+    normalized[key] = normalizeBrief(key, parsed[key], { strict, referenceDate });
   }
   return normalized;
 }

@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2024-01-15) and ETH: Event-Driven Return Odds"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-01-15"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 14
-freshness_days: 778
+freshness_days: 780
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
+is_core_page: false
+core_window_days: 90
+body_variant_family: "risk-first"
+hub_baseline_mean_t7: 0.26
+hub_baseline_median_t7: -0.39
+hub_baseline_std_t7: 11.002
+hub_baseline_delta: -7.6
+z_score_t7: -0.75
+percentile_t7: 21.43
+narrative_trigger: "within_historical_norm"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/eth/cpi"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH Reaction to 
 - Event: **CPI**
 - Asset: **ETH**
 - Event date: **2024-01-15**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **778 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **780 days**
 - Sample size (all-history): **14**
 
 ## Event Outcome

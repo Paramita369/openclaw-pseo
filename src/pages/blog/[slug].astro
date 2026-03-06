@@ -45,7 +45,7 @@ const eventDelta = entry.data.event_delta;
 const conditionalSample = conditional?.sample_size ?? '--';
 const freshnessDays = entry.data.freshness_days;
 const freshnessStatus = String(entry.data.freshness_status || 'fresh').toLowerCase();
-const hubBriefs = loadHubBriefs();
+const hubBriefs = loadHubBriefs({ strict: true });
 const hubKey = `${assetTag}_${String(entry.data.event_type || '').toUpperCase()}`;
 const hub = hubBriefs[hubKey];
 const hubIsIndexable = Boolean(hub && hub.status === 'approved' && hub.indexing === 'index');

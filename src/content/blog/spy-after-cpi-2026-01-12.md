@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2026-01-12) and SPY: Event-Driven Return Odds"
 description: "Historical probability profile for SPY around CPI events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2026-01-12"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 70
 sample_size: 14
-freshness_days: 50
+freshness_days: 52
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
+is_core_page: true
+core_window_days: 90
+body_variant_family: "checklist"
+hub_baseline_mean_t7: 0.51
+hub_baseline_median_t7: 1.08
+hub_baseline_std_t7: 1.8429
+hub_baseline_delta: -0.57
+z_score_t7: 0.0
+percentile_t7: 46.15
+narrative_trigger: "within_historical_norm"
 canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/spy-after-cpi-2026-01-12"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "spy-after-cpi-2024-03-12", "title": "SPY CPI Win Rate
 - Event: **CPI**
 - Asset: **SPY**
 - Event date: **2026-01-12**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **50 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **52 days**
 - Sample size (all-history): **14**
 
 ## Event Outcome
@@ -105,15 +115,25 @@ related_events: [{"slug": "spy-after-cpi-2024-03-12", "title": "SPY CPI Win Rate
 | T+1 | 61.54% | 38.46% | 0.09% | 0.26% | 13 |
 | T+7 | 76.92% | 23.08% | 1.08% | 0.51% | 13 |
 
-## Historical Distribution Summary
+## Event Outcome Interpretation
 
-When CPI was **UP**, SPY T+1 up probability was **61.54%** (n=13).
+Execution quality here comes from context discipline rather than reacting to the first candle. SPY around CPI is best framed through how the release landed higher than the previous release. The current observation shows actual value 326.5880 versus previous 326.0310, a delta of +0.5570. Across the full history, SPY has a T+7 up probability of 76.92% versus 23.08% down, with a median return of 1.08%. When only matching the same event direction, the T+7 up probability shifts to 76.92% across 13 comparable releases, with a same-direction median of 1.08%. That is the immediate context behind the current bullish classification. The standing hub thesis for this asset-event pair is: SPY reacts to CPI through broad risk-premium repricing; downside inflation surprises often support index breadth while upside shocks compress valuation multiples.
 
-When CPI was **UP**, SPY T+7 up probability was **76.92%** (n=13).
+## Distribution Position
 
-Same-direction T+7 median return: **1.08%**.
+The current T+7 reaction of 0.51% sits in the middle of its historical distribution for SPY after CPI. Its z-score is 0.00, which measures distance from the historical mean, and its percentile rank is 46.15, which shows how often prior releases were weaker than this one. That places the observation inside the central band of observed windows, not in an obvious tail bucket. That distinction is what tells an operator whether to slow down, confirm, or stand aside. In practice this means the page is useful for calibration, but it does not justify upgrading a routine macro response into a regime-break narrative.
 
-For SPY, historical CPI windows show all-history T+1 up probability of 64.29% and T+7 up probability of 76.92%. When CPI printed Up versus previous, T+1 up probability was 61.54% and T+7 up probability was 76.92% across 13 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
+## Comparison vs Hub Baseline
+
+The baseline comparison is what turns this page from observation into a repeatable checklist. The hub baseline median T+7 return for SPY after CPI is 1.08%, while the baseline mean is 0.51% and the baseline standard deviation is 1.8429. The current event is running at -0.57% versus the baseline median. Same-direction probability is +0.00% versus the all-history T+7 up rate, and the same-direction median differs by +0.00%. That baseline gap is what turns the page into an action filter instead of a generic macro recap. This release is classified as within historical norm rather than handled as a generic macro template. If the current move only differed by a few basis points, the narrative would collapse back toward historical norm. The current regime context also matters: Sector rotation speed has accelerated in the post-tightening phase.
+
+## Failure Modes
+
+The main failure mode is skipping confirmation steps because the headline seems obvious. Energy and healthcare moves can offset index-level signal clarity. This matters because the historical distribution is built on end-of-window outcomes, not the first minute of price discovery. A release can look constructive initially, then fail once rates, the dollar, and sector breadth reprice in a different direction. That is also why low sample environments and mixed reaction functions should be handled as weaker evidence.
+
+## Execution Relevance
+
+Treat this page as an execution checklist input, not a buy or sell signal. The practical takeaway is to use the current page as a decision filter: read the release, compare it with the hub baseline, then decide whether the event is behaving like a normal CPI setup or a tail observation. For this asset-event pair, the operational checklist is: Track breadth (advance/decline) with index move.; Compare rate-sensitive sectors versus defensives.; Use predefined stop distance from event range.. When the page is marked within historical norm, the right response is not automatically to trade more aggressively; it is to decide whether confirmation quality is strong enough to justify action.
 
 ## Methodology
 

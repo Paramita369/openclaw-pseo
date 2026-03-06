@@ -8,7 +8,7 @@ const breadcrumbs = [
   { name: 'Strategy Hubs', url: '/playbooks' },
 ];
 
-const briefMap = loadHubBriefs();
+const briefMap = loadHubBriefs({ strict: true });
 const cards = listHubRoutes().map((route) => {
   const brief = briefMap[route.key];
   return {

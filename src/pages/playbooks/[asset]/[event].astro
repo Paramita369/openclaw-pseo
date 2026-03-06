@@ -7,7 +7,7 @@ import { HUB_EVENTS, listHubRoutes, loadHubBriefs } from '../../../lib/hubBriefs
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  const briefMap = loadHubBriefs();
+  const briefMap = loadHubBriefs({ strict: true });
 
   return listHubRoutes().map((route) => {
     const key = route.key;
@@ -89,6 +89,31 @@ const hubVisualPayload = crossEventRows.map((row) => {
     slug: String(row.slug || ''),
   };
 });
+const validComparisonRows = hubVisualPayload.filter(
+  (row) => typeof row.t1Up === 'number' && typeof row.t7Up === 'number' && typeof row.t7Median === 'number' && typeof row.sample === 'number'
+);
+const highestT7UpRow = [...validComparisonRows].sort((left, right) => (right.t7Up ?? -Infinity) - (left.t7Up ?? -Infinity))[0] || null;
+const highestMedianRow = [...validComparisonRows].sort((left, right) => (right.t7Median ?? -Infinity) - (left.t7Median ?? -Infinity))[0] || null;
+const deepestSampleRow = [...validComparisonRows].sort((left, right) => (right.sample ?? -Infinity) - (left.sample ?? -Infinity))[0] || null;
+const currentEventRow = validComparisonRows.find((row) => row.event === eventType) || null;
+const t7Rank = currentEventRow
+  ? [...validComparisonRows]
+      .sort((left, right) => (right.t7Up ?? -Infinity) - (left.t7Up ?? -Infinity))
+      .findIndex((row) => row.event === eventType) + 1
+  : 0;
+const medianRank = currentEventRow
+  ? [...validComparisonRows]
+      .sort((left, right) => (right.t7Median ?? -Infinity) - (left.t7Median ?? -Infinity))
+      .findIndex((row) => row.event === eventType) + 1
+  : 0;
+const sampleRank = currentEventRow
+  ? [...validComparisonRows]
+      .sort((left, right) => (right.sample ?? -Infinity) - (left.sample ?? -Infinity))
+      .findIndex((row) => row.event === eventType) + 1
+  : 0;
+const hubComparisonNarrative = currentEventRow && validComparisonRows.length > 0
+  ? `${eventType} currently ranks #${t7Rank || '--'} of ${validComparisonRows.length} for T+7 up probability, #${medianRank || '--'} for T+7 median return, and #${sampleRank || '--'} for sample depth across the ${asset} event set.`
+  : `Cross-event comparison is currently incomplete for ${asset}, so this hub should be read with extra caution until all event rows are populated.`;
 const reviewedDateIso = /^\d{4}-\d{2}-\d{2}$/.test(String(reviewedAt))
   ? String(reviewedAt)
   : new Date().toISOString().slice(0, 10);
@@ -158,6 +183,33 @@ const schemaExtras = [
       <p class="mt-2 text-sm" style="color:var(--muted);">
         Compare latest CPI/NFP/FOMC observations for {asset}. This section is unique to Hub pages and is used to avoid
         one-event narrative bias.
+      </p>
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="rounded-xl border p-4" style="border-color:var(--border);background:var(--surface-alt);">
+          <p class="text-xs font-bold uppercase tracking-wide" style="color:var(--muted);">Highest T+7 P(up)</p>
+          <p class="mt-2 text-lg font-extrabold">{highestT7UpRow?.event || '--'}</p>
+          <p class="text-sm" style="color:var(--muted);">
+            {highestT7UpRow ? `${highestT7UpRow.t7Up}% on ${highestT7UpRow.eventDate}` : 'Comparison data unavailable.'}
+          </p>
+        </div>
+        <div class="rounded-xl border p-4" style="border-color:var(--border);background:var(--surface-alt);">
+          <p class="text-xs font-bold uppercase tracking-wide" style="color:var(--muted);">Strongest T+7 Median</p>
+          <p class="mt-2 text-lg font-extrabold">{highestMedianRow?.event || '--'}</p>
+          <p class="text-sm" style="color:var(--muted);">
+            {highestMedianRow ? `${highestMedianRow.t7Median}% median return` : 'Comparison data unavailable.'}
+          </p>
+        </div>
+        <div class="rounded-xl border p-4" style="border-color:var(--border);background:var(--surface-alt);">
+          <p class="text-xs font-bold uppercase tracking-wide" style="color:var(--muted);">Deepest Sample</p>
+          <p class="mt-2 text-lg font-extrabold">{deepestSampleRow?.event || '--'}</p>
+          <p class="text-sm" style="color:var(--muted);">
+            {deepestSampleRow ? `${deepestSampleRow.sample} matched observations` : 'Comparison data unavailable.'}
+          </p>
+        </div>
+      </div>
+      <p class="mt-4 text-sm leading-7" style="color:var(--muted);">
+        {hubComparisonNarrative}
+        {currentEventRow ? ` The current ${eventType} row prints ${currentEventRow.t1Up}% T+1 up probability and ${currentEventRow.t7Median}% median return, so the operator should read this hub as a relative ranking page rather than a single-event slogan.` : ''}
       </p>
       <div class="mt-4 grid grid-cols-1 xl:grid-cols-2 gap-4">
         <div class="rounded-xl border p-3" style="border-color:var(--border);background:var(--surface);">

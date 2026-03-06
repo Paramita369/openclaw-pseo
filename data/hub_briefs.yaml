@@ -7,8 +7,8 @@ BTC_CPI:
   asset: "BTC"
   event_type: "CPI"
   thesis: "Bitcoin's sensitivity to US inflation data has shifted from a pure risk-on asset to a complex liquidity proxy. Historical analysis reveals that upside CPI surprises often trigger acute T+1 drawdowns, followed by a robust T+7 recovery if the broader macroeconomic narrative anticipates eventual Fed intervention."
-  what_changed_recently: "Institutional ETF flows now absorb immediate volatility shockwaves faster than in the 2022 tightening cycle."
-  risk_watchouts: "Elevated funding rates on offshore exchanges can exacerbate liquidations independent of the CPI print."
+  what_changed_recently: "Institutional ETF flows now absorb immediate volatility shockwaves faster than in the 2022 tightening cycle, which means CPI-driven drawdowns can exhaust sooner than older crypto bear-market analogs suggested. The first reaction still matters, but the half-life of panic has shortened materially."
+  risk_watchouts: "Elevated funding rates on offshore exchanges can exacerbate liquidations independent of the CPI print, so a mechanically weak first candle is not enough on its own. Traders also need to watch whether real yields and DXY confirm the same macro read, because mismatched cross-asset signals often reverse the initial BTC move."
   execution_checklist:
     - "Monitor CME futures basis pre-print."
     - "Set limit orders 3-5% below current spot for flash crashes."
@@ -204,7 +204,7 @@ SPY_FOMC:
   event_type: "FOMC"
   thesis: "The S&P 500's reaction to FOMC rate decisions is heavily dictated by the preceding 30-day index trajectory. A 'buy the rumor, sell the fact' dynamic dominates when equities enter the meeting at all-time highs. Conversely, preemptive market fear often yields a powerful relief rally on inline dot-plot projections."
   what_changed_recently: "The market's focal point has pivoted from terminal rate pricing to the trajectory of quantitative tightening (QT) tapering."
-  risk_watchouts: "Jerome Powell's press conference (30 minutes post-release) frequently reverses the initial algorithmic reaction."
+  risk_watchouts: "Jerome Powell's press conference (30 minutes post-release) frequently reverses the initial algorithmic reaction, especially when the statement appears neutral but the Q&A shifts the market's view of cuts, QT tapering, or growth sensitivity. Breadth deterioration under an index-level bounce is a common warning that the first move is failing."
   execution_checklist:
     - "Hedge long portfolios with short-dated VIX call options 24h prior."
     - "Avoid initiating 0DTE (Zero Days to Expiration) option strategies during the first 15 minutes of the release."

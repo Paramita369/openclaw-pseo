@@ -1,14 +1,14 @@
 ---
 title: "2025-12-10 FOMC Meeting: GOLD T+1/T+7 Probability Profile"
 description: "Historical probability profile for GOLD around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 3
 title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-12-10"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 9
-freshness_days: 83
+freshness_days: 85
 freshness_status: "fresh"
 index_tier: "B"
 is_recent_90d: true
+is_core_page: true
+core_window_days: 90
+body_variant_family: "risk-first"
+hub_baseline_mean_t7: 0.59
+hub_baseline_median_t7: 0.9
+hub_baseline_std_t7: 2.0208
+hub_baseline_delta: -0.31
+z_score_t7: -0.0
+percentile_t7: 44.44
+narrative_trigger: "within_historical_norm"
 canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/gold-after-fomc-2025-12-10"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "gold-after-fomc-2024-01-30", "title": "2024-01-30 FOM
 - Event: **FOMC**
 - Asset: **GOLD**
 - Event date: **2025-12-10**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **83 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **85 days**
 - Sample size (all-history): **9**
 
 ## Event Outcome
@@ -105,15 +115,25 @@ related_events: [{"slug": "gold-after-fomc-2024-01-30", "title": "2024-01-30 FOM
 | T+1 | 88.89% | 11.11% | 0.83% | 0.72% | 9 |
 | T+7 | 66.67% | 33.33% | 0.9% | 0.59% | 9 |
 
-## Historical Distribution Summary
+## Event Outcome Interpretation
 
-When FOMC was **FLAT**, GOLD T+1 up probability was **88.89%** (n=9).
+The main mistake after macro releases is to treat every surprise as a regime break. GOLD around FOMC is best framed through how the release landed unchanged versus the previous release. The current observation shows actual value 4.0000 versus previous 4.0000, a delta of +0.0000. Across the full history, GOLD has a T+7 up probability of 66.67% versus 33.33% down, with a median return of 0.90%. When only matching the same event direction, the T+7 up probability shifts to 66.67% across 9 comparable releases, with a same-direction median of 0.90%. That is the immediate context behind the current bullish classification. The standing hub thesis for this asset-event pair is: Gold's post-FOMC edge is strongest when statement, dots, and press conference align on easing or tightening trajectory.
 
-When FOMC was **FLAT**, GOLD T+7 up probability was **66.67%** (n=9).
+## Distribution Position
 
-Same-direction T+7 median return: **0.9%**.
+The current T+7 reaction of 0.59% sits in the middle of its historical distribution for GOLD after FOMC. Its z-score is -0.00, which measures distance from the historical mean, and its percentile rank is 44.44, which shows how often prior releases were weaker than this one. That places the observation inside the central band of observed windows, not in an obvious tail bucket. That is the difference between a manageable macro impulse and a tail event that can invalidate prior playbooks. In practice this means the page is useful for calibration, but it does not justify upgrading a routine macro response into a regime-break narrative.
 
-For GOLD, historical FOMC windows show all-history T+1 up probability of 88.89% and T+7 up probability of 66.67%. When FOMC printed Flat versus previous, T+1 up probability was 88.89% and T+7 up probability was 66.67% across 9 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
+## Comparison vs Hub Baseline
+
+The baseline comparison matters because most false positives come from overreacting to ordinary noise. The hub baseline median T+7 return for GOLD after FOMC is 0.90%, while the baseline mean is 0.59% and the baseline standard deviation is 2.0208. The current event is running at -0.31% versus the baseline median. Same-direction probability is +0.00% versus the all-history T+7 up rate, and the same-direction median differs by +0.00%. That distance from baseline is what determines whether this is noise, pressure, or a real outlier worth extra caution. This release is classified as within historical norm rather than handled as a generic macro template. If the current move only differed by a few basis points, the narrative would collapse back toward historical norm. The current regime context also matters: Terminal-rate narrative has given way to pace-of-easing narrative.
+
+## Failure Modes
+
+The main failure mode is assuming the first interpretation of the release will survive cross-asset confirmation. Headline fade risk rises when policy message is mixed. This matters because the historical distribution is built on end-of-window outcomes, not the first minute of price discovery. A release can look constructive initially, then fail once rates, the dollar, and sector breadth reprice in a different direction. That is also why low sample environments and mixed reaction functions should be handled as weaker evidence.
+
+## Execution Relevance
+
+Treat this as an educational risk framework, not investment advice. The practical takeaway is to use the current page as a decision filter: read the release, compare it with the hub baseline, then decide whether the event is behaving like a normal FOMC setup or a tail observation. For this asset-event pair, the operational checklist is: Map pre-event consensus versus actual guidance.; Reassess after press conference starts.; Use a hard invalidation level tied to yield reversal.. When the page is marked within historical norm, the right response is not automatically to trade more aggressively; it is to decide whether confirmation quality is strong enough to justify action.
 
 ## Methodology
 

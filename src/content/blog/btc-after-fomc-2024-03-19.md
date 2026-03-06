@@ -1,14 +1,14 @@
 ---
 title: "BTC Post-FOMC Reaction (2024-03-19): Quant Backtest Snapshot"
 description: "Historical probability profile for BTC around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 4
 title_template_key: "fomc_4"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2024-03-19"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 9
-freshness_days: 714
+freshness_days: 716
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
+is_core_page: false
+core_window_days: 90
+body_variant_family: "risk-first"
+hub_baseline_mean_t7: 1.12
+hub_baseline_median_t7: 0.31
+hub_baseline_std_t7: 10.2392
+hub_baseline_delta: 12.73
+z_score_t7: 1.16
+percentile_t7: 88.89
+narrative_trigger: "significant_outperformance"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/btc/fomc"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "btc-after-fomc-2024-04-30", "title": "BTC After FOMC 
 - Event: **FOMC**
 - Asset: **BTC**
 - Event date: **2024-03-19**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **714 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **716 days**
 - Sample size (all-history): **9**
 
 ## Event Outcome

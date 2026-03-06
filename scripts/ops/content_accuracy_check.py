@@ -23,10 +23,12 @@ except Exception:  # pragma: no cover
 
 try:
     from scripts.macro_pipeline.pipeline_utils import cutoff_date, event_filter_sql, parse_float, resolve_project_root
+    from scripts.macro_pipeline.content_features import CORE_WINDOW_DAYS, compute_statistical_features, is_core_page_for_window
 except Exception:  # pragma: no cover
     CURRENT_FILE = Path(__file__).resolve()
     sys.path.insert(0, str(CURRENT_FILE.parents[1] / "macro_pipeline"))
     from pipeline_utils import cutoff_date, event_filter_sql, parse_float, resolve_project_root
+    from content_features import CORE_WINDOW_DAYS, compute_statistical_features, is_core_page_for_window
 
 EVENT_FRESHNESS_THRESHOLDS = {
     "CPI": 45,
@@ -262,6 +264,7 @@ def validate_page(
     conn: sqlite3.Connection,
     has_outcomes: bool,
     default_asof_cutoff: str,
+    run_as_of_date: str,
     known_slugs: Sequence[str],
 ) -> List[Dict[str, Any]]:
     slug = path.stem
@@ -425,6 +428,60 @@ def validate_page(
                     f"expected={expected_conditional_size} csv={csv_conditional_size}",
                 )
 
+    baseline_t7_values = [row.impact_t7_pct for row in distribution_rows if row.impact_t7_pct is not None]
+    metrics_block = frontmatter.get("metrics") if isinstance(frontmatter.get("metrics"), dict) else {}
+    expected_features = compute_statistical_features(metrics_block.get("impact_t7_pct"), baseline_t7_values)
+    fm_is_core_page = frontmatter.get("is_core_page")
+    expected_is_core_page = is_core_page_for_window(
+        event_date=event_date,
+        as_of_date=run_as_of_date,
+        canonical_target=str(frontmatter.get("canonical_target", "")).lower(),
+        robots_directive=str(frontmatter.get("robots_directive", "")).lower(),
+        in_blog_sitemap=bool(frontmatter.get("in_blog_sitemap")),
+        window_days=CORE_WINDOW_DAYS,
+    )
+    if not isinstance(fm_is_core_page, bool) or fm_is_core_page != expected_is_core_page:
+        add_mismatch(
+            mismatches,
+            slug,
+            "core_page_flag_mismatch",
+            f"expected={expected_is_core_page} actual={fm_is_core_page}",
+        )
+    core_window_days = frontmatter.get("core_window_days")
+    try:
+        parsed_core_window = int(float(core_window_days or 0))
+    except Exception:
+        parsed_core_window = 0
+    if parsed_core_window != CORE_WINDOW_DAYS:
+        add_mismatch(
+            mismatches,
+            slug,
+            "core_window_days_mismatch",
+            f"expected={CORE_WINDOW_DAYS} actual={core_window_days}",
+        )
+    for field_name, expected_value in [
+        ("hub_baseline_mean_t7", expected_features.baseline_mean_t7),
+        ("hub_baseline_median_t7", expected_features.baseline_median_t7),
+        ("hub_baseline_std_t7", expected_features.baseline_std_t7),
+        ("hub_baseline_delta", expected_features.hub_baseline_delta),
+        ("z_score_t7", expected_features.z_score_t7),
+        ("percentile_t7", expected_features.percentile_t7),
+    ]:
+        if not is_close(frontmatter.get(field_name), expected_value):
+            add_mismatch(
+                mismatches,
+                slug,
+                f"{field_name}_mismatch",
+                f"expected={expected_value} actual={frontmatter.get(field_name)}",
+            )
+    if str(frontmatter.get("narrative_trigger") or "").strip() != expected_features.narrative_trigger:
+        add_mismatch(
+            mismatches,
+            slug,
+            "narrative_trigger_mismatch",
+            f"expected={expected_features.narrative_trigger} actual={frontmatter.get('narrative_trigger')}",
+        )
+
     try:
         asof_dt = datetime.strptime(asof_date, "%Y-%m-%d").date()
         event_dt = datetime.strptime(event_date, "%Y-%m-%d").date()
@@ -519,6 +576,7 @@ def main() -> None:
                 conn=conn,
                 has_outcomes=has_outcomes,
                 default_asof_cutoff=default_asof_cutoff,
+                run_as_of_date=args.as_of_date,
                 known_slugs=known_slugs,
             )
             checked_pages += 1

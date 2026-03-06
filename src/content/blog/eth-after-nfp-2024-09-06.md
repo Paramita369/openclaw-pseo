@@ -1,14 +1,14 @@
 ---
 title: "ETH Post-NFP Setup (2024-09-06): Historical Probability Lens"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 5
 title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-09-06"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Bullish"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 13
-freshness_days: 543
+freshness_days: 545
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
+is_core_page: false
+core_window_days: 90
+body_variant_family: "analyst"
+hub_baseline_mean_t7: 3.32
+hub_baseline_median_t7: 5.12
+hub_baseline_std_t7: 8.5559
+hub_baseline_delta: 4.67
+z_score_t7: 0.76
+percentile_t7: 76.92
+narrative_trigger: "within_historical_norm"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/eth/nfp"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH NFP Reaction
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2024-09-06**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **543 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **545 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome

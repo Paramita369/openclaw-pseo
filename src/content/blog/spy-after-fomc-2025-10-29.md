@@ -1,14 +1,14 @@
 ---
 title: "SPY After FOMC (2025-10-29): Historical Signal & Probability"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 1
 title_template_key: "fomc_1"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-10-29"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 9
-freshness_days: 125
+freshness_days: 127
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
+is_core_page: false
+core_window_days: 90
+body_variant_family: "distribution"
+hub_baseline_mean_t7: 0.64
+hub_baseline_median_t7: 0.63
+hub_baseline_std_t7: 1.7817
+hub_baseline_delta: 0.01
+z_score_t7: -0.0
+percentile_t7: 55.56
+narrative_trigger: "within_historical_norm"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/spy/fomc"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "spy-after-fomc-2025-01-29", "title": "Fed Decision (2
 - Event: **FOMC**
 - Asset: **SPY**
 - Event date: **2025-10-29**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **125 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **127 days**
 - Sample size (all-history): **9**
 
 ## Event Outcome

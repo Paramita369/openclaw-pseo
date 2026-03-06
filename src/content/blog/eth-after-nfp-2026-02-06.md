@@ -1,14 +1,14 @@
 ---
 title: "ETH NFP Reaction (2026-02-06): T+1/T+7 Up Probability"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 1
 title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2026-02-06"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Bullish"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 70
 sample_size: 13
-freshness_days: 25
+freshness_days: 27
 freshness_status: "fresh"
 index_tier: "B"
 is_recent_90d: true
+is_core_page: true
+core_window_days: 90
+body_variant_family: "distribution"
+hub_baseline_mean_t7: 3.32
+hub_baseline_median_t7: 5.12
+hub_baseline_std_t7: 8.5559
+hub_baseline_delta: -1.8
+z_score_t7: -0.0
+percentile_t7: 46.15
+narrative_trigger: "within_historical_norm"
 canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/eth-after-nfp-2026-02-06"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "eth-after-nfp-2026-01-02", "title": "2026-01-02 Nonfa
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2026-02-06**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **25 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **27 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome
@@ -105,15 +115,25 @@ related_events: [{"slug": "eth-after-nfp-2026-01-02", "title": "2026-01-02 Nonfa
 | T+1 | 50.0% | 50.0% | -0.03% | 0.09% | 12 |
 | T+7 | 58.33% | 41.67% | 3.01% | 3.07% | 12 |
 
-## Historical Distribution Summary
+## Event Outcome Interpretation
 
-When NFP was **UP**, ETH T+1 up probability was **50.0%** (n=12).
+The useful signal is where this release sits inside the historical range, not the headline in isolation. ETH around NFP is best framed through how the release landed higher than the previous release. The current observation shows actual value 158627.0000 versus previous 158497.0000, a delta of +130.0000. Across the full history, ETH has a T+7 up probability of 61.54% versus 38.46% down, with a median return of 5.12%. When only matching the same event direction, the T+7 up probability shifts to 58.33% across 12 comparable releases, with a same-direction median of 3.01%. That is the immediate context behind the current bullish classification. The standing hub thesis for this asset-event pair is: ETH has historically shown mixed first-day response to payroll shocks, but directional follow-through improves when dollar trend aligns with crypto market breadth.
 
-When NFP was **UP**, ETH T+7 up probability was **58.33%** (n=12).
+## Distribution Position
 
-Same-direction T+7 median return: **3.01%**.
+The current T+7 reaction of 3.32% sits in the middle of its historical distribution for ETH after NFP. Its z-score is -0.00, which measures distance from the historical mean, and its percentile rank is 46.15, which shows how often prior releases were weaker than this one. That places the observation inside the central band of observed windows, not in an obvious tail bucket. That framing matters because it separates ordinary event noise from true tail behavior inside the same distribution. In practice this means the page is useful for calibration, but it does not justify upgrading a routine macro response into a regime-break narrative.
 
-For ETH, historical NFP windows show all-history T+1 up probability of 53.85% and T+7 up probability of 61.54%. When NFP printed Up versus previous, T+1 up probability was 50.0% and T+7 up probability was 58.33% across 12 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
+## Comparison vs Hub Baseline
+
+Relative to the hub baseline, this release can be located with a concrete distance from normal behavior. The hub baseline median T+7 return for ETH after NFP is 5.12%, while the baseline mean is 3.32% and the baseline standard deviation is 8.5559. The current event is running at -1.80% versus the baseline median. Same-direction probability is -3.21% versus the all-history T+7 up rate, and the same-direction median differs by -2.11%. In other words, the baseline gap decides the narrative, not a cosmetic change in wording. This release is classified as within historical norm rather than handled as a generic macro template. If the current move only differed by a few basis points, the narrative would collapse back toward historical norm. The current regime context also matters: Cross-exchange depth has improved, reducing single-venue distortion.
+
+## Failure Modes
+
+The main failure mode is forgetting that distributions absorb a lot of noise before they change shape. Thin weekend-adjacent liquidity can produce false breaks. This matters because the historical distribution is built on end-of-window outcomes, not the first minute of price discovery. A release can look constructive initially, then fail once rates, the dollar, and sector breadth reprice in a different direction. That is also why low sample environments and mixed reaction functions should be handled as weaker evidence.
+
+## Execution Relevance
+
+Use this page as a distribution map, not a shortcut to conviction. The practical takeaway is to use the current page as a decision filter: read the release, compare it with the hub baseline, then decide whether the event is behaving like a normal NFP setup or a tail observation. For this asset-event pair, the operational checklist is: Validate move with ETH perp funding and open interest.; Use smaller first entry and add on confirmation.; Monitor ETH/BTC and TOTAL3 for breadth confirmation.. When the page is marked within historical norm, the right response is not automatically to trade more aggressively; it is to decide whether confirmation quality is strong enough to justify action.
 
 ## Methodology
 

@@ -1,14 +1,14 @@
 ---
 title: "NFP Print (2025-01-10) vs SPY: Quantified Directional Odds"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 4
 title_template_key: "nfp_4"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-01-10"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 50
 sample_size: 13
-freshness_days: 417
+freshness_days: 419
 freshness_status: "stale"
 index_tier: "C"
 is_recent_90d: false
+is_core_page: false
+core_window_days: 90
+body_variant_family: "checklist"
+hub_baseline_mean_t7: 1.41
+hub_baseline_median_t7: 1.39
+hub_baseline_std_t7: 1.7058
+hub_baseline_delta: 1.55
+z_score_t7: 0.9
+percentile_t7: 84.62
+narrative_trigger: "within_historical_norm"
 canonical_target: "none"
 canonical_url: ""
 robots_directive: "noindex,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "2024-07-05 Nonfa
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2025-01-10**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **417 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **419 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome

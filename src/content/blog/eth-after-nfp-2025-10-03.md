@@ -1,14 +1,14 @@
 ---
 title: "ETH NFP Reaction (2025-10-03): T+1/T+7 Up Probability"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 1
 title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-10-03"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Bullish"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 40
 sample_size: 13
-freshness_days: 151
+freshness_days: 153
 freshness_status: "stale"
 index_tier: "C"
 is_recent_90d: false
+is_core_page: false
+core_window_days: 90
+body_variant_family: "distribution"
+hub_baseline_mean_t7: 3.32
+hub_baseline_median_t7: 5.12
+hub_baseline_std_t7: 8.5559
+hub_baseline_delta: -1.8
+z_score_t7: -0.0
+percentile_t7: 46.15
+narrative_trigger: "within_historical_norm"
 canonical_target: "none"
 canonical_url: ""
 robots_directive: "noindex,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH NFP Reaction
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2025-10-03**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **151 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **153 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome

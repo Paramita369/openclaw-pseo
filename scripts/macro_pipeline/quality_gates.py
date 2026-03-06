@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Dict, List, Sequence, Tuple
 
 from pipeline_utils import ALLOWED_EVENT_TYPES, PRIMARY_ASSETS, cutoff_date, event_filter_sql, resolve_project_root
+from content_features import CORE_WINDOW_DAYS, FEATURE_EPSILON, compute_statistical_features, is_core_page_for_window
 
 try:
     import yaml
@@ -38,6 +39,16 @@ REQUIRED_FRONTMATTER_KEYS = [
     "freshness_status",
     "index_tier",
     "is_recent_90d",
+    "is_core_page",
+    "core_window_days",
+    "body_variant_family",
+    "hub_baseline_mean_t7",
+    "hub_baseline_median_t7",
+    "hub_baseline_std_t7",
+    "hub_baseline_delta",
+    "z_score_t7",
+    "percentile_t7",
+    "narrative_trigger",
     "canonical_target",
     "canonical_url",
     "robots_directive",
@@ -87,6 +98,16 @@ EXPECTED_CSV_COLUMNS = {
     "title_template_key",
     "index_tier",
     "is_recent_90d",
+    "is_core_page",
+    "core_window_days",
+    "body_variant_family",
+    "hub_baseline_mean_t7",
+    "hub_baseline_median_t7",
+    "hub_baseline_std_t7",
+    "hub_baseline_delta",
+    "z_score_t7",
+    "percentile_t7",
+    "narrative_trigger",
     "canonical_target",
     "canonical_url",
     "robots_directive",
@@ -112,9 +133,9 @@ EVENT_FRESHNESS_THRESHOLDS = {
 
 HUB_ASSETS = ["BTC", "ETH", "GOLD", "QQQ", "SPY"]
 HUB_EVENTS = ["CPI", "NFP", "FOMC"]
-HUB_MIN_THESIS_LEN = 120
-HUB_MIN_CHANGED_LEN = 80
-HUB_MIN_RISK_LEN = 80
+HUB_MIN_THESIS_LEN = 180
+HUB_MIN_CHANGED_LEN = 120
+HUB_MIN_RISK_LEN = 120
 HUB_MIN_CHECKLIST_ITEMS = 3
 HUB_MIN_CHECKLIST_ITEM_LEN = 12
 
@@ -262,6 +283,24 @@ def extract_frontmatter(content: str) -> Dict[str, object]:
     return fallback if isinstance(fallback, dict) else {}
 
 
+def extract_markdown_body(content: str) -> str:
+    match = re.match(r"^---\n.*?\n---\n", content, flags=re.DOTALL)
+    if not match:
+        return content
+    return content[match.end():]
+
+
+def compute_core_page_flag(frontmatter: Dict[str, object], as_of_date: str) -> bool:
+    return is_core_page_for_window(
+        event_date=str(frontmatter.get("event_date", "")),
+        as_of_date=as_of_date,
+        canonical_target=str(frontmatter.get("canonical_target", "")).lower(),
+        robots_directive=str(frontmatter.get("robots_directive", "")).lower(),
+        in_blog_sitemap=bool(frontmatter.get("in_blog_sitemap")),
+        window_days=CORE_WINDOW_DAYS,
+    )
+
+
 def is_finite_number(value: object) -> bool:
     try:
         number = float(value)
@@ -390,6 +429,35 @@ def scan_file(path: Path) -> List[str]:
     freshness_state = str(fm.get("freshness_status", "")).lower()
     if freshness_state not in {"fresh", "stale"}:
         violations.append("invalid_freshness_status")
+
+    if "is_core_page" not in fm or not isinstance(fm.get("is_core_page"), bool):
+        violations.append("invalid_is_core_page")
+    if "core_window_days" not in fm or not is_finite_number(fm.get("core_window_days")):
+        violations.append("invalid_core_window_days")
+    elif int(float(fm.get("core_window_days", 0))) != CORE_WINDOW_DAYS:
+        violations.append("core_window_days_mismatch")
+    if not str(fm.get("body_variant_family", "")).strip():
+        violations.append("invalid_body_variant_family")
+    if str(fm.get("narrative_trigger", "")).strip() not in {
+        "significant_outperformance",
+        "significant_underperformance",
+        "within_historical_norm",
+        "low_context",
+    }:
+        violations.append("invalid_narrative_trigger")
+    for field in [
+        "hub_baseline_mean_t7",
+        "hub_baseline_median_t7",
+        "hub_baseline_std_t7",
+        "hub_baseline_delta",
+        "z_score_t7",
+        "percentile_t7",
+    ]:
+        if field in fm and not is_finite_number(fm.get(field)):
+            violations.append(f"non_numeric_{field}")
+    percentile = to_float(fm.get("percentile_t7"))
+    if percentile is not None and not (0.0 <= percentile <= 100.0):
+        violations.append("percentile_out_of_range")
 
     metrics = fm.get("metrics")
     if not isinstance(metrics, dict):
@@ -1007,6 +1075,8 @@ def validate_snapshot_freshness_contract(
     snapshot_path = snapshot_path or (root / "src" / "daily_snapshot.json")
     index_path = index_path or (root / "src" / "pages" / "index.astro")
     allowed_statuses = {"fresh", "stale", "fallback", "calendar_unknown"}
+    allowed_source_quality = {"live", "fallback", "calendar_unknown"}
+    allowed_display_modes = {"live", "delayed", "fallback", "calendar_unknown"}
     allowed_asset_types = {"crypto", "us_session"}
 
     if not snapshot_path.exists():
@@ -1039,6 +1109,8 @@ def validate_snapshot_freshness_contract(
         as_of_date = str(item.get("as_of_date", "")).strip()
         as_of_ts = str(item.get("as_of_ts", "")).strip()
         source = str(item.get("source", "")).strip()
+        source_quality = str(item.get("source_quality", "")).strip().lower()
+        display_mode = str(item.get("display_mode", "")).strip().lower()
         data_age_hours = item.get("data_age_hours")
 
         if asset_type not in allowed_asset_types:
@@ -1050,6 +1122,10 @@ def validate_snapshot_freshness_contract(
 
         if freshness not in allowed_statuses:
             violations.append(f"snapshot_invalid_freshness_status:{asset}")
+        if source_quality not in allowed_source_quality:
+            violations.append(f"snapshot_invalid_source_quality:{asset}")
+        if display_mode not in allowed_display_modes:
+            violations.append(f"snapshot_invalid_display_mode:{asset}")
         if not re.match(r"^\d{4}-\d{2}-\d{2}$", as_of_date):
             violations.append(f"snapshot_invalid_as_of_date:{asset}")
         if not re.match(r"^\d{4}-\d{2}-\d{2}T", as_of_ts):
@@ -1076,6 +1152,8 @@ def validate_snapshot_freshness_contract(
             violations.append("snapshot_ui_missing_asof_label")
         if "freshnessLabel" not in index_source:
             violations.append("snapshot_ui_missing_freshness_badge")
+        if "source_quality" not in index_source:
+            violations.append("snapshot_ui_missing_source_quality_usage")
         if "24/7 Data Updates" in index_source:
             violations.append("snapshot_ui_contains_misleading_24_7_claim")
 
@@ -1224,6 +1302,202 @@ def validate_tier_contract(content_dir: Path) -> Dict[str, object]:
             break
 
     return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_snapshot_single_source_contract(root: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    legacy_snapshot = root / "src" / "data" / "daily_snapshot.json"
+    if legacy_snapshot.exists():
+        violations.append("legacy_snapshot_file_still_exists")
+
+    for path in list((root / "src").rglob("*.astro")) + list((root / "src").rglob("*.ts")):
+        text = path.read_text(encoding="utf-8")
+        if "data/daily_snapshot.json" in text:
+            violations.append(f"legacy_snapshot_import:{path.relative_to(root)}")
+            break
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_hub_loader_strict_contract(root: Path) -> Dict[str, object]:
+    violations: List[str] = []
+    hub_briefs_path = root / "data" / "hub_briefs.yaml"
+    if not hub_briefs_path.exists():
+        return {"violations": ["missing_hub_briefs_yaml"], "count": 1}
+
+    payload = load_hub_briefs_payload(hub_briefs_path)
+    if not isinstance(payload, dict):
+        return {"violations": ["invalid_hub_briefs_payload"], "count": 1}
+
+    for asset in HUB_ASSETS:
+        for event in HUB_EVENTS:
+            key = f"{asset}_{event}"
+            item = payload.get(key) if isinstance(payload.get(key), dict) else {}
+            status = str(item.get("status", "")).lower()
+            indexing = str(item.get("indexing", "")).lower()
+            if indexing not in {"index", "noindex"}:
+                indexing = "index" if status == "approved" else "noindex"
+            if status == "approved" and indexing == "index" and not hub_content_depth_passes(item):
+                violations.append(f"approved_index_hub_depth_fail:{key}")
+
+    for relative_path in [
+        Path("src/pages/playbooks/[asset]/[event].astro"),
+        Path("src/pages/playbooks/index.astro"),
+        Path("src/pages/blog/[slug].astro"),
+    ]:
+        full_path = root / relative_path
+        if not full_path.exists():
+            violations.append(f"missing_loader_consumer:{relative_path}")
+            continue
+        text = full_path.read_text(encoding="utf-8")
+        if "loadHubBriefs({ strict: true" not in text and "loadHubBriefs({strict: true" not in text:
+            violations.append(f"missing_strict_hub_loader:{relative_path}")
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_statistical_feature_safety_contract(content_dir: Path, as_of_date: str) -> Dict[str, object]:
+    violations: List[str] = []
+    if not content_dir.exists():
+        return {"violations": ["missing_content_dir"], "count": 1}
+
+    for path in sorted(content_dir.glob("*.md")):
+        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+        percentile = to_float(fm.get("percentile_t7"))
+        z_score = to_float(fm.get("z_score_t7"))
+        std_value = to_float(fm.get("hub_baseline_std_t7"))
+        trigger = str(fm.get("narrative_trigger", "")).strip()
+        is_core_page = compute_core_page_flag(fm, as_of_date)
+        if percentile is None or z_score is None or std_value is None:
+            violations.append("missing_statistical_feature")
+            break
+        if not (0.0 <= percentile <= 100.0):
+            violations.append("percentile_out_of_range")
+            break
+        if std_value < FEATURE_EPSILON and abs(z_score) > 0.0:
+            violations.append("z_score_nonzero_when_std_zero")
+            break
+        if is_core_page and trigger == "low_context" and abs(z_score) > 0.0:
+            violations.append("low_context_should_zero_z_score")
+            break
+        if not math.isfinite(percentile) or not math.isfinite(z_score):
+            violations.append("non_finite_statistical_feature")
+            break
+
+    return {"violations": sorted(set(violations)), "count": len(sorted(set(violations)))}
+
+
+def validate_core_content_depth_contract(content_dir: Path, as_of_date: str) -> Dict[str, object]:
+    violations: List[str] = []
+    warnings: List[str] = []
+    required_headings = [
+        "## Distribution Position",
+        "## Comparison vs Hub Baseline",
+        "## Failure Modes",
+        "## Execution Relevance",
+    ]
+
+    core_pages: List[Path] = []
+    for path in sorted(content_dir.glob("*.md")):
+        content = path.read_text(encoding="utf-8")
+        fm = extract_frontmatter(content)
+        computed_is_core = compute_core_page_flag(fm, as_of_date)
+        if isinstance(fm.get("is_core_page"), bool) and fm.get("is_core_page") is not computed_is_core:
+            violations.append(f"is_core_page_mismatch:{path.stem}")
+        if computed_is_core:
+            core_pages.append(path)
+            body = extract_markdown_body(content)
+            for heading in required_headings:
+                if heading not in body:
+                    violations.append(f"missing_core_heading:{path.stem}:{heading}")
+                    break
+
+    if not core_pages:
+        warnings.append("no_core_pages_in_recent_window")
+    elif len(core_pages) < 10:
+        warnings.append(f"low_core_page_count:{len(core_pages)}")
+
+    return {
+        "violations": sorted(set(violations)),
+        "count": len(sorted(set(violations))),
+        "warnings": warnings,
+        "core_pages": len(core_pages),
+    }
+
+
+def validate_content_uniqueness_contract(content_dir: Path, as_of_date: str) -> Dict[str, object]:
+    violations: List[str] = []
+    warnings: List[str] = []
+    core_pages: List[Tuple[str, Dict[str, object], str]] = []
+
+    for path in sorted(content_dir.glob("*.md")):
+        content = path.read_text(encoding="utf-8")
+        fm = extract_frontmatter(content)
+        if not compute_core_page_flag(fm, as_of_date):
+            continue
+        body = extract_markdown_body(content)
+        body_before_methodology = body.split("## Methodology", 1)[0]
+        word_count = len(re.findall(r"[A-Za-z0-9][A-Za-z0-9'-]*", body_before_methodology))
+        if word_count < 450:
+            violations.append(f"core_page_word_count_below_min:{path.stem}:{word_count}")
+        if not str(fm.get("narrative_trigger", "")).strip():
+            violations.append(f"core_page_missing_narrative_trigger:{path.stem}")
+        for field in ["hub_baseline_delta", "z_score_t7", "percentile_t7"]:
+            if not is_finite_number(fm.get(field)):
+                violations.append(f"core_page_missing_{field}:{path.stem}")
+        core_pages.append((path.stem, fm, body_before_methodology))
+
+    if not core_pages:
+        warnings.append("no_core_pages_in_recent_window")
+        return {"violations": [], "count": 0, "warnings": warnings, "core_pages": 0}
+    if len(core_pages) < 10:
+        warnings.append(f"low_core_page_count:{len(core_pages)}")
+
+    sentence_pages: Dict[str, set[str]] = {}
+    section_headings = [
+        "## Event Outcome Interpretation",
+        "## Distribution Position",
+        "## Comparison vs Hub Baseline",
+        "## Failure Modes",
+        "## Execution Relevance",
+    ]
+    for slug, _fm, body in core_pages:
+        section_sentences: List[str] = []
+        for heading in section_headings:
+            match = re.search(
+                rf"{re.escape(heading)}\n\n(.+?)(?:[.!?])(?:\s|$)",
+                body,
+                flags=re.DOTALL,
+            )
+            if not match:
+                continue
+            first_sentence = match.group(1).strip()
+            if len(first_sentence) >= 40:
+                section_sentences.append(first_sentence)
+        sentences = section_sentences
+        for sentence in set(sentences):
+            sentence_pages.setdefault(sentence, set()).add(slug)
+
+    max_sentence_share = 0.4
+    threshold = max(2, math.ceil(len(core_pages) * max_sentence_share))
+    for sentence, page_set in sentence_pages.items():
+        if len(page_set) > threshold:
+            violations.append(f"repeated_sentence_over_limit:{len(page_set)}:{sentence[:80]}")
+            break
+
+    family_counts: Dict[str, int] = {}
+    for _slug, fm, _body in core_pages:
+        family = str(fm.get("body_variant_family", "")).strip()
+        family_counts[family] = family_counts.get(family, 0) + 1
+    if len([name for name, count in family_counts.items() if name and count > 0]) < 2 and len(core_pages) >= 4:
+        violations.append("insufficient_body_variant_family_usage")
+
+    return {
+        "violations": sorted(set(violations)),
+        "count": len(sorted(set(violations))),
+        "warnings": warnings,
+        "core_pages": len(core_pages),
+    }
 
 
 def token_lcs_ratio(left: Sequence[str], right: Sequence[str]) -> float:
@@ -2092,6 +2366,11 @@ def run_gates(
     seo_signal_conflict_result = validate_seo_signal_conflict_contract(content_dir)
     sitemap_canonical_result = validate_sitemap_canonical_contract(content_dir, public_dir)
     tier_contract_result = validate_tier_contract(content_dir)
+    snapshot_single_source_result = validate_snapshot_single_source_contract(root)
+    hub_loader_strict_result = validate_hub_loader_strict_contract(root)
+    core_content_depth_result = validate_core_content_depth_contract(content_dir, as_of_date)
+    statistical_feature_safety_result = validate_statistical_feature_safety_contract(content_dir, as_of_date)
+    content_uniqueness_result = validate_content_uniqueness_contract(content_dir, as_of_date)
 
     for scope in [
         redirect_result,
@@ -2122,6 +2401,11 @@ def run_gates(
         seo_signal_conflict_result,
         sitemap_canonical_result,
         tier_contract_result,
+        snapshot_single_source_result,
+        hub_loader_strict_result,
+        core_content_depth_result,
+        statistical_feature_safety_result,
+        content_uniqueness_result,
     ]:
         for issue in scope["violations"]:
             report["summary"][issue] = report["summary"].get(issue, 0) + 1
@@ -2155,11 +2439,18 @@ def run_gates(
     report["seo_signal_conflict_violations"] = seo_signal_conflict_result
     report["sitemap_canonical_violations"] = sitemap_canonical_result
     report["tier_contract_violations"] = tier_contract_result
+    report["snapshot_single_source_violations"] = snapshot_single_source_result
+    report["hub_loader_strict_violations"] = hub_loader_strict_result
+    report["core_content_depth_violations"] = core_content_depth_result
+    report["statistical_feature_safety_violations"] = statistical_feature_safety_result
+    report["content_uniqueness_violations"] = content_uniqueness_result
     report["approved_hub_minimum_contract"] = approved_hub_minimum_result
     report["warnings"] = {
         "cta": cta_result.get("warnings", []),
         "hub_route": hub_route_result.get("warnings", []),
         "approved_hub_minimum": approved_hub_minimum_result.get("warnings", []),
+        "core_content_depth": core_content_depth_result.get("warnings", []),
+        "content_uniqueness": content_uniqueness_result.get("warnings", []),
     }
 
     content_violations = sum(len(v) for v in violations_by_file.values())
@@ -2193,6 +2484,11 @@ def run_gates(
         + int(seo_signal_conflict_result["count"])
         + int(sitemap_canonical_result["count"])
         + int(tier_contract_result["count"])
+        + int(snapshot_single_source_result["count"])
+        + int(hub_loader_strict_result["count"])
+        + int(core_content_depth_result["count"])
+        + int(statistical_feature_safety_result["count"])
+        + int(content_uniqueness_result["count"])
     )
     report["content_violations"] = content_violations
     report["total_violations"] = total_violations

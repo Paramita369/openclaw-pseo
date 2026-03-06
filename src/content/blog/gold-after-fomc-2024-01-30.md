@@ -1,14 +1,14 @@
 ---
 title: "2024-01-30 FOMC Meeting: GOLD T+1/T+7 Probability Profile"
 description: "Historical probability profile for GOLD around FOMC events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 3
 title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2024-01-30"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 9
-freshness_days: 763
+freshness_days: 765
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
+is_core_page: false
+core_window_days: 90
+body_variant_family: "analyst"
+hub_baseline_mean_t7: 0.59
+hub_baseline_median_t7: 0.9
+hub_baseline_std_t7: 2.0208
+hub_baseline_delta: -0.75
+z_score_t7: -0.22
+percentile_t7: 44.44
+narrative_trigger: "within_historical_norm"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/gold/fomc"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "gold-after-fomc-2026-01-28", "title": "GOLD After FOM
 - Event: **FOMC**
 - Asset: **GOLD**
 - Event date: **2024-01-30**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **763 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **765 days**
 - Sample size (all-history): **9**
 
 ## Event Outcome

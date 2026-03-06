@@ -1,14 +1,14 @@
 ---
 title: "GOLD After NFP (2024-08-02): Event Probability and Median Return"
 description: "Historical probability profile for GOLD around NFP events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 3
 title_template_key: "nfp_3"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-08-02"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 50
 sample_size: 13
-freshness_days: 578
+freshness_days: 580
 freshness_status: "stale"
 index_tier: "C"
 is_recent_90d: false
+is_core_page: false
+core_window_days: 90
+body_variant_family: "distribution"
+hub_baseline_mean_t7: 1.14
+hub_baseline_median_t7: 1.07
+hub_baseline_std_t7: 1.6215
+hub_baseline_delta: -0.81
+z_score_t7: -0.54
+percentile_t7: 30.77
+narrative_trigger: "within_historical_norm"
 canonical_target: "none"
 canonical_url: ""
 robots_directive: "noindex,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "gold-after-nfp-2024-03-01", "title": "GOLD NFP Reacti
 - Event: **NFP**
 - Asset: **GOLD**
 - Event date: **2024-08-02**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **578 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **580 days**
 - Sample size (all-history): **13**
 
 ## Event Outcome

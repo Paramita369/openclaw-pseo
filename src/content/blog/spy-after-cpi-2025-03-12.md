@@ -1,14 +1,14 @@
 ---
 title: "SPY CPI Win Rate (2025-03-12): Historical T+1/T+7 Probability"
 description: "Historical probability profile for SPY around CPI events (T+1/T+7)."
-pubDate: "2026-03-04"
+pubDate: "2026-03-06"
 title_variant_id: 1
 title_template_key: "cpi_1"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-03-12"
-asof_date: "2026-03-03"
+asof_date: "2026-03-05"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,10 +22,20 @@ penalties:
 confidence_level: "normal"
 quality_score: 70
 sample_size: 14
-freshness_days: 356
+freshness_days: 358
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
+is_core_page: false
+core_window_days: 90
+body_variant_family: "checklist"
+hub_baseline_mean_t7: 0.51
+hub_baseline_median_t7: 1.08
+hub_baseline_std_t7: 1.8429
+hub_baseline_delta: -0.57
+z_score_t7: 0.0
+percentile_t7: 46.15
+narrative_trigger: "within_historical_norm"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/spy/cpi"
 robots_directive: "index,follow"
@@ -82,8 +92,8 @@ related_events: [{"slug": "spy-after-cpi-2024-03-12", "title": "SPY CPI Win Rate
 - Event: **CPI**
 - Asset: **SPY**
 - Event date: **2025-03-12**
-- As-of date (T-1): **2026-03-03**
-- Freshness age: **356 days**
+- As-of date (T-1): **2026-03-05**
+- Freshness age: **358 days**
 - Sample size (all-history): **14**
 
 ## Event Outcome

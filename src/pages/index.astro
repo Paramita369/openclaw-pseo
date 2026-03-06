@@ -22,9 +22,12 @@ const formatAsOf = (value) => {
 
 const freshnessLabel = (status) => {
   const value = String(status || '').toLowerCase();
+  if (value === 'live') return 'Live';
+  if (value === 'delayed') return 'Delayed';
+  if (value === 'fallback') return 'Fallback';
+  if (value === 'calendar_unknown') return 'Session Unknown';
   if (value === 'fresh') return 'Fresh';
   if (value === 'stale') return 'Stale';
-  if (value === 'fallback') return 'Fallback';
   return 'Unknown';
 };
 
@@ -127,6 +130,40 @@ const playbookSubline = isStalePlaybook
 
 const utmSource = offersConfig.utm?.source || 'quantmacro';
 const utmMedium = offersConfig.utm?.medium || 'affiliate';
+const snapshotCoreAssets = ['BTC', 'ETH', 'GOLD', 'QQQ', 'SPY'];
+const snapshotCoreMarkets = snapshotCoreAssets.map((name) => ({ name, data: markets[name] })).filter((item) => item.data);
+const hasFallbackSnapshot = snapshotCoreMarkets.some((item) => item.data?.source_quality === 'fallback');
+const hasCalendarUnknownSnapshot = snapshotCoreMarkets.some((item) => item.data?.source_quality === 'calendar_unknown');
+const allLiveSnapshot =
+  snapshotCoreMarkets.length > 0 && snapshotCoreMarkets.every((item) => item.data?.source_quality === 'live');
+const latestSnapshotAsOf =
+  snapshotCoreMarkets.map((item) => String(item.data?.as_of_ts || '')).filter(Boolean).sort().at(-1) ||
+  dailySnapshot.timestamp ||
+  '';
+
+const snapshotBanner = hasFallbackSnapshot
+  ? {
+      title: 'Fallback snapshot in use',
+      body: `Some market cards are using cached data. Last synchronized: ${formatAsOf(latestSnapshotAsOf)}.`,
+      className: 'metric-down',
+    }
+  : hasCalendarUnknownSnapshot
+    ? {
+        title: 'Session freshness unavailable',
+        body: 'Market-close freshness could not be confirmed for one or more US session assets.',
+        className: 'metric-muted',
+      }
+    : allLiveSnapshot
+      ? {
+          title: 'Live market data synchronized',
+          body: `Core market cards are using current source data as of ${formatAsOf(latestSnapshotAsOf)}.`,
+          className: 'metric-up',
+        }
+      : {
+          title: 'Delayed snapshot in use',
+          body: 'Market data is available, but one or more cards are not in live mode.',
+          className: 'metric-muted',
+        };
 
 const resolveOfferSet = (asset) => {
   const fallbackKeys = offersConfig.asset_offer_keys?.[asset] || offersConfig.asset_offer_keys?.DEFAULT || [];
@@ -220,15 +257,25 @@ const steps = [
             {dailySnapshot.timestamp ? new Date(dailySnapshot.timestamp).toLocaleString() : 'No snapshot timestamp'}
           </span>
         </div>
+        <div class="rounded-xl border px-3 py-2 mb-3" style="border-color:var(--border);background:var(--surface);">
+          <p class={`text-sm font-semibold ${snapshotBanner.className}`}>{snapshotBanner.title}</p>
+          <p class="text-xs mt-1" style="color:var(--muted);">{snapshotBanner.body}</p>
+        </div>
         <p class="text-xs mb-3" style="color:var(--muted);">
-          Crypto is near real-time; US session assets reflect latest market close and trading-calendar freshness.
+          Crypto cards can be live or fallback. US session cards reflect the latest validated market close and trading-calendar freshness, not 24/7 live pricing.
         </p>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
           {Object.entries(markets).map(([name, data]) => {
             const positive = data.change >= 0;
-            const status = String(data.freshness_status || '').toLowerCase();
+            const status = String(data.display_mode || data.source_quality || data.freshness_status || '').toLowerCase();
             const badgeClass =
-              status === 'fresh' ? 'metric-up' : status === 'stale' ? 'metric-down' : 'metric-muted';
+              status === 'live'
+                ? 'metric-up'
+                : status === 'fallback'
+                  ? 'metric-down'
+                  : status === 'delayed' || status === 'stale'
+                    ? 'metric-muted'
+                    : 'metric-muted';
             return (
               <div class="rounded-xl border p-3" style="border-color:var(--border);background:var(--surface-alt);">
                 <p class="text-xs font-semibold" style="color:var(--muted);">{name}</p>
@@ -238,7 +285,10 @@ const steps = [
                 </p>
                 <p class="text-[11px] mt-1" style="color:var(--muted);">As-of: {formatAsOf(data.as_of_ts)}</p>
                 <p class="text-[11px] mt-1">
-                  <span class={`badge-chip ${badgeClass}`}>{freshnessLabel(data.freshness_status)}</span>
+                  <span class={`badge-chip ${badgeClass}`}>{freshnessLabel(status)}</span>
+                </p>
+                <p class="text-[11px] mt-1" style="color:var(--muted);">
+                  Source: {String(data.source_quality || data.source || '--')}
                 </p>
               </div>
             );
