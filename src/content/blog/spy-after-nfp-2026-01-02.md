@@ -1,14 +1,14 @@
 ---
 title: "SPY Post-NFP Setup (2026-01-02): Historical Probability Lens"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
-pubDate: "2026-03-08"
+pubDate: "2026-03-09"
 title_variant_id: 5
 title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2026-01-02"
-asof_date: "2026-03-07"
+asof_date: "2026-03-08"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 64
+freshness_days: 65
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-30", "open": 687.45, "high": 688.56, "low": 686.58
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2026-01-02**
-- As-of date (T-1): **2026-03-07**
-- Freshness age: **64 days**
+- As-of date (T-1): **2026-03-08**
+- Freshness age: **65 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

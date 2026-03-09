@@ -1,19 +1,19 @@
 ---
 title: "US CPI (2024-06-12) and GOLD: Event-Driven Return Odds"
 description: "Historical probability profile for GOLD around CPI events (T+1/T+7)."
-pubDate: "2026-03-06"
+pubDate: "2026-03-09"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-06-12"
-asof_date: "2026-03-05"
+asof_date: "2026-03-08"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
-raw_signal_score: 15.46
-robust_score: 9.46
+raw_signal_score: 18.4
+robust_score: 12.4
 penalties:
   sample: 0.0
   freshness: 6.0
@@ -21,20 +21,20 @@ penalties:
   outcome: 0.0
 confidence_level: "normal"
 quality_score: 50
-sample_size: 14
-freshness_days: 631
+sample_size: 39
+freshness_days: 634
 freshness_status: "stale"
 index_tier: "C"
 is_recent_90d: false
 is_core_page: false
 core_window_days: 90
 body_variant_family: "checklist"
-hub_baseline_mean_t7: 1.07
-hub_baseline_median_t7: 1.52
-hub_baseline_std_t7: 1.8614
-hub_baseline_delta: -0.45
-z_score_t7: 0.0
-percentile_t7: 46.15
+hub_baseline_mean_t7: 1.49
+hub_baseline_median_t7: 1.4
+hub_baseline_std_t7: 2.4218
+hub_baseline_delta: 0.09
+z_score_t7: -0.0
+percentile_t7: 52.63
 narrative_trigger: "strict_median_norm"
 narrative_rank_band: "median"
 narrative_direction_band: "neutral"
@@ -42,7 +42,7 @@ canonical_target: "none"
 canonical_url: ""
 robots_directive: "noindex,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-04T00:01:00+00:00"
+data_last_updated_at: "2026-03-05T00:03:13+00:00"
 event_direction: "down"
 event_actual: 313.044
 event_previous: 313.175
@@ -51,25 +51,25 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["gold", "cpi", "event-probability", "general"]
 metrics:
-  sharpe_t7: 0.41
+  sharpe_t7: 0.49
   mdd_t7: -1.53
-  volatility: 2.6
+  volatility: 3.02
   impact_t1_pct: -1.53
-  impact_t7_pct: 1.07
+  impact_t7_pct: 1.49
 probabilities:
-  sample_size: 14
+  sample_size: 39
   t1:
-    up: 50.0
-    down: 50.0
-    median: 0.27
-    mean: 0.22
-    sample: 14
+    up: 56.41
+    down: 43.59
+    median: 0.34
+    mean: 0.3
+    sample: 39
   t7:
-    up: 76.92
-    down: 23.08
-    median: 1.52
-    mean: 1.07
-    sample: 13
+    up: 78.95
+    down: 21.05
+    median: 1.4
+    mean: 1.49
+    sample: 38
   conditional:
     basis: "event_direction"
     direction: "down"
@@ -95,9 +95,9 @@ chartData: [{"time": "2024-06-10", "open": 2290.6, "high": 2309.3, "low": 2290.5
 - Event: **CPI**
 - Asset: **GOLD**
 - Event date: **2024-06-12**
-- As-of date (T-1): **2026-03-05**
-- Freshness age: **631 days**
-- Sample size (all-history): **14**
+- As-of date (T-1): **2026-03-08**
+- Freshness age: **634 days**
+- Sample size (all-history): **39**
 
 ## Event Outcome
 
@@ -108,8 +108,8 @@ chartData: [{"time": "2024-06-10", "open": 2290.6, "high": 2309.3, "low": 2290.5
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 50.0% | 50.0% | 0.27% | 0.22% | 14 |
-| T+7 | 76.92% | 23.08% | 1.52% | 1.07% | 13 |
+| T+1 | 56.41% | 43.59% | 0.34% | 0.3% | 39 |
+| T+7 | 78.95% | 21.05% | 1.4% | 1.49% | 38 |
 
 ## Probability Table (Same-direction)
 
@@ -126,7 +126,7 @@ When CPI was **DOWN**, GOLD T+7 up probability was **0.0%** (n=0).
 
 Same-direction T+7 median return: **0.0%**.
 
-For GOLD, historical CPI windows show all-history T+1 up probability of 50.0% and T+7 up probability of 76.92%. When CPI printed Down versus previous, T+1 up probability was 0.0% and T+7 up probability was 0.0% across 0 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
+For GOLD, historical CPI windows show all-history T+1 up probability of 56.41% and T+7 up probability of 78.95%. When CPI printed Down versus previous, T+1 up probability was 0.0% and T+7 up probability was 0.0% across 0 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

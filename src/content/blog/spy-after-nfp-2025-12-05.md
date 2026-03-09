@@ -1,14 +1,14 @@
 ---
 title: "SPY After NFP (2025-12-05): Event Probability and Median Return"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
-pubDate: "2026-03-08"
+pubDate: "2026-03-09"
 title_variant_id: 3
 title_template_key: "nfp_3"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-12-05"
-asof_date: "2026-03-07"
+asof_date: "2026-03-08"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 92
+freshness_days: 93
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-02", "open": 679.91, "high": 681.81, "low": 677.33
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2025-12-05**
-- As-of date (T-1): **2026-03-07**
-- Freshness age: **92 days**
+- As-of date (T-1): **2026-03-08**
+- Freshness age: **93 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

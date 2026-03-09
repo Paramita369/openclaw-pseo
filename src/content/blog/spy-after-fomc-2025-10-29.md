@@ -1,48 +1,48 @@
 ---
 title: "SPY After FOMC (2025-10-29): Historical Signal & Probability"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
-pubDate: "2026-03-06"
+pubDate: "2026-03-09"
 title_variant_id: 1
 title_template_key: "fomc_1"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-10-29"
-asof_date: "2026-03-05"
+asof_date: "2026-03-08"
 source: "verified_targets.csv"
 offer_key: "ibkr"
-signal: "Bullish"
-raw_signal_score: 17.56
-robust_score: 7.56
+signal: "Neutral"
+raw_signal_score: 5.91
+robust_score: -0.09
 penalties:
-  sample: 4.0
+  sample: 0.0
   freshness: 6.0
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 60
-sample_size: 9
-freshness_days: 127
+quality_score: 90
+sample_size: 23
+freshness_days: 130
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
 is_core_page: false
 core_window_days: 90
 body_variant_family: "distribution"
-hub_baseline_mean_t7: 0.64
-hub_baseline_median_t7: 0.63
-hub_baseline_std_t7: 1.7817
-hub_baseline_delta: 0.01
-z_score_t7: -0.0
-percentile_t7: 55.56
-narrative_trigger: "strict_median_norm"
-narrative_rank_band: "median"
-narrative_direction_band: "neutral"
+hub_baseline_mean_t7: 0.26
+hub_baseline_median_t7: 0.54
+hub_baseline_std_t7: 1.9274
+hub_baseline_delta: -1.97
+z_score_t7: -0.88
+percentile_t7: 17.39
+narrative_trigger: "moderate_underperformance"
+narrative_rank_band: "moderate"
+narrative_direction_band: "negative"
 canonical_target: "hub"
 canonical_url: "https://quantmacro.vercel.app/playbooks/spy/fomc"
 robots_directive: "index,follow"
 in_blog_sitemap: false
-data_last_updated_at: "2026-03-03T09:55:20.776741+00:00"
+data_last_updated_at: "2026-03-04T01:58:11+00:00"
 event_direction: "flat"
 event_actual: 4.25
 event_previous: 4.25
@@ -51,41 +51,41 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["spy", "fomc", "event-probability", "general"]
 metrics:
-  sharpe_t7: 0.91
-  mdd_t7: -0.06
-  volatility: 0.7
-  impact_t1_pct: -0.06
-  impact_t7_pct: 0.64
+  sharpe_t7: -4.32
+  mdd_t7: -1.43
+  volatility: 0.33
+  impact_t1_pct: -1.1
+  impact_t7_pct: -1.43
 probabilities:
-  sample_size: 9
+  sample_size: 23
   t1:
-    up: 55.56
-    down: 44.44
-    median: 0.54
-    mean: -0.06
-    sample: 9
+    up: 52.17
+    down: 47.83
+    median: 0.1
+    mean: -0.02
+    sample: 23
   t7:
-    up: 77.78
-    down: 22.22
-    median: 0.63
-    mean: 0.64
-    sample: 9
+    up: 56.52
+    down: 43.48
+    median: 0.54
+    mean: 0.26
+    sample: 23
   conditional:
     basis: "event_direction"
     direction: "flat"
-    sample_size: 9
+    sample_size: 17
     t1:
-      up: 55.56
-      down: 44.44
-      median: 0.54
-      mean: -0.06
-      sample: 9
+      up: 47.06
+      down: 52.94
+      median: -0.2
+      mean: -0.08
+      sample: 17
     t7:
-      up: 77.78
-      down: 22.22
-      median: 0.63
-      mean: 0.64
-      sample: 9
+      up: 64.71
+      down: 35.29
+      median: 0.57
+      mean: 0.48
+      sample: 17
 related_events: [{"slug": "spy-after-fomc-2025-01-29", "title": "Fed Decision (2025-01-29) and SPY: Event-Driven Odds", "event_date": "2025-01-29", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 9.47, "median_t7_pct": 0.63, "sample_size": 9}, {"slug": "spy-after-fomc-2024-03-19", "title": "SPY After FOMC (2024-03-19): Historical Signal & Probability", "event_date": "2024-03-19", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 7.7, "median_t7_pct": 0.63, "sample_size": 9}, {"slug": "spy-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and SPY: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 2.69, "median_t7_pct": 0.63, "sample_size": 9}]
 chartData: [{"time": "2025-10-27", "open": 680.72, "high": 683.52, "low": 680.11, "close": 683.22}, {"time": "2025-10-28", "open": 685.03, "high": 686.88, "low": 682.81, "close": 685.04}, {"time": "2025-10-29", "open": 686.69, "high": 687.67, "low": 680.86, "close": 685.36}, {"time": "2025-10-30", "open": 681.89, "high": 683.92, "low": 677.83, "close": 677.83}, {"time": "2025-10-31", "open": 683.02, "high": 683.06, "low": 677.24, "close": 680.05}, {"time": "2025-11-03", "open": 683.65, "high": 683.78, "low": 677.94, "close": 681.33}, {"time": "2025-11-04", "open": 674.12, "high": 677.96, "low": 672.59, "close": 673.25}, {"time": "2025-11-05", "open": 672.99, "high": 678.85, "low": 672.18, "close": 675.58}]
 ---
@@ -95,9 +95,9 @@ chartData: [{"time": "2025-10-27", "open": 680.72, "high": 683.52, "low": 680.11
 - Event: **FOMC**
 - Asset: **SPY**
 - Event date: **2025-10-29**
-- As-of date (T-1): **2026-03-05**
-- Freshness age: **127 days**
-- Sample size (all-history): **9**
+- As-of date (T-1): **2026-03-08**
+- Freshness age: **130 days**
+- Sample size (all-history): **23**
 
 ## Event Outcome
 
@@ -108,25 +108,25 @@ chartData: [{"time": "2025-10-27", "open": 680.72, "high": 683.52, "low": 680.11
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 55.56% | 44.44% | 0.54% | -0.06% | 9 |
-| T+7 | 77.78% | 22.22% | 0.63% | 0.64% | 9 |
+| T+1 | 52.17% | 47.83% | 0.1% | -0.02% | 23 |
+| T+7 | 56.52% | 43.48% | 0.54% | 0.26% | 23 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 55.56% | 44.44% | 0.54% | -0.06% | 9 |
-| T+7 | 77.78% | 22.22% | 0.63% | 0.64% | 9 |
+| T+1 | 47.06% | 52.94% | -0.2% | -0.08% | 17 |
+| T+7 | 64.71% | 35.29% | 0.57% | 0.48% | 17 |
 
 ## Historical Distribution Summary
 
-When FOMC was **FLAT**, SPY T+1 up probability was **55.56%** (n=9).
+When FOMC was **FLAT**, SPY T+1 up probability was **47.06%** (n=17).
 
-When FOMC was **FLAT**, SPY T+7 up probability was **77.78%** (n=9).
+When FOMC was **FLAT**, SPY T+7 up probability was **64.71%** (n=17).
 
-Same-direction T+7 median return: **0.63%**.
+Same-direction T+7 median return: **0.57%**.
 
-For SPY, historical FOMC windows show all-history T+1 up probability of 55.56% and T+7 up probability of 77.78%. When FOMC printed Flat versus previous, T+1 up probability was 55.56% and T+7 up probability was 77.78% across 9 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
+For SPY, historical FOMC windows show all-history T+1 up probability of 52.17% and T+7 up probability of 56.52%. When FOMC printed Flat versus previous, T+1 up probability was 47.06% and T+7 up probability was 64.71% across 17 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

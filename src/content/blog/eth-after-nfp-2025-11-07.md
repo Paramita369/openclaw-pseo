@@ -1,14 +1,14 @@
 ---
 title: "NFP Print (2025-11-07) vs ETH: Quantified Directional Odds"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-08"
+pubDate: "2026-03-09"
 title_variant_id: 4
 title_template_key: "nfp_4"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-11-07"
-asof_date: "2026-03-07"
+asof_date: "2026-03-08"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 120
+freshness_days: 121
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: 0.79
       mean: 2.65
       sample: 30
-related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH NFP Reaction (2026-02-06): T+1/T+7 Up Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}, {"slug": "eth-after-nfp-2026-01-02", "title": "2026-01-02 Nonfarm Payrolls: ETH Historical Win Rate", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}, {"slug": "eth-after-nfp-2025-12-05", "title": "ETH Post-NFP Setup (2025-12-05): Historical Probability Lens", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 5.12, "sample_size": 13}]
+related_events: [{"slug": "eth-after-nfp-2026-02-06", "title": "ETH NFP Reaction (2026-02-06): T+1/T+7 Up Probability", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.44, "sample_size": 34}, {"slug": "eth-after-nfp-2026-01-02", "title": "2026-01-02 Nonfarm Payrolls: ETH Historical Win Rate", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.44, "sample_size": 34}, {"slug": "eth-after-nfp-2025-12-05", "title": "ETH Post-NFP Setup (2025-12-05): Historical Probability Lens", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.44, "sample_size": 34}]
 chartData: [{"time": "2025-11-04", "open": 3602.04, "high": 3652.69, "low": 3063.09, "close": 3292.57}, {"time": "2025-11-05", "open": 3292.15, "high": 3479.81, "low": 3170.51, "close": 3425.17}, {"time": "2025-11-06", "open": 3425.36, "high": 3454.34, "low": 3245.28, "close": 3312.26}, {"time": "2025-11-07", "open": 3312.03, "high": 3471.8, "low": 3195.9, "close": 3435.3}, {"time": "2025-11-08", "open": 3435.15, "high": 3482.27, "low": 3357.71, "close": 3400.38}, {"time": "2025-11-09", "open": 3400.1, "high": 3616.44, "low": 3359.72, "close": 3582.62}, {"time": "2025-11-10", "open": 3583.44, "high": 3656.15, "low": 3508.99, "close": 3568.46}, {"time": "2025-11-11", "open": 3568.47, "high": 3644.53, "low": 3404.86, "close": 3415.28}, {"time": "2025-11-12", "open": 3415.8, "high": 3586.01, "low": 3373.71, "close": 3413.09}, {"time": "2025-11-13", "open": 3412.99, "high": 3561.86, "low": 3156.03, "close": 3232.76}, {"time": "2025-11-14", "open": 3232.3, "high": 3252.66, "low": 3071.97, "close": 3103.79}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-11-04", "open": 3602.04, "high": 3652.69, "low": 3063
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2025-11-07**
-- As-of date (T-1): **2026-03-07**
-- Freshness age: **120 days**
+- As-of date (T-1): **2026-03-08**
+- Freshness age: **121 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

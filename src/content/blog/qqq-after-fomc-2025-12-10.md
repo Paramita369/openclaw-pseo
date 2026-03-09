@@ -1,14 +1,14 @@
 ---
 title: "QQQ Post-FOMC Reaction (2025-12-10): Quant Backtest Snapshot"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
-pubDate: "2026-03-08"
+pubDate: "2026-03-09"
 title_variant_id: 4
 title_template_key: "fomc_4"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-12-10"
-asof_date: "2026-03-07"
+asof_date: "2026-03-08"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 87
+freshness_days: 88
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
@@ -86,7 +86,7 @@ probabilities:
       median: 1.08
       mean: 0.6
       sample: 17
-related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and QQQ: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 2.07, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and QQQ: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2025-10-29", "title": "2025-10-29 FOMC Meeting: QQQ T+1/T+7 Probability Profile", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}]
+related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and QQQ: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 2.07, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and QQQ: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.88, "sample_size": 23}, {"slug": "qqq-after-fomc-2025-10-29", "title": "2025-10-29 FOMC Meeting: QQQ T+1/T+7 Probability Profile", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}]
 chartData: [{"time": "2025-12-08", "open": 626.4, "high": 628.03, "low": 620.89, "close": 623.48}, {"time": "2025-12-09", "open": 622.21, "high": 625.06, "low": 620.2, "close": 624.25}, {"time": "2025-12-10", "open": 623.05, "high": 628.4, "low": 620.19, "close": 626.8}, {"time": "2025-12-11", "open": 623.02, "high": 624.97, "low": 616.93, "close": 624.78}, {"time": "2025-12-12", "open": 621.28, "high": 622.74, "low": 610.57, "close": 612.83}, {"time": "2025-12-15", "open": 617.57, "high": 617.62, "low": 608.54, "close": 609.75}, {"time": "2025-12-16", "open": 607.48, "high": 612.72, "low": 606.13, "close": 610.96}, {"time": "2025-12-17", "open": 612.27, "high": 612.86, "low": 599.51, "close": 599.64}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-08", "open": 626.4, "high": 628.03, "low": 620.89,
 - Event: **FOMC**
 - Asset: **QQQ**
 - Event date: **2025-12-10**
-- As-of date (T-1): **2026-03-07**
-- Freshness age: **87 days**
+- As-of date (T-1): **2026-03-08**
+- Freshness age: **88 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

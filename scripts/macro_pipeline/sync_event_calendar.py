@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
 from pipeline_utils import ALLOWED_EVENT_TYPES, PRIMARY_ASSETS, cutoff_date, event_filter_sql, resolve_project_root
+from fred_policy import enforce_fred_api_requirement
 
 try:
     import requests
@@ -657,6 +658,12 @@ def main() -> None:
         ensure_schema(conn)
         overrides = load_overrides(override_path, as_of_cutoff)
         event_dates, source_map = collect_event_dates(conn, as_of_cutoff, fred_api_key, overrides)
+
+        enforce_fred_api_requirement(
+            strict=args.strict,
+            fred_api_key=fred_api_key,
+            fetch_statuses={'calendar': 'api' if not FETCH_DIAGNOSTICS else 'fallback'},
+        )
 
         calendar_upserts = 0
         new_events = 0

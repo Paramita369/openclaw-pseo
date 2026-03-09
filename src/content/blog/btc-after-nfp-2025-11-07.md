@@ -1,14 +1,14 @@
 ---
 title: "BTC Post-NFP Setup (2025-11-07): Historical Probability Lens"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
-pubDate: "2026-03-08"
+pubDate: "2026-03-09"
 title_variant_id: 5
 title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-11-07"
-asof_date: "2026-03-07"
+asof_date: "2026-03-08"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 120
+freshness_days: 121
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: 0.81
       mean: 1.51
       sample: 30
-related_events: [{"slug": "btc-after-nfp-2026-02-06", "title": "BTC Post-NFP Setup (2026-02-06): Historical Probability Lens", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.54, "sample_size": 13}, {"slug": "btc-after-nfp-2026-01-02", "title": "NFP Print (2026-01-02) vs BTC: Quantified Directional Odds", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.54, "sample_size": 13}, {"slug": "btc-after-nfp-2025-12-05", "title": "BTC Post-NFP Setup (2025-12-05): Historical Probability Lens", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.54, "sample_size": 13}]
+related_events: [{"slug": "btc-after-nfp-2026-02-06", "title": "BTC Post-NFP Setup (2026-02-06): Historical Probability Lens", "event_date": "2026-02-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.0, "sample_size": 34}, {"slug": "btc-after-nfp-2026-01-02", "title": "NFP Print (2026-01-02) vs BTC: Quantified Directional Odds", "event_date": "2026-01-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.0, "sample_size": 34}, {"slug": "btc-after-nfp-2025-12-05", "title": "BTC Post-NFP Setup (2025-12-05): Historical Probability Lens", "event_date": "2025-12-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.0, "sample_size": 34}]
 chartData: [{"time": "2025-11-04", "open": 106541.42, "high": 107264.88, "low": 98962.06, "close": 101590.52}, {"time": "2025-11-05", "open": 101579.23, "high": 104534.7, "low": 98989.91, "close": 103891.84}, {"time": "2025-11-06", "open": 103893.66, "high": 104147.3, "low": 100336.87, "close": 101301.29}, {"time": "2025-11-07", "open": 101286.24, "high": 104052.91, "low": 99257.05, "close": 103372.41}, {"time": "2025-11-08", "open": 103371.7, "high": 103373.56, "low": 101458.04, "close": 102282.12}, {"time": "2025-11-09", "open": 102278.98, "high": 105418.37, "low": 101468.88, "close": 104719.64}, {"time": "2025-11-10", "open": 104723.77, "high": 106564.7, "low": 104350.65, "close": 105996.59}, {"time": "2025-11-11", "open": 105996.86, "high": 107428.26, "low": 102457.33, "close": 102997.47}, {"time": "2025-11-12", "open": 103011.44, "high": 105297.23, "low": 100836.62, "close": 101663.19}, {"time": "2025-11-13", "open": 101674.15, "high": 104005.49, "low": 97988.72, "close": 99697.49}, {"time": "2025-11-14", "open": 99694.7, "high": 99804.43, "low": 94000.73, "close": 94397.79}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-11-04", "open": 106541.42, "high": 107264.88, "low": 
 - Event: **NFP**
 - Asset: **BTC**
 - Event date: **2025-11-07**
-- As-of date (T-1): **2026-03-07**
-- Freshness age: **120 days**
+- As-of date (T-1): **2026-03-08**
+- Freshness age: **121 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

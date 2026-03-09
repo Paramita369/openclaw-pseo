@@ -24,6 +24,7 @@ except Exception:  # pragma: no cover
     Retry = None  # type: ignore
 
 from pipeline_utils import ALLOWED_EVENT_TYPES, cutoff_date, event_filter_sql, parse_float, resolve_project_root
+from fred_policy import enforce_fred_api_requirement
 
 FRED_SERIES = {
     "CPI": {"series_id": "CPIAUCSL", "unit": "index"},
@@ -444,6 +445,12 @@ def main() -> None:
             observations, fetch_status = fetch_fred_series(spec["series_id"], fred_api_key)
             by_type_observations[event_type] = observations
             fetch_statuses[event_type] = fetch_status
+
+        enforce_fred_api_requirement(
+            strict=args.strict,
+            fred_api_key=fred_api_key,
+            fetch_statuses=fetch_statuses,
+        )
 
         for event_type in sorted(ALLOWED_EVENT_TYPES):
             unit = FRED_SERIES[event_type]["unit"]

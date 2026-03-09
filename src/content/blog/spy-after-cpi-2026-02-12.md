@@ -1,14 +1,14 @@
 ---
 title: "SPY Reaction to US CPI (2026-02-12): Quant Probability Breakdown"
 description: "Historical probability profile for SPY around CPI events (T+1/T+7)."
-pubDate: "2026-03-08"
+pubDate: "2026-03-09"
 title_variant_id: 2
 title_template_key: "cpi_2"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2026-02-12"
-asof_date: "2026-03-07"
+asof_date: "2026-03-08"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 23
+freshness_days: 24
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
@@ -95,8 +95,8 @@ chartData: [{"time": "2026-02-09", "open": 689.42, "high": 695.87, "low": 688.34
 - Event: **CPI**
 - Asset: **SPY**
 - Event date: **2026-02-12**
-- As-of date (T-1): **2026-03-07**
-- Freshness age: **23 days**
+- As-of date (T-1): **2026-03-08**
+- Freshness age: **24 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

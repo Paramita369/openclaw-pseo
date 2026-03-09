@@ -1,14 +1,14 @@
 ---
 title: "GOLD After CPI (2026-01-12): Up/Down Odds and Median Returns"
 description: "Historical probability profile for GOLD around CPI events (T+1/T+7)."
-pubDate: "2026-03-08"
+pubDate: "2026-03-09"
 title_variant_id: 5
 title_template_key: "cpi_5"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2026-01-12"
-asof_date: "2026-03-07"
+asof_date: "2026-03-08"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 54
+freshness_days: 55
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
@@ -95,8 +95,8 @@ chartData: [{"time": "2026-01-09", "open": 4473.0, "high": 4490.3, "low": 4473.0
 - Event: **CPI**
 - Asset: **GOLD**
 - Event date: **2026-01-12**
-- As-of date (T-1): **2026-03-07**
-- Freshness age: **54 days**
+- As-of date (T-1): **2026-03-08**
+- Freshness age: **55 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome
