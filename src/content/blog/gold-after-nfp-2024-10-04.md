@@ -1,14 +1,14 @@
 ---
 title: "GOLD Post-NFP Setup (2024-10-04): Historical Probability Lens"
 description: "Historical probability profile for GOLD around NFP events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 5
 title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-10-04"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 34
-freshness_days: 520
+freshness_days: 521
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: 1.1
       mean: 1.49
       sample: 30
-related_events: [{"slug": "gold-after-nfp-2024-03-01", "title": "GOLD NFP Reaction (2024-03-01): T+1/T+7 Up Probability", "event_date": "2024-03-01", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.57, "median_t7_pct": 1.07, "sample_size": 13}, {"slug": "gold-after-nfp-2024-04-05", "title": "NFP Print (2024-04-05) vs GOLD: Quantified Directional Odds", "event_date": "2024-04-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 4.16, "median_t7_pct": 1.07, "sample_size": 13}, {"slug": "gold-after-nfp-2024-09-06", "title": "GOLD Post-NFP Setup (2024-09-06): Historical Probability Lens", "event_date": "2024-09-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 1.09, "median_t7_pct": 1.07, "sample_size": 13}]
+related_events: [{"slug": "gold-after-nfp-2024-03-01", "title": "GOLD NFP Reaction (2024-03-01): T+1/T+7 Up Probability", "event_date": "2024-03-01", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 6.57, "median_t7_pct": 1.31, "sample_size": 34}, {"slug": "gold-after-nfp-2024-04-05", "title": "NFP Print (2024-04-05) vs GOLD: Quantified Directional Odds", "event_date": "2024-04-05", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 4.16, "median_t7_pct": 1.31, "sample_size": 34}, {"slug": "gold-after-nfp-2024-09-06", "title": "GOLD Post-NFP Setup (2024-09-06): Historical Probability Lens", "event_date": "2024-09-06", "event_type": "NFP", "signal": "Bullish", "sharpe_t7": 1.09, "median_t7_pct": 1.31, "sample_size": 34}]
 chartData: [{"time": "2024-10-01", "open": 2631.4, "high": 2670.9, "low": 2631.4, "close": 2667.3}, {"time": "2024-10-02", "open": 2650.6, "high": 2657.2, "low": 2640.0, "close": 2647.1}, {"time": "2024-10-03", "open": 2642.8, "high": 2657.1, "low": 2640.0, "close": 2657.1}, {"time": "2024-10-04", "open": 2656.0, "high": 2667.0, "low": 2639.0, "close": 2645.8}, {"time": "2024-10-07", "open": 2648.7, "high": 2657.4, "low": 2639.0, "close": 2644.8}, {"time": "2024-10-08", "open": 2639.0, "high": 2639.0, "low": 2609.3, "close": 2615.0}, {"time": "2024-10-09", "open": 2603.0, "high": 2607.7, "low": 2603.0, "close": 2606.0}, {"time": "2024-10-10", "open": 2602.5, "high": 2628.3, "low": 2602.5, "close": 2620.6}, {"time": "2024-10-11", "open": 2638.3, "high": 2658.1, "low": 2638.2, "close": 2657.6}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-10-01", "open": 2631.4, "high": 2670.9, "low": 2631.4
 - Event: **NFP**
 - Asset: **GOLD**
 - Event date: **2024-10-04**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **520 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **521 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "ETH After NFP (2024-12-06): Event Probability and Median Return"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 3
 title_template_key: "nfp_3"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-12-06"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 457
+freshness_days: 458
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-12-03", "open": 3643.74, "high": 3670.22, "low": 3504
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2024-12-06**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **457 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **458 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

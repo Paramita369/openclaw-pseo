@@ -1,14 +1,14 @@
 ---
 title: "2025-09-17 FOMC Meeting: GOLD T+1/T+7 Probability Profile"
 description: "Historical probability profile for GOLD around FOMC events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 3
 title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-09-17"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 172
+freshness_days: 173
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: 0.15
       mean: -0.16
       sample: 17
-related_events: [{"slug": "gold-after-fomc-2024-01-30", "title": "2024-01-30 FOMC Meeting: GOLD T+1/T+7 Probability Profile", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 1.61, "median_t7_pct": 0.9, "sample_size": 9}, {"slug": "gold-after-fomc-2026-01-28", "title": "GOLD After FOMC (2026-01-28): Historical Signal & Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.9, "sample_size": 23}, {"slug": "gold-after-fomc-2025-12-10", "title": "2025-12-10 FOMC Meeting: GOLD T+1/T+7 Probability Profile", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.9, "sample_size": 23}]
+related_events: [{"slug": "gold-after-fomc-2024-01-30", "title": "2024-01-30 FOMC Meeting: GOLD T+1/T+7 Probability Profile", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 1.61, "median_t7_pct": 0.9, "sample_size": 23}, {"slug": "gold-after-fomc-2026-01-28", "title": "GOLD After FOMC (2026-01-28): Historical Signal & Probability", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.9, "sample_size": 23}, {"slug": "gold-after-fomc-2025-12-10", "title": "2025-12-10 FOMC Meeting: GOLD T+1/T+7 Probability Profile", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.9, "sample_size": 23}]
 chartData: [{"time": "2025-09-15", "open": 3640.0, "high": 3686.4, "low": 3635.1, "close": 3682.2}, {"time": "2025-09-16", "open": 3681.4, "high": 3698.6, "low": 3681.4, "close": 3688.9}, {"time": "2025-09-17", "open": 3669.0, "high": 3685.2, "low": 3661.6, "close": 3681.8}, {"time": "2025-09-18", "open": 3654.6, "high": 3667.4, "low": 3637.0, "close": 3643.7}, {"time": "2025-09-19", "open": 3659.0, "high": 3685.9, "low": 3658.2, "close": 3671.5}, {"time": "2025-09-22", "open": 3688.2, "high": 3748.2, "low": 3688.0, "close": 3740.7}, {"time": "2025-09-23", "open": 3747.0, "high": 3786.0, "low": 3740.0, "close": 3780.6}, {"time": "2025-09-24", "open": 3769.8, "high": 3772.5, "low": 3732.1, "close": 3732.1}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-09-15", "open": 3640.0, "high": 3686.4, "low": 3635.1
 - Event: **FOMC**
 - Asset: **GOLD**
 - Event date: **2025-09-17**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **172 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **173 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

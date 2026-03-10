@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2026-01-28) and QQQ: Event-Driven Odds"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2026-01-28"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 39
+freshness_days: 40
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
@@ -86,7 +86,7 @@ probabilities:
       median: 1.08
       mean: 0.6
       sample: 17
-related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and QQQ: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 2.07, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2025-12-10", "title": "QQQ Post-FOMC Reaction (2025-12-10): Quant Backtest Snapshot", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.88, "sample_size": 23}, {"slug": "qqq-after-fomc-2025-10-29", "title": "2025-10-29 FOMC Meeting: QQQ T+1/T+7 Probability Profile", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 1.16, "sample_size": 9}]
+related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and QQQ: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.07, "median_t7_pct": 0.88, "sample_size": 23}, {"slug": "qqq-after-fomc-2025-12-10", "title": "QQQ Post-FOMC Reaction (2025-12-10): Quant Backtest Snapshot", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.88, "sample_size": 23}, {"slug": "qqq-after-fomc-2025-10-29", "title": "2025-10-29 FOMC Meeting: QQQ T+1/T+7 Probability Profile", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.88, "sample_size": 23}]
 chartData: [{"time": "2026-01-26", "open": 623.21, "high": 627.61, "low": 622.12, "close": 625.46}, {"time": "2026-01-27", "open": 628.91, "high": 632.04, "low": 627.34, "close": 631.13}, {"time": "2026-01-28", "open": 635.46, "high": 636.6, "low": 631.81, "close": 633.22}, {"time": "2026-01-29", "open": 632.65, "high": 633.67, "low": 618.27, "close": 629.43}, {"time": "2026-01-30", "open": 625.71, "high": 628.26, "low": 619.3, "close": 621.87}, {"time": "2026-02-02", "open": 618.7, "high": 628.49, "low": 618.66, "close": 626.14}, {"time": "2026-02-03", "open": 628.3, "high": 629.98, "low": 610.96, "close": 616.52}, {"time": "2026-02-04", "open": 615.02, "high": 615.1, "low": 600.47, "close": 605.75}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2026-01-26", "open": 623.21, "high": 627.61, "low": 622.12
 - Event: **FOMC**
 - Asset: **QQQ**
 - Event date: **2026-01-28**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **39 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **40 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "SPY NFP Reaction (2024-10-04): T+1/T+7 Up Probability"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 1
 title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-10-04"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 34
-freshness_days: 520
+freshness_days: 521
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,8 +86,8 @@ probabilities:
       median: 0.11
       mean: 0.83
       sample: 30
-related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "2024-07-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-07-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.02, "median_t7_pct": 1.39, "sample_size": 13}, {"slug": "spy-after-nfp-2024-01-05", "title": "2024-01-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-01-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.04, "median_t7_pct": 1.39, "sample_size": 13}, {"slug": "spy-after-nfp-2024-08-02", "title": "NFP Print (2024-08-02) vs SPY: Quantified Directional Odds", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 2.25, "median_t7_pct": 1.39, "sample_size": 13}]
-chartData: [{"time": "2024-10-01", "open": 564.84, "high": 565.49, "low": 557.55, "close": 560.13}, {"time": "2024-10-02", "open": 559.24, "high": 561.4, "low": 556.83, "close": 560.37}, {"time": "2024-10-03", "open": 558.89, "high": 561.3, "low": 557.05, "close": 559.35}, {"time": "2024-10-04", "open": 563.81, "high": 564.8, "low": 559.62, "close": 564.43}, {"time": "2024-10-07", "open": 562.77, "high": 563.42, "low": 558.17, "close": 559.33}, {"time": "2024-10-08", "open": 561.91, "high": 565.22, "low": 561.03, "close": 564.62}, {"time": "2024-10-09", "open": 564.61, "high": 569.09, "low": 564.01, "close": 568.53}, {"time": "2024-10-10", "open": 567.18, "high": 568.96, "low": 565.92, "close": 567.53}, {"time": "2024-10-11", "open": 567.45, "high": 571.67, "low": 567.32, "close": 570.93}]
+related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "2024-07-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-07-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.02, "median_t7_pct": 0.11, "sample_size": 34}, {"slug": "spy-after-nfp-2024-01-05", "title": "2024-01-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-01-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.04, "median_t7_pct": 0.11, "sample_size": 34}, {"slug": "spy-after-nfp-2024-08-02", "title": "NFP Print (2024-08-02) vs SPY: Quantified Directional Odds", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 2.25, "median_t7_pct": 0.11, "sample_size": 34}]
+chartData: [{"time": "2024-10-01", "open": 564.84, "high": 565.49, "low": 557.55, "close": 560.13}, {"time": "2024-10-02", "open": 559.24, "high": 561.4, "low": 556.83, "close": 560.37}, {"time": "2024-10-03", "open": 558.89, "high": 561.3, "low": 557.05, "close": 559.35}, {"time": "2024-10-04", "open": 563.81, "high": 564.8, "low": 559.62, "close": 564.43}, {"time": "2024-10-07", "open": 562.77, "high": 563.43, "low": 558.17, "close": 559.33}, {"time": "2024-10-08", "open": 561.91, "high": 565.22, "low": 561.03, "close": 564.62}, {"time": "2024-10-09", "open": 564.61, "high": 569.09, "low": 564.01, "close": 568.53}, {"time": "2024-10-10", "open": 567.18, "high": 568.96, "low": 565.92, "close": 567.53}, {"time": "2024-10-11", "open": 567.45, "high": 571.67, "low": 567.32, "close": 570.93}]
 ---
 
 ## Event Snapshot
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-10-01", "open": 564.84, "high": 565.49, "low": 557.55
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2024-10-04**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **520 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **521 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

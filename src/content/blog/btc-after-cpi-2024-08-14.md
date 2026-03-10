@@ -1,14 +1,14 @@
 ---
 title: "BTC Reaction to US CPI (2024-08-14): Quant Probability Breakdown"
 description: "Historical probability profile for BTC around CPI events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 2
 title_template_key: "cpi_2"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-08-14"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 571
+freshness_days: 572
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-08-11", "open": 60944.89, "high": 61778.66, "low": 58
 - Event: **CPI**
 - Asset: **BTC**
 - Event date: **2024-08-14**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **571 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **572 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

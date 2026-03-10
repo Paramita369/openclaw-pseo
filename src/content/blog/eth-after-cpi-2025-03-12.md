@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2025-03-12) and ETH: Event-Driven Return Odds"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-03-12"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 361
+freshness_days: 362
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: -1.52
       mean: 0.24
       sample: 38
-related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH Reaction to US CPI (2024-06-12): Quant Probability Breakdown", "event_date": "2024-06-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.22, "median_t7_pct": -0.39, "sample_size": 14}, {"slug": "eth-after-cpi-2026-02-12", "title": "ETH CPI Win Rate (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -1.18, "sample_size": 39}, {"slug": "eth-after-cpi-2026-01-12", "title": "2026-01-12 CPI Release: ETH Directional Probability Snapshot", "event_date": "2026-01-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -1.18, "sample_size": 39}]
+related_events: [{"slug": "eth-after-cpi-2024-06-12", "title": "ETH Reaction to US CPI (2024-06-12): Quant Probability Breakdown", "event_date": "2024-06-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.22, "median_t7_pct": -1.18, "sample_size": 39}, {"slug": "eth-after-cpi-2026-02-12", "title": "ETH CPI Win Rate (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -1.18, "sample_size": 39}, {"slug": "eth-after-cpi-2026-01-12", "title": "2026-01-12 CPI Release: ETH Directional Probability Snapshot", "event_date": "2026-01-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -1.18, "sample_size": 39}]
 chartData: [{"time": "2025-03-09", "open": 2201.71, "high": 2210.31, "low": 1991.19, "close": 2015.51}, {"time": "2025-03-10", "open": 2015.43, "high": 2150.71, "low": 1812.77, "close": 1861.15}, {"time": "2025-03-11", "open": 1859.78, "high": 1961.8, "low": 1760.94, "close": 1919.84}, {"time": "2025-03-12", "open": 1919.66, "high": 1954.57, "low": 1832.02, "close": 1908.98}, {"time": "2025-03-13", "open": 1909.02, "high": 1919.69, "low": 1823.53, "close": 1862.97}, {"time": "2025-03-14", "open": 1863.0, "high": 1945.09, "low": 1861.11, "close": 1909.47}, {"time": "2025-03-15", "open": 1909.53, "high": 1955.24, "low": 1904.97, "close": 1937.39}, {"time": "2025-03-16", "open": 1937.38, "high": 1940.47, "low": 1863.49, "close": 1887.44}, {"time": "2025-03-17", "open": 1887.45, "high": 1951.63, "low": 1880.48, "close": 1927.0}, {"time": "2025-03-18", "open": 1927.01, "high": 1935.18, "low": 1872.51, "close": 1932.54}, {"time": "2025-03-19", "open": 1932.54, "high": 2068.76, "low": 1928.25, "close": 2057.75}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-03-09", "open": 2201.71, "high": 2210.31, "low": 1991
 - Event: **CPI**
 - Asset: **ETH**
 - Event date: **2025-03-12**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **361 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **362 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

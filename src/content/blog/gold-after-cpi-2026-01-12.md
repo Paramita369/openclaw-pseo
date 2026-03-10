@@ -1,14 +1,14 @@
 ---
 title: "GOLD After CPI (2026-01-12): Up/Down Odds and Median Returns"
 description: "Historical probability profile for GOLD around CPI events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 5
 title_template_key: "cpi_5"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2026-01-12"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 55
+freshness_days: 56
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
@@ -86,7 +86,7 @@ probabilities:
       median: 1.4
       mean: 1.49
       sample: 38
-related_events: [{"slug": "gold-after-cpi-2025-02-12", "title": "US CPI (2025-02-12) and GOLD: Event-Driven Return Odds", "event_date": "2025-02-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 7.09, "median_t7_pct": 1.52, "sample_size": 14}, {"slug": "gold-after-cpi-2024-02-20", "title": "US CPI (2024-02-20) and GOLD: Event-Driven Return Odds", "event_date": "2024-02-20", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 6.12, "median_t7_pct": 1.52, "sample_size": 14}, {"slug": "gold-after-cpi-2024-05-15", "title": "US CPI (2024-05-15) and GOLD: Event-Driven Return Odds", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.47, "median_t7_pct": 1.52, "sample_size": 14}]
+related_events: [{"slug": "gold-after-cpi-2025-02-12", "title": "US CPI (2025-02-12) and GOLD: Event-Driven Return Odds", "event_date": "2025-02-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 7.09, "median_t7_pct": 1.4, "sample_size": 39}, {"slug": "gold-after-cpi-2024-02-20", "title": "US CPI (2024-02-20) and GOLD: Event-Driven Return Odds", "event_date": "2024-02-20", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 6.12, "median_t7_pct": 1.4, "sample_size": 39}, {"slug": "gold-after-cpi-2024-05-15", "title": "US CPI (2024-05-15) and GOLD: Event-Driven Return Odds", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.47, "median_t7_pct": 1.4, "sample_size": 39}]
 chartData: [{"time": "2026-01-09", "open": 4473.0, "high": 4490.3, "low": 4473.0, "close": 4490.3}, {"time": "2026-01-12", "open": 4579.1, "high": 4620.0, "low": 4577.8, "close": 4604.3}, {"time": "2026-01-13", "open": 4578.6, "high": 4617.1, "low": 4578.6, "close": 4589.2}, {"time": "2026-01-14", "open": 4610.3, "high": 4635.0, "low": 4608.2, "close": 4626.3}, {"time": "2026-01-15", "open": 4612.9, "high": 4616.3, "low": 4612.9, "close": 4616.3}, {"time": "2026-01-16", "open": 4608.0, "high": 4608.0, "low": 4588.4, "close": 4588.4}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2026-01-09", "open": 4473.0, "high": 4490.3, "low": 4473.0
 - Event: **CPI**
 - Asset: **GOLD**
 - Event date: **2026-01-12**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **55 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **56 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

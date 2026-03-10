@@ -1,14 +1,14 @@
 ---
 title: "QQQ Post-NFP Setup (2025-09-05): Historical Probability Lens"
 description: "Historical probability profile for QQQ around NFP events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 5
 title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-09-05"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 184
+freshness_days: 185
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,8 +86,8 @@ probabilities:
       median: 0.12
       mean: 1.05
       sample: 30
-related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "2025-01-10 Nonfarm Payrolls: QQQ Historical Win Rate", "event_date": "2025-01-10", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.64, "median_t7_pct": 1.51, "sample_size": 13}, {"slug": "qqq-after-nfp-2024-12-06", "title": "QQQ After NFP (2024-12-06): Event Probability and Median Return", "event_date": "2024-12-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.77, "median_t7_pct": 1.51, "sample_size": 13}, {"slug": "qqq-after-nfp-2024-08-02", "title": "QQQ After NFP (2024-08-02): Event Probability and Median Return", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.35, "median_t7_pct": 1.51, "sample_size": 13}]
-chartData: [{"time": "2025-09-02", "open": 559.94, "high": 564.59, "low": 558.17, "close": 564.24}, {"time": "2025-09-03", "open": 567.84, "high": 570.3, "low": 565.35, "close": 568.68}, {"time": "2025-09-04", "open": 569.35, "high": 574.19, "low": 567.64, "close": 573.82}, {"time": "2025-09-05", "open": 579.07, "high": 579.7, "low": 570.13, "close": 574.65}, {"time": "2025-09-08", "open": 576.96, "high": 579.42, "low": 576.36, "close": 577.46}, {"time": "2025-09-09", "open": 578.25, "high": 579.52, "low": 575.63, "close": 579.09}, {"time": "2025-09-10", "open": 582.31, "high": 582.34, "low": 577.14, "close": 579.28}, {"time": "2025-09-11", "open": 581.82, "high": 583.45, "low": 580.2, "close": 582.65}, {"time": "2025-09-12", "open": 583.61, "high": 586.42, "low": 582.67, "close": 585.23}]
+related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "2025-01-10 Nonfarm Payrolls: QQQ Historical Win Rate", "event_date": "2025-01-10", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.64, "median_t7_pct": 0.12, "sample_size": 34}, {"slug": "qqq-after-nfp-2024-12-06", "title": "QQQ After NFP (2024-12-06): Event Probability and Median Return", "event_date": "2024-12-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.77, "median_t7_pct": 0.12, "sample_size": 34}, {"slug": "qqq-after-nfp-2024-08-02", "title": "QQQ After NFP (2024-08-02): Event Probability and Median Return", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.35, "median_t7_pct": 0.12, "sample_size": 34}]
+chartData: [{"time": "2025-09-02", "open": 559.94, "high": 564.59, "low": 558.17, "close": 564.24}, {"time": "2025-09-03", "open": 567.84, "high": 570.3, "low": 565.35, "close": 568.68}, {"time": "2025-09-04", "open": 569.35, "high": 574.19, "low": 567.64, "close": 573.82}, {"time": "2025-09-05", "open": 579.07, "high": 579.7, "low": 570.13, "close": 574.65}, {"time": "2025-09-08", "open": 576.96, "high": 579.42, "low": 576.36, "close": 577.46}, {"time": "2025-09-09", "open": 578.25, "high": 579.52, "low": 575.63, "close": 579.09}, {"time": "2025-09-10", "open": 582.31, "high": 582.34, "low": 577.14, "close": 579.28}, {"time": "2025-09-11", "open": 581.81, "high": 583.45, "low": 580.2, "close": 582.65}, {"time": "2025-09-12", "open": 583.61, "high": 586.42, "low": 582.67, "close": 585.23}]
 ---
 
 ## Event Snapshot
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-09-02", "open": 559.94, "high": 564.59, "low": 558.17
 - Event: **NFP**
 - Asset: **QQQ**
 - Event date: **2025-09-05**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **184 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **185 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

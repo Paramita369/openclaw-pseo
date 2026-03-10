@@ -1,14 +1,14 @@
 ---
 title: "2025-05-07 FOMC Meeting: QQQ T+1/T+7 Probability Profile"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 3
 title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-05-07"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 305
+freshness_days: 306
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: 1.08
       mean: 0.6
       sample: 17
-related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and QQQ: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 2.07, "median_t7_pct": 1.16, "sample_size": 9}, {"slug": "qqq-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and QQQ: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.88, "sample_size": 23}, {"slug": "qqq-after-fomc-2025-12-10", "title": "QQQ Post-FOMC Reaction (2025-12-10): Quant Backtest Snapshot", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.88, "sample_size": 23}]
+related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and QQQ: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.07, "median_t7_pct": 0.88, "sample_size": 23}, {"slug": "qqq-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and QQQ: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.88, "sample_size": 23}, {"slug": "qqq-after-fomc-2025-12-10", "title": "QQQ Post-FOMC Reaction (2025-12-10): Quant Backtest Snapshot", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.88, "sample_size": 23}]
 chartData: [{"time": "2025-05-05", "open": 482.87, "high": 487.29, "low": 482.38, "close": 484.2}, {"time": "2025-05-06", "open": 477.85, "high": 483.32, "low": 476.49, "close": 479.7}, {"time": "2025-05-07", "open": 480.36, "high": 484.07, "low": 475.08, "close": 481.58}, {"time": "2025-05-08", "open": 486.79, "high": 490.94, "low": 482.45, "close": 486.55}, {"time": "2025-05-09", "open": 488.46, "high": 489.79, "low": 484.47, "close": 486.23}, {"time": "2025-05-12", "open": 505.18, "high": 506.08, "low": 499.69, "close": 506.04}, {"time": "2025-05-13", "open": 507.35, "high": 515.55, "low": 506.61, "close": 513.75}, {"time": "2025-05-14", "open": 514.93, "high": 517.38, "low": 513.91, "close": 516.83}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-05-05", "open": 482.87, "high": 487.29, "low": 482.38
 - Event: **FOMC**
 - Asset: **QQQ**
 - Event date: **2025-05-07**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **305 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **306 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

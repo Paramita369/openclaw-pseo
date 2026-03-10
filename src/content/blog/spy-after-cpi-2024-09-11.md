@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2024-09-11) and SPY: Event-Driven Return Odds"
 description: "Historical probability profile for SPY around CPI events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-09-11"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 543
+freshness_days: 544
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: 0.51
       mean: 0.21
       sample: 38
-related_events: [{"slug": "spy-after-cpi-2024-03-12", "title": "SPY CPI Win Rate (2024-03-12): Historical T+1/T+7 Probability", "event_date": "2024-03-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 3.94, "median_t7_pct": 1.08, "sample_size": 14}, {"slug": "spy-after-cpi-2024-11-14", "title": "2024-11-14 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-11-14", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.43, "median_t7_pct": 1.08, "sample_size": 14}, {"slug": "spy-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.37, "median_t7_pct": 1.08, "sample_size": 14}]
+related_events: [{"slug": "spy-after-cpi-2024-03-12", "title": "SPY CPI Win Rate (2024-03-12): Historical T+1/T+7 Probability", "event_date": "2024-03-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 3.94, "median_t7_pct": 0.51, "sample_size": 39}, {"slug": "spy-after-cpi-2024-11-14", "title": "2024-11-14 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-11-14", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.43, "median_t7_pct": 0.51, "sample_size": 39}, {"slug": "spy-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.37, "median_t7_pct": 0.51, "sample_size": 39}]
 chartData: [{"time": "2024-09-09", "open": 534.88, "high": 537.89, "low": 532.95, "close": 536.61}, {"time": "2024-09-10", "open": 538.53, "high": 539.3, "low": 533.63, "close": 538.95}, {"time": "2024-09-11", "open": 538.86, "high": 545.4, "low": 530.28, "close": 544.48}, {"time": "2024-09-12", "open": 545.06, "high": 549.37, "low": 542.83, "close": 549.06}, {"time": "2024-09-13", "open": 549.67, "high": 552.93, "low": 549.42, "close": 551.93}, {"time": "2024-09-16", "open": 551.67, "high": 553.01, "low": 549.86, "close": 552.75}, {"time": "2024-09-17", "open": 554.97, "high": 556.42, "low": 550.73, "close": 552.97}, {"time": "2024-09-18", "open": 553.63, "high": 558.49, "low": 550.77, "close": 551.33}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-09-09", "open": 534.88, "high": 537.89, "low": 532.95
 - Event: **CPI**
 - Asset: **SPY**
 - Event date: **2024-09-11**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **543 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **544 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

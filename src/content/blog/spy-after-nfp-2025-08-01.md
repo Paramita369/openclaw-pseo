@@ -1,14 +1,14 @@
 ---
 title: "NFP Print (2025-08-01) vs SPY: Quantified Directional Odds"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 4
 title_template_key: "nfp_4"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-08-01"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 34
-freshness_days: 219
+freshness_days: 220
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: 1.06
       mean: 0.66
       sample: 4
-related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "2024-07-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-07-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.02, "median_t7_pct": 1.39, "sample_size": 13}, {"slug": "spy-after-nfp-2024-01-05", "title": "2024-01-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-01-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.04, "median_t7_pct": 1.39, "sample_size": 13}, {"slug": "spy-after-nfp-2024-10-04", "title": "SPY NFP Reaction (2024-10-04): T+1/T+7 Up Probability", "event_date": "2024-10-04", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.43, "median_t7_pct": 1.39, "sample_size": 13}]
+related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "2024-07-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-07-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.02, "median_t7_pct": 0.11, "sample_size": 34}, {"slug": "spy-after-nfp-2024-01-05", "title": "2024-01-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-01-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.04, "median_t7_pct": 0.11, "sample_size": 34}, {"slug": "spy-after-nfp-2024-10-04", "title": "SPY NFP Reaction (2024-10-04): T+1/T+7 Up Probability", "event_date": "2024-10-04", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.43, "median_t7_pct": 0.11, "sample_size": 34}]
 chartData: [{"time": "2025-07-29", "open": 634.71, "high": 635.03, "low": 630.72, "close": 631.64}, {"time": "2025-07-30", "open": 632.29, "high": 634.04, "low": 627.94, "close": 630.84}, {"time": "2025-07-31", "open": 635.81, "high": 636.2, "low": 627.17, "close": 628.48}, {"time": "2025-08-01", "open": 622.73, "high": 622.77, "low": 615.76, "close": 618.17}, {"time": "2025-08-04", "open": 622.1, "high": 627.62, "low": 622.01, "close": 627.57}, {"time": "2025-08-05", "open": 628.19, "high": 629.0, "low": 623.46, "close": 624.39}, {"time": "2025-08-06", "open": 625.46, "high": 629.83, "low": 624.55, "close": 629.17}, {"time": "2025-08-07", "open": 632.61, "high": 633.35, "low": 625.52, "close": 628.64}, {"time": "2025-08-08", "open": 630.44, "high": 634.01, "low": 630.13, "close": 633.55}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-07-29", "open": 634.71, "high": 635.03, "low": 630.72
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2025-08-01**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **219 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **220 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

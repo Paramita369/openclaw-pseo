@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2024-10-10) and BTC: Event-Driven Return Odds"
 description: "Historical probability profile for BTC around CPI events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-10-10"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 514
+freshness_days: 515
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: 1.26
       mean: 0.58
       sample: 38
-related_events: [{"slug": "btc-after-cpi-2024-08-14", "title": "BTC Reaction to US CPI (2024-08-14): Quant Probability Breakdown", "event_date": "2024-08-14", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.86, "median_t7_pct": 3.64, "sample_size": 14}, {"slug": "btc-after-cpi-2026-02-12", "title": "BTC After CPI (2026-02-12): Up/Down Odds and Median Returns", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.11, "sample_size": 39}, {"slug": "btc-after-cpi-2026-01-12", "title": "BTC CPI Win Rate (2026-01-12): Historical T+1/T+7 Probability", "event_date": "2026-01-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.11, "sample_size": 39}]
+related_events: [{"slug": "btc-after-cpi-2024-08-14", "title": "BTC Reaction to US CPI (2024-08-14): Quant Probability Breakdown", "event_date": "2024-08-14", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.86, "median_t7_pct": 1.11, "sample_size": 39}, {"slug": "btc-after-cpi-2026-02-12", "title": "BTC After CPI (2026-02-12): Up/Down Odds and Median Returns", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.11, "sample_size": 39}, {"slug": "btc-after-cpi-2026-01-12", "title": "BTC CPI Win Rate (2026-01-12): Historical T+1/T+7 Probability", "event_date": "2026-01-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 1.11, "sample_size": 39}]
 chartData: [{"time": "2024-10-07", "open": 62819.11, "high": 64443.71, "low": 62152.55, "close": 62236.66}, {"time": "2024-10-08", "open": 62221.64, "high": 63174.3, "low": 61843.56, "close": 62131.97}, {"time": "2024-10-09", "open": 62131.73, "high": 62508.84, "low": 60314.61, "close": 60582.1}, {"time": "2024-10-10", "open": 60581.93, "high": 61236.72, "low": 58895.21, "close": 60274.5}, {"time": "2024-10-11", "open": 60275.46, "high": 63400.87, "low": 60046.12, "close": 62445.09}, {"time": "2024-10-12", "open": 62444.62, "high": 63448.79, "low": 62443.27, "close": 63193.02}, {"time": "2024-10-13", "open": 63192.95, "high": 63272.65, "low": 62035.64, "close": 62851.38}, {"time": "2024-10-14", "open": 62848.4, "high": 66482.49, "low": 62442.15, "close": 66046.12}, {"time": "2024-10-15", "open": 66050.37, "high": 67881.68, "low": 64809.2, "close": 67041.11}, {"time": "2024-10-16", "open": 67042.46, "high": 68375.29, "low": 66758.73, "close": 67612.72}, {"time": "2024-10-17", "open": 67617.08, "high": 67912.21, "low": 66647.39, "close": 67399.84}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-10-07", "open": 62819.11, "high": 64443.71, "low": 62
 - Event: **CPI**
 - Asset: **BTC**
 - Event date: **2024-10-10**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **514 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **515 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

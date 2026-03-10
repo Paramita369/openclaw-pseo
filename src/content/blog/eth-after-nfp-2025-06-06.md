@@ -1,14 +1,14 @@
 ---
 title: "NFP Print (2025-06-06) vs ETH: Quantified Directional Odds"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 4
 title_template_key: "nfp_4"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-06-06"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 34
-freshness_days: 275
+freshness_days: 276
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-06-03", "open": 2607.2, "high": 2652.42, "low": 2582.
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2025-06-06**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **275 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **276 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

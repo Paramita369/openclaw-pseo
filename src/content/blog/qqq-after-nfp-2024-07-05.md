@@ -1,14 +1,14 @@
 ---
 title: "2024-07-05 Nonfarm Payrolls: QQQ Historical Win Rate"
 description: "Historical probability profile for QQQ around NFP events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 2
 title_template_key: "nfp_2"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-07-05"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 34
-freshness_days: 611
+freshness_days: 612
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: 0.12
       mean: 1.05
       sample: 30
-related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "2025-01-10 Nonfarm Payrolls: QQQ Historical Win Rate", "event_date": "2025-01-10", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.64, "median_t7_pct": 1.51, "sample_size": 13}, {"slug": "qqq-after-nfp-2024-12-06", "title": "QQQ After NFP (2024-12-06): Event Probability and Median Return", "event_date": "2024-12-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.77, "median_t7_pct": 1.51, "sample_size": 13}, {"slug": "qqq-after-nfp-2024-08-02", "title": "QQQ After NFP (2024-08-02): Event Probability and Median Return", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.35, "median_t7_pct": 1.51, "sample_size": 13}]
+related_events: [{"slug": "qqq-after-nfp-2025-01-10", "title": "2025-01-10 Nonfarm Payrolls: QQQ Historical Win Rate", "event_date": "2025-01-10", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.64, "median_t7_pct": 0.12, "sample_size": 34}, {"slug": "qqq-after-nfp-2024-12-06", "title": "QQQ After NFP (2024-12-06): Event Probability and Median Return", "event_date": "2024-12-06", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.77, "median_t7_pct": 0.12, "sample_size": 34}, {"slug": "qqq-after-nfp-2024-08-02", "title": "QQQ After NFP (2024-08-02): Event Probability and Median Return", "event_date": "2024-08-02", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.35, "median_t7_pct": 0.12, "sample_size": 34}]
 chartData: [{"time": "2024-07-02", "open": 476.55, "high": 483.12, "low": 476.42, "close": 483.06}, {"time": "2024-07-03", "open": 482.31, "high": 487.22, "low": 482.31, "close": 487.09}, {"time": "2024-07-05", "open": 487.93, "high": 492.61, "low": 487.64, "close": 492.17}, {"time": "2024-07-08", "open": 492.54, "high": 493.9, "low": 491.52, "close": 493.34}, {"time": "2024-07-09", "open": 494.86, "high": 495.98, "low": 492.25, "close": 493.77}, {"time": "2024-07-10", "open": 495.69, "high": 499.47, "low": 494.38, "close": 498.92}, {"time": "2024-07-11", "open": 499.02, "high": 499.23, "low": 486.78, "close": 487.97}, {"time": "2024-07-12", "open": 488.55, "high": 495.6, "low": 488.08, "close": 490.84}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-07-02", "open": 476.55, "high": 483.12, "low": 476.42
 - Event: **NFP**
 - Asset: **QQQ**
 - Event date: **2024-07-05**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **611 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **612 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

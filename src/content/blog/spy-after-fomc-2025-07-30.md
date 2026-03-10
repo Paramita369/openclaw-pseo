@@ -1,14 +1,14 @@
 ---
 title: "FOMC Outcome (2025-07-30) for SPY: Up/Down Probability View"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 5
 title_template_key: "fomc_5"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-07-30"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 221
+freshness_days: 222
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: 0.57
       mean: 0.48
       sample: 17
-related_events: [{"slug": "spy-after-fomc-2025-01-29", "title": "Fed Decision (2025-01-29) and SPY: Event-Driven Odds", "event_date": "2025-01-29", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 9.47, "median_t7_pct": 0.63, "sample_size": 9}, {"slug": "spy-after-fomc-2024-03-19", "title": "SPY After FOMC (2024-03-19): Historical Signal & Probability", "event_date": "2024-03-19", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 7.7, "median_t7_pct": 0.63, "sample_size": 9}, {"slug": "spy-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and SPY: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bullish", "sharpe_t7": 2.69, "median_t7_pct": 0.63, "sample_size": 9}]
+related_events: [{"slug": "spy-after-fomc-2025-01-29", "title": "Fed Decision (2025-01-29) and SPY: Event-Driven Odds", "event_date": "2025-01-29", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 9.47, "median_t7_pct": 0.54, "sample_size": 23}, {"slug": "spy-after-fomc-2024-03-19", "title": "SPY After FOMC (2024-03-19): Historical Signal & Probability", "event_date": "2024-03-19", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 7.7, "median_t7_pct": 0.54, "sample_size": 23}, {"slug": "spy-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and SPY: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.69, "median_t7_pct": 0.54, "sample_size": 23}]
 chartData: [{"time": "2025-07-28", "open": 633.84, "high": 634.4, "low": 631.92, "close": 633.31}, {"time": "2025-07-29", "open": 634.71, "high": 635.03, "low": 630.72, "close": 631.64}, {"time": "2025-07-30", "open": 632.29, "high": 634.04, "low": 627.94, "close": 630.84}, {"time": "2025-07-31", "open": 635.81, "high": 636.2, "low": 627.17, "close": 628.48}, {"time": "2025-08-01", "open": 622.73, "high": 622.77, "low": 615.76, "close": 618.17}, {"time": "2025-08-04", "open": 622.1, "high": 627.62, "low": 622.01, "close": 627.57}, {"time": "2025-08-05", "open": 628.19, "high": 629.0, "low": 623.46, "close": 624.39}, {"time": "2025-08-06", "open": 625.46, "high": 629.83, "low": 624.55, "close": 629.17}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-07-28", "open": 633.84, "high": 634.4, "low": 631.92,
 - Event: **FOMC**
 - Asset: **SPY**
 - Event date: **2025-07-30**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **221 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **222 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

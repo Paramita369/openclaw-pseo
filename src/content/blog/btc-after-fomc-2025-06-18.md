@@ -1,14 +1,14 @@
 ---
 title: "BTC Post-FOMC Reaction (2025-06-18): Quant Backtest Snapshot"
 description: "Historical probability profile for BTC around FOMC events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 4
 title_template_key: "fomc_4"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-06-18"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 263
+freshness_days: 264
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: -2.38
       mean: -0.94
       sample: 17
-related_events: [{"slug": "btc-after-fomc-2024-04-30", "title": "BTC After FOMC (2024-04-30): Historical Signal & Probability", "event_date": "2024-04-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 5.37, "median_t7_pct": 0.31, "sample_size": 9}, {"slug": "btc-after-fomc-2024-01-30", "title": "BTC Post-FOMC Reaction (2024-01-30): Quant Backtest Snapshot", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.97, "median_t7_pct": 0.31, "sample_size": 9}, {"slug": "btc-after-fomc-2026-01-28", "title": "FOMC Outcome (2026-01-28) for BTC: Up/Down Probability View", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -2.38, "sample_size": 23}]
+related_events: [{"slug": "btc-after-fomc-2024-04-30", "title": "BTC After FOMC (2024-04-30): Historical Signal & Probability", "event_date": "2024-04-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 5.37, "median_t7_pct": -2.38, "sample_size": 23}, {"slug": "btc-after-fomc-2024-01-30", "title": "BTC Post-FOMC Reaction (2024-01-30): Quant Backtest Snapshot", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.97, "median_t7_pct": -2.38, "sample_size": 23}, {"slug": "btc-after-fomc-2026-01-28", "title": "FOMC Outcome (2026-01-28) for BTC: Up/Down Probability View", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": -2.38, "sample_size": 23}]
 chartData: [{"time": "2025-06-15", "open": 105464.84, "high": 106157.1, "low": 104519.88, "close": 105552.02}, {"time": "2025-06-16", "open": 105555.59, "high": 108915.38, "low": 104997.62, "close": 106796.76}, {"time": "2025-06-17", "open": 106794.12, "high": 107750.2, "low": 103396.53, "close": 104601.12}, {"time": "2025-06-18", "open": 104602.07, "high": 105581.85, "low": 103602.27, "close": 104883.33}, {"time": "2025-06-19", "open": 104886.77, "high": 105250.89, "low": 103940.77, "close": 104684.29}, {"time": "2025-06-20", "open": 104681.03, "high": 106539.38, "low": 102372.21, "close": 103309.6}, {"time": "2025-06-21", "open": 103315.08, "high": 104015.78, "low": 100973.06, "close": 102257.41}, {"time": "2025-06-22", "open": 102212.03, "high": 103351.63, "low": 98286.2, "close": 100987.14}, {"time": "2025-06-23", "open": 100987.48, "high": 106116.86, "low": 99705.75, "close": 105577.77}, {"time": "2025-06-24", "open": 105571.52, "high": 106316.83, "low": 104740.24, "close": 106045.63}, {"time": "2025-06-25", "open": 106047.41, "high": 108168.4, "low": 105881.39, "close": 107361.26}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-06-15", "open": 105464.84, "high": 106157.1, "low": 1
 - Event: **FOMC**
 - Asset: **BTC**
 - Event date: **2025-06-18**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **263 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **264 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

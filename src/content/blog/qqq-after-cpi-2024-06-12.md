@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2024-06-12) and QQQ: Event-Driven Return Odds"
 description: "Historical probability profile for QQQ around CPI events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-06-12"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 50
 sample_size: 39
-freshness_days: 634
+freshness_days: 635
 freshness_status: "stale"
 index_tier: "C"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: 0.0
       mean: 0.0
       sample: 0
-related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: QQQ Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 9.6, "median_t7_pct": 0.6, "sample_size": 14}, {"slug": "qqq-after-cpi-2024-09-11", "title": "US CPI (2024-09-11) and QQQ: Event-Driven Return Odds", "event_date": "2024-09-11", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 7.08, "median_t7_pct": 0.6, "sample_size": 14}, {"slug": "qqq-after-cpi-2026-02-12", "title": "QQQ CPI Win Rate (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.58, "sample_size": 39}]
+related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: QQQ Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 9.6, "median_t7_pct": 0.58, "sample_size": 39}, {"slug": "qqq-after-cpi-2024-09-11", "title": "US CPI (2024-09-11) and QQQ: Event-Driven Return Odds", "event_date": "2024-09-11", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 7.08, "median_t7_pct": 0.58, "sample_size": 39}, {"slug": "qqq-after-cpi-2026-02-12", "title": "QQQ CPI Win Rate (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.58, "sample_size": 39}]
 chartData: [{"time": "2024-06-10", "open": 457.38, "high": 460.72, "low": 457.09, "close": 460.36}, {"time": "2024-06-11", "open": 459.08, "high": 463.64, "low": 457.59, "close": 463.52}, {"time": "2024-06-12", "open": 467.45, "high": 471.92, "low": 466.76, "close": 469.59}, {"time": "2024-06-13", "open": 473.13, "high": 473.79, "low": 469.86, "close": 472.14}, {"time": "2024-06-14", "open": 471.94, "high": 474.65, "low": 471.47, "close": 474.58}, {"time": "2024-06-17", "open": 474.85, "high": 482.18, "low": 473.54, "close": 480.4}, {"time": "2024-06-18", "open": 480.35, "high": 481.23, "low": 478.78, "close": 480.54}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-06-10", "open": 457.38, "high": 460.72, "low": 457.09
 - Event: **CPI**
 - Asset: **QQQ**
 - Event date: **2024-06-12**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **634 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **635 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

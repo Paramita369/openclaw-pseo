@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2025-01-29) and ETH: Event-Driven Odds"
 description: "Historical probability profile for ETH around FOMC events (T+1/T+7)."
-pubDate: "2026-03-09"
+pubDate: "2026-03-10"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-01-29"
-asof_date: "2026-03-08"
+asof_date: "2026-03-09"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Bearish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 403
+freshness_days: 404
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -86,7 +86,7 @@ probabilities:
       median: -3.26
       mean: -1.88
       sample: 17
-related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH Post-FOMC Reaction (2024-01-30): Quant Backtest Snapshot", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 3.74, "median_t7_pct": -0.19, "sample_size": 9}, {"slug": "eth-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and ETH: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bearish", "sharpe_t7": 0.0, "median_t7_pct": -3.26, "sample_size": 23}, {"slug": "eth-after-fomc-2025-12-10", "title": "2025-12-10 FOMC Meeting: ETH T+1/T+7 Probability Profile", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Bearish", "sharpe_t7": 0.0, "median_t7_pct": -3.26, "sample_size": 23}]
+related_events: [{"slug": "eth-after-fomc-2024-01-30", "title": "ETH Post-FOMC Reaction (2024-01-30): Quant Backtest Snapshot", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Bearish", "sharpe_t7": 3.74, "median_t7_pct": -3.26, "sample_size": 23}, {"slug": "eth-after-fomc-2026-01-28", "title": "Fed Decision (2026-01-28) and ETH: Event-Driven Odds", "event_date": "2026-01-28", "event_type": "FOMC", "signal": "Bearish", "sharpe_t7": 0.0, "median_t7_pct": -3.26, "sample_size": 23}, {"slug": "eth-after-fomc-2025-12-10", "title": "2025-12-10 FOMC Meeting: ETH T+1/T+7 Probability Profile", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Bearish", "sharpe_t7": 0.0, "median_t7_pct": -3.26, "sample_size": 23}]
 chartData: [{"time": "2025-01-26", "open": 3317.29, "high": 3359.31, "low": 3233.92, "close": 3236.13}, {"time": "2025-01-27", "open": 3235.86, "high": 3250.4, "low": 3024.09, "close": 3178.92}, {"time": "2025-01-28", "open": 3179.09, "high": 3222.74, "low": 3040.09, "close": 3077.11}, {"time": "2025-01-29", "open": 3076.38, "high": 3177.98, "low": 3055.18, "close": 3113.0}, {"time": "2025-01-30", "open": 3113.29, "high": 3282.99, "low": 3093.12, "close": 3247.78}, {"time": "2025-01-31", "open": 3247.87, "high": 3437.57, "low": 3214.94, "close": 3298.27}, {"time": "2025-02-01", "open": 3298.82, "high": 3329.66, "low": 3103.92, "close": 3118.33}, {"time": "2025-02-02", "open": 3118.61, "high": 3161.89, "low": 2755.47, "close": 2868.69}, {"time": "2025-02-03", "open": 2868.08, "high": 2919.48, "low": 2159.28, "close": 2884.57}, {"time": "2025-02-04", "open": 2883.82, "high": 2888.25, "low": 2636.17, "close": 2735.05}, {"time": "2025-02-05", "open": 2735.23, "high": 2824.4, "low": 2701.1, "close": 2787.78}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-01-26", "open": 3317.29, "high": 3359.31, "low": 3233
 - Event: **FOMC**
 - Asset: **ETH**
 - Event date: **2025-01-29**
-- As-of date (T-1): **2026-03-08**
-- Freshness age: **403 days**
+- As-of date (T-1): **2026-03-09**
+- Freshness age: **404 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome
