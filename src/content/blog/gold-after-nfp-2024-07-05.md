@@ -1,14 +1,14 @@
 ---
 title: "GOLD Post-NFP Setup (2024-07-05): Historical Probability Lens"
 description: "Historical probability profile for GOLD around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 5
 title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-07-05"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 34
-freshness_days: 612
+freshness_days: 613
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-07-02", "open": 2330.7, "high": 2334.6, "low": 2323.0
 - Event: **NFP**
 - Asset: **GOLD**
 - Event date: **2024-07-05**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **612 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **613 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

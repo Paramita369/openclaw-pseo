@@ -1,14 +1,14 @@
 ---
 title: "QQQ Reaction to US CPI (2025-09-12): Quant Probability Breakdown"
 description: "Historical probability profile for QQQ around CPI events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 2
 title_template_key: "cpi_2"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-09-12"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 178
+freshness_days: 179
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -87,7 +87,7 @@ probabilities:
       mean: 0.2
       sample: 38
 related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: QQQ Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 9.6, "median_t7_pct": 0.58, "sample_size": 39}, {"slug": "qqq-after-cpi-2024-09-11", "title": "US CPI (2024-09-11) and QQQ: Event-Driven Return Odds", "event_date": "2024-09-11", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 7.08, "median_t7_pct": 0.58, "sample_size": 39}, {"slug": "qqq-after-cpi-2026-02-12", "title": "QQQ CPI Win Rate (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.58, "sample_size": 39}]
-chartData: [{"time": "2025-09-09", "open": 578.25, "high": 579.52, "low": 575.63, "close": 579.09}, {"time": "2025-09-10", "open": 582.31, "high": 582.34, "low": 577.14, "close": 579.28}, {"time": "2025-09-11", "open": 581.81, "high": 583.45, "low": 580.2, "close": 582.65}, {"time": "2025-09-12", "open": 583.61, "high": 586.42, "low": 582.67, "close": 585.23}, {"time": "2025-09-15", "open": 587.0, "high": 590.34, "low": 586.85, "close": 590.23}, {"time": "2025-09-16", "open": 591.16, "high": 591.41, "low": 589.05, "close": 589.74}, {"time": "2025-09-17", "open": 589.66, "high": 590.3, "low": 582.94, "close": 588.56}, {"time": "2025-09-18", "open": 593.46, "high": 596.68, "low": 591.51, "close": 593.87}, {"time": "2025-09-19", "open": 595.87, "high": 598.58, "low": 594.39, "close": 597.89}]
+chartData: [{"time": "2025-09-09", "open": 578.25, "high": 579.52, "low": 575.63, "close": 579.09}, {"time": "2025-09-10", "open": 582.31, "high": 582.34, "low": 577.14, "close": 579.28}, {"time": "2025-09-11", "open": 581.82, "high": 583.45, "low": 580.2, "close": 582.65}, {"time": "2025-09-12", "open": 583.61, "high": 586.42, "low": 582.67, "close": 585.23}, {"time": "2025-09-15", "open": 587.0, "high": 590.34, "low": 586.85, "close": 590.23}, {"time": "2025-09-16", "open": 591.16, "high": 591.41, "low": 589.05, "close": 589.74}, {"time": "2025-09-17", "open": 589.66, "high": 590.3, "low": 582.94, "close": 588.56}, {"time": "2025-09-18", "open": 593.46, "high": 596.68, "low": 591.51, "close": 593.87}, {"time": "2025-09-19", "open": 595.87, "high": 598.58, "low": 594.39, "close": 597.89}]
 ---
 
 ## Event Snapshot
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-09-09", "open": 578.25, "high": 579.52, "low": 575.63
 - Event: **CPI**
 - Asset: **QQQ**
 - Event date: **2025-09-12**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **178 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **179 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

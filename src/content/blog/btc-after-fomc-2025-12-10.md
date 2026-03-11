@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2025-12-10) and BTC: Event-Driven Odds"
 description: "Historical probability profile for BTC around FOMC events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-12-10"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,11 +22,11 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 89
+freshness_days: 90
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
-is_core_page: true
+is_core_page: false
 core_window_days: 90
 body_variant_family: "distribution"
 hub_baseline_mean_t7: -0.7
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-07", "open": 89277.81, "high": 91740.84, "low": 87
 - Event: **FOMC**
 - Asset: **BTC**
 - Event date: **2025-12-10**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **89 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **90 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome
@@ -118,25 +118,15 @@ chartData: [{"time": "2025-12-07", "open": 89277.81, "high": 91740.84, "low": 87
 | T+1 | 47.06% | 52.94% | -0.19% | -0.15% | 17 |
 | T+7 | 47.06% | 52.94% | -2.38% | -0.94% | 17 |
 
-## Event Outcome Interpretation
+## Historical Distribution Summary
 
-The useful signal is where this release sits inside the historical range, not the headline in isolation. BTC around FOMC is best framed through how the release landed unchanged versus the previous release. The current observation shows actual value 4.0000 versus previous 4.0000, a delta of +0.0000. Across the full history, BTC has a T+7 up probability of 43.48% versus 56.52% down, with a median return of -2.38%. When only matching the same event direction, the T+7 up probability shifts to 47.06% across 17 comparable releases, with a same-direction median of -2.38%. The current release therefore reads as a below-baseline and fragile response rather than a collapse. The standing hub thesis for this asset-event pair is: BTC tends to price the path of liquidity and real yields around FOMC, and the press-conference tone often dominates the initial statement reaction. The strongest setups appear when policy language, dot-plot implications...
+When FOMC was **FLAT**, BTC T+1 up probability was **47.06%** (n=17).
 
-## Distribution Position
+When FOMC was **FLAT**, BTC T+7 up probability was **47.06%** (n=17).
 
-This window is below baseline and looks fragile rather than structurally broken. The current T+7 move of -6.39% carries a z-score of -0.62 and a percentile rank of 30.43, leaving the release in the central band of observed windows. That puts the event on the weak side of normal without forcing it into a full downside tail label. The important distinction is that fragile reactions can still bounce, which is why a mild underperformance should not be confused with regime failure.
+Same-direction T+7 median return: **-2.38%**.
 
-## Comparison vs Hub Baseline
-
-This comparison is below baseline, but it is still better read as fragile than catastrophic. Relative to the hub baseline, this release can be located with a concrete distance from normal behavior. The hub baseline median T+7 return is -2.38% and the current gap is -4.01%. Same-direction probability differs by +3.58% and the same-direction median differs by +0.00%. The baseline gap is large enough to matter, but not large enough to imply that the broader playbook is broken. The current regime context also matters: Rate-path sensitivity has increased versus the headline policy-rate level, especially after ETF-driven participation expanded macro crossover flow. Markets now reprice expected cuts and real-yield trajectory faster than...
-
-## Failure Modes
-
-The failure mode here is reading a fragile window as proof of permanent weakness. The main failure mode is forgetting that distributions absorb noise before they change shape. Whipsaw risk is highest between statement release and Powell Q&A, where a second narrative can reverse the first move. Funding-rate extremes, thin liquidity in correlated alt markets, and sudden bond-volatility spikes can magnify false breakouts during this window. Moderate underperformance often creates bounce risk, especially if rates or the dollar stop reinforcing the weak read.
-
-## Execution Relevance
-
-Use this page as a distribution map, not a shortcut to conviction. The operational takeaway is to respect the below-baseline read without assuming collapse. The checklist is Map expected policy path versus futures pricing pre-event.; Wait for confirmation after press conference starts.; Scale entries in multiple tranches, not one fill.. Fragile setups demand tighter invalidation and more patience because bounce risk is often highest when traders treat every weak release as a one-way trend.
+For BTC, historical FOMC windows show all-history T+1 up probability of 52.17% and T+7 up probability of 43.48%. When FOMC printed Flat versus previous, T+1 up probability was 47.06% and T+7 up probability was 47.06% across 17 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

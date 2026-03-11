@@ -1,14 +1,14 @@
 ---
 title: "ETH CPI Win Rate (2026-02-12): Historical T+1/T+7 Probability"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 1
 title_template_key: "cpi_1"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2026-02-12"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 25
+freshness_days: 26
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
@@ -95,8 +95,8 @@ chartData: [{"time": "2026-02-09", "open": 2087.92, "high": 2144.98, "low": 2008
 - Event: **CPI**
 - Asset: **ETH**
 - Event date: **2026-02-12**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **25 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **26 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

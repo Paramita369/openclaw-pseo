@@ -1,14 +1,14 @@
 ---
 title: "BTC Post-NFP Setup (2025-08-01): Historical Probability Lens"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 5
 title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-08-01"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 34
-freshness_days: 220
+freshness_days: 221
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-07-29", "open": 117938.59, "high": 119273.87, "low": 
 - Event: **NFP**
 - Asset: **BTC**
 - Event date: **2025-08-01**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **220 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **221 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

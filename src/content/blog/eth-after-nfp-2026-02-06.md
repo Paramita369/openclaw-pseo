@@ -1,14 +1,14 @@
 ---
 title: "ETH NFP Reaction (2026-02-06): T+1/T+7 Up Probability"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 1
 title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2026-02-06"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 31
+freshness_days: 32
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
@@ -95,8 +95,8 @@ chartData: [{"time": "2026-02-03", "open": 2344.45, "high": 2357.21, "low": 2109
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2026-02-06**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **31 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **32 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

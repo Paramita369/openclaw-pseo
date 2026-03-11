@@ -1,14 +1,14 @@
 ---
 title: "GOLD After FOMC (2026-01-28): Historical Signal & Probability"
 description: "Historical probability profile for GOLD around FOMC events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 1
 title_template_key: "fomc_1"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2026-01-28"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 40
+freshness_days: 41
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
@@ -95,8 +95,8 @@ chartData: [{"time": "2026-01-26", "open": 5081.5, "high": 5095.6, "low": 5052.2
 - Event: **FOMC**
 - Asset: **GOLD**
 - Event date: **2026-01-28**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **40 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **41 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

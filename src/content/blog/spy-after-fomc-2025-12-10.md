@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2025-12-10) and SPY: Event-Driven Odds"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-12-10"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,11 +22,11 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 89
+freshness_days: 90
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
-is_core_page: true
+is_core_page: false
 core_window_days: 90
 body_variant_family: "distribution"
 hub_baseline_mean_t7: 0.26
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-08", "open": 684.57, "high": 684.62, "low": 679.56
 - Event: **FOMC**
 - Asset: **SPY**
 - Event date: **2025-12-10**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **89 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **90 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome
@@ -118,25 +118,15 @@ chartData: [{"time": "2025-12-08", "open": 684.57, "high": 684.62, "low": 679.56
 | T+1 | 47.06% | 52.94% | -0.2% | -0.08% | 17 |
 | T+7 | 64.71% | 35.29% | 0.57% | 0.48% | 17 |
 
-## Event Outcome Interpretation
+## Historical Distribution Summary
 
-The useful signal is where this release sits inside the historical range, not the headline in isolation. SPY around FOMC is best framed through how the release landed unchanged versus the previous release. The current observation shows actual value 4.0000 versus previous 4.0000, a delta of +0.0000. Across the full history, SPY has a T+7 up probability of 56.52% versus 43.48% down, with a median return of 0.54%. When only matching the same event direction, the T+7 up probability shifts to 64.71% across 17 comparable releases, with a same-direction median of 0.57%. The current release therefore belongs to the downside tail and should be treated as materially weak. The standing hub thesis for this asset-event pair is: The S&P 500's reaction to FOMC rate decisions is heavily dictated by the preceding 30-day index trajectory. A 'buy the rumor, sell the fact' dynamic dominates when equities enter the meeting at all-time highs. Conversel...
+When FOMC was **FLAT**, SPY T+1 up probability was **47.06%** (n=17).
 
-## Distribution Position
+When FOMC was **FLAT**, SPY T+7 up probability was **64.71%** (n=17).
 
-This window sits in the weak tail and should be classified as a downside tail event for SPY after FOMC. The current T+7 move of -2.35% carries a z-score of -1.35 and a percentile rank of 8.70, which pushes the release into the weakest decile of observed windows and away from ordinary downside noise. That makes this an extreme negative deviation rather than a routine weak print, so the page should be read with explicit downside-tail caution.
+Same-direction T+7 median return: **0.57%**.
 
-## Comparison vs Hub Baseline
-
-This comparison is materially below baseline and should be treated as a true downside-tail gap. Relative to the hub baseline, this release can be located with a concrete distance from normal behavior. The hub baseline median T+7 return is 0.54% and the current gap is -2.89%. Same-direction probability differs by +8.19% and the same-direction median differs by +0.03%. The baseline gap is now large enough to justify a weak-tail classification and a more defensive interpretation. The current regime context also matters: The market's focal point has pivoted from terminal rate pricing to the trajectory of quantitative tightening (QT) tapering.
-
-## Failure Modes
-
-The failure mode here is underestimating how far a downside tail can travel before it stabilizes. The main failure mode is forgetting that distributions absorb noise before they change shape. Jerome Powell's press conference (30 minutes post-release) frequently reverses the initial algorithmic reaction, especially when the statement appears neutral but the Q&A shifts the market's view of cuts, QT tapering, or growth sensitivity. Breadth deterioration under an index-level bounce is a common warning that the first move is failing. Invalidation needs to be tighter because weak-tail conditions can extend farther than a normal weak window.
-
-## Execution Relevance
-
-Use this page as a distribution map, not a shortcut to conviction. The operational takeaway is to respect the downside tail and accept a higher invalidation burden before assuming the move is spent. The checklist remains Hedge long portfolios with short-dated VIX call options 24h prior.; Avoid initiating 0DTE (Zero Days to Expiration) option strategies during the first 15 minutes of the release.; Analyze the initial sector rotation (e.g., Tech vs. Utilities) for duration risk clues.. This is exactly the state where waiting for confirmation matters more than trying to fade weakness too early.
+For SPY, historical FOMC windows show all-history T+1 up probability of 52.17% and T+7 up probability of 56.52%. When FOMC printed Flat versus previous, T+1 up probability was 47.06% and T+7 up probability was 64.71% across 17 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

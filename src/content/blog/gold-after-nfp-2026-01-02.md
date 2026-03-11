@@ -1,14 +1,14 @@
 ---
 title: "GOLD NFP Reaction (2026-01-02): T+1/T+7 Up Probability"
 description: "Historical probability profile for GOLD around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 1
 title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2026-01-02"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 66
+freshness_days: 67
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-30", "open": 4346.4, "high": 4403.6, "low": 4338.0
 - Event: **NFP**
 - Asset: **GOLD**
 - Event date: **2026-01-02**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **66 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **67 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

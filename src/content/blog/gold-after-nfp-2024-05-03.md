@@ -1,14 +1,14 @@
 ---
 title: "GOLD After NFP (2024-05-03): Event Probability and Median Return"
 description: "Historical probability profile for GOLD around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 3
 title_template_key: "nfp_3"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-05-03"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 34
-freshness_days: 675
+freshness_days: 676
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-04-30", "open": 2322.5, "high": 2322.5, "low": 2291.4
 - Event: **NFP**
 - Asset: **GOLD**
 - Event date: **2024-05-03**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **675 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **676 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

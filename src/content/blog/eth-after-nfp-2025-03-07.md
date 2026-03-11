@@ -1,14 +1,14 @@
 ---
 title: "2025-03-07 Nonfarm Payrolls: ETH Historical Win Rate"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 2
 title_template_key: "nfp_2"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-03-07"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 367
+freshness_days: 368
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-03-04", "open": 2145.65, "high": 2220.36, "low": 1996
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2025-03-07**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **367 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **368 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

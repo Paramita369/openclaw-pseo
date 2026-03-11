@@ -1,14 +1,14 @@
 ---
 title: "SPY NFP Reaction (2024-02-02): T+1/T+7 Up Probability"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 1
 title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-02-02"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 34
-freshness_days: 766
+freshness_days: 767
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-01-30", "open": 478.73, "high": 479.76, "low": 478.29
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2024-02-02**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **766 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **767 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

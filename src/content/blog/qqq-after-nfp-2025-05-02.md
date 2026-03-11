@@ -1,14 +1,14 @@
 ---
 title: "NFP Print (2025-05-02) vs QQQ: Quantified Directional Odds"
 description: "Historical probability profile for QQQ around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 4
 title_template_key: "nfp_4"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-05-02"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 311
+freshness_days: 312
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-04-29", "open": 468.5, "high": 474.72, "low": 467.92,
 - Event: **NFP**
 - Asset: **QQQ**
 - Event date: **2025-05-02**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **311 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **312 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

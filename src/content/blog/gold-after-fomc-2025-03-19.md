@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2025-03-19) and GOLD: Event-Driven Odds"
 description: "Historical probability profile for GOLD around FOMC events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-03-19"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 355
+freshness_days: 356
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-03-17", "open": 2991.0, "high": 3001.5, "low": 2989.0
 - Event: **FOMC**
 - Asset: **GOLD**
 - Event date: **2025-03-19**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **355 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **356 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "QQQ Post-NFP Setup (2025-11-07): Historical Probability Lens"
 description: "Historical probability profile for QQQ around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 5
 title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-11-07"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 122
+freshness_days: 123
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-11-04", "open": 622.48, "high": 626.14, "low": 617.66
 - Event: **NFP**
 - Asset: **QQQ**
 - Event date: **2025-11-07**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **122 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **123 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

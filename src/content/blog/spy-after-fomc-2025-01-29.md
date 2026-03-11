@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2025-01-29) and SPY: Event-Driven Odds"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-01-29"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 404
+freshness_days: 405
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-01-27", "open": 587.91, "high": 592.73, "low": 587.74
 - Event: **FOMC**
 - Asset: **SPY**
 - Event date: **2025-01-29**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **404 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **405 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

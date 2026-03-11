@@ -1,14 +1,14 @@
 ---
 title: "QQQ After CPI (2024-12-11): Up/Down Odds and Median Returns"
 description: "Historical probability profile for QQQ around CPI events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 5
 title_template_key: "cpi_5"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-12-11"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 453
+freshness_days: 454
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-12-09", "open": 522.06, "high": 522.85, "low": 517.76
 - Event: **CPI**
 - Asset: **QQQ**
 - Event date: **2024-12-11**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **453 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **454 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2024-08-14) and SPY: Event-Driven Return Odds"
 description: "Historical probability profile for SPY around CPI events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-08-14"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 572
+freshness_days: 573
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -87,7 +87,7 @@ probabilities:
       mean: 0.21
       sample: 38
 related_events: [{"slug": "spy-after-cpi-2024-03-12", "title": "SPY CPI Win Rate (2024-03-12): Historical T+1/T+7 Probability", "event_date": "2024-03-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 3.94, "median_t7_pct": 0.51, "sample_size": 39}, {"slug": "spy-after-cpi-2024-11-14", "title": "2024-11-14 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-11-14", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.43, "median_t7_pct": 0.51, "sample_size": 39}, {"slug": "spy-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: SPY Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.37, "median_t7_pct": 0.51, "sample_size": 39}]
-chartData: [{"time": "2024-08-12", "open": 524.63, "high": 526.12, "low": 521.43, "close": 523.71}, {"time": "2024-08-13", "open": 526.91, "high": 532.55, "low": 526.66, "close": 532.32}, {"time": "2024-08-14", "open": 533.11, "high": 535.19, "low": 530.43, "close": 534.0}, {"time": "2024-08-15", "open": 539.64, "high": 543.44, "low": 539.04, "close": 543.15}, {"time": "2024-08-16", "open": 541.53, "high": 545.07, "low": 541.37, "close": 544.37}, {"time": "2024-08-19", "open": 544.78, "high": 549.57, "low": 543.93, "close": 549.57}, {"time": "2024-08-20", "open": 549.12, "high": 550.78, "low": 547.33, "close": 548.68}, {"time": "2024-08-21", "open": 549.73, "high": 552.03, "low": 544.78, "close": 550.57}]
+chartData: [{"time": "2024-08-12", "open": 524.63, "high": 526.12, "low": 521.43, "close": 523.71}, {"time": "2024-08-13", "open": 526.91, "high": 532.55, "low": 526.66, "close": 532.32}, {"time": "2024-08-14", "open": 533.11, "high": 535.19, "low": 530.43, "close": 534.0}, {"time": "2024-08-15", "open": 539.65, "high": 543.44, "low": 539.04, "close": 543.15}, {"time": "2024-08-16", "open": 541.53, "high": 545.07, "low": 541.37, "close": 544.37}, {"time": "2024-08-19", "open": 544.78, "high": 549.57, "low": 543.93, "close": 549.57}, {"time": "2024-08-20", "open": 549.12, "high": 550.78, "low": 547.33, "close": 548.68}, {"time": "2024-08-21", "open": 549.73, "high": 552.03, "low": 544.78, "close": 550.57}]
 ---
 
 ## Event Snapshot
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-08-12", "open": 524.63, "high": 526.12, "low": 521.43
 - Event: **CPI**
 - Asset: **SPY**
 - Event date: **2024-08-14**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **572 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **573 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

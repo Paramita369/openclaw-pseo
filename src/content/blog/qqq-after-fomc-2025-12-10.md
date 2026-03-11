@@ -1,14 +1,14 @@
 ---
 title: "QQQ Post-FOMC Reaction (2025-12-10): Quant Backtest Snapshot"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 4
 title_template_key: "fomc_4"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-12-10"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,11 +22,11 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 89
+freshness_days: 90
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
-is_core_page: true
+is_core_page: false
 core_window_days: 90
 body_variant_family: "checklist"
 hub_baseline_mean_t7: 0.27
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-08", "open": 626.4, "high": 628.03, "low": 620.89,
 - Event: **FOMC**
 - Asset: **QQQ**
 - Event date: **2025-12-10**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **89 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **90 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome
@@ -118,25 +118,15 @@ chartData: [{"time": "2025-12-08", "open": 626.4, "high": 628.03, "low": 620.89,
 | T+1 | 41.18% | 58.82% | -0.34% | -0.06% | 17 |
 | T+7 | 64.71% | 35.29% | 1.08% | 0.6% | 17 |
 
-## Event Outcome Interpretation
+## Historical Distribution Summary
 
-Execution quality here comes from context discipline rather than reacting to the first candle. QQQ around FOMC is best framed through how the release landed unchanged versus the previous release. The current observation shows actual value 4.0000 versus previous 4.0000, a delta of +0.0000. Across the full history, QQQ has a T+7 up probability of 56.52% versus 43.48% down, with a median return of 0.88%. When only matching the same event direction, the T+7 up probability shifts to 64.71% across 17 comparable releases, with a same-direction median of 1.08%. The current release therefore belongs to the downside tail and should be treated as materially weak. The standing hub thesis for this asset-event pair is: QQQ generally trends with forward-rate expectations, and reactions are magnified when valuation is stretched before the meeting. The highest-quality playbook setup occurs when statement language, dot-plot repricing, and...
+When FOMC was **FLAT**, QQQ T+1 up probability was **41.18%** (n=17).
 
-## Distribution Position
+When FOMC was **FLAT**, QQQ T+7 up probability was **64.71%** (n=17).
 
-This window sits in the weak tail and should be classified as a downside tail event for QQQ after FOMC. The current T+7 move of -4.33% carries a z-score of -1.59 and a percentile rank of 8.70, which pushes the release into the weakest decile of observed windows and away from ordinary downside noise. That makes this an extreme negative deviation rather than a routine weak print, so the page should be read with explicit downside-tail caution.
+Same-direction T+7 median return: **1.08%**.
 
-## Comparison vs Hub Baseline
-
-This comparison is materially below baseline and should be treated as a true downside-tail gap. The baseline comparison is what turns the page from observation into a repeatable checklist. The hub baseline median T+7 return is 0.88% and the current gap is -5.21%. Same-direction probability differs by +8.19% and the same-direction median differs by +0.20%. The baseline gap is now large enough to justify a weak-tail classification and a more defensive interpretation. The current regime context also matters: Communication tone has become a bigger driver than the headline rate level itself, particularly in periods where terminal-rate uncertainty is lower and policy-path uncertainty is higher. This increases the importance of...
-
-## Failure Modes
-
-The failure mode here is underestimating how far a downside tail can travel before it stabilizes. The main failure mode is skipping confirmation steps because the headline feels obvious. A dovish statement can still fail if Q&A tone turns cautious or if long-end yields reprice higher into the close. Mega-cap concentration can mask weak breadth, so index-level strength without broad participation often leads to late-session fade and poor risk-adjusted continuation. Invalidation needs to be tighter because weak-tail conditions can extend farther than a normal weak window.
-
-## Execution Relevance
-
-Treat this page as an execution checklist input, not a buy or sell signal. The operational takeaway is to respect the downside tail and accept a higher invalidation burden before assuming the move is spent. The checklist remains Track implied cuts path before and after statement.; Wait for confirmation after Q&A begins.; Size positions based on realized volatility percentile.. This is exactly the state where waiting for confirmation matters more than trying to fade weakness too early.
+For QQQ, historical FOMC windows show all-history T+1 up probability of 43.48% and T+7 up probability of 56.52%. When FOMC printed Flat versus previous, T+1 up probability was 41.18% and T+7 up probability was 64.71% across 17 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

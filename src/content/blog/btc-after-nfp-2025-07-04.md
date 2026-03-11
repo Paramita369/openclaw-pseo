@@ -1,14 +1,14 @@
 ---
 title: "BTC After NFP (2025-07-04): Event Probability and Median Return"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 3
 title_template_key: "nfp_3"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-07-04"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 248
+freshness_days: 249
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-07-01", "open": 107144.38, "high": 107550.68, "low": 
 - Event: **NFP**
 - Asset: **BTC**
 - Event date: **2025-07-04**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **248 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **249 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

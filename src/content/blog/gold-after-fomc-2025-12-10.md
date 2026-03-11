@@ -1,14 +1,14 @@
 ---
 title: "2025-12-10 FOMC Meeting: GOLD T+1/T+7 Probability Profile"
 description: "Historical probability profile for GOLD around FOMC events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 3
 title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-12-10"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,11 +22,11 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 89
+freshness_days: 90
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
-is_core_page: true
+is_core_page: false
 core_window_days: 90
 body_variant_family: "risk-first"
 hub_baseline_mean_t7: 0.05
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-08", "open": 4205.5, "high": 4215.8, "low": 4175.5
 - Event: **FOMC**
 - Asset: **GOLD**
 - Event date: **2025-12-10**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **89 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **90 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome
@@ -118,25 +118,15 @@ chartData: [{"time": "2025-12-08", "open": 4205.5, "high": 4215.8, "low": 4175.5
 | T+1 | 70.59% | 29.41% | 0.32% | 0.31% | 17 |
 | T+7 | 52.94% | 47.06% | 0.15% | -0.16% | 17 |
 
-## Event Outcome Interpretation
+## Historical Distribution Summary
 
-The main mistake after macro releases is to treat every surprise as a regime break. GOLD around FOMC is best framed through how the release landed unchanged versus the previous release. The current observation shows actual value 4.0000 versus previous 4.0000, a delta of +0.0000. Across the full history, GOLD has a T+7 up probability of 56.52% versus 43.48% down, with a median return of 0.90%. When only matching the same event direction, the T+7 up probability shifts to 52.94% across 17 comparable releases, with a same-direction median of 0.15%. The current release therefore belongs to a strong positive tail regime rather than a routine upside outcome. The standing hub thesis for this asset-event pair is: Gold's post-FOMC edge is strongest when statement, dots, and press conference align on easing or tightening trajectory.
+When FOMC was **FLAT**, GOLD T+1 up probability was **70.59%** (n=17).
 
-## Distribution Position
+When FOMC was **FLAT**, GOLD T+7 up probability was **52.94%** (n=17).
 
-This window sits in the upper decile and behaves like an extreme positive deviation for GOLD after FOMC. The T+7 move of 3.60% prints a z-score of 1.22 and a percentile rank of 91.30, which places the release in the top decile of observed windows and inside the positive tail rather than the median band. That matters because tail behavior is not the same thing as ordinary upside drift; it says this event landed materially stronger than baseline and should be handled as a high-variance state, not a generic bullish recap.
+Same-direction T+7 median return: **0.15%**.
 
-## Comparison vs Hub Baseline
-
-This comparison is materially above baseline rather than cosmetically positive. The baseline comparison matters because most false positives come from overreacting to ordinary noise. The hub baseline median T+7 return is 0.90% versus a current gap of +2.70%. Same-direction probability is -3.58% above the all-history T+7 up rate, while the same-direction median differs by -0.75%. That spread is large enough to justify an outlier label, but not large enough to excuse lazy extrapolation. The current regime context also matters: Terminal-rate narrative has given way to pace-of-easing narrative.
-
-## Failure Modes
-
-The failure mode here is treating a positive tail event as if it automatically upgrades the whole regime. The main failure mode is assuming the first interpretation will survive cross-asset confirmation. Headline fade risk rises when policy message is mixed. Once rates, the dollar, or breadth stop confirming the move, upper-tail reactions can mean-revert quickly and punish late entries.
-
-## Execution Relevance
-
-Treat this as an educational risk framework, not investment advice. The practical takeaway is to respect the tail profile while keeping reversion risk front and center. Operators should not extrapolate this window without stronger confirmation, and the higher confirmation burden should be explicit in the checklist: Map pre-event consensus versus actual guidance.; Reassess after press conference starts.; Use a hard invalidation level tied to yield reversal.. A page marked extreme outperformance is strongest as a filter for discipline, not a license to chase.
+For GOLD, historical FOMC windows show all-history T+1 up probability of 69.57% and T+7 up probability of 56.52%. When FOMC printed Flat versus previous, T+1 up probability was 70.59% and T+7 up probability was 52.94% across 17 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

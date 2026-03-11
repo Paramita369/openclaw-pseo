@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2024-06-12) and QQQ: Event-Driven Return Odds"
 description: "Historical probability profile for QQQ around CPI events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-06-12"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 50
 sample_size: 39
-freshness_days: 635
+freshness_days: 636
 freshness_status: "stale"
 index_tier: "C"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-06-10", "open": 457.38, "high": 460.72, "low": 457.09
 - Event: **CPI**
 - Asset: **QQQ**
 - Event date: **2024-06-12**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **635 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **636 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

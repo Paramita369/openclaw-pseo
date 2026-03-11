@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2025-02-12) and BTC: Event-Driven Return Odds"
 description: "Historical probability profile for BTC around CPI events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-02-12"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 390
+freshness_days: 391
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-02-09", "open": 96481.31, "high": 97325.28, "low": 94
 - Event: **CPI**
 - Asset: **BTC**
 - Event date: **2025-02-12**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **390 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **391 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

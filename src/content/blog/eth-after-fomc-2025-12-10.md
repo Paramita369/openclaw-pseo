@@ -1,14 +1,14 @@
 ---
 title: "2025-12-10 FOMC Meeting: ETH T+1/T+7 Probability Profile"
 description: "Historical probability profile for ETH around FOMC events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 3
 title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-12-10"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Bearish"
@@ -22,11 +22,11 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 89
+freshness_days: 90
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
-is_core_page: true
+is_core_page: false
 core_window_days: 90
 body_variant_family: "risk-first"
 hub_baseline_mean_t7: -2.8
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-07", "open": 3040.18, "high": 3148.77, "low": 2930
 - Event: **FOMC**
 - Asset: **ETH**
 - Event date: **2025-12-10**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **89 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **90 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome
@@ -118,25 +118,15 @@ chartData: [{"time": "2025-12-07", "open": 3040.18, "high": 3148.77, "low": 2930
 | T+1 | 35.29% | 64.71% | -1.41% | 0.94% | 17 |
 | T+7 | 29.41% | 70.59% | -3.26% | -1.88% | 17 |
 
-## Event Outcome Interpretation
+## Historical Distribution Summary
 
-The main mistake after macro releases is to treat every surprise as a regime break. ETH around FOMC is best framed through how the release landed unchanged versus the previous release. The current observation shows actual value 4.0000 versus previous 4.0000, a delta of +0.0000. Across the full history, ETH has a T+7 up probability of 30.43% versus 69.57% down, with a median return of -3.26%. When only matching the same event direction, the T+7 up probability shifts to 29.41% across 17 comparable releases, with a same-direction median of -3.26%. The current release therefore reads as a below-baseline and fragile response rather than a collapse. The standing hub thesis for this asset-event pair is: ETH tends to inherit macro direction from rate expectations, but relative performance improves when policy uncertainty falls and volatility compresses.
+When FOMC was **FLAT**, ETH T+1 up probability was **35.29%** (n=17).
 
-## Distribution Position
+When FOMC was **FLAT**, ETH T+7 up probability was **29.41%** (n=17).
 
-This window is below baseline and looks fragile rather than structurally broken. The current T+7 move of -14.86% carries a z-score of -0.80 and a percentile rank of 13.04, leaving the release in the lower quartile of observed windows. That puts the event on the weak side of normal without forcing it into a full downside tail label. The important distinction is that fragile reactions can still bounce, which is why a mild underperformance should not be confused with regime failure.
+Same-direction T+7 median return: **-3.26%**.
 
-## Comparison vs Hub Baseline
-
-This comparison is below baseline, but it is still better read as fragile than catastrophic. The baseline comparison matters because most false positives come from overreacting to ordinary noise. The hub baseline median T+7 return is -3.26% and the current gap is -11.60%. Same-direction probability differs by -1.02% and the same-direction median differs by +0.00%. The baseline gap is large enough to matter, but not large enough to imply that the broader playbook is broken. The current regime context also matters: Macro-to-crypto transmission is faster due to tighter cross-asset monitoring.
-
-## Failure Modes
-
-The failure mode here is reading a fragile window as proof of permanent weakness. The main failure mode is assuming the first interpretation will survive cross-asset confirmation. Policy surprise can trigger correlated liquidation cascades. Moderate underperformance often creates bounce risk, especially if rates or the dollar stop reinforcing the weak read.
-
-## Execution Relevance
-
-Treat this as an educational risk framework, not investment advice. The operational takeaway is to respect the below-baseline read without assuming collapse. The checklist is Track implied volatility term structure before event.; Avoid chasing first impulse candle.; Anchor exits to predefined volatility bands.. Fragile setups demand tighter invalidation and more patience because bounce risk is often highest when traders treat every weak release as a one-way trend.
+For ETH, historical FOMC windows show all-history T+1 up probability of 43.48% and T+7 up probability of 30.43%. When FOMC printed Flat versus previous, T+1 up probability was 35.29% and T+7 up probability was 29.41% across 17 matched cases. Current classification is Bearish; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

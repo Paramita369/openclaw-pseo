@@ -1,14 +1,14 @@
 ---
 title: "2025-02-07 Nonfarm Payrolls: GOLD Historical Win Rate"
 description: "Historical probability profile for GOLD around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 2
 title_template_key: "nfp_2"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-02-07"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 395
+freshness_days: 396
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-02-04", "open": 2827.6, "high": 2853.3, "low": 2816.1
 - Event: **NFP**
 - Asset: **GOLD**
 - Event date: **2025-02-07**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **395 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **396 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "FOMC Outcome (2024-06-11) for SPY: Up/Down Probability View"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 5
 title_template_key: "fomc_5"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2024-06-11"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 636
+freshness_days: 637
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-06-10", "open": 521.93, "high": 524.68, "low": 521.34
 - Event: **FOMC**
 - Asset: **SPY**
 - Event date: **2024-06-11**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **636 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **637 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

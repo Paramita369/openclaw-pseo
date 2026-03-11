@@ -1,14 +1,14 @@
 ---
 title: "2025-12-12 CPI Release: GOLD Directional Probability Snapshot"
 description: "Historical probability profile for GOLD around CPI events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 4
 title_template_key: "cpi_4"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-12-12"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 87
+freshness_days: 88
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-09", "open": 4190.7, "high": 4219.7, "low": 4177.7
 - Event: **CPI**
 - Asset: **GOLD**
 - Event date: **2025-12-12**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **87 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **88 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

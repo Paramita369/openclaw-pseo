@@ -1,14 +1,14 @@
 ---
 title: "BTC CPI Win Rate (2024-01-15): Historical T+1/T+7 Probability"
 description: "Historical probability profile for BTC around CPI events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 1
 title_template_key: "cpi_1"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-01-15"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 784
+freshness_days: 785
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-01-12", "open": 46354.79, "high": 46498.14, "low": 41
 - Event: **CPI**
 - Asset: **BTC**
 - Event date: **2024-01-15**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **784 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **785 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

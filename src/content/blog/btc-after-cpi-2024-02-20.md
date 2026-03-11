@@ -1,14 +1,14 @@
 ---
 title: "2024-02-20 CPI Release: BTC Directional Probability Snapshot"
 description: "Historical probability profile for BTC around CPI events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 4
 title_template_key: "cpi_4"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-02-20"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 748
+freshness_days: 749
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-02-17", "open": 52161.68, "high": 52191.91, "low": 50
 - Event: **CPI**
 - Asset: **BTC**
 - Event date: **2024-02-20**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **748 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **749 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

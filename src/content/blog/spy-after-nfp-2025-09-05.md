@@ -1,14 +1,14 @@
 ---
 title: "SPY Post-NFP Setup (2025-09-05): Historical Probability Lens"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
-pubDate: "2026-03-10"
+pubDate: "2026-03-11"
 title_variant_id: 5
 title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-09-05"
-asof_date: "2026-03-09"
+asof_date: "2026-03-10"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 185
+freshness_days: 186
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -87,7 +87,7 @@ probabilities:
       mean: 0.83
       sample: 30
 related_events: [{"slug": "spy-after-nfp-2024-07-05", "title": "2024-07-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-07-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 7.02, "median_t7_pct": 0.11, "sample_size": 34}, {"slug": "spy-after-nfp-2024-01-05", "title": "2024-01-05 Nonfarm Payrolls: SPY Historical Win Rate", "event_date": "2024-01-05", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 6.04, "median_t7_pct": 0.11, "sample_size": 34}, {"slug": "spy-after-nfp-2024-10-04", "title": "SPY NFP Reaction (2024-10-04): T+1/T+7 Up Probability", "event_date": "2024-10-04", "event_type": "NFP", "signal": "Neutral", "sharpe_t7": 3.43, "median_t7_pct": 0.11, "sample_size": 34}]
-chartData: [{"time": "2025-09-02", "open": 633.86, "high": 636.84, "low": 631.3, "close": 636.62}, {"time": "2025-09-03", "open": 639.0, "high": 640.54, "low": 636.81, "close": 640.07}, {"time": "2025-09-04", "open": 640.74, "high": 645.45, "low": 639.84, "close": 645.42}, {"time": "2025-09-05", "open": 647.76, "high": 648.49, "low": 639.66, "close": 643.55}, {"time": "2025-09-08", "open": 644.92, "high": 646.13, "low": 643.54, "close": 645.13}, {"time": "2025-09-09", "open": 645.27, "high": 647.15, "low": 643.53, "close": 646.62}, {"time": "2025-09-10", "open": 649.89, "high": 650.82, "low": 646.92, "close": 648.49}, {"time": "2025-09-11", "open": 650.45, "high": 654.58, "low": 649.86, "close": 653.88}, {"time": "2025-09-12", "open": 653.85, "high": 655.35, "low": 653.15, "close": 653.66}]
+chartData: [{"time": "2025-09-02", "open": 633.86, "high": 636.84, "low": 631.3, "close": 636.62}, {"time": "2025-09-03", "open": 639.0, "high": 640.54, "low": 636.81, "close": 640.07}, {"time": "2025-09-04", "open": 640.75, "high": 645.45, "low": 639.84, "close": 645.42}, {"time": "2025-09-05", "open": 647.76, "high": 648.49, "low": 639.66, "close": 643.55}, {"time": "2025-09-08", "open": 644.92, "high": 646.13, "low": 643.54, "close": 645.13}, {"time": "2025-09-09", "open": 645.27, "high": 647.15, "low": 643.53, "close": 646.62}, {"time": "2025-09-10", "open": 649.89, "high": 650.82, "low": 646.92, "close": 648.49}, {"time": "2025-09-11", "open": 650.45, "high": 654.58, "low": 649.86, "close": 653.88}, {"time": "2025-09-12", "open": 653.85, "high": 655.35, "low": 653.15, "close": 653.66}]
 ---
 
 ## Event Snapshot
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-09-02", "open": 633.86, "high": 636.84, "low": 631.3,
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2025-09-05**
-- As-of date (T-1): **2026-03-09**
-- Freshness age: **185 days**
+- As-of date (T-1): **2026-03-10**
+- Freshness age: **186 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome
