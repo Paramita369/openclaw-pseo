@@ -1,14 +1,14 @@
 ---
 title: "ETH Post-NFP Setup (2025-08-01): Historical Probability Lens"
 description: "Historical probability profile for ETH around NFP events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-13"
 title_variant_id: 5
 title_template_key: "nfp_5"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-08-01"
-asof_date: "2026-03-10"
+asof_date: "2026-03-12"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 34
-freshness_days: 221
+freshness_days: 223
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-07-29", "open": 3788.32, "high": 3884.0, "low": 3716.
 - Event: **NFP**
 - Asset: **ETH**
 - Event date: **2025-08-01**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **221 days**
+- As-of date (T-1): **2026-03-12**
+- Freshness age: **223 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

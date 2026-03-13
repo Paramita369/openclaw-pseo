@@ -1,14 +1,14 @@
 ---
 title: "SPY After FOMC (2025-10-29): Historical Signal & Probability"
 description: "Historical probability profile for SPY around FOMC events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-13"
 title_variant_id: 1
 title_template_key: "fomc_1"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-10-29"
-asof_date: "2026-03-10"
+asof_date: "2026-03-12"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 132
+freshness_days: 134
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-10-27", "open": 680.72, "high": 683.52, "low": 680.11
 - Event: **FOMC**
 - Asset: **SPY**
 - Event date: **2025-10-29**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **132 days**
+- As-of date (T-1): **2026-03-12**
+- Freshness age: **134 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

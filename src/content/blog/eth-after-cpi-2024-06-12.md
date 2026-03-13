@@ -1,14 +1,14 @@
 ---
 title: "ETH Reaction to US CPI (2024-06-12): Quant Probability Breakdown"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 2
 title_template_key: "cpi_2"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-06-12"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 39
-freshness_days: 636
+freshness_days: 637
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-06-09", "open": 3680.94, "high": 3719.37, "low": 3668
 - Event: **CPI**
 - Asset: **ETH**
 - Event date: **2024-06-12**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **636 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **637 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

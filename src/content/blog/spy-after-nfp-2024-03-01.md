@@ -1,14 +1,14 @@
 ---
 title: "2024-03-01 Nonfarm Payrolls: SPY Historical Win Rate"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 2
 title_template_key: "nfp_2"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-03-01"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 34
-freshness_days: 739
+freshness_days: 740
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-02-27", "open": 494.48, "high": 494.92, "low": 492.57
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2024-03-01**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **739 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **740 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

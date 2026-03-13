@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2024-10-10) and ETH: Event-Driven Return Odds"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-10-10"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 516
+freshness_days: 517
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-10-07", "open": 2439.94, "high": 2520.41, "low": 2405
 - Event: **CPI**
 - Asset: **ETH**
 - Event date: **2024-10-10**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **516 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **517 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "2024-06-07 Nonfarm Payrolls: QQQ Historical Win Rate"
 description: "Historical probability profile for QQQ around NFP events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 2
 title_template_key: "nfp_2"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-06-07"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 34
-freshness_days: 641
+freshness_days: 642
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-06-04", "open": 448.52, "high": 451.2, "low": 446.79,
 - Event: **NFP**
 - Asset: **QQQ**
 - Event date: **2024-06-07**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **641 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **642 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

@@ -1,14 +1,14 @@
 ---
 title: "2024-11-06 FOMC Meeting: ETH T+1/T+7 Probability Profile"
 description: "Historical probability profile for ETH around FOMC events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 3
 title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2024-11-06"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Bearish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 489
+freshness_days: 490
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-11-03", "open": 2491.09, "high": 2495.44, "low": 2411
 - Event: **FOMC**
 - Asset: **ETH**
 - Event date: **2024-11-06**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **489 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **490 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

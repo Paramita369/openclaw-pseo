@@ -1,14 +1,14 @@
 ---
 title: "ETH After CPI (2025-04-12): Up/Down Odds and Median Returns"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 5
 title_template_key: "cpi_5"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-04-12"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 332
+freshness_days: 333
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-04-09", "open": 1472.6, "high": 1687.19, "low": 1386.
 - Event: **CPI**
 - Asset: **ETH**
 - Event date: **2025-04-12**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **332 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **333 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

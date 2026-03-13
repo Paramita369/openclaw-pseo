@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2026-01-28) and QQQ: Event-Driven Odds"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-13"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2026-01-28"
-asof_date: "2026-03-10"
+asof_date: "2026-03-12"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -20,9 +20,9 @@ penalties:
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
+quality_score: 100
 sample_size: 23
-freshness_days: 41
+freshness_days: 43
 freshness_status: "fresh"
 index_tier: "A"
 is_recent_90d: true
@@ -42,7 +42,7 @@ canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/qqq-after-fomc-2026-01-28"
 robots_directive: "index,follow"
 in_blog_sitemap: true
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+data_last_updated_at: "2026-03-13T09:46:21+00:00"
 event_direction: "flat"
 event_actual: 3.75
 event_previous: 3.75
@@ -51,9 +51,9 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["qqq", "fomc", "event-probability", "general"]
 metrics:
-  sharpe_t7: -1.16
+  sharpe_t7: -10.0
   mdd_t7: -4.34
-  volatility: 3.74
+  volatility: 20.18
   impact_t1_pct: -0.6
   impact_t7_pct: -4.34
 probabilities:
@@ -86,7 +86,7 @@ probabilities:
       median: 1.08
       mean: 0.6
       sample: 17
-related_events: [{"slug": "qqq-after-fomc-2024-01-30", "title": "Fed Decision (2024-01-30) and QQQ: Event-Driven Odds", "event_date": "2024-01-30", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 2.07, "median_t7_pct": 0.88, "sample_size": 23}, {"slug": "qqq-after-fomc-2025-12-10", "title": "QQQ Post-FOMC Reaction (2025-12-10): Quant Backtest Snapshot", "event_date": "2025-12-10", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.88, "sample_size": 23}, {"slug": "qqq-after-fomc-2025-10-29", "title": "2025-10-29 FOMC Meeting: QQQ T+1/T+7 Probability Profile", "event_date": "2025-10-29", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 0.0, "median_t7_pct": 0.88, "sample_size": 23}]
+related_events: [{"slug": "qqq-after-fomc-2025-06-18", "title": "QQQ After FOMC (2025-06-18): Historical T+1/T+7 Probability", "event_date": "2025-06-18", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.42, "sample_size": 0}, {"slug": "qqq-after-fomc-2025-05-07", "title": "QQQ After FOMC (2025-05-07): Historical T+1/T+7 Probability", "event_date": "2025-05-07", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 7.32, "sample_size": 0}, {"slug": "qqq-after-fomc-2025-01-29", "title": "QQQ After FOMC (2025-01-29): Historical T+1/T+7 Probability", "event_date": "2025-01-29", "event_type": "FOMC", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.16, "sample_size": 0}]
 chartData: [{"time": "2026-01-26", "open": 623.21, "high": 627.61, "low": 622.12, "close": 625.46}, {"time": "2026-01-27", "open": 628.91, "high": 632.04, "low": 627.34, "close": 631.13}, {"time": "2026-01-28", "open": 635.46, "high": 636.6, "low": 631.81, "close": 633.22}, {"time": "2026-01-29", "open": 632.65, "high": 633.67, "low": 618.27, "close": 629.43}, {"time": "2026-01-30", "open": 625.71, "high": 628.26, "low": 619.3, "close": 621.87}, {"time": "2026-02-02", "open": 618.7, "high": 628.49, "low": 618.66, "close": 626.14}, {"time": "2026-02-03", "open": 628.3, "high": 629.98, "low": 610.96, "close": 616.52}, {"time": "2026-02-04", "open": 615.02, "high": 615.1, "low": 600.47, "close": 605.75}]
 ---
 
@@ -95,8 +95,8 @@ chartData: [{"time": "2026-01-26", "open": 623.21, "high": 627.61, "low": 622.12
 - Event: **FOMC**
 - Asset: **QQQ**
 - Event date: **2026-01-28**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **41 days**
+- As-of date (T-1): **2026-03-12**
+- Freshness age: **43 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

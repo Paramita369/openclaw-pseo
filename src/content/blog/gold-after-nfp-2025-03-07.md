@@ -1,14 +1,14 @@
 ---
 title: "NFP Print (2025-03-07) vs GOLD: Quantified Directional Odds"
 description: "Historical probability profile for GOLD around NFP events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 4
 title_template_key: "nfp_4"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-03-07"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 368
+freshness_days: 369
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-03-04", "open": 2886.1, "high": 2927.9, "low": 2886.1
 - Event: **NFP**
 - Asset: **GOLD**
 - Event date: **2025-03-07**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **368 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **369 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

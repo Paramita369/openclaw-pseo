@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2025-02-12) and GOLD: Event-Driven Return Odds"
 description: "Historical probability profile for GOLD around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-02-12"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 391
+freshness_days: 392
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-02-10", "open": 2864.2, "high": 2916.1, "low": 2863.8
 - Event: **CPI**
 - Asset: **GOLD**
 - Event date: **2025-02-12**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **391 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **392 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

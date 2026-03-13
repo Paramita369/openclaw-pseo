@@ -1,14 +1,14 @@
 ---
 title: "QQQ After NFP (2024-08-02): Event Probability and Median Return"
 description: "Historical probability profile for QQQ around NFP events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 3
 title_template_key: "nfp_3"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-08-02"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 34
-freshness_days: 585
+freshness_days: 586
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-07-30", "open": 462.1, "high": 462.81, "low": 450.5, 
 - Event: **NFP**
 - Asset: **QQQ**
 - Event date: **2024-08-02**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **585 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **586 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

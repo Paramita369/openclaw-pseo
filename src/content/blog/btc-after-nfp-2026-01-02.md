@@ -1,14 +1,14 @@
 ---
 title: "NFP Print (2026-01-02) vs BTC: Quantified Directional Odds"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-13"
 title_variant_id: 4
 title_template_key: "nfp_4"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2026-01-02"
-asof_date: "2026-03-10"
+asof_date: "2026-03-12"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 67
+freshness_days: 69
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-30", "open": 87134.35, "high": 89297.94, "low": 86
 - Event: **NFP**
 - Asset: **BTC**
 - Event date: **2026-01-02**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **67 days**
+- As-of date (T-1): **2026-03-12**
+- Freshness age: **69 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

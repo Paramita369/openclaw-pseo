@@ -1,14 +1,14 @@
 ---
 title: "ETH Reaction to US CPI (2025-12-12): Quant Probability Breakdown"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-13"
 title_variant_id: 2
 title_template_key: "cpi_2"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-12-12"
-asof_date: "2026-03-10"
+asof_date: "2026-03-12"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,11 +22,11 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 88
+freshness_days: 90
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
-is_core_page: true
+is_core_page: false
 core_window_days: 90
 body_variant_family: "distribution"
 hub_baseline_mean_t7: 0.23
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-09", "open": 3124.94, "high": 3395.84, "low": 3092
 - Event: **CPI**
 - Asset: **ETH**
 - Event date: **2025-12-12**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **88 days**
+- As-of date (T-1): **2026-03-12**
+- Freshness age: **90 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome
@@ -118,25 +118,15 @@ chartData: [{"time": "2025-12-09", "open": 3124.94, "high": 3395.84, "low": 3092
 | T+1 | 60.53% | 39.47% | 0.96% | 0.64% | 38 |
 | T+7 | 44.74% | 55.26% | -1.52% | 0.24% | 38 |
 
-## Event Outcome Interpretation
+## Historical Distribution Summary
 
-The useful signal is where this release sits inside the historical range, not the headline in isolation. ETH around CPI is best framed through how the release landed higher than the previous release. The current observation shows actual value 326.0310 versus previous 325.0630, a delta of +0.9680. Across the full history, ETH has a T+7 up probability of 43.59% versus 56.41% down, with a median return of -1.18%. When only matching the same event direction, the T+7 up probability shifts to 44.74% across 38 comparable releases, with a same-direction median of -1.52%. The current release therefore reads as a calibration event inside the median band, not as a high-conviction break. The standing hub thesis for this asset-event pair is: ETH reacts to inflation prints through both risk appetite and crypto-beta rotation, often showing larger relative swings than BTC during regime shifts. CPI surprises can trigger an initial valuation shock, then a second...
+When CPI was **UP**, ETH T+1 up probability was **60.53%** (n=38).
 
-## Distribution Position
+When CPI was **UP**, ETH T+7 up probability was **44.74%** (n=38).
 
-This window sits in the median band and should be used for calibration rather than conviction. The current T+7 move of -3.44% carries a z-score of -0.38 and a percentile rank of 43.59, which keeps the release inside the central band of observed windows. That is exactly what a strict median norm looks like: neither extreme strength nor extreme weakness, just a normal response range that helps calibrate expectations. The key instruction here is simple: do not overstate what is still a routine macro window.
+Same-direction T+7 median return: **-1.52%**.
 
-## Comparison vs Hub Baseline
-
-This comparison stays close to the median band and is best used for calibration. Relative to the hub baseline, this release can be located with a concrete distance from normal behavior. The hub baseline median T+7 return is -1.18% and the current gap is -2.26%. Same-direction probability moves by +1.15% and the same-direction median differs by -0.34%. Those numbers matter because they show where normal variation ends, not because they justify an outsized story. The current regime context also matters: Layer-2 and ETF-adjacent narrative flows can amplify post-CPI trend continuation, especially when macro surprise aligns with existing positioning. At the same time, cross-exchange liquidity has become more synchronized...
-
-## Failure Modes
-
-The failure mode here is over-reading ordinary data as if it were exceptional. The main failure mode is forgetting that distributions absorb noise before they change shape. Network-specific headlines and protocol news can contaminate pure macro interpretation around release windows. If USD and front-end yields diverge, ETH can print misleading first-candle direction before reverting; leverage-driven liquidations then increase realized slippage and drawdown risk. Median-band releases often produce the worst decisions when operators insist on finding a dramatic narrative where the distribution is actually telling them to stay measured.
-
-## Execution Relevance
-
-Use this page as a distribution map, not a shortcut to conviction. The operational takeaway is calibration, not escalation. The checklist remains Compare ETH/BTC ratio around event open.; Confirm spot-volume participation before breakout trades.; Reduce leverage when spread volatility widens.. When a page is marked strict median norm, the right move is to compare it against the hub, keep sizing conservative, and do not overstate the evidence.
+For ETH, historical CPI windows show all-history T+1 up probability of 58.97% and T+7 up probability of 43.59%. When CPI printed Up versus previous, T+1 up probability was 60.53% and T+7 up probability was 44.74% across 38 matched cases. Current classification is Neutral; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

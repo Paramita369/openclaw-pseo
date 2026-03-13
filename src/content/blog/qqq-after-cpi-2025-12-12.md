@@ -1,14 +1,14 @@
 ---
 title: "QQQ Reaction to US CPI (2025-12-12): Quant Probability Breakdown"
 description: "Historical probability profile for QQQ around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-13"
 title_variant_id: 2
 title_template_key: "cpi_2"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-12-12"
-asof_date: "2026-03-10"
+asof_date: "2026-03-12"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,11 +22,11 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 88
+freshness_days: 90
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
-is_core_page: true
+is_core_page: false
 core_window_days: 90
 body_variant_family: "risk-first"
 hub_baseline_mean_t7: 0.2
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-12-09", "open": 622.21, "high": 625.06, "low": 620.2,
 - Event: **CPI**
 - Asset: **QQQ**
 - Event date: **2025-12-12**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **88 days**
+- As-of date (T-1): **2026-03-12**
+- Freshness age: **90 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome
@@ -118,25 +118,15 @@ chartData: [{"time": "2025-12-09", "open": 622.21, "high": 625.06, "low": 620.2,
 | T+1 | 60.53% | 39.47% | 0.19% | 0.23% | 38 |
 | T+7 | 55.26% | 44.74% | 0.58% | 0.2% | 38 |
 
-## Event Outcome Interpretation
+## Historical Distribution Summary
 
-The main mistake after macro releases is to treat every surprise as a regime break. QQQ around CPI is best framed through how the release landed higher than the previous release. The current observation shows actual value 326.0310 versus previous 325.0630, a delta of +0.9680. Across the full history, QQQ has a T+7 up probability of 55.26% versus 44.74% down, with a median return of 0.58%. When only matching the same event direction, the T+7 up probability shifts to 55.26% across 38 comparable releases, with a same-direction median of 0.58%. The current release therefore reads as a calibration event inside the median band, not as a high-conviction break. The standing hub thesis for this asset-event pair is: QQQ is highly duration-sensitive to CPI shocks. Positive inflation surprise usually pressures multiples first, then recovers if growth narrative stays intact.
+When CPI was **UP**, QQQ T+1 up probability was **60.53%** (n=38).
 
-## Distribution Position
+When CPI was **UP**, QQQ T+7 up probability was **55.26%** (n=38).
 
-This window sits in the median band and should be used for calibration rather than conviction. The current T+7 move of 0.56% carries a z-score of 0.16 and a percentile rank of 50.00, which keeps the release inside the central band of observed windows. That is exactly what a strict median norm looks like: neither extreme strength nor extreme weakness, just a normal response range that helps calibrate expectations. The key instruction here is simple: do not overstate what is still a routine macro window.
+Same-direction T+7 median return: **0.58%**.
 
-## Comparison vs Hub Baseline
-
-This comparison stays close to the median band and is best used for calibration. The baseline comparison matters because most false positives come from overreacting to ordinary noise. The hub baseline median T+7 return is 0.58% and the current gap is -0.02%. Same-direction probability moves by +0.00% and the same-direction median differs by +0.00%. Those numbers matter because they show where normal variation ends, not because they justify an outsized story. The current regime context also matters: Mega-cap concentration has increased index-level event beta.
-
-## Failure Modes
-
-The failure mode here is over-reading ordinary data as if it were exceptional. The main failure mode is assuming the first interpretation will survive cross-asset confirmation. Single-name earnings shocks can mask macro signal quality. Median-band releases often produce the worst decisions when operators insist on finding a dramatic narrative where the distribution is actually telling them to stay measured.
-
-## Execution Relevance
-
-Treat this as an educational risk framework, not investment advice. The operational takeaway is calibration, not escalation. The checklist remains Track US2Y/US10Y move for duration impulse.; Observe semiconductor breadth for confirmation.; Use staged entries around first-hour range.. When a page is marked strict median norm, the right move is to compare it against the hub, keep sizing conservative, and do not overstate the evidence.
+For QQQ, historical CPI windows show all-history T+1 up probability of 61.54% and T+7 up probability of 55.26%. When CPI printed Up versus previous, T+1 up probability was 60.53% and T+7 up probability was 55.26% across 38 matched cases. Current classification is Bullish; this remains an educational probability lens, not investment advice.
 
 ## Methodology
 

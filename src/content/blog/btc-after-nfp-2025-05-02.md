@@ -1,14 +1,14 @@
 ---
 title: "BTC NFP Reaction (2025-05-02): T+1/T+7 Up Probability"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 1
 title_template_key: "nfp_1"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-05-02"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 34
-freshness_days: 312
+freshness_days: 313
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-04-29", "open": 94981.86, "high": 95485.41, "low": 93
 - Event: **NFP**
 - Asset: **BTC**
 - Event date: **2025-05-02**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **312 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **313 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

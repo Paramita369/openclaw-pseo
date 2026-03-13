@@ -1,14 +1,14 @@
 ---
 title: "Fed Decision (2024-01-30) and QQQ: Event-Driven Odds"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 2
 title_template_key: "fomc_2"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2024-01-30"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 770
+freshness_days: 771
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-01-29", "open": 419.64, "high": 423.67, "low": 418.98
 - Event: **FOMC**
 - Asset: **QQQ**
 - Event date: **2024-01-30**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **770 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **771 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

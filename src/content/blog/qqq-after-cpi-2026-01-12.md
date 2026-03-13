@@ -1,28 +1,28 @@
 ---
 title: "QQQ CPI Win Rate (2026-01-12): Historical T+1/T+7 Probability"
 description: "Historical probability profile for QQQ around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-13"
 title_variant_id: 1
 title_template_key: "cpi_1"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2026-01-12"
-asof_date: "2026-03-10"
+asof_date: "2026-03-12"
 source: "verified_targets.csv"
 offer_key: "ibkr"
-signal: "Bullish"
-raw_signal_score: 8.09
-robust_score: 2.09
+signal: "Neutral"
+raw_signal_score: 7.63
+robust_score: 1.63
 penalties:
   sample: 0.0
   freshness: 6.0
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
-sample_size: 39
-freshness_days: 57
+quality_score: 100
+sample_size: 40
+freshness_days: 59
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
@@ -42,7 +42,7 @@ canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/qqq-after-cpi-2026-01-12"
 robots_directive: "index,follow"
 in_blog_sitemap: true
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+data_last_updated_at: "2026-03-13T09:46:21+00:00"
 event_direction: "up"
 event_actual: 326.588
 event_previous: 326.031
@@ -51,19 +51,19 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["qqq", "cpi", "event-probability", "general"]
 metrics:
-  sharpe_t7: -1.05
+  sharpe_t7: -10.0
   mdd_t7: -3.05
-  volatility: 2.9
+  volatility: 13.79
   impact_t1_pct: -0.15
   impact_t7_pct: -3.05
 probabilities:
-  sample_size: 39
+  sample_size: 40
   t1:
-    up: 61.54
-    down: 38.46
-    median: 0.21
-    mean: 0.23
-    sample: 39
+    up: 60.0
+    down: 40.0
+    median: 0.19
+    mean: 0.19
+    sample: 40
   t7:
     up: 55.26
     down: 44.74
@@ -75,18 +75,18 @@ probabilities:
     direction: "up"
     sample_size: 38
     t1:
-      up: 60.53
-      down: 39.47
-      median: 0.19
-      mean: 0.23
-      sample: 38
+      up: 58.97
+      down: 41.03
+      median: 0.16
+      mean: 0.18
+      sample: 39
     t7:
       up: 55.26
       down: 44.74
       median: 0.58
       mean: 0.2
       sample: 38
-related_events: [{"slug": "qqq-after-cpi-2024-05-15", "title": "2024-05-15 CPI Release: QQQ Directional Probability Snapshot", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 9.6, "median_t7_pct": 0.58, "sample_size": 39}, {"slug": "qqq-after-cpi-2024-09-11", "title": "US CPI (2024-09-11) and QQQ: Event-Driven Return Odds", "event_date": "2024-09-11", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 7.08, "median_t7_pct": 0.58, "sample_size": 39}, {"slug": "qqq-after-cpi-2026-02-12", "title": "QQQ CPI Win Rate (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.0, "median_t7_pct": 0.58, "sample_size": 39}]
+related_events: [{"slug": "qqq-after-cpi-2026-02-12", "title": "QQQ After CPI (2026-02-12): Historical T+1/T+7 Probability", "event_date": "2026-02-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 0.47, "sample_size": 0}, {"slug": "qqq-after-cpi-2025-12-18", "title": "QQQ After CPI (2025-12-18): Historical T+1/T+7 Probability", "event_date": "2025-12-18", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 2.56, "sample_size": 0}, {"slug": "qqq-after-cpi-2025-10-24", "title": "QQQ After CPI (2025-10-24): Historical T+1/T+7 Probability", "event_date": "2025-10-24", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.94, "sample_size": 0}]
 chartData: [{"time": "2026-01-09", "open": 621.41, "high": 627.89, "low": 619.06, "close": 626.65}, {"time": "2026-01-12", "open": 622.31, "high": 628.85, "low": 622.26, "close": 627.17}, {"time": "2026-01-13", "open": 627.27, "high": 629.47, "low": 623.7, "close": 626.24}, {"time": "2026-01-14", "open": 622.24, "high": 623.45, "low": 614.56, "close": 619.55}, {"time": "2026-01-15", "open": 626.6, "high": 630.0, "low": 620.75, "close": 621.78}, {"time": "2026-01-16", "open": 625.5, "high": 626.08, "low": 618.88, "close": 621.26}]
 ---
 
@@ -95,9 +95,9 @@ chartData: [{"time": "2026-01-09", "open": 621.41, "high": 627.89, "low": 619.06
 - Event: **CPI**
 - Asset: **QQQ**
 - Event date: **2026-01-12**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **57 days**
-- Sample size (all-history): **39**
+- As-of date (T-1): **2026-03-12**
+- Freshness age: **59 days**
+- Sample size (all-history): **40**
 
 ## Event Outcome
 
@@ -108,14 +108,14 @@ chartData: [{"time": "2026-01-09", "open": 621.41, "high": 627.89, "low": 619.06
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 61.54% | 38.46% | 0.21% | 0.23% | 39 |
+| T+1 | 60.0% | 40.0% | 0.19% | 0.19% | 40 |
 | T+7 | 55.26% | 44.74% | 0.58% | 0.2% | 38 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 60.53% | 39.47% | 0.19% | 0.23% | 38 |
+| T+1 | 58.97% | 41.03% | 0.16% | 0.18% | 39 |
 | T+7 | 55.26% | 44.74% | 0.58% | 0.2% | 38 |
 
 ## Event Outcome Interpretation

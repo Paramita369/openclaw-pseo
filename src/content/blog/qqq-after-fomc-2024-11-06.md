@@ -1,14 +1,14 @@
 ---
 title: "QQQ Post-FOMC Reaction (2024-11-06): Quant Backtest Snapshot"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 4
 title_template_key: "fomc_4"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2024-11-06"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 489
+freshness_days: 490
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-11-04", "open": 483.58, "high": 486.13, "low": 481.03
 - Event: **FOMC**
 - Asset: **QQQ**
 - Event date: **2024-11-06**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **489 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **490 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

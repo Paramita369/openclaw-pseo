@@ -1,28 +1,28 @@
 ---
 title: "GOLD After CPI (2026-01-12): Up/Down Odds and Median Returns"
 description: "Historical probability profile for GOLD around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-13"
 title_variant_id: 5
 title_template_key: "cpi_5"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2026-01-12"
-asof_date: "2026-03-10"
+asof_date: "2026-03-12"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
-raw_signal_score: 18.4
-robust_score: 12.4
+raw_signal_score: 17.98
+robust_score: 11.98
 penalties:
   sample: 0.0
   freshness: 6.0
   confidence: 0.0
   outcome: 0.0
 confidence_level: "normal"
-quality_score: 90
-sample_size: 39
-freshness_days: 57
+quality_score: 100
+sample_size: 40
+freshness_days: 59
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: true
@@ -42,7 +42,7 @@ canonical_target: "self"
 canonical_url: "https://quantmacro.vercel.app/blog/gold-after-cpi-2026-01-12"
 robots_directive: "index,follow"
 in_blog_sitemap: true
-data_last_updated_at: "2026-03-04T01:58:11+00:00"
+data_last_updated_at: "2026-03-13T09:46:21+00:00"
 event_direction: "up"
 event_actual: 326.588
 event_previous: 326.031
@@ -51,19 +51,19 @@ direction_basis: "vs_previous"
 outcome_status: "ok"
 tags: ["gold", "cpi", "event-probability", "general"]
 metrics:
-  sharpe_t7: 0.91
+  sharpe_t7: 10.0
   mdd_t7: -0.33
-  volatility: 3.7
+  volatility: 23.03
   impact_t1_pct: -0.33
   impact_t7_pct: 3.37
 probabilities:
-  sample_size: 39
+  sample_size: 40
   t1:
-    up: 56.41
-    down: 43.59
-    median: 0.34
-    mean: 0.3
-    sample: 39
+    up: 55.0
+    down: 45.0
+    median: 0.32
+    mean: 0.27
+    sample: 40
   t7:
     up: 78.95
     down: 21.05
@@ -75,18 +75,18 @@ probabilities:
     direction: "up"
     sample_size: 38
     t1:
-      up: 57.89
-      down: 42.11
-      median: 0.42
-      mean: 0.35
-      sample: 38
+      up: 56.41
+      down: 43.59
+      median: 0.34
+      mean: 0.31
+      sample: 39
     t7:
       up: 78.95
       down: 21.05
       median: 1.4
       mean: 1.49
       sample: 38
-related_events: [{"slug": "gold-after-cpi-2025-02-12", "title": "US CPI (2025-02-12) and GOLD: Event-Driven Return Odds", "event_date": "2025-02-12", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 7.09, "median_t7_pct": 1.4, "sample_size": 39}, {"slug": "gold-after-cpi-2024-02-20", "title": "US CPI (2024-02-20) and GOLD: Event-Driven Return Odds", "event_date": "2024-02-20", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 6.12, "median_t7_pct": 1.4, "sample_size": 39}, {"slug": "gold-after-cpi-2024-05-15", "title": "US CPI (2024-05-15) and GOLD: Event-Driven Return Odds", "event_date": "2024-05-15", "event_type": "CPI", "signal": "Bullish", "sharpe_t7": 0.47, "median_t7_pct": 1.4, "sample_size": 39}]
+related_events: [{"slug": "gold-after-cpi-2026-01-13", "title": "GOLD After CPI (2026-01-13): Historical T+1/T+7 Probability", "event_date": "2026-01-13", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 3.71, "sample_size": 0}, {"slug": "gold-after-cpi-2025-12-18", "title": "GOLD After CPI (2025-12-18): Historical T+1/T+7 Probability", "event_date": "2025-12-18", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 4.37, "sample_size": 0}, {"slug": "gold-after-cpi-2025-12-12", "title": "GOLD After CPI (2025-12-12): Historical T+1/T+7 Probability", "event_date": "2025-12-12", "event_type": "CPI", "signal": "Neutral", "sharpe_t7": 10.0, "median_t7_pct": 1.43, "sample_size": 0}]
 chartData: [{"time": "2026-01-09", "open": 4473.0, "high": 4490.3, "low": 4473.0, "close": 4490.3}, {"time": "2026-01-12", "open": 4579.1, "high": 4620.0, "low": 4577.8, "close": 4604.3}, {"time": "2026-01-13", "open": 4578.6, "high": 4617.1, "low": 4578.6, "close": 4589.2}, {"time": "2026-01-14", "open": 4610.3, "high": 4635.0, "low": 4608.2, "close": 4626.3}, {"time": "2026-01-15", "open": 4612.9, "high": 4616.3, "low": 4612.9, "close": 4616.3}, {"time": "2026-01-16", "open": 4608.0, "high": 4608.0, "low": 4588.4, "close": 4588.4}]
 ---
 
@@ -95,9 +95,9 @@ chartData: [{"time": "2026-01-09", "open": 4473.0, "high": 4490.3, "low": 4473.0
 - Event: **CPI**
 - Asset: **GOLD**
 - Event date: **2026-01-12**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **57 days**
-- Sample size (all-history): **39**
+- As-of date (T-1): **2026-03-12**
+- Freshness age: **59 days**
+- Sample size (all-history): **40**
 
 ## Event Outcome
 
@@ -108,14 +108,14 @@ chartData: [{"time": "2026-01-09", "open": 4473.0, "high": 4490.3, "low": 4473.0
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 56.41% | 43.59% | 0.34% | 0.3% | 39 |
+| T+1 | 55.0% | 45.0% | 0.32% | 0.27% | 40 |
 | T+7 | 78.95% | 21.05% | 1.4% | 1.49% | 38 |
 
 ## Probability Table (Same-direction)
 
 | Window | P(up) | P(down) | Median return | Mean return | Sample |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| T+1 | 57.89% | 42.11% | 0.42% | 0.35% | 38 |
+| T+1 | 56.41% | 43.59% | 0.34% | 0.31% | 39 |
 | T+7 | 78.95% | 21.05% | 1.4% | 1.49% | 38 |
 
 ## Event Outcome Interpretation

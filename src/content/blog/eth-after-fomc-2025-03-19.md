@@ -1,14 +1,14 @@
 ---
 title: "FOMC Outcome (2025-03-19) for ETH: Up/Down Probability View"
 description: "Historical probability profile for ETH around FOMC events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 5
 title_template_key: "fomc_5"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-03-19"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Bearish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 356
+freshness_days: 357
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-03-16", "open": 1937.38, "high": 1940.47, "low": 1863
 - Event: **FOMC**
 - Asset: **ETH**
 - Event date: **2025-03-19**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **356 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **357 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

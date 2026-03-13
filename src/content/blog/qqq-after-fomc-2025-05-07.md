@@ -1,14 +1,14 @@
 ---
 title: "2025-05-07 FOMC Meeting: QQQ T+1/T+7 Probability Profile"
 description: "Historical probability profile for QQQ around FOMC events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 3
 title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-05-07"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 307
+freshness_days: 308
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-05-05", "open": 482.87, "high": 487.29, "low": 482.38
 - Event: **FOMC**
 - Asset: **QQQ**
 - Event date: **2025-05-07**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **307 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **308 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

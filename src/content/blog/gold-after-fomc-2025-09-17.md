@@ -1,14 +1,14 @@
 ---
 title: "2025-09-17 FOMC Meeting: GOLD T+1/T+7 Probability Profile"
 description: "Historical probability profile for GOLD around FOMC events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-13"
 title_variant_id: 3
 title_template_key: "fomc_3"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-09-17"
-asof_date: "2026-03-10"
+asof_date: "2026-03-12"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 174
+freshness_days: 176
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-09-15", "open": 3640.0, "high": 3686.4, "low": 3635.1
 - Event: **FOMC**
 - Asset: **GOLD**
 - Event date: **2025-09-17**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **174 days**
+- As-of date (T-1): **2026-03-12**
+- Freshness age: **176 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

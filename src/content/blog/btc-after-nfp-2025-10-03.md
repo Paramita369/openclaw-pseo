@@ -1,14 +1,14 @@
 ---
 title: "2025-10-03 Nonfarm Payrolls: BTC Historical Win Rate"
 description: "Historical probability profile for BTC around NFP events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-13"
 title_variant_id: 2
 title_template_key: "nfp_2"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2025-10-03"
-asof_date: "2026-03-10"
+asof_date: "2026-03-12"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 60
 sample_size: 34
-freshness_days: 158
+freshness_days: 160
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-09-30", "open": 114396.52, "high": 114836.62, "low": 
 - Event: **NFP**
 - Asset: **BTC**
 - Event date: **2025-10-03**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **158 days**
+- As-of date (T-1): **2026-03-12**
+- Freshness age: **160 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

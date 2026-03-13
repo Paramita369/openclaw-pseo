@@ -1,14 +1,14 @@
 ---
 title: "US CPI (2025-06-12) and SPY: Event-Driven Return Odds"
 description: "Historical probability profile for SPY around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 3
 title_template_key: "cpi_3"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-06-12"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 271
+freshness_days: 272
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-06-09", "open": 594.54, "high": 596.06, "low": 593.32
 - Event: **CPI**
 - Asset: **SPY**
 - Event date: **2025-06-12**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **271 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **272 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

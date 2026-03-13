@@ -1,14 +1,14 @@
 ---
 title: "GOLD Reaction to US CPI (2024-01-15): Quant Probability Breakdown"
 description: "Historical probability profile for GOLD around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 2
 title_template_key: "cpi_2"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-01-15"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 785
+freshness_days: 786
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-01-12", "open": 2031.1, "high": 2057.0, "low": 2031.1
 - Event: **CPI**
 - Asset: **GOLD**
 - Event date: **2024-01-15**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **785 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **786 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

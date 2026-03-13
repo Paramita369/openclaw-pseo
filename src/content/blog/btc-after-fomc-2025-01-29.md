@@ -1,14 +1,14 @@
 ---
 title: "BTC Post-FOMC Reaction (2025-01-29): Quant Backtest Snapshot"
 description: "Historical probability profile for BTC around FOMC events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 4
 title_template_key: "fomc_4"
 event_type: "FOMC"
 event_label: "FOMC"
 event_slug: "fomc"
 event_date: "2025-01-29"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 23
-freshness_days: 405
+freshness_days: 406
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-01-26", "open": 104713.21, "high": 105438.65, "low": 
 - Event: **FOMC**
 - Asset: **BTC**
 - Event date: **2025-01-29**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **405 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **406 days**
 - Sample size (all-history): **23**
 
 ## Event Outcome

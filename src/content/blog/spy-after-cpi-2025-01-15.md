@@ -1,14 +1,14 @@
 ---
 title: "SPY CPI Win Rate (2025-01-15): Historical T+1/T+7 Probability"
 description: "Historical probability profile for SPY around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 1
 title_template_key: "cpi_1"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-01-15"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Bullish"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 419
+freshness_days: 420
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-01-13", "open": 569.09, "high": 575.0, "low": 568.67,
 - Event: **CPI**
 - Asset: **SPY**
 - Event date: **2025-01-15**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **419 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **420 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

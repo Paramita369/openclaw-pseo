@@ -1,14 +1,14 @@
 ---
 title: "2025-09-12 CPI Release: ETH Directional Probability Snapshot"
 description: "Historical probability profile for ETH around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-13"
 title_variant_id: 4
 title_template_key: "cpi_4"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2025-09-12"
-asof_date: "2026-03-10"
+asof_date: "2026-03-12"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 179
+freshness_days: 181
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2025-09-09", "open": 4308.28, "high": 4381.23, "low": 4277
 - Event: **CPI**
 - Asset: **ETH**
 - Event date: **2025-09-12**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **179 days**
+- As-of date (T-1): **2026-03-12**
+- Freshness age: **181 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome

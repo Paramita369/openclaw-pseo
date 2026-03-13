@@ -1,14 +1,14 @@
 ---
 title: "NFP Print (2024-04-05) vs SPY: Quantified Directional Odds"
 description: "Historical probability profile for SPY around NFP events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 4
 title_template_key: "nfp_4"
 event_type: "NFP"
 event_label: "NFP"
 event_slug: "nfp"
 event_date: "2024-04-05"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "ibkr"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 80
 sample_size: 34
-freshness_days: 704
+freshness_days: 705
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-04-02", "open": 507.31, "high": 508.03, "low": 505.59
 - Event: **NFP**
 - Asset: **SPY**
 - Event date: **2024-04-05**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **704 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **705 days**
 - Sample size (all-history): **34**
 
 ## Event Outcome

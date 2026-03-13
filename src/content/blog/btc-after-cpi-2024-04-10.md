@@ -1,14 +1,14 @@
 ---
 title: "BTC After CPI (2024-04-10): Up/Down Odds and Median Returns"
 description: "Historical probability profile for BTC around CPI events (T+1/T+7)."
-pubDate: "2026-03-11"
+pubDate: "2026-03-12"
 title_variant_id: 5
 title_template_key: "cpi_5"
 event_type: "CPI"
 event_label: "CPI"
 event_slug: "cpi"
 event_date: "2024-04-10"
-asof_date: "2026-03-10"
+asof_date: "2026-03-11"
 source: "verified_targets.csv"
 offer_key: "binance"
 signal: "Neutral"
@@ -22,7 +22,7 @@ penalties:
 confidence_level: "normal"
 quality_score: 90
 sample_size: 39
-freshness_days: 699
+freshness_days: 700
 freshness_status: "stale"
 index_tier: "B"
 is_recent_90d: false
@@ -95,8 +95,8 @@ chartData: [{"time": "2024-04-07", "open": 68897.11, "high": 70284.43, "low": 68
 - Event: **CPI**
 - Asset: **BTC**
 - Event date: **2024-04-10**
-- As-of date (T-1): **2026-03-10**
-- Freshness age: **699 days**
+- As-of date (T-1): **2026-03-11**
+- Freshness age: **700 days**
 - Sample size (all-history): **39**
 
 ## Event Outcome
